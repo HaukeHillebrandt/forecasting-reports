@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proto-Question Quality Filter &mdash; Evaluating the Pandemic Threat of Lab Leaks from State Bioweapon Programmes</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f7f8fa; color: #2c2c2c; line-height: 1.65; padding: 2.5rem 1.5rem;
+  }
+  .container { max-width: 54rem; margin: 0 auto; }
+
+  /* --- Header --- */
+  .page-header {
+    background: #1a1a2e; color: #eee; border-radius: 12px;
+    padding: 2rem 2.5rem; margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(26,26,46,.18);
+  }
+  .page-header h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: .4rem; letter-spacing: -.01em; }
+  .page-header .subtitle { font-size: .88rem; color: #a0a0b8; margin-bottom: .75rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #8888a0;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .25rem .7rem; border-radius: 6px;
+  }
+
+  /* --- Sort controls --- */
+  .sort-bar {
+    display: flex; align-items: center; gap: .75rem;
+    margin-bottom: 1.5rem; font-size: .82rem; color: #888;
+  }
+  .sort-bar span { font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+  .sort-btn {
+    appearance: none; border: none; cursor: pointer;
+    background: #fff; color: #555; font-size: .8rem; font-weight: 500;
+    padding: .4rem .9rem; border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    transition: box-shadow .15s, color .15s, background .15s;
+  }
+  .sort-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); color: #1a1a2e; }
+  .sort-btn.active { background: #1a1a2e; color: #fff; box-shadow: 0 2px 8px rgba(26,26,46,.2); }
+
+  /* --- Question list (expandable details) --- */
+  .question-list { display: flex; flex-direction: column; gap: .75rem; }
+
+  .q-item {
+    background: #fff; border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.05);
+    transition: box-shadow .2s ease, transform .2s ease;
+    overflow: hidden;
+  }
+  .q-item:hover { box-shadow: 0 3px 14px rgba(0,0,0,.08); }
+  .q-item[open] { box-shadow: 0 4px 20px rgba(0,0,0,.09); }
+
+  .q-item summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: 1rem 1.5rem;
+    transition: background .15s;
+  }
+  .q-item summary::-webkit-details-marker { display: none; }
+  .q-item summary:hover { background: #fafbfd; }
+
+  .q-item summary .chevron {
+    flex-shrink: 0; width: 1rem; text-align: center;
+    font-size: .6rem; color: #b0b0b0;
+    transition: transform .2s ease;
+  }
+  .q-item[open] summary .chevron { transform: rotate(90deg); }
+
+  .q-score-badge {
+    flex-shrink: 0; font-size: .82rem; font-weight: 700;
+    min-width: 2.6rem; text-align: center;
+    padding: .2rem .5rem; border-radius: 6px;
+  }
+  .q-summary-text {
+    flex: 1; font-size: .92rem; font-weight: 500; color: #2c2c2c;
+    line-height: 1.45;
+  }
+  .badge {
+    flex-shrink: 0; font-size: .68rem; font-weight: 600;
+    padding: .2rem .55rem; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
+  .badge-selected { background: #e8f5e9; color: #2e7d32; }
+  .badge-filtered { background: #f0f0f0; color: #999; }
+
+  /* --- Expanded content --- */
+  .q-body { padding: .25rem 1.5rem 1.5rem 3.85rem; }
+
+  .score-row {
+    display: flex; gap: 1.5rem; margin: .5rem 0 1rem 0;
+    padding: .65rem 1rem; background: #f8f9fc; border-radius: 8px;
+    font-size: .84rem;
+  }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 4.5rem; }
+  .score-label {
+    position: relative;
+    font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; color: #999;
+    cursor: default;
+  }
+  .score-value { font-weight: 700; font-size: .95rem; margin-top: .1rem; }
+
+  .q-body p {
+    font-size: .9rem; line-height: 1.65; color: #444;
+    white-space: pre-wrap; word-wrap: break-word;
+    margin-bottom: .6rem;
+  }
+  .q-body p strong { color: #333; }
+
+  /* Collapsible sub-section inside expanded body */
+  .sub-section { margin-top: .5rem; }
+  .sub-section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .35rem;
+    padding: .25rem 0; font-size: .8rem; text-transform: uppercase;
+    letter-spacing: .04em; color: #999; font-weight: 500;
+  }
+  .sub-section summary::-webkit-details-marker { display: none; }
+  .sub-section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb;
+    transition: transform .15s ease;
+  }
+  .sub-section[open] summary::before { transform: rotate(90deg); }
+  .sub-section > p { margin-top: .25rem; padding-left: .8rem; }
+
+  /* --- Tooltips --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+    background: #1a1a2e; color: #e8e8f0; font-size: .7rem; font-weight: 400;
+    text-transform: none; letter-spacing: normal;
+    padding: .35rem .65rem; border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity .15s ease;
+    z-index: 10;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+
+  a { color: #1565c0; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02b: Proto-Question Quality Filter</h1>
+    <div class="subtitle">Evaluating the Pandemic Threat of Lab Leaks from State Bioweapon Programmes</div>
+    <div class="page-stats">
+      <span>31 total</span>
+      <span>5 selected (top 5)</span>
+      <span>Cutoff score: 92</span>
+      <span>Project: lab_leaks</span>
+    </div>
+  </div>
+
+  <div class="sort-bar">
+    <span>Sort by</span>
+    <button class="sort-btn active" data-sort="quality" onclick="sortBy('quality')">Quality Score</button>
+    <button class="sort-btn" data-sort="status" onclick="sortBy('status')">Status (selected first)</button>
+  </div>
+
+  <div class="question-list" id="question-list">
+    <details class="q-item" id="q-0" data-quality="95.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">95</span><span class="q-summary-text">Will the US government&#x27;s OSTP or Commerce Department finalize mandatory nucleic acid synthesis screening regulations for non-federally funded orders by December 31, 2026?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">95</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The May 2025 Executive Order on biological research safety directed actions to achieve comprehensive nucleic acid synthesis screening, but extension to non-federally funded orders remains incomplete. This is a critical chokepoint for preventing covert pathogen synthesis.</p>
+        <p><strong>Paper reference:</strong> The paper describes a scenario where State A synthesises &#x27;virus-X&#x27; into a potent, low-attribution WMD (page 12). DNA synthesis screening is a key bottleneck that could prevent this pathway.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question. It addresses a significant policy shift (Executive Order 14292, May 2025) with high uncertainty regarding the transition from voluntary frameworks to mandatory requirements for the private sector. The resolution is dependent on bureaucratic speed and political will, making it a non-trivial event with high entropy and clear room for disagreement among experts. It has a reliable resolution source (Federal Register/official government announcements).</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-1" data-quality="92.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will the US Senate pass the Biosecurity Modernization and Innovation Act of 2026 (S.3741) before December 31, 2026?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> This bipartisan bill, introduced by Senators Cotton and Klobuchar on January 29, 2026, would mandate the Secretary of Commerce to promulgate regulations for nucleic acid synthesis screening. Its passage would be a landmark regulatory milestone directly addressing the &#x27;Evasion of Attribution&#x27; and synthetic design pathways identified in the paper.</p>
+        <p><strong>Paper reference:</strong> The paper identifies DNA synthesis screening as a key chokepoint for preventing covert pathogen design (Scenario 2A, Threat Enhancement) and notes that states could use AI to design synthetic pathogens that bypass traditional detection.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Legislative forecasting is a staple of high-quality prediction markets. The bill is bipartisan (Cotton/Klobuchar), which makes the outcome non-trivial (it&#x27;s not a &#x27;dead on arrival&#x27; partisan bill, nor is it a guaranteed ceremonial one). The outcome is genuinely uncertain and would be influenced by the broader political calendar, committee priorities, and biosecurity industry lobbying.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-2" data-quality="92.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will OpenAI officially classify a deployed model (not just a pre-deployment assessment) as &#x27;Bio High&#x27; under its Preparedness Framework before December 31, 2026?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> OpenAI warned in June 2025 that upcoming models will reach &#x27;High&#x27; bio capability levels. Whether this threshold is actually crossed for a deployed model is a key signal for the biological capability uplift the paper theorizes.</p>
+        <p><strong>Paper reference:</strong> Table 9 lists &#x27;LLMs provide substantial high-risk virology uplift (e.g. &gt;80% accuracy on VCT)&#x27; as a red line scenario that would affect P(BW) and P(PPP) in the risk model.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting concept. It relies on a concrete, public framework from a leading AI lab, making it researchable and non-trivial. The binary outcome (whether the threshold is crossed) is genuinely uncertain as it depends on the rapid but unpredictable advancement of biological reasoning in frontier models. It captures a key &#x27;red line&#x27; signal for AI safety.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-3" data-quality="92.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will a peer-reviewed study be published before December 31, 2026 demonstrating that a generative AI model can design a novel functional viral genome that is viable in cell culture?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> This would represent a concrete demonstration of the biological capability uplift the paper identifies as a key risk multiplier, moving beyond in silico predictions to actual functional validation.</p>
+        <p><strong>Paper reference:</strong> Page 17 cites King et al. 2025 showing &#x27;generative AI tools have been shown to generate novel, functional viral genomes.&#x27; The paper&#x27;s scenario involves engineering a novel capsid variant.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent, timely question. The King et al. 2025 paper &#x27;Generative design of novel bacteriophages with genome language models&#x27; was posted to bioRxiv in September 2025 and demonstrated exactly this capability for bacteriophages. The uncertainty lies in whether such a study (either King et al. or a subsequent one) will pass peer review and be published by the 2026 deadline, and whether the &#x27;novelty&#x27; and &#x27;viability&#x27; will be accepted by the scientific community. It maps directly to high-impact risks identified in AI safety and biosecurity literature. Research into the peer-review timeline and the technical rigorousness of recent preprints would inform the forecast.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-4" data-quality="92.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will a frontier AI model achieve a score of 80% or higher on the Virology Capabilities Test (VCT) before December 31, 2026?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The VCT is a benchmark measuring AI&#x27;s ability to troubleshoot complex virology laboratory protocols. High performance on such benchmarks is a direct indicator of the &#x27;biological capability uplift&#x27; that could affect multiple parameters in the paper&#x27;s risk model.</p>
+        <p><strong>Paper reference:</strong> Table 9 explicitly flags &#x27;&gt;80% accuracy on VCT&#x27; as a red line scenario that would lower expertise requirements for state actors to initiate virology programmes, affecting P(BW) and P(PPP).</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>High-quality concept because it tracks a &#x27;red line&#x27; capability threshold identified in recent biorisk research. Current top models (like OpenAI&#x27;s o3) are reaching expert levels (roughly 80% baseline), making the outcome genuinely uncertain for the 2026 deadline. Research into model scaling and specific virology troubleshooting capability would significantly shift a forecaster&#x27;s probability.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-5" data-quality="92.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will a peer-reviewed study be published before December 31, 2026, demonstrating that an AI-designed viral sequence can evade detection by at least two different commercial DNA synthesis screening tools?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> This directly tests the &#x27;Evasion of Attribution&#x27; scenarios where AI helps design pathogens that bypass existing safeguards, a key concern in the paper&#x27;s analysis.</p>
+        <p><strong>Paper reference:</strong> Page 17 cites Wittmann et al. 2025 showing &#x27;generative AI tools have been shown to generate novel, functional viral genomes and design sequences capable of evading commercial DNA synthesis screening.&#x27;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question. It addresses a specific, technically measurable frontier of AI-biological risk (evasion of safeguards). A landmark study (Wittmann et al., 2025) has already demonstrated this for proteins/toxins; extending this to full viral sequences by 2026 is a logical and uncertain next step. Research into the &#x27;cat-and-mouse&#x27; game between AI design and screening updates would significantly shift forecasts. High entropy exists because screening providers are actively patching vulnerabilities discovered in 2025.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-6" data-quality="92.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will a major cybersecurity firm publish a report documenting a confirmed attempt by a state-affiliated threat actor to steal AI model weights from a frontier AI lab before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper&#x27;s central scenario involves a state cyber-warfare unit obtaining and finetuning a stolen model. Evidence of actual state-sponsored attempts to steal model weights would validate this threat pathway.</p>
+        <p><strong>Paper reference:</strong> Page 11: &#x27;State A&#x27;s cyber-warfare unit finetunes a best-in-class foundation model to disable its safeguards.&#x27; Figure 1 shows the pathway for state actors to acquire AI capabilities.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting concept. The theft of AI model weights by state actors is a critical uncertainty in AI safety and geopolitics. It is a &#x27;hard&#x27; question because it requires monitoring sophisticated cyber-adversary tactics and lab security postures. There is significant room for disagreement among experts on whether such an attempt will be publicly documented vs. kept classified. The event is non-trivial and has high impact.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-7" data-quality="92.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will NIST or any US government body publish a formal standard or guidance document defining security levels (including SL4) specifically for protecting AI model weights before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper references RAND&#x27;s SL4 security levels as necessary for preventing state-level model weight theft. Formalizing these into government standards would be a critical regulatory milestone.</p>
+        <p><strong>Paper reference:</strong> Page 4, footnote 8 references &#x27;securing model weights as per SL 4 standards (RAND, 2024)&#x27; and notes experts suggested companies &#x27;might need to pause deployment for over one year to implement SL 4 controls.&#x27;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question. It addresses a critical regulatory and security milestone that is currently a subject of intense debate and development. The probability is neither 0% nor 100%, as the US government has shown interest in weight security but formalizing specific &#x27;SL4&#x27; style standards is a high bar. A forecaster would need to track NIST workshops, US AI Safety Institute (AISI) publications, and executive order implementations to provide a nuanced forecast.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-8" data-quality="90.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">90</span><span class="q-summary-text">Will any major frontier AI lab announce or implement a formal agreement providing pre-deployment model access to a government biosecurity agency for evaluations before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">90</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Pre-deployment access for biosecurity evaluations would be a key institutional safeguard against releasing models with high bioweapon uplift potential.</p>
+        <p><strong>Paper reference:</strong> The paper&#x27;s scenario describes a state finetuning a stolen model (page 11), suggesting the need for strong pre-deployment controls and evaluations.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting concept. It addresses a significant policy shift in AI governance and biosecurity. Agreements between labs (OpenAI, Anthropic) and safety institutes already exist for pre-deployment testing (e.g., NIST/AISI agreements in 2024/2025), but the specific focus on &#x27;biosecurity agencies&#x27; adds a layer of difficulty and entropy. Research into current MOU trends and legislative mandates (like the US AI Executive Order) would significantly inform a forecast.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-9" data-quality="90.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">90</span><span class="q-summary-text">Will the International AI Safety Report publish a 2027 edition (or a major interim update to the 2026 edition) that includes a dedicated section or chapter on AI-biology risks before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">90</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The International AI Safety Report 2026 already discusses biological risks. Whether this continues to receive dedicated attention in updates would signal sustained institutional focus.</p>
+        <p><strong>Paper reference:</strong> The paper&#x27;s analysis framework aligns with the kind of risk assessment the International AI Safety Report covers, including AI capabilities that could enhance biological threats.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question. It tracks institutionalization of a specific risk frontier (AI-Bio) within a primary global governance mechanism. With the 2026 report already published (Feb 3, 2026) and containing a bio section, the 2027 update is a genuine point of uncertainty regarding sustained focus. It has high entropy and clear resolution sources (the report website).</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-10" data-quality="90.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">90</span><span class="q-summary-text">Will the US Department of State&#x27;s next &#x27;Adherence to and Compliance with Arms Control&#x27; report identify any additional state beyond Russia, North Korea, China, and Iran as raising concerns regarding offensive biological weapons activities?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">90</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper&#x27;s model depends on the number of states pursuing bioweapons. A new addition to the list would significantly affect P(BW) estimates across the model.</p>
+        <p><strong>Paper reference:</strong> Page 2 states &#x27;two states are assessed by the United States to maintain active offensive bioweapons programmes and two others are assessed to conduct activities that raise concerns&#x27; (US Department of State, 2025).</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question. It focuses on a geopolitically significant and uncertain event. The State Department&#x27;s list of countries with bioweapons concerns has been relatively stable, but shifts (e.g., adding a new country like Syria, which has been mentioned in past years but is not in the &#x27;core&#x27; list of the prompt) would be a major intelligence and policy update. Researching global biosecurity trends, state-level biological research, and US diplomatic rhetoric would significantly improve a forecast. The outcome is binary and has a reliable, recurring resolution source.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-11" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will a peer-reviewed paper be published before December 31, 2026 demonstrating that a Protein Language Model can predict the transmissibility (R₀) of viral variants with accuracy significantly exceeding existing methods?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> This tracks the &#x27;biological capability&#x27; uplift that would affect the P(pandemic|leak) parameter in the paper&#x27;s model by enabling more reliable engineering of transmissible pathogens.</p>
+        <p><strong>Paper reference:</strong> Page 17 cites Ito et al. 2025 showing PLMs can predict the transmissibility (R₀) of SARS-CoV-2 variants. The paper&#x27;s scenario involves engineering a variant with R₀ &gt; 5.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent proxy for &#x27;biological capability&#x27; uplift. It targets a specific scientific bottleneck. The inclusion of &#x27;significantly exceeding&#x27; ensures the question isn&#x27;t immediately resolved by current work like Ito et al. (2025) or CoVFit, which already predict fitness but may not yet meet a &#x27;significantly exceeding&#x27; standard for R0 specifically. Research into the current SOTA for viral fitness prediction would definitely improve a forecaster&#x27;s estimate.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-12" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the BWC Working Group formally recommend the establishment of a dedicated permanent organization or secretariat with verification powers by December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The BWC currently lacks enforcement infrastructure comparable to the OPCW or IAEA. Creating such an organization would fundamentally change the governance landscape for biological weapons.</p>
+        <p><strong>Paper reference:</strong> Page 2 notes the BWC has no formal verification process. Page 15 discusses how &#x27;effective attribution is a major deterrent for the pursuit of bioweapons.&#x27;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting concept. It addresses a significant gap in global biological security governance that is currently the subject of active, high-stakes international negotiations [048aec]. The outcome is genuinely uncertain due to long-standing geopolitical disagreements over BWC verification protocols. The question is &#x27;high entropy&#x27; as there is a plausible path to both &#x27;Yes&#x27; (growing momentum for institutional strengthening) and &#x27;No&#x27; (continued diplomatic deadlock). Research into the positions of key states (e.g., the US, Russia, China) and the progress of the Working Group&#x27;s sessions in 2025-2026 would significantly improve a forecast.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-13" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will a peer-reviewed RCT (randomized controlled trial) be published before December 31, 2026 demonstrating statistically significant AI uplift for novices on wet-lab biological tasks involving dangerous pathogens or their surrogates?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Two RCTs published in February 2026 represent rigorous attempts to measure AI biosecurity risk. Whether follow-up studies demonstrate uplift on more dangerous tasks would be a critical signal.</p>
+        <p><strong>Paper reference:</strong> The paper discusses AI-enabled uplift for non-expert states, particularly in Scenario 2C (Lab Coach) and notes the importance of &#x27;tacit troubleshooting&#x27; capabilities.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question. It addresses a critical technical bottleneck in AI biosecurity (uplift for novices) and uses a rigorous scientific standard for resolution. The existence of pilot RCTs in February 2026 (e.g., by METR and Stephen Turner) indicates that this is an active area of research with a &#x27;high-entropy&#x27; future—it is uncertain whether these results will extend to wet-lab tasks involving more dangerous agents.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-14" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will any country&#x27;s national security strategy or equivalent high-level document published in 2026 explicitly name &#x27;AI-enabled biological threats&#x27; as a priority risk area?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Inclusion in a national security strategy would signal that AI-bio risks are being treated with the same seriousness as other WMD threats at the highest policy levels.</p>
+        <p><strong>Paper reference:</strong> The paper discusses how AI might shift the strategic calculus of bioweapons relative to other WMDs (Scenario 1Bii) and the implications for national security.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question concept. It focuses on a high-stakes policy shift that is currently being debated (e.g., by the CSIS and NTI). It meets the high entropy criterion because while the term is gaining traction in 2024-2025, its formal adoption as a &#x27;priority&#x27; in 2026 strategies is not guaranteed. It is researchable, as forecasters can track current policy trends and the publication schedules of major powers (US, UK, EU, China). Existing 2025 snippets show the term is being socialized but not yet universally enshrined in NSS-level documents.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-15" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will a leading AI company (OpenAI, Anthropic, or Google DeepMind) publicly announce that they have restricted, delayed, or withdrawn a model or specific capability due to biosecurity red-teaming results before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> This demonstrates a tangible industry response to the biological risk scenarios outlined in the paper and would validate the effectiveness of safety evaluation frameworks.</p>
+        <p><strong>Paper reference:</strong> The paper notes that &#x27;mitigating state-level misuse of frontier models could require restricting capability improvements&#x27; (page 4, footnote 8) and identifies model safeguards as a key defense.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This question captures a high-impact &#x27;red line&#x27; scenario described in frontier safety frameworks (e.g., OpenAI&#x27;s Preparedness Framework). It is a good forecasting concept because it involves predicting both a technical outcome (failing a safety eval) and a corporate communication decision (making it public). It is genuinely uncertain and has high stakes.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-16" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the Australia Group formally add any AI-related items (such as software for pathogenic protein design or biological design tools) to its export control lists at its 2026 Plenary?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The Australia Group harmonizes export controls to prevent the proliferation of chemical and biological weapons. Adding AI-enabled biological design tools would represent a concrete policy response to the emerging dual-use risk.</p>
+        <p><strong>Paper reference:</strong> Table 1 references the Australia Group membership of multiple historic bioweapon programmes. The paper discusses how AI-enabled biological design tools could enhance state capabilities to develop bioweapons.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question. It addresses a high-stakes, uncertain policy shift at the intersection of AI and biosecurity. Recent actions by the US BIS to control &#x27;biological design tools&#x27; suggest this is a live issue for international harmonization, yet achieving consensus in the AG is non-trivial. Researching member states&#x27; positions and past additions to the list would significantly inform a forecast.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-17" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the BWC Working Group on the Strengthening of the Convention formally recommend a legally binding verification mechanism in its final report to the Tenth Review Conference?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The BWC Working Group is actively developing a &#x27;rolling text&#x27; with proposals for compliance and verification. Whether it achieves consensus on a legally binding mechanism by its final sessions in 2026 is a key indicator of the international governance gap the paper identifies.</p>
+        <p><strong>Paper reference:</strong> The paper notes that the BWC &#x27;does not have a formal verification process&#x27; (page 2), making this a critical governance gap that AI could either complicate or help resolve.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting topic. Verification has been the central, unresolved challenge of the BWC for decades. The question requires forecasters to track the &#x27;rolling text&#x27; and diplomatic signals from key players (US, Russia, China, NAM). It has high entropy as consensus is notoriously difficult to reach in this forum. Research into the specific proposals in the current sessions would significantly improve a forecast.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-18" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the Frontier Model Forum or a similar multi-company AI safety body release a standardized &#x27;Bio-Red-Teaming&#x27; evaluation protocol specifically for frontier models before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Establishing standardized biosecurity evaluations is a prerequisite for measuring the &#x27;uplift&#x27; the paper theorizes and for coordinating industry responses.</p>
+        <p><strong>Paper reference:</strong> The paper&#x27;s Table 9 lists multiple red-line scenarios that would need standardized evaluation to detect, including LLMs being jailbroken to respond to high-risk queries.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a very good question with clear real-world impact. The Frontier Model Forum (FMF) has already released a &#x27;Preliminary Taxonomy&#x27; of AI-Bio evaluations in late 2024, making the transition to a &#x27;standardized protocol&#x27; by 2026 a plausible and non-trivial milestone. It is difficult because it requires tracking technical workstreams across multiple companies. There is significant room for disagreement on whether industry coordination will move fast enough to produce a &#x27;standardized&#x27; version versus fragmented company-specific ones.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-19" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the RAND Corporation or CLTR (Centre for Long-Term Resilience) publish an updated Global Risk Index for AI-enabled Biological Tools with revised risk scores before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> A structured risk index provides a quantitative framework to track the evolving threat from AI-enabled biological tools at the state level.</p>
+        <p><strong>Paper reference:</strong> The paper proposes its own quantitative risk framework and emphasizes the need for structured expert elicitation to refine risk estimates.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a strong forecasting concept. The &#x27;Global Risk Index for AI-enabled Biological Tools&#x27; was recently released (c. 2025), making a 2026 update with revised scores a non-trivial event that reflects the rapid pace of AI development. It involves significant research into the publication cycles of RAND/CLTR and the evolving risk landscape. There is high entropy as it is uncertain if a second edition would be produced within such a short window.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-20" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the US AI Action Plan (released July 2025) result in CAISI conducting and publishing results of biosecurity evaluations of frontier AI models before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The Center for AI Safety and Innovation (CAISI, successor to AISI) has been designated to evaluate frontier AI models. Whether it publishes specific biosecurity evaluations would be a major institutional milestone.</p>
+        <p><strong>Paper reference:</strong> The paper discusses the need for evaluating AI models&#x27; capabilities for biological misuse and references structured evaluation frameworks.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a strong institutional forecasting question. It tracks the operationalization of a major government policy. The outcome is uncertain due to potential bureaucratic delays, classification of sensitive biosecurity data, or shifts in agency priorities. It provides a clear &#x27;milestone&#x27; for measuring the effectiveness of the US AI safety infrastructure.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-21" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the UN Security Council hold a formal session or adopt a resolution specifically mentioning AI risks in the context of biological weapons before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> UNSC attention to AI-biological risks would reflect the international political weight given to the synergy between AI and biological weapons identified in the paper.</p>
+        <p><strong>Paper reference:</strong> The paper discusses how AI could shift the strategic calculus for states pursuing bioweapons, potentially affecting international security dynamics.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Strong concept that captures the political response to emerging technological risks. The UNSC held its first AI briefing in 2023, but a formal session or resolution dedicated to the specific intersection of AI and bioweapons would be a major escalation. It is a high-entropy event as it depends on geopolitical cooperation and the visibility of AI-enabled threats.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-22" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will SecureBio publish results from a new evaluation (beyond the existing VCT) that specifically measures LLM capability to provide tacit knowledge for pathogen culturing or handling before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Testing whether LLMs can provide the &#x27;tacit knowledge&#x27; that traditionally required years of lab experience is a key indicator for the &#x27;Lab Coach&#x27; scenario in the paper.</p>
+        <p><strong>Paper reference:</strong> Table 4, Scenario 2C: &#x27;Multimodal AI systems provide cross-domain assistance with wet lab protocols (e.g. scaling up, tacit troubleshooting, experimental automation).&#x27;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a strong forecasting concept because it tracks a specific, high-stakes capability milestone (the &#x27;Lab Coach&#x27; scenario) identified by safety experts. It is genuinely uncertain as SecureBio&#x27;s research roadmap is not public in full detail. Researching their previous output (VCT) and their stated goals would significantly improve a forecast. It avoids the &#x27;base rate only&#x27; trap because it depends on specific organizational success and scientific breakthroughs in evaluation methodology.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-23" data-quality="84.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">84</span><span class="q-summary-text">Will any G7 nation enact legislation mandating &#x27;Know Your Customer&#x27; (KYC) requirements for cloud compute providers specifically for high-risk AI or biological design workloads by December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">84</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> KYC for cloud compute is an upstream control that could prevent the covert R&amp;D activities described in the paper&#x27;s scenario where State A&#x27;s cyber-warfare unit finetunes a stolen model.</p>
+        <p><strong>Paper reference:</strong> The paper&#x27;s scenario describes State A using a finetuned foundation model to interact with biological design tools (page 11). Controlling access to compute is a key intervention point.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This question has very high entropy and difficulty. The recent rescission of US Executive Order 14110 (which included KYC provisions) by the Trump administration in early 2025 creates a significant &#x27;update&#x27; and divergence in the forecasting landscape. Comparing the EU AI Act&#x27;s requirements with shifting US and other G7 (e.g., Japan, UK) policies provides ample room for expert disagreement and deep research.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-24" data-quality="82.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">82</span><span class="q-summary-text">Will the Global Biolabs database or Muluneh et al. report an increase of more than 5% in the total number of known BSL-4 laboratories worldwide in a 2026 update?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">82</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> An increase in BSL-4 labs expands the global footprint of potential leak sources, directly affecting the N_units parameter in the paper&#x27;s risk model.</p>
+        <p><strong>Paper reference:</strong> The paper uses N_units (facility-equivalents) as a linear driver of risk and references Global Biolabs 2023 and Muluneh et al. 2025 for counting high-containment facilities (pages 6-7, 14).</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question addresses a critical parameter in biosafety risk modeling (N_units). The 5% threshold is specific and non-trivial. Global Biolabs is a reliable, established source (King&#x27;s College London). The uncertainty is high because laboratory construction is public but often delayed, and international reporting varies. Research into known BSL-4 projects currently under construction would allow for a sophisticated forecast.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-25" data-quality="82.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">82</span><span class="q-summary-text">Will the National Academies of Sciences, Engineering, and Medicine (NASEM) publish its final consensus report on &#x27;Assessing and Navigating Biosecurity Concerns&#x27; related to AI-enabled biological design tools before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">82</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The NASEM study is a high-profile scientific consensus effort that would provide authoritative guidance on the dual-use risks of AI in biology.</p>
+        <p><strong>Paper reference:</strong> The paper&#x27;s analysis draws on similar expert assessments and emphasizes the need for structured expert elicitation to refine risk estimates.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a strong &#x27;event-based&#x27; forecasting question. NASEM studies often face delays, making the 2026 deadline non-trivial. The study &#x27;Assessing and Navigating Biosecurity Concerns...&#x27; is high-profile and its release will be a major update for the field. While it is less &#x27;continuous&#x27; than a price forecast, the uncertainty of committee consensus and administrative timelines provides enough entropy for a good forecast. quality is slightly lower than the first because it&#x27;s a &#x27;bureaucratic&#x27; milestone rather than a technical/scientific breakthrough.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-26" data-quality="82.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">82</span><span class="q-summary-text">Will any country announce a formal moratorium, ban, or significant new restrictions on gain-of-function research involving AI-guided pathogen design before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">82</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> A moratorium on AI-guided gain-of-function research would be a high-impact policy signal that could significantly constrain the pathways described in the paper.</p>
+        <p><strong>Paper reference:</strong> The paper describes AI-enabled pathogen design as a key risk multiplier and notes that Trump&#x27;s May 2025 EO already restricted some gain-of-function research funding.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality concept because it tracks a real-world policy shift initiated by the May 2025 US Executive Order on biological research safety. It is a &#x27;good&#x27; forecasting question because the outcome is genuinely uncertain—while some countries may follow the US lead, others may prioritize innovation. Researching international diplomatic trends and the implementation of the US order would significantly improve a forecast.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-27" data-quality="82.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">82</span><span class="q-summary-text">Will a major AI lab (OpenAI, Anthropic, Google DeepMind, or Meta) publish a transparency or system card that includes specific quantitative refusal rates for biological weapons-related queries before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">82</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper identifies jailbreak vulnerability as a red-line scenario. Published refusal rates would provide concrete data on the robustness of safeguards.</p>
+        <p><strong>Paper reference:</strong> Table 9 lists &#x27;LLMs can be jail-broken to respond to high-risk queries (e.g. &lt;5% refusal rate, hours-days)&#x27; as a red line scenario affecting P(BW) and P(pandemic|leak).</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a strong forecasting question because it tracks the evolving tension between AI safety transparency and &#x27;security through obscurity.&#x27; Current system cards often provide aggregate safety data but omit specific rates for high-consequence domains like bioweapons to avoid revealing vulnerabilities [4eed96]. The emergence of reporting standards like STREAM (ChemBio) suggests this is a live, uncertain issue.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-28" data-quality="82.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">82</span><span class="q-summary-text">Will the WHO establish or announce a new Technical Advisory Group specifically focused on AI risks in the life sciences or biosafety before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">82</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The WHO establishing a dedicated group on AI-biosafety would mark an institutional milestone in global health governance to address the intersection of AI and biological risks.</p>
+        <p><strong>Paper reference:</strong> The paper discusses how AI could affect biosafety practices and lab leak risks, impacting multiple parameters in the risk model including P(leak) and P(pandemic|leak).</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a solid institutional milestone question. While the WHO already has a Technical Advisory Group on the Responsible Use of the Life Sciences and Dual-Use Research (TAG-RULS DUR) which has begun discussing AI (e.g., February 2025 meeting report), the creation of a <em>dedicated</em> AI-biosafety group would be a distinct, non-trivial event. It avoids &#x27;nothing happened&#x27; updates by monitoring specific organizational changes. Probability is moderate as they might prefer to keep AI within the existing TAG&#x27;s mandate.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-29" data-quality="60.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#ef6c00;background:#fff3e0" data-tooltip="Quality score (0-100)">60</span><span class="q-summary-text">Will the US Congress pass the BIOSECURE Act as part of the FY2027 NDAA or as standalone legislation before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#ef6c00">60</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The BIOSECURE Act restricts federal agencies from contracting with certain foreign biotech companies, directly affecting the supply chain dynamics relevant to state bioweapon programs.</p>
+        <p><strong>Paper reference:</strong> The paper discusses how states could exploit existing supply chains and biotechnology infrastructure (Scenario 1C, Evasion of Attribution).</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question concept is strong because it targets a specific legislative outcome with significant geopolitical and supply chain implications. However, search results indicate the BIOSECURE Act was already enacted in December 2025 as part of the FY2026 NDAA. The question would be high quality if updated to reflect an expansion or specific implementation milestones (like the OMB list due Dec 2026), but as written, it risks resolving to &#x27;already happened&#x27; or being moot.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-30" data-quality="45.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#c62828;background:#ffebee" data-tooltip="Quality score (0-100)">45</span><span class="q-summary-text">Will OpenAI and Ginkgo Bioworks (or a similar AI lab/biotech partnership) publish a peer-reviewed paper demonstrating an AI agent autonomously completing a multi-step biological experiment before December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#c62828">45</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> AI agents operating autonomous labs could increase throughput (N_units) of biological research or reduce human error (P(leak)), addressing two parameters in the paper&#x27;s risk model.</p>
+        <p><strong>Paper reference:</strong> Table 4 describes &#x27;Experimental Automation&#x27; under Scenario 2C (Lab Coach) as a high-likelihood pathway, and the paper discusses how AI could reduce reliance on physical experimentation.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>While the concept of AI-driven autonomous labs is a high-quality topic for biosecurity and productivity forecasting, this specific question is likely &#x27;stale&#x27; or already resolved. Search results indicate that OpenAI and Ginkgo Bioworks released a paper in early 2026 (e.g., bioRxiv Feb 2026) demonstrating a GPT-5-driven autonomous lab performing 36,000 experiments. For a forecasting tournament, a question that has already resolved or is public knowledge at the time of the tournament start has low quality due to zero entropy. If the intent was for a <em>future</em> milestone beyond this one, it needs refocusing.</p></details>
+      </div>
+    </details>
+  </div>
+
+<script>
+function sortBy(mode) {
+  var list = document.getElementById('question-list');
+  var items = Array.from(list.querySelectorAll('.q-item'));
+  items.sort(function(a, b) {
+    if (mode === 'quality') {
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    if (mode === 'status') {
+      var s = parseInt(a.dataset.status) - parseInt(b.dataset.status);
+      if (s !== 0) return s;
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    return 0;
+  });
+  items.forEach(function(el) { list.appendChild(el); });
+  var btns = document.querySelectorAll('.sort-btn');
+  btns.forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.sort === mode);
+  });
+}
+</script>
+</div></body></html>

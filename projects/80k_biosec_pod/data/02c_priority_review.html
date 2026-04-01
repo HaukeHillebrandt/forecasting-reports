@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Priority Scoring &mdash; AI &amp; Biosecurity Risks — 80,000 Hours Podcast with Dr Richard Moulange</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f5f5f5; color: #222; line-height: 1.6; padding: 2rem 1rem; }
+  .container { max-width: 56rem; margin: 0 auto; }
+  .page-header { background: #1a1a2e; color: #eee; border-radius: 10px; padding: 1.5rem 2rem; margin-bottom: 1.5rem; }
+  .page-header h1 { font-size: 1.4rem; margin-bottom: .5rem; }
+  .page-header .subtitle { font-size: .9rem; color: #aaa; margin-bottom: .5rem; }
+  .page-header .page-stats { display: flex; flex-wrap: wrap; gap: .75rem; font-size: .85rem; color: #999; }
+  .page-header .page-stats span { background: rgba(255,255,255,.1); padding: .2rem .6rem; border-radius: 4px; }
+  .toc { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .toc h2 { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: .75rem; }
+  .toc-item { display: flex; align-items: baseline; gap: .6rem; padding: .35rem 0; text-decoration: none; color: #222; border-bottom: 1px solid #f0f0f0; }
+  .toc-item:last-child { border-bottom: none; }
+  .toc-item:hover { color: #1a1a2e; }
+  .toc-score { font-size: .85rem; font-weight: 700; min-width: 2.8rem; text-align: center; padding: .15rem .35rem; border-radius: 4px; }
+  .toc-title { font-size: .9rem; font-weight: 500; flex: 1; }
+  .toc-cluster { font-size: .72rem; color: #666; background: #f0f0f0; padding: .1rem .45rem; border-radius: 10px; white-space: nowrap; }
+  .toc-status { font-size: .75rem; min-width: 7rem; text-align: right; }
+  .card { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 1.25rem; }
+  .card-header { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .75rem; }
+  .card h2 { font-size: 1.05rem; line-height: 1.4; }
+  .badge { font-size: .7rem; color: #666; background: #f0f0f0; padding: .1rem .45rem; border-radius: 10px; }
+  .badge-advanced { background: #e8f5e9; color: #2e7d32; font-weight: 600; }
+  .badge-demoted { background: #fff3e0; color: #ef6c00; font-weight: 600; }
+  .badge-low { background: #ffebee; color: #c62828; font-weight: 600; }
+  .score-row { display: flex; flex-wrap: wrap; gap: .75rem; margin: .5rem 0; padding: .6rem 1rem; background: #f8f9fc; border-radius: 6px; font-size: .84rem; }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 5.5rem; }
+  .score-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .03em; color: #888; }
+  .score-value { font-weight: 700; font-size: .95rem; }
+  .composite { font-size: 1.1rem; }
+  .section { margin-top: .5rem; }
+  .section summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: .4rem; padding: .3rem 0; }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before { content: "\25B6"; font-size: .5rem; color: #aaa; transition: transform .15s; }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section > p, .section > .content { margin-top: .3rem; padding-left: .9rem; }
+  .card p { font-size: .9rem; white-space: pre-wrap; word-wrap: break-word; }
+  .card h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin: 0; }
+  a { color: #1565c0; }
+  .cluster-summary { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .cluster-summary h2 { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: .75rem; }
+  .cluster-row { display: flex; align-items: center; gap: .6rem; padding: .3rem 0; border-bottom: 1px solid #f0f0f0; font-size: .85rem; }
+  .cluster-row:last-child { border-bottom: none; }
+  .cluster-name { min-width: 12rem; font-weight: 600; }
+  .cluster-bar { height: .5rem; border-radius: 3px; background: #1565c0; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02c: Priority Scoring (ITN + Soon/Sudden/Sharp)</h1>
+    <div class="subtitle">AI &amp; Biosecurity Risks — 80,000 Hours Podcast with Dr Richard Moulange</div>
+    <div class="page-stats">
+      <span>2 scored</span>
+      <span>2 advanced</span>
+      <span>0 diversity-demoted</span>
+      <span>0 low priority</span>
+      <span>Threshold: 60</span>
+      <span>Max/cluster: 3</span>
+      <span>Project: 80k_biosec_pod</span>
+    </div>
+  </div>
+  <div class="cluster-summary"><h2>Topic Clusters</h2>
+    <div class="cluster-row"><span class="cluster-name">biosecurity legislation</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+    <div class="cluster-row"><span class="cluster-name">capability benchmarks</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+  </div>
+  <nav class="toc"><h2>All Questions (by priority score)</h2>
+    <a class="toc-item" href="#q-0"><span class="toc-score" style="color:#2e7d32;background:#e8f5e9">83</span><span class="toc-title">Will the &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741) or a successor bill containing a mandate for DN</span><span class="toc-cluster">biosecurity legislation</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+    <a class="toc-item" href="#q-1"><span class="toc-score" style="color:#ef6c00;background:#fff3e0">78</span><span class="toc-title">Will a publicly available AI model achieve a score of 60% or higher on the Virology Capabilities Test (VCT) (or a succes</span><span class="toc-cluster">capability benchmarks</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+  </nav>
+  <div class="card" id="q-0">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#2e7d32;background:#e8f5e9">83</span>
+    <div><h2>Will the &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741) or a successor bill containing a mandate for DNA synthesis screening be signed into US law by 31st December 2027?</h2>
+      <span class="toc-cluster">biosecurity legislation</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#2e7d32">90</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#2e7d32">80</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#ef6c00">75</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#ef6c00">70</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 92</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>The podcast discusses the need for &quot;damage control&quot; and &quot;defusing the bomb&quot; of biological risk [Page 67]. Research reveals that bipartisan legislation (S.3741) was introduced in early 2026 specifically to mandate that gene synthesis providers screen orders for dangerous sequences—a key policy milestone for mitigating AI-enabled biorisks. Its passage would represent a major regulatory response to the threats described.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Biosecurity Modernization and Innovation Act of 2026 (S.3741) provisions regarding DNA synthesis screening.</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>The Biosecurity Modernization and Innovation Act of 2026 (S.3741) represents a critical regulatory milestone by attempting to mandate DNA synthesis screening, transitioning it from a voluntary to a federally enforceable requirement <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. This is a leading indicator for the US government&#x27;s ability to mitigate AI-enabled biorisks, a key concern identified in the source material <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. Resolution would significantly update beliefs about the trajectory of biosecurity governance and the practical constraints on malicious actors&#x27; access to dangerous genetic material <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>A comprehensive search of Metaculus, Polymarket, INFER, and Manifold as of April 2026 confirmed that there are no active forecasting questions or markets specifically tracking S.3741 or the passage of mandatory DNA synthesis screening legislation <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. While broader biosecurity topics are occasionally discussed, this specific legislative outcome is not being systematically monitored by the forecasting community <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. None of the major prediction platforms or specialized policy trackers have operationalized this bill&#x27;s passage as a discrete forecasting target <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Forecasting the passage of this bill requires synthesizing political signals (bipartisan sponsorship by Sens. Cotton and Klobuchar), technical critiques of its provisions (e.g., homology-based vs. functional screening), and legislative hurdles <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. There is a rich information environment of congressional records and expert policy analysis that a skilled forecaster can exploit to move beyond a simple base rate of bill passage <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>S.3741 was introduced in early 2026 and is currently active in the 119th Congress <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. The window for legislative action and the time-sensitive nature of the biosecurity gaps it addresses make this a high-priority &quot;soon&quot; risk; the outcome is likely to be determined within the 2027 resolution window <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>The passage of a bill into law is a discrete state change. While the legislative process is public and visible, the final steps (committee discharge, floor votes, or inclusion in larger packages) can occur rapidly and with limited advance warning to the general public <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a> <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>The indicator sits in a domain where biosecurity risks can compound silently (e.g., through AI-enabled design) without obvious &quot;warning shots&quot; before a major incident <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. While voluntary frameworks exist, this bill addresses a &quot;sharp&quot; risk where the first observable failure of the current screening regime could be catastrophic <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p></details>
+  </div>
+  <div class="card" id="q-1">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#ef6c00;background:#fff3e0">78</span>
+    <div><h2>Will a publicly available AI model achieve a score of 60% or higher on the Virology Capabilities Test (VCT) (or a successor version using the same methodology) by December 31, 2027?</h2>
+      <span class="toc-cluster">capability benchmarks</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#ef6c00">70</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#ef6c00">75</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#ef6c00">65</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#2e7d32">80</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 92</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>Current state-of-the-art models like OpenAI&#x27;s o3 have achieved 43.8% on the VCT, which already outperforms 94% of expert virologists [cfc167]. Reaching 60% would represent a significant leap in the model&#x27;s ability to provide &#x27;tacit&#x27; laboratory knowledge that was previously thought to be a human-only barrier. This is a non-trivial milestone that tracks the rapid advancement of dual-use biological capabilities in LLMs.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Virology Capabilities Test (VCT) and Frontier AI model performance [cfc167]</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>The question tracks a significant capability jump (from 43.8% to 60%) in a domain (virology) identified as a major biorisk pathway <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>. However, the 60% threshold itself is not explicitly defined as a critical &#x27;point of no return&#x27; in the source paper, making it a high-quality but secondary indicator of risk progression <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>Web searches across Metaculus, Polymarket, Manifold, and INFER (as of April 2026) confirm that while the Virology Capabilities Test (VCT) is cited in academic and safety reports (e.g., International AI Safety Report 2026, OECD), no active forecasting markets or systematic policy trackers currently monitor this specific 60% threshold <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>. Most existing biorisk tracking focuses on broader indicators rather than this specific multimodal benchmark.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Skilled forecasters can improve on a naive prior by analyzing historical scaling laws for LLM performance on expert benchmarks (like GPQA or MMLU), tracking compute trends, and monitoring developer-specific safety disclosures. The rich information environment of AI progress makes this highly tractable for research-heavy forecasting <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>With current state-of-the-art models already at 43.8% (outperforming most human experts) as of early 2025, the 60% milestone is a highly relevant near-term target likely to be tested by next-generation frontier models before the 2027 deadline <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>While model training is a gradual process, the release of a new frontier model (e.g., a successor to o3) often results in a discrete, &#x27;sudden&#x27; jump in benchmark performance that can surprise the policy community.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>Capability benchmarks in biology are &#x27;sharp&#x27; because improvements often happen in private lab settings or via internal model updates before public release. A model crossing a expertise threshold like 60% could occur without a public &#x27;warning shot&#x27; or smaller-scale failure that triggers policy intervention <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>.</p></details>
+  </div>
+</div></body></html>

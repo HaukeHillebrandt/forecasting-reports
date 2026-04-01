@@ -1,0 +1,3 @@
+# Block all search engine crawlers — HTML reports are public but not intended for indexing
+User-agent: *
+Disallow: /

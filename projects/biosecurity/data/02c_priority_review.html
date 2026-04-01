@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Priority Scoring &mdash; Reasons to be pessimistic (and optimistic) on the future of biosecurity</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f5f5f5; color: #222; line-height: 1.6; padding: 2rem 1rem; }
+  .container { max-width: 56rem; margin: 0 auto; }
+  .page-header { background: #1a1a2e; color: #eee; border-radius: 10px; padding: 1.5rem 2rem; margin-bottom: 1.5rem; }
+  .page-header h1 { font-size: 1.4rem; margin-bottom: .5rem; }
+  .page-header .subtitle { font-size: .9rem; color: #aaa; margin-bottom: .5rem; }
+  .page-header .page-stats { display: flex; flex-wrap: wrap; gap: .75rem; font-size: .85rem; color: #999; }
+  .page-header .page-stats span { background: rgba(255,255,255,.1); padding: .2rem .6rem; border-radius: 4px; }
+  .toc { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .toc h2 { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: .75rem; }
+  .toc-item { display: flex; align-items: baseline; gap: .6rem; padding: .35rem 0; text-decoration: none; color: #222; border-bottom: 1px solid #f0f0f0; }
+  .toc-item:last-child { border-bottom: none; }
+  .toc-item:hover { color: #1a1a2e; }
+  .toc-score { font-size: .85rem; font-weight: 700; min-width: 2.8rem; text-align: center; padding: .15rem .35rem; border-radius: 4px; }
+  .toc-title { font-size: .9rem; font-weight: 500; flex: 1; }
+  .toc-cluster { font-size: .72rem; color: #666; background: #f0f0f0; padding: .1rem .45rem; border-radius: 10px; white-space: nowrap; }
+  .toc-status { font-size: .75rem; min-width: 7rem; text-align: right; }
+  .card { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 1.25rem; }
+  .card-header { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .75rem; }
+  .card h2 { font-size: 1.05rem; line-height: 1.4; }
+  .badge { font-size: .7rem; color: #666; background: #f0f0f0; padding: .1rem .45rem; border-radius: 10px; }
+  .badge-advanced { background: #e8f5e9; color: #2e7d32; font-weight: 600; }
+  .badge-demoted { background: #fff3e0; color: #ef6c00; font-weight: 600; }
+  .badge-low { background: #ffebee; color: #c62828; font-weight: 600; }
+  .score-row { display: flex; flex-wrap: wrap; gap: .75rem; margin: .5rem 0; padding: .6rem 1rem; background: #f8f9fc; border-radius: 6px; font-size: .84rem; }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 5.5rem; }
+  .score-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .03em; color: #888; }
+  .score-value { font-weight: 700; font-size: .95rem; }
+  .composite { font-size: 1.1rem; }
+  .section { margin-top: .5rem; }
+  .section summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: .4rem; padding: .3rem 0; }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before { content: "\25B6"; font-size: .5rem; color: #aaa; transition: transform .15s; }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section > p, .section > .content { margin-top: .3rem; padding-left: .9rem; }
+  .card p { font-size: .9rem; white-space: pre-wrap; word-wrap: break-word; }
+  .card h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin: 0; }
+  a { color: #1565c0; }
+  .cluster-summary { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .cluster-summary h2 { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: .75rem; }
+  .cluster-row { display: flex; align-items: center; gap: .6rem; padding: .3rem 0; border-bottom: 1px solid #f0f0f0; font-size: .85rem; }
+  .cluster-row:last-child { border-bottom: none; }
+  .cluster-name { min-width: 12rem; font-weight: 600; }
+  .cluster-bar { height: .5rem; border-radius: 3px; background: #1565c0; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02c: Priority Scoring (ITN + Soon/Sudden/Sharp)</h1>
+    <div class="subtitle">Reasons to be pessimistic (and optimistic) on the future of biosecurity</div>
+    <div class="page-stats">
+      <span>2 scored</span>
+      <span>2 advanced</span>
+      <span>0 diversity-demoted</span>
+      <span>0 low priority</span>
+      <span>Threshold: 60</span>
+      <span>Max/cluster: 3</span>
+      <span>Project: biosecurity</span>
+    </div>
+  </div>
+  <div class="cluster-summary"><h2>Topic Clusters</h2>
+    <div class="cluster-row"><span class="cluster-name">biosecurity legislation</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+    <div class="cluster-row"><span class="cluster-name">biosecurity regulation</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+  </div>
+  <nav class="toc"><h2>All Questions (by priority score)</h2>
+    <a class="toc-item" href="#q-0"><span class="toc-score" style="color:#ef6c00;background:#fff3e0">78</span><span class="toc-title">By December 31, 2026, will the U.S. Department of Health and Human Services (HHS) or the Office of Science and Technolog</span><span class="toc-cluster">biosecurity regulation</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+    <a class="toc-item" href="#q-1"><span class="toc-score" style="color:#ef6c00;background:#fff3e0">77</span><span class="toc-title">Will the &#x27;Biosecurity Modernization and Innovation Act of 2026&#x27; (S. 3741), or a successor bill containing its core gene </span><span class="toc-cluster">biosecurity legislation</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+  </nav>
+  <div class="card" id="q-0">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#ef6c00;background:#fff3e0">78</span>
+    <div><h2>By December 31, 2026, will the U.S. Department of Health and Human Services (HHS) or the Office of Science and Technology Policy (OSTP) publish a final, updated &quot;Framework for Nucleic Acid Synthesis Screening&quot; that requires federally funded institutions to only purchase from providers that screen all orders?</h2>
+      <span class="toc-cluster">biosecurity regulation</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#2e7d32">88</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#ef6c00">78</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#2e7d32">92</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#c62828">55</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#c62828">45</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 90</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>The paper identifies &quot;ordering from DNA synthesis companies who don&#x27;t screen&quot; as a primary fear. A updated framework is currently being revised following a May 2025 Executive Order [9b9597]. This question tracks a critical regulatory milestone that would address the &quot;institutional and coordinative&quot; bottlenecks mentioned in the paper.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Conclusion, Page 66-67: &quot;ordering from DNA synthesis companies who don&#x27;t screen&quot; and the need for &quot;comprehensive coverage.&quot;</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>The question tracks a critical regulatory milestone for biosecurity identified as a &#x27;primary fear&#x27; in the source paper <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. An updated framework requiring screened orders for federally funded research would represent a major shift in the &#x27;institutional and coordinative&#x27; bottlenecks of DNA synthesis governance <a href="https://genesynthesisscreening.centerforhealthsecurity.org/faqs-1" target="_blank" rel="noopener">FAQs | Gene Synthesis Screening Information Hub</a> <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS &amp; OSTP Screening | Synthetic Nucleic Acid Security &amp; Biorisk ...</a>. Resolution would significantly update beliefs about the effectiveness of US biosecurity oversight <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a> <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a>.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>A search of Metaculus, Polymarket, Manifold, INFER, and Good Judgment Open confirms no active forecasting questions or markets specifically track the finalization of the &#x27;Framework for Nucleic Acid Synthesis Screening&#x27; or its specific screening mandates. While the general topic of DNA synthesis is discussed in policy circles <a href="https://genesynthesisscreening.centerforhealthsecurity.org/faqs-1" target="_blank" rel="noopener">FAQs | Gene Synthesis Screening Information Hub</a> <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS &amp; OSTP Screening | Synthetic Nucleic Acid Security &amp; Biorisk ...</a>, this specific regulatory milestone is not being systematically monitored by the forecasting community. Some think tanks like the Center for Health Security and SPAR track related policy, but do not provide formal probabilistic forecasts on this outcome <a href="https://genesynthesisscreening.centerforhealthsecurity.org/faqs-1" target="_blank" rel="noopener">FAQs | Gene Synthesis Screening Information Hub</a> <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS &amp; OSTP Screening | Synthetic Nucleic Acid Security &amp; Biorisk ...</a> <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a>.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>This is a highly tractable forecasting task. It requires synthesizing evidence from executive orders, legislative status (e.g., H.R. 3029), and official agency announcements from HHS and OSTP <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a> <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a> <a href="https://genesynthesisscreening.centerforhealthsecurity.org/faqs-1" target="_blank" rel="noopener">FAQs | Gene Synthesis Screening Information Hub</a>. Skilled forecasters can improve on a naive prior by analyzing the tension between the 2025 EO&#x27;s mandates and the administrative delays observed in late 2025 and early 2026 <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS &amp; OSTP Screening | Synthetic Nucleic Acid Security &amp; Biorisk ...</a> <a href="https://genesynthesisscreening.centerforhealthsecurity.org/faqs-1" target="_blank" rel="noopener">FAQs | Gene Synthesis Screening Information Hub</a>.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>The outcome will be locked in within the window (ending Dec 31, 2026), as the May 2025 Executive Order (EO 14292) set a 90-day deadline for revision <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a> <a href="https://genesynthesisscreening.centerforhealthsecurity.org/faqs-1" target="_blank" rel="noopener">FAQs | Gene Synthesis Screening Information Hub</a>. Current status reports from March 2026 indicate the framework is still in the &#x27;revision/replacement&#x27; phase, making the 2026 deadline a critical juncture for confirming implementation <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS &amp; OSTP Screening | Synthetic Nucleic Acid Security &amp; Biorisk ...</a> <a href="https://genesynthesisscreening.centerforhealthsecurity.org/faqs-1" target="_blank" rel="noopener">FAQs | Gene Synthesis Screening Information Hub</a>.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>While the policy process is visible, the final publication and the specific stringency of the mandate (e.g., &#x27;screen all orders&#x27;) could be announced suddenly <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS &amp; OSTP Screening | Synthetic Nucleic Acid Security &amp; Biorisk ...</a>. However, the overall direction of travel is broadly visible due to the 2025 Executive Order <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a> <a href="https://genesynthesisscreening.centerforhealthsecurity.org/faqs-1" target="_blank" rel="noopener">FAQs | Gene Synthesis Screening Information Hub</a>.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>The question tracks a regulatory process, which typically involves &#x27;warning shots&#x27; like draft frameworks or public comment periods <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS &amp; OSTP Screening | Synthetic Nucleic Acid Security &amp; Biorisk ...</a> <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a>. However, the &#x27;sharp&#x27; aspect lies in the biosecurity risk it mitigates: the first observable failure (a synthesized pathogen) could be the consequential incident itself, and this policy seeks to prevent that silent compounding of risk <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a> <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS &amp; OSTP Screening | Synthetic Nucleic Acid Security &amp; Biorisk ...</a>.</p></details>
+  </div>
+  <div class="card" id="q-1">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#ef6c00;background:#fff3e0">77</span>
+    <div><h2>Will the &#x27;Biosecurity Modernization and Innovation Act of 2026&#x27; (S. 3741), or a successor bill containing its core gene synthesis screening mandates, be signed into law by the President of the United States on or before December 31, 2026?</h2>
+      <span class="toc-cluster">biosecurity legislation</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#2e7d32">80</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#ef6c00">75</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#ef6c00">65</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#c62828">55</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 88</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>The paper identifies a critical regulatory gap where current U.S. DNA synthesis screening is largely voluntary [ad2493]. The Biosecurity Modernization and Innovation Act, introduced in February 2026 by Senators Cotton and Klobuchar, represents the primary legislative attempt to close this gap by mandating screening for all synthetic DNA orders [d55ce2]. This question tracks the transition from a voluntary to a mandatory &#x27;Swiss-cheese&#x27; layer of defense.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Section 3: Conclusion (part 19-21), Biosecurity Modernization and Innovation Act of 2026 (S. 3741)</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>The &#x27;Biosecurity Modernization and Innovation Act of 2026&#x27; (S. 3741) is a critical legislative vehicle addressing a major regulatory gap identified in biosecurity research: the transition from voluntary to mandatory DNA synthesis screening <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. As the primary bipartisan effort to federalize these standards, its passage would be a leading indicator of U.S. biosecurity trajectory and would significantly shift resource allocation for synthesis providers <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>A comprehensive search across Metaculus, Polymarket, INFER, Good Judgment Open, and Manifold on March 31, 2026, revealed no active forecasting markets or questions specifically tracking S. 3741 or its core mandates. While the general topic of biosecurity is covered, this specific legislative indicator is currently a gap in systematic monitoring. Monitoring is currently limited to legislative trackers and think-tank policy alerts (e.g., NTI, AIP, and Center for Health Security).</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Forecasting this question requires synthesizing political dynamics, committee leadership incentives (Cotton/Klobuchar), and industry lobbying <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. While there is a rich information environment of legislative history and expert analysis, the synthesis of these signals to predict a binary outcome (signed vs. not) is non-trivial for a researcher.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>The bill was introduced in January 2026 and is currently active in the 119th Congress <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. Given the resolution deadline of December 31, 2026, the question tracks a development at a critical juncture where the legislative window is open and the outcome will be determined within the required timeframe.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>Legislative passage is a discrete state change (signed into law). While the committee process (Commerce, Science, and Transportation) is visible <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>, the final passage often involves sudden movements, such as attachment to larger &#x27;must-pass&#x27; spending packages, which can happen with limited advance public warning.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>The risk of misused synthetic DNA follows a pattern where a single consequential incident could occur without smaller &#x27;warning shots&#x27; that trigger policy change, making proactive regulation like S. 3741 particularly important <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. However, the bill itself is a response to the known potential for such incidents rather than a direct response to a specific &#x27;warning shot&#x27; event.</p></details>
+  </div>
+</div></body></html>

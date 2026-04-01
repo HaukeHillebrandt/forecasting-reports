@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Priority Scoring &mdash; Lab Leaks</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f5f5f5; color: #222; line-height: 1.6; padding: 2rem 1rem; }
+  .container { max-width: 56rem; margin: 0 auto; }
+  .page-header { background: #1a1a2e; color: #eee; border-radius: 10px; padding: 1.5rem 2rem; margin-bottom: 1.5rem; }
+  .page-header h1 { font-size: 1.4rem; margin-bottom: .5rem; }
+  .page-header .subtitle { font-size: .9rem; color: #aaa; margin-bottom: .5rem; }
+  .page-header .page-stats { display: flex; flex-wrap: wrap; gap: .75rem; font-size: .85rem; color: #999; }
+  .page-header .page-stats span { background: rgba(255,255,255,.1); padding: .2rem .6rem; border-radius: 4px; }
+  .toc { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .toc h2 { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: .75rem; }
+  .toc-item { display: flex; align-items: baseline; gap: .6rem; padding: .35rem 0; text-decoration: none; color: #222; border-bottom: 1px solid #f0f0f0; }
+  .toc-item:last-child { border-bottom: none; }
+  .toc-item:hover { color: #1a1a2e; }
+  .toc-score { font-size: .85rem; font-weight: 700; min-width: 2.8rem; text-align: center; padding: .15rem .35rem; border-radius: 4px; }
+  .toc-title { font-size: .9rem; font-weight: 500; flex: 1; }
+  .toc-cluster { font-size: .72rem; color: #666; background: #f0f0f0; padding: .1rem .45rem; border-radius: 10px; white-space: nowrap; }
+  .toc-status { font-size: .75rem; min-width: 7rem; text-align: right; }
+  .card { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 1.25rem; }
+  .card-header { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .75rem; }
+  .card h2 { font-size: 1.05rem; line-height: 1.4; }
+  .badge { font-size: .7rem; color: #666; background: #f0f0f0; padding: .1rem .45rem; border-radius: 10px; }
+  .badge-advanced { background: #e8f5e9; color: #2e7d32; font-weight: 600; }
+  .badge-demoted { background: #fff3e0; color: #ef6c00; font-weight: 600; }
+  .badge-low { background: #ffebee; color: #c62828; font-weight: 600; }
+  .score-row { display: flex; flex-wrap: wrap; gap: .75rem; margin: .5rem 0; padding: .6rem 1rem; background: #f8f9fc; border-radius: 6px; font-size: .84rem; }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 5.5rem; }
+  .score-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .03em; color: #888; }
+  .score-value { font-weight: 700; font-size: .95rem; }
+  .composite { font-size: 1.1rem; }
+  .section { margin-top: .5rem; }
+  .section summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: .4rem; padding: .3rem 0; }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before { content: "\25B6"; font-size: .5rem; color: #aaa; transition: transform .15s; }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section > p, .section > .content { margin-top: .3rem; padding-left: .9rem; }
+  .card p { font-size: .9rem; white-space: pre-wrap; word-wrap: break-word; }
+  .card h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin: 0; }
+  a { color: #1565c0; }
+  .cluster-summary { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .cluster-summary h2 { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: .75rem; }
+  .cluster-row { display: flex; align-items: center; gap: .6rem; padding: .3rem 0; border-bottom: 1px solid #f0f0f0; font-size: .85rem; }
+  .cluster-row:last-child { border-bottom: none; }
+  .cluster-name { min-width: 12rem; font-weight: 600; }
+  .cluster-bar { height: .5rem; border-radius: 3px; background: #1565c0; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02c: Priority Scoring (ITN + Soon/Sudden/Sharp)</h1>
+    <div class="subtitle">Lab Leaks</div>
+    <div class="page-stats">
+      <span>5 scored</span>
+      <span>3 advanced</span>
+      <span>0 diversity-demoted</span>
+      <span>2 low priority</span>
+      <span>Threshold: 60</span>
+      <span>Max/cluster: 3</span>
+      <span>Project: lab_leaks</span>
+    </div>
+  </div>
+  <div class="cluster-summary"><h2>Topic Clusters</h2>
+    <div class="cluster-row"><span class="cluster-name">AI biological capability thresholds</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+    <div class="cluster-row"><span class="cluster-name">AI biosecurity capability benchmarks</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+    <div class="cluster-row"><span class="cluster-name">biosecurity legislation</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+    <div class="cluster-row"><span class="cluster-name">biosecurity regulation</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+    <div class="cluster-row"><span class="cluster-name">unknown</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+  </div>
+  <nav class="toc"><h2>All Questions (by priority score)</h2>
+    <a class="toc-item" href="#q-0"><span class="toc-score" style="color:#ef6c00;background:#fff3e0">71</span><span class="toc-title">Will the US government&#x27;s OSTP or Commerce Department finalize mandatory nucleic acid synthesis screening regulations for</span><span class="toc-cluster">biosecurity regulation</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+    <a class="toc-item" href="#q-1"><span class="toc-score" style="color:#ef6c00;background:#fff3e0">68</span><span class="toc-title">Will a frontier AI model achieve a score of 80% or higher on the Virology Capabilities Test (VCT) before December 31, 20</span><span class="toc-cluster">AI biosecurity capability benchmarks</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+    <a class="toc-item" href="#q-2"><span class="toc-score" style="color:#ef6c00;background:#fff3e0">61</span><span class="toc-title">Will the US Senate pass the Biosecurity Modernization and Innovation Act of 2026 (S.3741) before December 31, 2026?</span><span class="toc-cluster">biosecurity legislation</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+    <a class="toc-item" href="#q-3"><span class="toc-score" style="color:#c62828;background:#ffebee">31</span><span class="toc-title">Will OpenAI officially classify a deployed model (not just a pre-deployment assessment) as &#x27;Bio High&#x27; under its Prepared</span><span class="toc-cluster">AI biological capability thresholds</span><span class="toc-status"><span class="badge badge-low">LOW PRIORITY</span></span></a>
+    <a class="toc-item" href="#q-4"><span class="toc-score" style="color:#c62828;background:#ffebee">0</span><span class="toc-title">Will a peer-reviewed study be published before December 31, 2026 demonstrating that a generative AI model can design a n</span><span class="toc-cluster">unknown</span><span class="toc-status"><span class="badge badge-low">LOW PRIORITY</span></span></a>
+  </nav>
+  <div class="card" id="q-0">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#ef6c00;background:#fff3e0">71</span>
+    <div><h2>Will the US government&#x27;s OSTP or Commerce Department finalize mandatory nucleic acid synthesis screening regulations for non-federally funded orders by December 31, 2026?</h2>
+      <span class="toc-cluster">biosecurity regulation</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#2e7d32">80</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#ef6c00">70</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#ef6c00">70</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#ef6c00">70</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#c62828">55</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#ef6c00">70</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 95</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>The May 2025 Executive Order on biological research safety directed actions to achieve comprehensive nucleic acid synthesis screening, but extension to non-federally funded orders remains incomplete. This is a critical chokepoint for preventing covert pathogen synthesis.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>The paper describes a scenario where State A synthesises &#x27;virus-X&#x27; into a potent, low-attribution WMD (page 12). DNA synthesis screening is a key bottleneck that could prevent this pathway.</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>DNA synthesis screening for non-federally funded orders is widely recognized as a critical biosecurity chokepoint. The source paper identifies synthesis of dangerous pathogens as a key WMD pathway. Extension of mandatory screening beyond federally funded research addresses a major gap — currently, non-federal entities can order synthetic nucleic acids without screening. A confident answer would meaningfully update resource allocation for biosecurity advocacy and preparedness. Multiple organizations (NTI, FAS, ARI, IBBIS, Johns Hopkins CHS) have flagged this specific gap as high-priority.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>No existing forecasting questions found on Metaculus, Polymarket, Manifold, INFER, or Good Judgment Open for this specific regulatory milestone. Metaculus has questions about DNA synthesizer capabilities and benchtop synthesizer sales, but nothing on mandatory screening regulations for non-federally funded orders. The general TOPIC is well-monitored by policy organizations: Johns Hopkins Center for Health Security maintains a gene synthesis screening information hub; NTI, FAS, ARI, IBBIS, and EBRC all actively track and advocate on this issue. However, the specific INDICATOR — whether mandatory regulations will be finalized by a particular date — is not systematically forecast anywhere. This gives it moderate-to-high neglectedness: the topic is covered but not in probabilistic forecasting form.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Forecasting this well requires synthesizing multiple independent lines of evidence: (1) Executive branch action — the May 2025 EO directed OSTP to revise the framework within 90 days, but as of late 2025 the revised framework had not been publicly released; (2) Legislative pathway — the Biosecurity Modernization and Innovation Act (S. 3741) was introduced Jan 29, 2026, directing Commerce to promulgate regulations, but it is in early legislative stages; (3) Historical base rates for regulatory rulemaking timelines; (4) Political dynamics around biosecurity in the current administration. The distinction between a revised framework (guidance) and mandatory regulations (legally binding rules) adds analytical complexity. Reasonable forecasters could arrive at meaningfully different probabilities depending on how they weight executive vs. legislative pathways.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>The policy window is actively open: EO 14292 was signed May 2025 with a 90-day OSTP revision deadline that appears to have lapsed without public output. The Biosecurity Modernization and Innovation Act was introduced in January 2026. The question asks about finalization by Dec 31, 2026 (resolution deadline is Dec 31, 2027). The biosecurity community is actively pushing for action now, and there is genuine urgency given advancing benchtop DNA synthesis capabilities. However, the regulatory process is inherently slow, meaning the window extends beyond 2026.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>Regulatory finalization is a discrete event (rules are either finalized or not), but the process leading up to it is typically visible — notice-and-comment periods, committee hearings, executive guidance documents. The direction of travel is broadly visible (both legislative and executive branches are pursuing screening), but exact timing is uncertain. An executive order pathway could produce faster, less-anticipated action than the legislative route.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>The underlying biosecurity risk (covert pathogen synthesis through unscreened channels) is a sharp risk — the first observable failure could be catastrophic without prior warning shots. Screening gaps compound silently; there is no power-law distribution of smaller incidents that would trigger corrective action before a serious biosecurity event. However, the question itself tracks regulatory action, not the underlying risk event, so the sharpness is somewhat attenuated. The regulatory response could be prompted by AI-biosecurity concerns (which are escalating) rather than an actual bioweapon incident.</p></details>
+  </div>
+  <div class="card" id="q-1">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#ef6c00;background:#fff3e0">68</span>
+    <div><h2>Will a frontier AI model achieve a score of 80% or higher on the Virology Capabilities Test (VCT) before December 31, 2026?</h2>
+      <span class="toc-cluster">AI biosecurity capability benchmarks</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#2e7d32">82</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#ef6c00">70</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#ef6c00">70</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#ef6c00">65</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#c62828">52</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#c62828">42</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 92</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>The VCT is a benchmark measuring AI&#x27;s ability to troubleshoot complex virology laboratory protocols. High performance on such benchmarks is a direct indicator of the &#x27;biological capability uplift&#x27; that could affect multiple parameters in the paper&#x27;s risk model.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Table 9 explicitly flags &#x27;&gt;80% accuracy on VCT&#x27; as a red line scenario that would lower expertise requirements for state actors to initiate virology programmes, affecting P(BW) and P(PPP).</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>The VCT &gt;80% threshold is explicitly flagged as a &quot;red line&quot; scenario in the source paper (Table 9), directly linked to lowering expertise requirements for state actors to initiate virology programmes, affecting P(BW) and P(PPP). The International AI Safety Report 2026 also references VCT as a key biosecurity indicator [69b076]. This is a genuine leading indicator for biological capability uplift — a major risk pathway. Resolution would cause meaningful updating on AI biosecurity risk trajectory and could shift resource allocation toward AI biosafety measures.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>Web searches conducted across all major forecasting platforms found NO dedicated VCT forecast questions: site:metaculus.com yielded only a tangential mention in a general AI competence question (Q5276), not a specific VCT threshold question. Polymarket returned no results for VCT or virology AI benchmarks. Manifold Markets returned no results for &quot;virology capabilities test.&quot; INFER returned no relevant results. However, the GENERAL topic of AI biosecurity is moderately well-covered: Metaculus has a Biosecurity Tournament (Long-Term), and the forecastingaifutures substack has published forecasts about AI biological capability timelines. The International AI Safety Report 2026 discusses VCT prominently [69b076]. Benchmark leaderboards (llm-stats.com) track VCT scores. The specific 80% threshold operationalisation is not being forecast anywhere, but indirect monitoring of the general area exists.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Forecasting this question well requires synthesising multiple lines of evidence: current benchmark progression trajectory (43.8% in April 2025 → 61% by November 2025 per llm-stats.com/Grok 4.1 model card), AI scaling trends, upcoming model release cadences, multimodal reasoning improvements, and the specific difficulty distribution of VCT questions. The ~17pp improvement over ~7 months provides a useful trend to extrapolate, but the rate of improvement may be non-linear, and benchmark-specific factors (e.g., question difficulty distribution, saturation effects) require inside-view analysis. Not a simple base-rate lookup, but there&#x27;s a dominant signal (extrapolating the improvement trend) that limits the range of reasonable forecaster disagreement.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>The resolution window closes December 31, 2026 — approximately 9 months from now. AI capabilities in scientific reasoning are advancing rapidly, and the current best VCT score (61%) needs a ~19pp improvement to reach 80%. The rate of improvement (~17pp in 7 months from April-November 2025) suggests this is plausible within the window but not certain. This is a relevant juncture given the pace of frontier model releases, but the same question could be re-asked with a later deadline if it doesn&#x27;t resolve, making the temporal urgency moderate rather than extreme.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>New frontier model releases cause discrete jumps in benchmark scores — the leap from 43.8% (o3) to 61% (Grok 4.1 Thinking) occurred over about 7 months. However, the general trajectory of AI improvement on biology benchmarks is a visible, gradual trend that is widely tracked. The direction of travel toward higher VCT scores is clear; only the exact timing of crossing 80% is uncertain. Informed observers of AI capabilities would find a score exceeding 80% unsurprising in direction, though the specific timing might be somewhat surprising. This is a moderately predictable endpoint of a well-documented trajectory.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>There are clear &quot;warning shots&quot; in the VCT trajectory: the progression from initial low scores to 43.8% to 61% is publicly visible on benchmark leaderboards and in published research. Each major model release provides updated VCT scores. The approach toward 80% would be observable as models score in the 60s and 70s first. However, the real-world biosecurity implications of reaching 80% may not have intermediate warning shots — the benchmark score is itself the warning shot for policy action. In the broader biosecurity domain, AI-enabled biological risk follows a gradual escalation pattern with multiple observable precursors, not an all-or-nothing dynamic.</p></details>
+  </div>
+  <div class="card" id="q-2">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#ef6c00;background:#fff3e0">61</span>
+    <div><h2>Will the US Senate pass the Biosecurity Modernization and Innovation Act of 2026 (S.3741) before December 31, 2026?</h2>
+      <span class="toc-cluster">biosecurity legislation</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#ef6c00">75</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#ef6c00">62</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#c62828">58</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#ef6c00">72</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#c62828">48</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#c62828">30</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 92</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>This bipartisan bill, introduced by Senators Cotton and Klobuchar on January 29, 2026, would mandate the Secretary of Commerce to promulgate regulations for nucleic acid synthesis screening. Its passage would be a landmark regulatory milestone directly addressing the &#x27;Evasion of Attribution&#x27; and synthetic design pathways identified in the paper.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>The paper identifies DNA synthesis screening as a key chokepoint for preventing covert pathogen design (Scenario 2A, Threat Enhancement) and notes that states could use AI to design synthetic pathogens that bypass traditional detection.</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>DNA synthesis screening is widely identified by biosecurity experts as a critical chokepoint for preventing covert pathogen design. S.3741 would be the first standalone federal legislation mandating nucleic acid synthesis screening, representing a major shift from voluntary/executive frameworks to statutory requirements. Its passage would meaningfully update decision-makers about the trajectory of US biosecurity governance. However, even if the bill fails, the policy direction may continue through executive orders or other legislative vehicles, somewhat reducing the unique decision-relevance of this specific bill&#x27;s passage.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>Searched Metaculus (site:metaculus.com biosecurity legislation, nucleic acid synthesis screening), Polymarket (site:polymarket.com biosecurity legislation), Manifold Markets, and INFER/Good Judgment Open — no existing forecasting questions found on this specific bill or its close variants. However, the bill IS tracked by standard legislative trackers (Congress.gov, LegiScan, TrackBill, BillTrack50). Multiple high-profile organizations are actively monitoring it: FAS published analysis calling it a &#x27;major step&#x27; [3c4020], Johns Hopkins Center for Health Security commended it, NTI endorsed it, and AEI&#x27;s CTSE commented on it. Reuters covered the bill&#x27;s introduction. So while no formal probabilistic forecast exists, the broader policy space is well-monitored by think tanks and media, reducing the marginal information value somewhat.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Forecasting this question requires synthesizing multiple lines of evidence: bipartisan dynamics (Cotton-Klobuchar sponsorship), committee composition and priorities, legislative calendar constraints, executive branch posture (noting the May 2025 EO pausing the existing synthesis screening framework), industry lobbying positions, and competing legislative priorities. Historical base rates for Senate bills provide a starting point (most introduced bills never pass), and inside-view analysis of political dynamics can meaningfully adjust from that prior. However, the question ultimately reduces to tracking a relatively standard legislative process, and a lawbc.com forecast document suggested &#x27;little if any legislation will be considered or passed in 2026&#x27; in the Senate, which provides a fairly strong anchor.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>The bill was introduced on January 29, 2026, and the question asks about Senate passage before December 31, 2026 — well before the overall resolution deadline of December 31, 2027. The 119th Congress (2025-2026) session creates a natural legislative window that is closing. The outcome will be substantially determined within 2026, making the information time-sensitive. However, biosecurity legislation is likely to remain a policy priority beyond this specific session, so similar questions could recur.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>Legislative passage is a discrete event (the bill either passes or doesn&#x27;t), but the process leading to it is generally visible through committee referrals, hearings, markups, and floor scheduling. The direction of travel becomes increasingly apparent as the legislative session progresses. Informed observers tracking committee activity would have advance notice of likely passage or failure. The bill could potentially be folded into a larger package (e.g., NDAA) somewhat suddenly, which adds a degree of unpredictability to the exact mechanism of passage.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>Legislative processes provide many &#x27;warning shots&#x27; — committee hearings, markups, floor debates, and procedural votes all precede final passage. The broader biosecurity policy space has seen a gradual buildup of action: the 2023 HHS Guidance, the 2024 OSTP Framework, the May 2025 Executive Order, California&#x27;s AB1864, and prior congressional discussions (National Security Commission on Emerging Biotechnology recommendations). These precursors mean this specific legislative outcome is not &#x27;sharp&#x27; — the policy trajectory is visible and escalating gradually.</p></details>
+  </div>
+  <div class="card" id="q-3">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#c62828;background:#ffebee">31</span>
+    <div><h2>Will OpenAI officially classify a deployed model (not just a pre-deployment assessment) as &#x27;Bio High&#x27; under its Preparedness Framework before December 31, 2026?</h2>
+      <span class="toc-cluster">AI biological capability thresholds</span> <span class="badge badge-low">LOW PRIORITY</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#c62828">48</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#c62828">28</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#c62828">18</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#c62828">15</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#c62828">30</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#c62828">40</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 92</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>OpenAI warned in June 2025 that upcoming models will reach &#x27;High&#x27; bio capability levels. Whether this threshold is actually crossed for a deployed model is a key signal for the biological capability uplift the paper theorizes.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Table 9 lists &#x27;LLMs provide substantial high-risk virology uplift (e.g. &gt;80% accuracy on VCT)&#x27; as a red line scenario that would affect P(BW) and P(PPP) in the risk model.</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>The underlying topic — AI models crossing biological capability thresholds — is critically important and directly relevant to biosecurity policy and AI governance decisions. The paper&#x27;s Table 9 identifies this as a red line scenario affecting biological weapons risk. However, the specific question appears to have ALREADY RESOLVED YES: ChatGPT Agent was deployed and classified as &quot;High capability in the Biological and Chemical domain&quot; under OpenAI&#x27;s Preparedness Framework in mid-2025, making this a lagging rather than leading indicator. While it was once a valuable tracking question, its marginal decision-relevance is now low since the outcome is already known.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>Platforms searched: (1) Metaculus — has a directly related question at metaculus.com/c/risk/38786/ titled &quot;Dates that OpenAI reports an AI reached these Biological &amp; Chemical risk levels&quot; which tracks this exact indicator. (2) Polymarket — no specific market found on this topic. (3) Manifold Markets — no specific question found matching &quot;OpenAI Bio High.&quot; (4) INFER/Good Judgment Open — no matching question found. However, extensive indirect monitoring exists: multiple media outlets (Fortune, The Hill, VentureBeat, Axios) and policy organizations (NTI) covered ChatGPT Agent&#x27;s Bio High classification. LessWrong and the Forecasting Research Institute have also published analysis of AI biological risk thresholds. The event has already occurred and been widely documented, meaning the information is readily available to decision-makers through existing channels.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>The question appears already resolved: ChatGPT Agent was classified as Bio High at deployment in mid-2025 per OpenAI&#x27;s own system card and multiple credible news sources. A forecaster would discover this with minimal research — essentially a single lookup. Even before resolution, the question primarily required monitoring OpenAI&#x27;s announcements rather than synthesizing multiple independent evidence streams. OpenAI explicitly warned in June 2025 that upcoming models would reach Bio High, making the eventual classification highly predictable. The forecast would have been near-certain (&gt;90%) shortly after that warning, offering minimal room for skill differentiation among forecasters.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>The event has already occurred. ChatGPT Agent was deployed and classified as Bio High in mid-2025, approximately 9 months before the current date (March 2026) and well within the resolution deadline of December 31, 2026. There is no remaining temporal urgency — the window for influence or learning from this specific question has closed. The question could have been valuable in early-to-mid 2025 when the outcome was still uncertain, but that window has passed.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>The classification of ChatGPT Agent as Bio High was not sudden or surprising. OpenAI published a blog post in June 2025 explicitly warning that &quot;upcoming AI models will reach &#x27;High&#x27; levels of capability in biology, as measured by our Preparedness Framework.&quot; The classification followed within weeks. The direction of travel was clearly visible through OpenAI&#x27;s own public communications, making this a telegraphed rather than surprising development. The general trajectory of increasing AI bio capabilities was well-documented.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>There were meaningful &quot;warning shots&quot; before this classification. OpenAI&#x27;s earlier models showed incremental increases in bio-relevant capabilities (documented in prior system cards). The June 2025 preparedness blog post served as an explicit warning shot. The broader AI safety community had been tracking biological capability uplift for years through evaluations like the VCT (Virology Capability Test). However, the general domain of AI-enabled biological risk does have some sharp characteristics — the transition from &quot;models can&#x27;t meaningfully help&quot; to &quot;models provide substantial uplift&quot; could happen quickly, and the consequences of crossing that threshold are severe.</p></details>
+  </div>
+  <div class="card" id="q-4">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#c62828;background:#ffebee">0</span>
+    <div><h2>Will a peer-reviewed study be published before December 31, 2026 demonstrating that a generative AI model can design a novel functional viral genome that is viable in cell culture?</h2>
+      <span class="toc-cluster">unknown</span> <span class="badge badge-low">LOW PRIORITY</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#c62828">0</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#c62828">0</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#c62828">0</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#c62828">0</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#c62828">0</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#c62828">0</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 92</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>This would represent a concrete demonstration of the biological capability uplift the paper identifies as a key risk multiplier, moving beyond in silico predictions to actual functional validation.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Page 17 cites King et al. 2025 showing &#x27;generative AI tools have been shown to generate novel, functional viral genomes.&#x27; The paper&#x27;s scenario involves engineering a novel capsid variant.</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>Agent failed</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>Agent failed</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Agent failed</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>Agent failed</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>Agent failed</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>Agent failed</p></details>
+  </div>
+</div></body></html>

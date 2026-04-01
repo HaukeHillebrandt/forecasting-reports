@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proto-Question Quality Filter &mdash; Reasons to be pessimistic (and optimistic) on the future of biosecurity</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f7f8fa; color: #2c2c2c; line-height: 1.65; padding: 2.5rem 1.5rem;
+  }
+  .container { max-width: 54rem; margin: 0 auto; }
+
+  /* --- Header --- */
+  .page-header {
+    background: #1a1a2e; color: #eee; border-radius: 12px;
+    padding: 2rem 2.5rem; margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(26,26,46,.18);
+  }
+  .page-header h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: .4rem; letter-spacing: -.01em; }
+  .page-header .subtitle { font-size: .88rem; color: #a0a0b8; margin-bottom: .75rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #8888a0;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .25rem .7rem; border-radius: 6px;
+  }
+
+  /* --- Sort controls --- */
+  .sort-bar {
+    display: flex; align-items: center; gap: .75rem;
+    margin-bottom: 1.5rem; font-size: .82rem; color: #888;
+  }
+  .sort-bar span { font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+  .sort-btn {
+    appearance: none; border: none; cursor: pointer;
+    background: #fff; color: #555; font-size: .8rem; font-weight: 500;
+    padding: .4rem .9rem; border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    transition: box-shadow .15s, color .15s, background .15s;
+  }
+  .sort-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); color: #1a1a2e; }
+  .sort-btn.active { background: #1a1a2e; color: #fff; box-shadow: 0 2px 8px rgba(26,26,46,.2); }
+
+  /* --- Question list (expandable details) --- */
+  .question-list { display: flex; flex-direction: column; gap: .75rem; }
+
+  .q-item {
+    background: #fff; border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.05);
+    transition: box-shadow .2s ease, transform .2s ease;
+    overflow: hidden;
+  }
+  .q-item:hover { box-shadow: 0 3px 14px rgba(0,0,0,.08); }
+  .q-item[open] { box-shadow: 0 4px 20px rgba(0,0,0,.09); }
+
+  .q-item summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: 1rem 1.5rem;
+    transition: background .15s;
+  }
+  .q-item summary::-webkit-details-marker { display: none; }
+  .q-item summary:hover { background: #fafbfd; }
+
+  .q-item summary .chevron {
+    flex-shrink: 0; width: 1rem; text-align: center;
+    font-size: .6rem; color: #b0b0b0;
+    transition: transform .2s ease;
+  }
+  .q-item[open] summary .chevron { transform: rotate(90deg); }
+
+  .q-score-badge {
+    flex-shrink: 0; font-size: .82rem; font-weight: 700;
+    min-width: 2.6rem; text-align: center;
+    padding: .2rem .5rem; border-radius: 6px;
+  }
+  .q-summary-text {
+    flex: 1; font-size: .92rem; font-weight: 500; color: #2c2c2c;
+    line-height: 1.45;
+  }
+  .badge {
+    flex-shrink: 0; font-size: .68rem; font-weight: 600;
+    padding: .2rem .55rem; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
+  .badge-selected { background: #e8f5e9; color: #2e7d32; }
+  .badge-filtered { background: #f0f0f0; color: #999; }
+
+  /* --- Expanded content --- */
+  .q-body { padding: .25rem 1.5rem 1.5rem 3.85rem; }
+
+  .score-row {
+    display: flex; gap: 1.5rem; margin: .5rem 0 1rem 0;
+    padding: .65rem 1rem; background: #f8f9fc; border-radius: 8px;
+    font-size: .84rem;
+  }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 4.5rem; }
+  .score-label {
+    position: relative;
+    font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; color: #999;
+    cursor: default;
+  }
+  .score-value { font-weight: 700; font-size: .95rem; margin-top: .1rem; }
+
+  .q-body p {
+    font-size: .9rem; line-height: 1.65; color: #444;
+    white-space: pre-wrap; word-wrap: break-word;
+    margin-bottom: .6rem;
+  }
+  .q-body p strong { color: #333; }
+
+  /* Collapsible sub-section inside expanded body */
+  .sub-section { margin-top: .5rem; }
+  .sub-section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .35rem;
+    padding: .25rem 0; font-size: .8rem; text-transform: uppercase;
+    letter-spacing: .04em; color: #999; font-weight: 500;
+  }
+  .sub-section summary::-webkit-details-marker { display: none; }
+  .sub-section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb;
+    transition: transform .15s ease;
+  }
+  .sub-section[open] summary::before { transform: rotate(90deg); }
+  .sub-section > p { margin-top: .25rem; padding-left: .8rem; }
+
+  /* --- Tooltips --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+    background: #1a1a2e; color: #e8e8f0; font-size: .7rem; font-weight: 400;
+    text-transform: none; letter-spacing: normal;
+    padding: .35rem .65rem; border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity .15s ease;
+    z-index: 10;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+
+  a { color: #1565c0; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02b: Proto-Question Quality Filter</h1>
+    <div class="subtitle">Reasons to be pessimistic (and optimistic) on the future of biosecurity</div>
+    <div class="page-stats">
+      <span>8 total</span>
+      <span>2 selected (top 2)</span>
+      <span>Cutoff score: 88</span>
+      <span>Project: biosecurity</span>
+    </div>
+  </div>
+
+  <div class="sort-bar">
+    <span>Sort by</span>
+    <button class="sort-btn active" data-sort="quality" onclick="sortBy('quality')">Quality Score</button>
+    <button class="sort-btn" data-sort="status" onclick="sortBy('status')">Status (selected first)</button>
+  </div>
+
+  <div class="question-list" id="question-list">
+    <details class="q-item" id="q-0" data-quality="90.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">90</span><span class="q-summary-text">By December 31, 2026, will the U.S. Department of Health and Human Services (HHS) or the Office of Science and Technology Policy (OSTP) publish a final, updated &quot;Framework for Nucleic Acid Synthesis Screening&quot; that requires federally funded institutions to only purchase from providers that screen all orders?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">90</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper identifies &quot;ordering from DNA synthesis companies who don&#x27;t screen&quot; as a primary fear. A updated framework is currently being revised following a May 2025 Executive Order [9b9597]. This question tracks a critical regulatory milestone that would address the &quot;institutional and coordinative&quot; bottlenecks mentioned in the paper.</p>
+        <p><strong>Paper reference:</strong> Conclusion, Page 66-67: &quot;ordering from DNA synthesis companies who don&#x27;t screen&quot; and the need for &quot;comprehensive coverage.&quot;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question. It tracks a specific regulatory milestone mandated by Executive Order 14292 (May 5, 2025), which required OSTP to revise the &#x27;Framework for Nucleic Acid Synthesis Screening&#x27; <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. As of March 2026, the 90-day deadline from the EO has long passed, yet official HHS/ASPR resources indicate the framework is still in the process of being updated <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS &amp; OSTP Screening | Synthetic Nucleic Acid Security &amp; Biorisk ...</a>. This creates a high-entropy situation where the timing of the &#x27;final&#x27; publication is genuinely uncertain. The question is objective, verifiable via government publications, and addresses a critical policy bottleneck identified in the source literature.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-1" data-quality="88.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the &#x27;Biosecurity Modernization and Innovation Act of 2026&#x27; (S. 3741), or a successor bill containing its core gene synthesis screening mandates, be signed into law by the President of the United States on or before December 31, 2026?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper identifies a critical regulatory gap where current U.S. DNA synthesis screening is largely voluntary [ad2493]. The Biosecurity Modernization and Innovation Act, introduced in February 2026 by Senators Cotton and Klobuchar, represents the primary legislative attempt to close this gap by mandating screening for all synthetic DNA orders [d55ce2]. This question tracks the transition from a voluntary to a mandatory &#x27;Swiss-cheese&#x27; layer of defense.</p>
+        <p><strong>Paper reference:</strong> Section 3: Conclusion (part 19-21), Biosecurity Modernization and Innovation Act of 2026 (S. 3741)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question. It addresses a genuinely uncertain and non-trivial political event (passage of S. 3741) with a clear binary resolution criterion <a href="https://fas.org/publication/biosecurity-modernization-and-innovation-act-of-2026/" target="_blank" rel="noopener">Biosecurity Modernization and Innovation Act of 2026 is a Major Step</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/history" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. The inclusion of &#x27;successor bill containing its core gene synthesis screening mandates&#x27; allows for legislative evolution while remaining researchable <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/history" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. The bill&#x27;s bipartisan support but uncertain legislative path creates high entropy <a href="https://fas.org/publication/biosecurity-modernization-and-innovation-act-of-2026/" target="_blank" rel="noopener">Biosecurity Modernization and Innovation Act of 2026 is a Major Step</a> <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. Verification is straightforward via Congress.gov <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/history" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-2" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the USDA issue a new Federal Order or regulation by December 31, 2026, that mandates weekly bulk tank milk testing for H5N1 for all commercial dairy herds in at least 10 U.S. states?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper discusses the &#x27;4-month lag&#x27; in detection and the failure of voluntary testing regimes where farmers &#x27;cherry-picked&#x27; healthy animals [19c2b4]. A move from voluntary or &#x27;pre-movement&#x27; testing to mandatory, frequent bulk testing would be a definitive signal that the government is addressing the structural &#x27;perverse incentives&#x27; and detection failures highlighted by the author.</p>
+        <p><strong>Paper reference:</strong> Section 4: Detection Lags and Reporting Incentives (p. 35-38)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question. It addresses a significant and uncertain policy shift (moving from voluntary or movement-based testing to mandatory herd-wide surveillance) that is a subject of active debate in public health and agriculture <a href="https://www.aphis.usda.gov/livestock-poultry-disease/avian/avian-influenza/hpai-detections/livestock/nmts/faq" target="_blank" rel="noopener">Frequently Asked Questions: National Milk Testing Strategy</a> <a href="https://www.aphis.usda.gov/livestock-poultry-disease/avian/avian-influenza/hpai-detections/livestock/nmts" target="_blank" rel="noopener">National Milk Testing Strategy | Animal and Plant Health ...</a>. The criteria are specific, measurable (10 states, weekly frequency, bulk tank testing), and have a clear resolution source in USDA Federal Orders. It is non-trivial, as currently only a few states (like Colorado) have implemented such mandates, and a federal requirement would face substantial industry and political hurdles.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-3" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the FDA or EMA grant &quot;Fast Track,&quot; &quot;Breakthrough Therapy,&quot; or an equivalent accelerated designation to any mRNA-encoded monoclonal antibody (mAb) therapeutic for an infectious disease by December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper notes that mRNA-encoded antibodies are a promising but early-stage technology. Regulatory milestones like Fast Track designations for specific candidates (e.g., from Moderna or BioNTech&#x27;s infectious disease pipelines) serve as an upstream signal of clinical viability and institutional prioritization.</p>
+        <p><strong>Paper reference:</strong> Section 4: &quot;Encode the whole thing into mRNA.&quot; and the mention of &quot;antibody-encoded-into-mRNA&quot; being in early days.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality question that tracks a specific technological transition: the move from mRNA vaccines to mRNA-encoded therapeutic antibodies. It uses clear, binary regulatory milestones (FDA/EMA designations) which provide an objective resolution path. The technology is currently in &#x27;early days,&#x27; with candidates like Moderna&#x27;s mRNA-1944 having reached Phase 1 but not yet widely receiving the high-level designations mentioned <a href="https://www.modernatx.com/research/product-pipeline" target="_blank" rel="noopener">https://www.modernatx.com/research/product-pipeline</a>. Conversely, similar technology is being heavily utilized in oncology (e.g., BioNTech&#x27;s RiboMabs BNT141/142), making the extension into infectious disease a genuinely uncertain and research-intensive forecast <a href="https://www.biontech.com/int/en/home/pipeline-and-products/pipeline.html" target="_blank" rel="noopener">BioNTech pipeline: Advancing innovative investigational therapies ...</a>. The 2026 deadline provides sufficient time for clinical progress to trigger these designations.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-4" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the Coalition for Epidemic Preparedness Innovations (CEPI) or a G7/G20 member state formally announce the successful completion of a &#x27;100 Days Mission&#x27; simulated &#x27;Pathogen X&#x27; exercise that successfully demonstrates a vaccine candidate&#x27;s readiness for Phase 1 trials within 100 days?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The 100 Days Mission is the central benchmark for rapid response mentioned in the paper [f615fe]. While a real pandemic is a low-probability event, a high-fidelity &#x27;stress test&#x27; or simulation is a common way for organizations like CEPI to demonstrate capability [f615fe]. This avoids forecasting the catastrophe itself while measuring the response capability the paper identifies as &#x27;extremely limited today&#x27;.</p>
+        <p><strong>Paper reference:</strong> CEPI 100 Days Mission and rapid vaccine turnaround (Page 51)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question. It identifies a specific, high-stakes benchmark (the 100 Days Mission) and uses a simulated exercise as a proxy for actual pandemic response capability, which is a rare and difficult event to forecast directly. The question is non-trivial, as achieving a 100-day turnaround from &#x27;Pathogen X&#x27; identification to Phase 1 readiness is a major technical hurdle that CEPI itself describes as currently limited. The resolution source (CEPI or G7/G20 announcements) is highly reliable, though the specific &#x27;success&#x27; criteria would benefit from further tightening in stage 03 to ensure the public report includes enough detail on the 100-day timeline. Recent simulation exercises (e.g., G20 South Africa 2025) demonstrate that these events occur but their detailed technical outcomes are not always immediately granular in press releases <a href="https://ippsecretariat.org/news/2025-g20-south-africa/" target="_blank" rel="noopener">Statement by 100 Days Mission Partners on the conclusion of the ...</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-5" data-quality="84.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">84</span><span class="q-summary-text">Will the U.S. AI Safety Institute (or its successor agency) publish a formal &#x27;Biological Capability Evaluation Framework&#x27; for frontier AI models that includes a standardized benchmark for &#x27;viral protein folding&#x27; or &#x27;pathogen-agnostic therapeutic design&#x27; by December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">84</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper suggests AI&#x27;s role in rapid-response therapeutics is a key optimistic factor. However, the lack of standardized benchmarks makes this hard to measure. The creation of a government-led evaluation framework for these specific biological capabilities would be a major regulatory and technical milestone in identifying which models actually provide these benefits versus presenting dual-use risks [05065d].</p>
+        <p><strong>Paper reference:</strong> Section 2.f. &#x27;Machine learning may be very useful for rapid-response therapeutics&#x27; [05065d]</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality proto-question that addresses a key technical and regulatory frontier. The U.S. AI Safety Institute (AISI) has been actively seeking input on chemical and biological AI risks <a href="https://www.nist.gov/aisi" target="_blank" rel="noopener">https://www.nist.gov/aisi</a>, but a formal &#x27;Biological Capability Evaluation Framework&#x27; with specific benchmarks for &#x27;pathogen-agnostic therapeutic design&#x27; remains an aspirational and uncertain milestone. The question is difficult because it requires understanding both the technical feasibility of such benchmarks (e.g., distinguishing them from &#x27;dual-use&#x27; risks) and the administrative speed of the AISI. While slightly more prone to linguistic ambiguity than the first question (e.g., what constitutes a &#x27;formal&#x27; publication), it is a strong candidate for refinement.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-6" data-quality="68.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#ef6c00;background:#fff3e0" data-tooltip="Quality score (0-100)">68</span><span class="q-summary-text">Will the &#x27;Biosecurity Modernization and Innovation Act of 2026&#x27; (S.3741) or a similar bill mandating DNA synthesis screening for all commercial providers be signed into law by December 31, 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#ef6c00">68</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper notes that the current biosecurity framework is largely voluntary or guided by HHS recommendations. Legislative action (like S.3741, introduced in Jan 2026) would transform the &#x27;preventative architecture&#x27; from a suggested practice into a mandatory market requirement, directly impacting the business models of startups like Aclid and the &#x27;chokepoint&#x27; efficacy discussed in the text [3597a4].</p>
+        <p><strong>Paper reference:</strong> The paper discusses the need for &#x27;DNA synthesis screening&#x27; and the emergence of companies like Aclid to automate compliance [3597a4].</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This question is acceptable but slightly less robust than the first due to the phrase &#x27;or a similar bill.&#x27; In forecasting, &#x27;similar&#x27; is an ambiguous term that can lead to resolution disputes <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/history" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. While the underlying topic (DNA synthesis screening mandates) is high-quality and research-intensive <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>, the phrasing needs to be tightened to define what constitutes a similar bill or to focus on a direct successor to ensure objective resolution <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/history" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-7" data-quality="30.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#c62828;background:#ffebee" data-tooltip="Quality score (0-100)">30</span><span class="q-summary-text">By December 31, 2026, will the Baker Lab or a successor entity publish a peer-reviewed study demonstrating that a fully de novo antibody designed using RFdiffusion (or a successor model) can neutralize a &#x27;live&#x27; or &#x27;pseudotyped&#x27; virus in vitro with a potency (IC50) of 100 ng/mL or better?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#c62828">30</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper highlights RFdiffusion as a breakthrough for binder design but notes that &#x27;neutralization&#x27; is the key bottleneck AI cannot easily solve yet. Demonstrating high-potency neutralization (a standard therapeutic benchmark) would signal that AI can now bypass the traditional &#x27;fishing&#x27; for antibodies in patients, significantly accelerating response to novel pathogens.</p>
+        <p><strong>Paper reference:</strong> Baker Lab RFdiffusion for computational antibody design (pp. 56-57)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This question is of low quality because the event described has likely already occurred by the current date (March 31, 2026). The Baker Lab&#x27;s &#x27;JAM&#x27; (Jointly-designed Antibody-antigen Modeling) approach, which uses RFdiffusion, was reported in late 2024 and early 2025 to have achieved sub-nanomolar neutralization potency against SARS-CoV-2 pseudoviruses <a href="https://www.researchgate.net/publication/397313047_Atomically_accurate_de_novo_design_of_antibodies_with_RFdiffusion" target="_blank" rel="noopener">Atomically accurate de novo design of antibodies with RFdiffusion</a> <a href="https://www.aphis.usda.gov/livestock-poultry-disease/avian/avian-influenza/hpai-detections/livestock/nmts" target="_blank" rel="noopener">National Milk Testing Strategy | Animal and Plant Health ...</a>. Sub-nanomolar potency for a standard antibody fragment (like a VHH) is significantly better (more potent) than the 100 ng/mL threshold specified in the question. Consequently, this question would likely resolve as &#x27;Yes&#x27; immediately upon opening, providing no forecasting value.</p></details>
+      </div>
+    </details>
+  </div>
+
+<script>
+function sortBy(mode) {
+  var list = document.getElementById('question-list');
+  var items = Array.from(list.querySelectorAll('.q-item'));
+  items.sort(function(a, b) {
+    if (mode === 'quality') {
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    if (mode === 'status') {
+      var s = parseInt(a.dataset.status) - parseInt(b.dataset.status);
+      if (s !== 0) return s;
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    return 0;
+  });
+  items.forEach(function(el) { list.appendChild(el); });
+  var btns = document.querySelectorAll('.sort-btn');
+  btns.forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.sort === mode);
+  });
+}
+</script>
+</div></body></html>

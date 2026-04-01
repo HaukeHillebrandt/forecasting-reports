@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proto-Question Quality Filter &mdash; AI &amp; Biosecurity Risks — 80,000 Hours Podcast with Dr Richard Moulange</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f7f8fa; color: #2c2c2c; line-height: 1.65; padding: 2.5rem 1.5rem;
+  }
+  .container { max-width: 54rem; margin: 0 auto; }
+
+  /* --- Header --- */
+  .page-header {
+    background: #1a1a2e; color: #eee; border-radius: 12px;
+    padding: 2rem 2.5rem; margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(26,26,46,.18);
+  }
+  .page-header h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: .4rem; letter-spacing: -.01em; }
+  .page-header .subtitle { font-size: .88rem; color: #a0a0b8; margin-bottom: .75rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #8888a0;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .25rem .7rem; border-radius: 6px;
+  }
+
+  /* --- Sort controls --- */
+  .sort-bar {
+    display: flex; align-items: center; gap: .75rem;
+    margin-bottom: 1.5rem; font-size: .82rem; color: #888;
+  }
+  .sort-bar span { font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+  .sort-btn {
+    appearance: none; border: none; cursor: pointer;
+    background: #fff; color: #555; font-size: .8rem; font-weight: 500;
+    padding: .4rem .9rem; border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    transition: box-shadow .15s, color .15s, background .15s;
+  }
+  .sort-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); color: #1a1a2e; }
+  .sort-btn.active { background: #1a1a2e; color: #fff; box-shadow: 0 2px 8px rgba(26,26,46,.2); }
+
+  /* --- Question list (expandable details) --- */
+  .question-list { display: flex; flex-direction: column; gap: .75rem; }
+
+  .q-item {
+    background: #fff; border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.05);
+    transition: box-shadow .2s ease, transform .2s ease;
+    overflow: hidden;
+  }
+  .q-item:hover { box-shadow: 0 3px 14px rgba(0,0,0,.08); }
+  .q-item[open] { box-shadow: 0 4px 20px rgba(0,0,0,.09); }
+
+  .q-item summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: 1rem 1.5rem;
+    transition: background .15s;
+  }
+  .q-item summary::-webkit-details-marker { display: none; }
+  .q-item summary:hover { background: #fafbfd; }
+
+  .q-item summary .chevron {
+    flex-shrink: 0; width: 1rem; text-align: center;
+    font-size: .6rem; color: #b0b0b0;
+    transition: transform .2s ease;
+  }
+  .q-item[open] summary .chevron { transform: rotate(90deg); }
+
+  .q-score-badge {
+    flex-shrink: 0; font-size: .82rem; font-weight: 700;
+    min-width: 2.6rem; text-align: center;
+    padding: .2rem .5rem; border-radius: 6px;
+  }
+  .q-summary-text {
+    flex: 1; font-size: .92rem; font-weight: 500; color: #2c2c2c;
+    line-height: 1.45;
+  }
+  .badge {
+    flex-shrink: 0; font-size: .68rem; font-weight: 600;
+    padding: .2rem .55rem; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
+  .badge-selected { background: #e8f5e9; color: #2e7d32; }
+  .badge-filtered { background: #f0f0f0; color: #999; }
+
+  /* --- Expanded content --- */
+  .q-body { padding: .25rem 1.5rem 1.5rem 3.85rem; }
+
+  .score-row {
+    display: flex; gap: 1.5rem; margin: .5rem 0 1rem 0;
+    padding: .65rem 1rem; background: #f8f9fc; border-radius: 8px;
+    font-size: .84rem;
+  }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 4.5rem; }
+  .score-label {
+    position: relative;
+    font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; color: #999;
+    cursor: default;
+  }
+  .score-value { font-weight: 700; font-size: .95rem; margin-top: .1rem; }
+
+  .q-body p {
+    font-size: .9rem; line-height: 1.65; color: #444;
+    white-space: pre-wrap; word-wrap: break-word;
+    margin-bottom: .6rem;
+  }
+  .q-body p strong { color: #333; }
+
+  /* Collapsible sub-section inside expanded body */
+  .sub-section { margin-top: .5rem; }
+  .sub-section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .35rem;
+    padding: .25rem 0; font-size: .8rem; text-transform: uppercase;
+    letter-spacing: .04em; color: #999; font-weight: 500;
+  }
+  .sub-section summary::-webkit-details-marker { display: none; }
+  .sub-section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb;
+    transition: transform .15s ease;
+  }
+  .sub-section[open] summary::before { transform: rotate(90deg); }
+  .sub-section > p { margin-top: .25rem; padding-left: .8rem; }
+
+  /* --- Tooltips --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+    background: #1a1a2e; color: #e8e8f0; font-size: .7rem; font-weight: 400;
+    text-transform: none; letter-spacing: normal;
+    padding: .35rem .65rem; border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity .15s ease;
+    z-index: 10;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+
+  a { color: #1565c0; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02b: Proto-Question Quality Filter</h1>
+    <div class="subtitle">AI &amp; Biosecurity Risks — 80,000 Hours Podcast with Dr Richard Moulange</div>
+    <div class="page-stats">
+      <span>19 total</span>
+      <span>2 selected (top 2)</span>
+      <span>Cutoff score: 92</span>
+      <span>Project: 80k_biosec_pod</span>
+    </div>
+  </div>
+
+  <div class="sort-bar">
+    <span>Sort by</span>
+    <button class="sort-btn active" data-sort="quality" onclick="sortBy('quality')">Quality Score</button>
+    <button class="sort-btn" data-sort="status" onclick="sortBy('status')">Status (selected first)</button>
+  </div>
+
+  <div class="question-list" id="question-list">
+    <details class="q-item" id="q-0" data-quality="92.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will the &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741) or a successor bill containing a mandate for DNA synthesis screening be signed into US law by 31st December 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The podcast discusses the need for &quot;damage control&quot; and &quot;defusing the bomb&quot; of biological risk [Page 67]. Research reveals that bipartisan legislation (S.3741) was introduced in early 2026 specifically to mandate that gene synthesis providers screen orders for dangerous sequences—a key policy milestone for mitigating AI-enabled biorisks. Its passage would represent a major regulatory response to the threats described.</p>
+        <p><strong>Paper reference:</strong> Biosecurity Modernization and Innovation Act of 2026 (S.3741) provisions regarding DNA synthesis screening.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality legislative forecasting question. It identifies a concrete, bipartisan bill (S.3741, introduced Jan 2026) with a specific biosecurity mandate (DNA synthesis screening) <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. Legislative outcomes are inherently non-trivial and subject to significant expert disagreement, satisfying the &#x27;high entropy&#x27; criterion. The resolution source (Congress.gov) is authoritative and persistent. The inclusion of &#x27;successor bills&#x27; provides necessary flexibility for legislative drift while maintaining the core policy focus on mandatory screening. This is a very good question for a tournament.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-1" data-quality="92.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will a publicly available AI model achieve a score of 60% or higher on the Virology Capabilities Test (VCT) (or a successor version using the same methodology) by December 31, 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Current state-of-the-art models like OpenAI&#x27;s o3 have achieved 43.8% on the VCT, which already outperforms 94% of expert virologists [cfc167]. Reaching 60% would represent a significant leap in the model&#x27;s ability to provide &#x27;tacit&#x27; laboratory knowledge that was previously thought to be a human-only barrier. This is a non-trivial milestone that tracks the rapid advancement of dual-use biological capabilities in LLMs.</p>
+        <p><strong>Paper reference:</strong> Virology Capabilities Test (VCT) and Frontier AI model performance [cfc167]</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This version of the question is excellent and superior to the first. By including the clause &#x27;or a successor version using the same methodology,&#x27; it proactively addresses the most likely &#x27;data issue&#x27;: the potential for the VCT to be updated or replaced by the original authors before 2028 <a href="https://securebio.substack.com/p/ais-can-provide-expert-level-virology" target="_blank" rel="noopener">https://securebio.substack.com/p/ais-can-provide-expert-level-virology</a>. This ensures the question remains resolvable even as the field evolves. The 60% threshold is a meaningful &#x27;high entropy&#x27; milestone that tracks whether AI can overcome the &#x27;tacit knowledge&#x27; barrier in virology <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-2" data-quality="90.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">90</span><span class="q-summary-text">Will the United Kingdom pass primary or secondary legislation that mandates DNA synthesis screening for all commercial synthetic nucleic acid providers operating within the UK by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">90</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The podcast and recent reports indicate the UK is &#x27;deeply considering&#x27; moving from voluntary guidance to a mandate [76973b]. This is a critical regulatory milestone that would set a global precedent for &#x27;upstream&#x27; biosecurity enforcement. Its resolution is clear through official UK legislative records (e.g., legislation.gov.uk).</p>
+        <p><strong>Paper reference:</strong> The UK Strategic Defence Review (SDR) 2025 and the UK Biological Security Strategy&#x27;s commitment to consider mandatory gene synthesis screening [76973b].</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question (90/100). It is binary, time-bound, and focuses on a non-trivial policy milestone. The UK government&#x27;s 2023 Biological Security Strategy already committed to &#x27;exploring&#x27; such requirements [[PDF] UK Biological Security Strategy - GOV.UK](<a href="https://assets.publishing.service.gov.uk/media/64c0ded51e10bf000e17ceba/UK_Biological_Security_Strategy.pdf" target="_blank" rel="noopener">https://assets.publishing.service.gov.uk/media/64c0ded51e10bf000e17ceba/UK_Biological_Security_Strategy.pdf</a>), and a December 2025 analysis specifically recommended proposing this legislation by Q4 2026 [[PDF] Cost-Benefit Analysis of Synthetic Nucleic Acid Screening for the UK](<a href="https://www.longtermresilience.org/wp-content/uploads/2025/12/Cost-Benefit-Analysis-of-Synthetic-Nucleic-Acid-Screening-for-the-UK-Report-CLTR-2025.pdf" target="_blank" rel="noopener">https://www.longtermresilience.org/wp-content/uploads/2025/12/Cost-Benefit-Analysis-of-Synthetic-Nucleic-Acid-Screening-for-the-UK-Report-CLTR-2025.pdf</a>). The use of official legislative records (legislation.gov.uk) ensures high-quality, objective resolution. It is a &#x27;good&#x27; question because, while the policy direction is set, the timing and political willpower to pass legislation by a specific date remain genuinely uncertain.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-3" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">By December 31, 2027, will OpenAI publicly announce that one of its models has reached the &#x27;High&#x27; or &#x27;Critical&#x27; capability threshold for &#x27;Biological&#x27; risks as defined in its Preparedness Framework?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> OpenAI&#x27;s framework mandates specific mitigations (e.g., hardening security) only when these thresholds are met [89ac5f]. A &#x27;High&#x27; rating indicates a model provides meaningful assistance to novices in creating known threats, while &#x27;Critical&#x27; involves enabling experts to develop novel threats [89ac5f]. This question tracks the first official industry acknowledgment of &#x27;dangerous&#x27; levels of biological capability.</p>
+        <p><strong>Paper reference:</strong> OpenAI Preparedness Framework (v2) [89ac5f]</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question (Score: 88). It addresses a genuinely uncertain and high-stakes future event: the first official industry acknowledgment of &#x27;dangerous&#x27; AI biological capabilities. The question is well-structured, relying on OpenAI&#x27;s own &#x27;Preparedness Framework&#x27; (v2), which provides clear, technical definitions for &#x27;High&#x27; and &#x27;Critical&#x27; thresholds [[PDF] Preparedness Framework - OpenAI](<a href="https://cdn.openai.com/pdf/18a02b5d-6b67-4cec-ab64-68cdfbddebcd/preparedness-framework-v2.pdf" target="_blank" rel="noopener">https://cdn.openai.com/pdf/18a02b5d-6b67-4cec-ab64-68cdfbddebcd/preparedness-framework-v2.pdf</a>). Research indicates that OpenAI has already begun reporting these risk levels in &#x27;System Cards&#x27; (e.g., for the o1 model), though currently, they remain at &#x27;Low&#x27; or &#x27;Medium&#x27; for biological risks [[PDF] Preparedness Framework - OpenAI](<a href="https://cdn.openai.com/pdf/18a02b5d-6b67-4cec-ab64-68cdfbddebcd/preparedness-framework-v2.pdf" target="_blank" rel="noopener">https://cdn.openai.com/pdf/18a02b5d-6b67-4cec-ab64-68cdfbddebcd/preparedness-framework-v2.pdf</a>). The question is difficult because it requires forecasting the rate of AI capability improvement against the lab&#x27;s evolving safety evaluations. It has high entropy, as experts disagree on when models will cross these specific thresholds. Resolution is verifiable through OpenAI&#x27;s public commitment to release Preparedness Framework results for major deployments [[PDF] Preparedness Framework - OpenAI](<a href="https://cdn.openai.com/pdf/18a02b5d-6b67-4cec-ab64-68cdfbddebcd/preparedness-framework-v2.pdf" target="_blank" rel="noopener">https://cdn.openai.com/pdf/18a02b5d-6b67-4cec-ab64-68cdfbddebcd/preparedness-framework-v2.pdf</a>).</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-4" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the US AI Safety Institute (US AISI) or NIST publish a standardized &#x27;red-teaming&#x27; evaluation framework for frontier models by December 31, 2027, that establishes a quantitative, measurable threshold for &#x27;non-expert uplift&#x27; in biological weapon design?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The Frontier Model Forum and major labs have proposed the &#x27;non-expert uplift&#x27; threshold as a key safety metric [bba28b]. Moving this from voluntary industry frameworks [87cbd6] to a formal government-backed evaluation standard would be a major regulatory milestone in managing the risks of dual-use AI-bio capabilities [bba28b].</p>
+        <p><strong>Paper reference:</strong> The paper&#x27;s discussion of &#x27;dual-use&#x27; and &#x27;non-expert uplift&#x27; from biological design tools.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question (score 88). It addresses a non-trivial regulatory and technical challenge: defining a quantitative &#x27;non-expert uplift&#x27; threshold for biological risks in AI [[PDF] Esvelt, Gopal and Jeyapragasan NIST RFI](<a href="https://www.nist.gov/document/ai-eo-14110-rfi-comments-securebio" target="_blank" rel="noopener">https://www.nist.gov/document/ai-eo-14110-rfi-comments-securebio</a>). The question is difficult because it requires forecasting both government policy (NIST/AISI) and scientific consensus on &#x27;uplift&#x27; metrics, which are currently only in the proposal/recommendation stage [[PDF] Esvelt, Gopal and Jeyapragasan NIST RFI](<a href="https://www.nist.gov/document/ai-eo-14110-rfi-comments-securebio" target="_blank" rel="noopener">https://www.nist.gov/document/ai-eo-14110-rfi-comments-securebio</a>). It has high entropy (non-trivial probability) and avoids data issues by naming a reliable resolution source (NIST/US AISI).</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-5" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">By December 31, 2027, will a major frontier AI developer (specifically Anthropic, OpenAI, or Google DeepMind) publish a peer-reviewed study or a formal technical report demonstrating a statistically significant &quot;uplift&quot; in the performance of PhD-level biologists on a biological-weapon-related laboratory task compared to a control group?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The source material highlights that while &quot;novice&quot; uplift has been difficult to prove, research in 2025/2026 (such as Claude 4 system cards) has begun to show measurable uplift for expert-level actors like PhD students [ec2add]. This question tracks the empirical validation of the &quot;mid-tier actor&quot; risk model discussed by Dr. Moulange.</p>
+        <p><strong>Paper reference:</strong> Anthropic Responsible Scaling Policy, Uplift Studies among PhDs [ec2add, b7f060]</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question. It addresses a core uncertainty in AI safety policy: whether AI models provide a &#x27;marginal uplift&#x27; for expert actors in high-risk domains like bioweapons. The question is difficult because it requires forecasting the results of future safety evaluations and the willingness of labs to publish sensitive findings. It has high entropy; while 2026 reports (like the Claude 4.6 system card) show models approaching critical thresholds and being &#x27;force multipliers,&#x27; they have not yet definitively demonstrated statistically significant uplift in bioweapon-specific lab tasks [[PDF] Claude Opus 4.6 System Card - Anthropic](<a href="https://www.anthropic.com/claude-opus-4-6-system-card" target="_blank" rel="noopener">https://www.anthropic.com/claude-opus-4-6-system-card</a>) <a href="https://80000hours.org/podcast/episodes/richard-moulange-ai-bioweapons-biorisk/" target="_blank" rel="noopener">AI designs genomes from scratch &amp; outperforms virologists at lab ...</a>. The resolution criteria are clear (peer-reviewed study or technical report), and the timeline is appropriate for seeing the next generation of models (e.g., Claude 5, GPT-5).</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-6" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the United Kingdom formally enact legislation or a mandatory regulatory statutory instrument requiring all commercial DNA synthesis providers operating in the UK to screen sequences against a standardized &#x27;biosecurity risk&#x27; database by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper discusses a specific CLTR/80k-linked proposal for the UK to &#x27;go it alone&#x27; on mandatory screening. Current UK guidance is voluntary. Legislation would mark a major shift from &#x27;norms&#x27; to &#x27;enforcement,&#x27; providing a clear observable signal of regulatory response to the AI-biosecurity risks discussed in the podcast.</p>
+        <p><strong>Paper reference:</strong> Discussion of the cost-benefit analysis for mandatory DNA synthesis screening in the UK [p50].</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question. It targets a clear, binary policy outcome with a specific deadline. The transition from voluntary guidance (Oct 2024 <a href="https://www.gov.uk/government/publications/uk-screening-guidance-on-synthetic-nucleic-acids/uk-screening-guidance-on-synthetic-nucleic-acids-for-users-and-providers" target="_blank" rel="noopener">UK screening guidance on synthetic nucleic acids for users and ...</a>) to mandatory legislation is a significant and non-trivial event that reflects a major shift in biosecurity strategy. Projections from groups like the Centre for Long-Term Resilience (CLTR) recommending legislation by Q4 2026 [[PDF] Cost-Benefit Analysis of Synthetic Nucleic Acid Screening for the UK](<a href="https://www.longtermresilience.org/wp-content/uploads/2025/12/Cost-Benefit-Analysis-of-Synthetic-Nucleic-Acid-Screening-for-the-UK-Report-CLTR-2025.pdf" target="_blank" rel="noopener">https://www.longtermresilience.org/wp-content/uploads/2025/12/Cost-Benefit-Analysis-of-Synthetic-Nucleic-Acid-Screening-for-the-UK-Report-CLTR-2025.pdf</a>) provide a realistic but uncertain roadmap, ensuring high entropy and room for disagreement. Resolution is straightforward via official UK legislative records.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-7" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">By December 31, 2027, will the UK AI Safety Institute (AISI) or the US AI Safety Institute (NIST) publish a standardized evaluation benchmark for frontier models that specifically measures their &quot;uplift&quot; in identifying or designing &quot;non-natural&quot; genomic precursors for viral enhancement?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper emphasizes the need for classifiers that distinguish natural mutations from engineered sequences. The International AI Safety Report 2026 notes that current evaluations are often voluntary and lack set &quot;red-lines.&quot; A government-standardized benchmark for biological &quot;uplift&quot; would be a critical regulatory and technical milestone. [502116], [a012fd]</p>
+        <p><strong>Paper reference:</strong> Page 44: Benchmarks for &quot;natural vs. engineered&quot; classifiers [502116] [a012fd]</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This question targets a specific, high-stakes technical and regulatory milestone: the creation of standardized benchmarks for biological &#x27;uplift&#x27; by leading AI safety bodies (UK AISI/US NIST). It is &#x27;somewhat difficult&#x27; as it requires interpreting specialized safety reports and tracking the evolution of &#x27;non-natural&#x27; genomic screening technologies. The International AI Safety Report 2026 confirms that such benchmarks are currently lacking and that &#x27;natural vs. engineered&#x27; classifiers are a key research priority [[PDF] international-ai-safety-report-2026.pdf](<a href="https://internationalaisafetyreport.org/sites/default/files/2026-02/international-ai-safety-report-2026.pdf" target="_blank" rel="noopener">https://internationalaisafetyreport.org/sites/default/files/2026-02/international-ai-safety-report-2026.pdf</a>). The question has high entropy because the technical feasibility and political will to standardize these &#x27;red-lines&#x27; remain uncertain, making it an excellent forecasting topic.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-8" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">By 31st December 2027, will the U.S. National Institute of Standards and Technology (NIST) publish a finalized set of &quot;AI-ready&quot; biological data standards as mandated by the AI-Ready Bio-Data Standards Act of 2026?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> This is a concrete regulatory milestone. The Act specifically directs NIST to facilitate these standards to manage biological data safety [971bda]. Tracking its completion provides a clear signal on the pace of government implementation of biosecurity-aware data infrastructure, which is a key upstream defense identified in the research [35b811].</p>
+        <p><strong>Paper reference:</strong> AI-Ready Bio-Data Standards Act of 2026 and Genesis Mission Executive Order [971bda, 35b811]</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question (Score: 85). It identifies a specific, verifiable regulatory milestone linked to the &#x27;AI-Ready Bio-Data Standards Act of 2026&#x27; <a href="https://www.biotech.senate.gov/news-resources/" target="_blank" rel="noopener">News &amp; Resources - Biotech</a> <a href="https://www.legistorm.com/stormfeed/view_rss/7180293/office/9760/title/ai-ready-bio-data-standards-act-of-2026.html" target="_blank" rel="noopener">AI-Ready Bio-Data Standards Act of 2026 - LegiStorm</a>. The question is non-trivial because while the Act directs NIST to establish these standards, government timelines for finalized &#x27;AI-ready&#x27; frameworks are subject to significant implementation delays, creating genuine uncertainty <a href="https://www.legistorm.com/stormfeed/view_rss/7180293/office/9760/title/ai-ready-bio-data-standards-act-of-2026.html" target="_blank" rel="noopener">AI-Ready Bio-Data Standards Act of 2026 - LegiStorm</a>. The resolution source (NIST publications) is authoritative and accessible, and the outcome has clear implications for biosecurity-aware data infrastructure <a href="https://www.biotech.senate.gov/news-resources/" target="_blank" rel="noopener">News &amp; Resources - Biotech</a> <a href="https://law-ai.org/the-genesis-mission-executive-order-what-it-does-and-how-it-shapes-the-future-of-ai-enabled-scientific-research/" target="_blank" rel="noopener">The Genesis Mission Executive Order: What It Does and How it ...</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-9" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will any publicly available AI model achieve a score of 60% or higher on the Virology Capabilities Test (VCT) by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The Virology Capabilities Test (VCT) is a critical benchmark for measuring AI troubleshooting expertise in virology [3a11d6]. As of early 2026, top models like o3 (43.8%) and Gemini 2.5 Pro (37.6%) already outperform expert human virologists (22.1%) [3a11d6]. Reaching 60% would signal a significant jump in the ability of AI to provide actionable, high-level technical guidance for potentially dangerous biological work, further eroding the &#x27;tacit knowledge&#x27; barrier mentioned in the paper.</p>
+        <p><strong>Paper reference:</strong> Virology Capabilities Test (VCT) and its performance metrics.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question. It targets a specific, expert-validated benchmark (VCT) where current state-of-the-art performance (OpenAI&#x27;s o3 at 43.8%) is well-documented <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a> <a href="https://arxiv.org/abs/2504.16137v1" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137v1</a>. Reaching 60% by late 2027 represents a significant but plausible leap, providing good entropy and difficulty. The main risk is benchmark obsolescence or the release of a &#x27;v2&#x27; before the deadline, which could make resolution ambiguous if not explicitly handled. Research on model scaling in specialized domains would significantly improve a forecast here <a href="https://arxiv.org/abs/2504.16137v1" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137v1</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-10" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will any AI model achieve a score of 60% or higher on the Virology Capabilities Test (VCT) by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The current top-performing model (OpenAI&#x27;s o3) scores 43.8% [f99167], while human experts average 22.1% [f99167]. A 60% threshold represents a significant &#x27;tacit knowledge&#x27; leap, testing if AI-assisted virology troubleshooting continues its rapid ascent or plateaus. This is a key capability indicator for whether AI can overcome the primary barrier to misuse (lab know-how).</p>
+        <p><strong>Paper reference:</strong> Virology Capabilities Test (VCT) performance (page 4 and 8) [f99167]</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a very good technical forecasting question. It uses a specific, peer-reviewed benchmark (VCT) <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a> and a clear numerical threshold (60%) that represents a significant advancement over current SOTA (43.8% for o3 <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>). The question is &#x27;difficult&#x27; as it requires modeling AI capability scaling. A minor concern is the long-term availability and integrity of the benchmark (e.g., contamination risks), but the concept itself is robust and captures a key uncertainty in AI-biosecurity risks.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-11" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">By December 31, 2027, will a major frontier AI lab (OpenAI, Anthropic, or Google DeepMind) publish a peer-reviewed study or technical report that demonstrates a statistically significant performance uplift for PhD-level biologists using an AI model on a multi-step biological protocol, compared to a control group without AI?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> This question addresses a critical gap in current risk modeling identified in the source text: that experts might benefit more from AI &#x27;coaching&#x27; than novices. A &#x27;Yes&#x27; resolution would signal that AI is meaningfully enhancing the capabilities of the most sophisticated actors in the biological domain, moving beyond simple &#x27;novice&#x27; assistance. [18c0e0, 15564a]</p>
+        <p><strong>Paper reference:</strong> The 80,000 Hours podcast with Dr. Richard Moulange emphasizes that current AI safety evaluations focus on &#x27;novice uplift&#x27; (amateurs) rather than &#x27;expert uplift&#x27; (PhDs), which may be a more significant threat vector. [6582f7, 18c0e0]</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question is of high quality (85/100). it addresses a specific, high-uncertainty area of AI safety (expert vs. novice uplift) that is a subject of active research by major labs like Anthropic and OpenAI. Recent system cards for models like Claude 4.5 and 4.6 already discuss &#x27;expert uplift&#x27; trials, but without consistent findings of &#x27;statistically significant&#x27; gains across all protocols [[PDF] Claude Opus 4.5 System Card - Anthropic](<a href="https://www.anthropic.com/claude-opus-4-5-system-card" target="_blank" rel="noopener">https://www.anthropic.com/claude-opus-4-5-system-card</a>). This creates a genuine &#x27;high entropy&#x27; scenario where forecasters must track model evolution and lab reporting standards. The resolution criteria (peer-reviewed study or technical report) are clear and rely on established publication practices by the named frontier labs.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-12" data-quality="84.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">84</span><span class="q-summary-text">Will the U.S. Department of Health and Human Services (HHS) or the Office of Science and Technology Policy (OSTP) finalize a mandatory regulatory requirement by December 31, 2027, that obligates all U.S.-based synthetic nucleic acid providers to screen all orders for &quot;Sequences of Concern&quot; (SOCs) below a 50-nucleotide threshold?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">84</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The current &quot;Framework for Nucleic Acid Synthesis Screening&quot; is a voluntary guidance document revised in September 2024, with a planned effective date for 50-nucleotide screening in October 2026 [9084b6]. However, implementation was reportedly paused or rescinded by subsequent executive actions in early 2025 [9084b6]. This question tracks whether the &quot;defense in depth&quot; strategy mentioned in the podcast reaches the milestone of becoming a settled, mandatory legal requirement [7e6578].</p>
+        <p><strong>Paper reference:</strong> Page 30: &quot;One is it would be more like a terrorist group. It’d have to order the DNA from somewhere — and immediately there you can go, well, we should definitely have gene synthesis screening...&quot;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a strong forecasting question that tracks a specific, measurable regulatory milestone. It is highly relevant as the regulatory landscape for DNA synthesis is currently in flux; the 2024 Framework was rescinded by Executive Order 14292 in early 2025, and a new directive was issued in May 2025 to replace it with a focus on &#x27;comprehensive and verifiable&#x27; screening <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12602429/" target="_blank" rel="noopener">Why implementation gaps could undermine synthetic nucleic acid ...</a> <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. The question&#x27;s difficulty lies in predicting whether this will evolve into a mandatory requirement for all providers rather than just a condition for federal funding recipients. It avoids data issues by relying on official government finalizations (HHS/OSTP), which are easily verifiable.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-13" data-quality="82.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">82</span><span class="q-summary-text">Will the &#x27;Biosecurity Modernization and Innovation Act of 2026&#x27; (S.3741), or a successor U.S. federal bill containing a mandate for DNA synthesis screening by the Department of Commerce, be signed into law by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">82</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper emphasizes that data and physical synthesis are the primary governance bottlenecks. This bill represents the most significant legislative attempt to move from voluntary to mandatory screening, directly addressing the &#x27;weapons of mass destruction territory&#x27; mentioned in the transcript. [007265]</p>
+        <p><strong>Paper reference:</strong> The introduction of the &#x27;Biosecurity Modernization and Innovation Act of 2026&#x27; (Cotton/Klobuchar) and its mandate for DNA synthesis screening. [007265]</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a strong, acceptable forecasting question (Score: 82). It targets a specific, high-impact legislative development: the &#x27;Biosecurity Modernization and Innovation Act of 2026&#x27; (S.3741). The bill was introduced on January 29, 2026, with bipartisan sponsorship (Senators Cotton and Klobuchar), making its passage a plausible but non-trivial event <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. The question correctly includes &#x27;successor bills&#x27; to ensure resolution if the bill is renumbered or merged, a common occurrence in the U.S. legislative process. The focus on the Department of Commerce mandate for DNA synthesis screening provides a clear, verifiable resolution criterion <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. While legislative forecasting can be influenced by unpredictable political shifts, the timeframe (end of 2027) allows for significant updates and disagreement among forecasters.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-14" data-quality="82.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">82</span><span class="q-summary-text">By December 31, 2027, will a major frontier AI developer (specifically OpenAI, Anthropic, Google DeepMind, or Meta) publicly release a full technical report or peer-reviewed paper detailing a new &#x27;human uplift&#x27; study that measures the assistance provided by a model released after January 1, 2025, in executing a biological or chemical weapon synthesis task?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">82</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Uplift studies are cited in the paper as a more valuable, though expensive, alternative to proxied bio-evals. This question tracks whether industry transparency on these critical risks will improve beyond the &#x27;marginal&#x27; or &#x27;sparse&#x27; information currently found in model cards [73be3e, Page 61].</p>
+        <p><strong>Paper reference:</strong> The paper notes that uplift studies are &quot;particularly expensive&quot; and &quot;very few&quot; companies do them [73be3e]. Richard Moulange mentions that OpenAI&#x27;s previous study was reported as negative but showed marginal signals of uplift [Page 61].</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a very good forecasting question (Score: 82). It targets &#x27;human uplift&#x27; studies, which are recognized as the gold standard for measuring LLM-enabled biorisk but are rarely performed due to high costs and technical difficulty [[PDF] MEASURING MID-2025 LLM-ASSISTANCE ON NOVICE ... - arXiv](<a href="https://arxiv.org/pdf/2602.16703" target="_blank" rel="noopener">https://arxiv.org/pdf/2602.16703</a>) [73be3e]. The question is high-entropy as it depends on the transparency and safety commitments of specific frontier labs (OpenAI, Anthropic, Google DeepMind, Meta) for their 2025+ models [[PDF] MEASURING MID-2025 LLM-ASSISTANCE ON NOVICE ... - arXiv](<a href="https://arxiv.org/pdf/2602.16703" target="_blank" rel="noopener">https://arxiv.org/pdf/2602.16703</a>). While the term &#x27;full technical report&#x27; requires precise definition in stage 03 to avoid ambiguity, the core concept is well-grounded in current biosecurity research needs [[PDF] MEASURING MID-2025 LLM-ASSISTANCE ON NOVICE ... - arXiv](<a href="https://arxiv.org/pdf/2602.16703" target="_blank" rel="noopener">https://arxiv.org/pdf/2602.16703</a>).</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-15" data-quality="78.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#ef6c00;background:#fff3e0" data-tooltip="Quality score (0-100)">78</span><span class="q-summary-text">By December 31, 2027, will a peer-reviewed study in Science, Nature, or Cell report an AI model successfully designing a functional protein sequence that evades current IGSC-standard screening protocols while maintaining its intended biological toxicity?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#ef6c00">78</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Dr. Moulange expresses deep concern about AI designing modified sequences that &#x27;beat our best software for detecting modifications&#x27; [d2588e]. This &#x27;red-teaming&#x27; milestone would provide objective evidence that AI has reached the capability to bypass the very defenses the paper proposes, moving the risk from theoretical to demonstrated [475360].</p>
+        <p><strong>Paper reference:</strong> AI-Enabled Protein Design and Evasion of Screening (p. 14)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-potential but slightly risky question (78/100). It addresses a critical technical &#x27;red-teaming&#x27; milestone identified in current research <a href="https://www.science.org/doi/10.1126/science.adu8578" target="_blank" rel="noopener">Strengthening nucleic acid biosecurity screening against ... - Science</a> <a href="https://www.biorxiv.org/content/10.1101/2024.12.02.626439v1.full-text" target="_blank" rel="noopener">Toward AI-Resilient Screening of Nucleic Acid Synthesis Orders</a>. However, it faces two challenges: 1) Potential &#x27;already happened&#x27; status—a October 2025 Science study already demonstrated AI-powered evasion of screening tools <a href="https://www.science.org/doi/10.1126/science.adu8578" target="_blank" rel="noopener">Strengthening nucleic acid biosecurity screening against ... - Science</a>. 2) Resolution ambiguity—scientists rarely publish studies on sequences with &#x27;intended biological toxicity&#x27; due to safety and ethics; they often use safe proxies <a href="https://www.nist.gov/publications/experimental-evaluation-ai-driven-protein-design-risks-using-safe-biological-proxies" target="_blank" rel="noopener">Experimental Evaluation of AI-Driven Protein Design Risks Using ...</a>. If &#x27;functional&#x27; and &#x27;toxicity&#x27; are interpreted strictly, the question might be unresolvable or &#x27;No&#x27; by default. If interpreted loosely, it may have already resolved &#x27;Yes&#x27;. Refinement should specify what counts as &#x27;toxicity&#x27; or whether proxies are acceptable.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-16" data-quality="78.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#ef6c00;background:#fff3e0" data-tooltip="Quality score (0-100)">78</span><span class="q-summary-text">Will at least two major automated cloud laboratory providers (e.g., Emerald Cloud Lab, Strateos) publicly announce the implementation of a &#x27;human-in-the-loop&#x27; verification requirement for all AI-submitted biological protocols involving &#x27;Select Agents&#x27; by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#ef6c00">78</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper notes that AI requires physical resources and that automated cloud labs are a key vulnerability [e46603]. Voluntary or regulated &#x27;human-in-the-loop&#x27; requirements for high-risk agents would signal a significant institutional response to prevent AI from autonomously executing dangerous experiments [f2b9ef, 161cb4].</p>
+        <p><strong>Paper reference:</strong> Automated cloud laboratories and physical resource constraints (Page 12)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a good forecasting question (score 78). It targets a concrete industry response to biosecurity risks in automated laboratories <a href="https://biosecurityhandbook.com/ai-biosecurity/cloud-labs.html" target="_blank" rel="noopener">Cloud Labs and Automated Biology - The Biosecurity Handbook</a>. While the &#x27;human-in-the-loop&#x27; requirement is a well-recognized potential safeguard, the question&#x27;s focus on &#x27;Select Agents&#x27; and &#x27;public announcements&#x27; makes it verifiable. The score is slightly lower than the first item because &#x27;major automated cloud laboratory providers&#x27; may require a more precise list in the final refinement to avoid ambiguity during resolution, and monitoring private company announcements for specific policy changes can sometimes be challenging <a href="https://biosecurityhandbook.com/ai-biosecurity/cloud-labs.html" target="_blank" rel="noopener">Cloud Labs and Automated Biology - The Biosecurity Handbook</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-17" data-quality="45.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#c62828;background:#ffebee" data-tooltip="Quality score (0-100)">45</span><span class="q-summary-text">Will the New York Department of Financial Services (or the designated oversight office under the RAISE Act) initiate at least one formal enforcement action or investigation against a &quot;large developer&quot; for a violation of the RAISE Act&#x27;s safety or reporting requirements by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#c62828">45</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The New York Responsible AI Safety and Education (RAISE) Act was signed into law in late 2025 and is set to take effect in July 2027 [44722c]. This question tests the practical &quot;teeth&quot; of new state-level legislation focused on frontier model safety and transparency, a key development mentioned in the paper as a potential lever for government intervention.</p>
+        <p><strong>Paper reference:</strong> Podcast Section 18: &quot;New York with the RAISE Act... EU with the EU AI Act and its code of practice.&quot;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This question is currently of low quality (45/100) due to factual inaccuracies in its premise. While the New York RAISE Act was indeed signed in December 2025 <a href="https://www.nysenate.gov/legislation/bills/2025/A6453/amendment/A" target="_blank" rel="noopener">NY State Assembly Bill 2025-A6453A - NYS Senate</a>, the enforcement authority is the New York Attorney General, not the Department of Financial Services (DFS) <a href="https://www.nysenate.gov/legislation/bills/2025/A6453/amendment/A" target="_blank" rel="noopener">NY State Assembly Bill 2025-A6453A - NYS Senate</a>. Additionally, the &#x27;July 1, 2027&#x27; effective date appears in some secondary commentary but the bill itself specifies an effective date 90 days after signing <a href="https://www.nysenate.gov/legislation/bills/2025/A6453/amendment/A" target="_blank" rel="noopener">NY State Assembly Bill 2025-A6453A - NYS Senate</a> <a href="https://www.nysenate.gov/legislation/bills/2025/S6953/amendment/B" target="_blank" rel="noopener">https://www.nysenate.gov/legislation/bills/2025/S6953/amendment/B</a>. Because the question names the wrong oversight body, it would likely fail to resolve or resolve as &#x27;No&#x27; even if an investigation by the AG occurred. It requires refinement to correctly identify the Attorney General and the Division of Homeland Security and Emergency Services as the relevant entities <a href="https://www.nysenate.gov/legislation/bills/2025/S6953/amendment/B" target="_blank" rel="noopener">https://www.nysenate.gov/legislation/bills/2025/S6953/amendment/B</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-18" data-quality="45.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#c62828;background:#ffebee" data-tooltip="Quality score (0-100)">45</span><span class="q-summary-text">Will DARPA&#x27;s &#x27;Network of Optimal Dynamic Energy Signatures&#x27; (NODES) program, or a successor initiative focused on &#x27;AI-enabled biodefense&#x27;, publicly announce the successful delivery of an AI-driven tool to the U.S. Government that &#x27;reproduces the functions of at least 15 known multifunctional proteins&#x27; as part of its Phase 1 milestones by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#c62828">45</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper emphasizes &#x27;defensive acceleration&#x27; as an underexplored but exciting category. The DARPA NODES program specifically aims to use AI to decode protein functions for biodefense. Reaching these technical milestones would provide a concrete measure of whether defensive capabilities are keeping pace with generative risks.</p>
+        <p><strong>Paper reference:</strong> The mention of &#x27;defensive acceleration&#x27; and the role of government programs in building resilience to biological threats.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question has significant technical and chronological inaccuracies. The DARPA NODES program (DARPA-PS-25-30) Phase 1 milestone (Capability Demonstration 1) requires predicting functions for 20 proteins, not 15 [[PDF] Program Solicitation](<a href="https://everglade.com/wp-content/uploads/DARPA-PS-25-30.pdf" target="_blank" rel="noopener">https://everglade.com/wp-content/uploads/DARPA-PS-25-30.pdf</a>). Furthermore, Phase 1 is a 12-month effort starting in 2025, making a December 2027 deadline for a Phase 1 milestone incorrect (it should resolve around late 2026) [[PDF] Program Solicitation](<a href="https://everglade.com/wp-content/uploads/DARPA-PS-25-30.pdf" target="_blank" rel="noopener">https://everglade.com/wp-content/uploads/DARPA-PS-25-30.pdf</a>). The program goal is &#x27;predicting&#x27; function from dynamics, whereas the question asks about &#x27;reproducing&#x27; functions, which is a conceptual mismatch [[PDF] Program Solicitation](<a href="https://everglade.com/wp-content/uploads/DARPA-PS-25-30.pdf" target="_blank" rel="noopener">https://everglade.com/wp-content/uploads/DARPA-PS-25-30.pdf</a>). While the topic of &#x27;defensive acceleration&#x27; is a high-quality forecasting area, the specific metrics in this proto-question are factually flawed.</p></details>
+      </div>
+    </details>
+  </div>
+
+<script>
+function sortBy(mode) {
+  var list = document.getElementById('question-list');
+  var items = Array.from(list.querySelectorAll('.q-item'));
+  items.sort(function(a, b) {
+    if (mode === 'quality') {
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    if (mode === 'status') {
+      var s = parseInt(a.dataset.status) - parseInt(b.dataset.status);
+      if (s !== 0) return s;
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    return 0;
+  });
+  items.forEach(function(el) { list.appendChild(el); });
+  var btns = document.querySelectorAll('.sort-btn');
+  btns.forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.sort === mode);
+  });
+}
+</script>
+</div></body></html>
