@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proto-Question Quality Filter &mdash; Measuring AI R&amp;D Automation</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f7f8fa; color: #2c2c2c; line-height: 1.65; padding: 2.5rem 1.5rem;
+  }
+  .container { max-width: 54rem; margin: 0 auto; }
+
+  /* --- Header --- */
+  .page-header {
+    background: #1a1a2e; color: #eee; border-radius: 12px;
+    padding: 2rem 2.5rem; margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(26,26,46,.18);
+  }
+  .page-header h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: .4rem; letter-spacing: -.01em; }
+  .page-header .subtitle { font-size: .88rem; color: #a0a0b8; margin-bottom: .75rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #8888a0;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .25rem .7rem; border-radius: 6px;
+  }
+
+  /* --- Sort controls --- */
+  .sort-bar {
+    display: flex; align-items: center; gap: .75rem;
+    margin-bottom: 1.5rem; font-size: .82rem; color: #888;
+  }
+  .sort-bar span { font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+  .sort-btn {
+    appearance: none; border: none; cursor: pointer;
+    background: #fff; color: #555; font-size: .8rem; font-weight: 500;
+    padding: .4rem .9rem; border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    transition: box-shadow .15s, color .15s, background .15s;
+  }
+  .sort-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); color: #1a1a2e; }
+  .sort-btn.active { background: #1a1a2e; color: #fff; box-shadow: 0 2px 8px rgba(26,26,46,.2); }
+
+  /* --- Question list (expandable details) --- */
+  .question-list { display: flex; flex-direction: column; gap: .75rem; }
+
+  .q-item {
+    background: #fff; border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.05);
+    transition: box-shadow .2s ease, transform .2s ease;
+    overflow: hidden;
+  }
+  .q-item:hover { box-shadow: 0 3px 14px rgba(0,0,0,.08); }
+  .q-item[open] { box-shadow: 0 4px 20px rgba(0,0,0,.09); }
+
+  .q-item summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: 1rem 1.5rem;
+    transition: background .15s;
+  }
+  .q-item summary::-webkit-details-marker { display: none; }
+  .q-item summary:hover { background: #fafbfd; }
+
+  .q-item summary .chevron {
+    flex-shrink: 0; width: 1rem; text-align: center;
+    font-size: .6rem; color: #b0b0b0;
+    transition: transform .2s ease;
+  }
+  .q-item[open] summary .chevron { transform: rotate(90deg); }
+
+  .q-score-badge {
+    flex-shrink: 0; font-size: .82rem; font-weight: 700;
+    min-width: 2.6rem; text-align: center;
+    padding: .2rem .5rem; border-radius: 6px;
+  }
+  .q-summary-text {
+    flex: 1; font-size: .92rem; font-weight: 500; color: #2c2c2c;
+    line-height: 1.45;
+  }
+  .badge {
+    flex-shrink: 0; font-size: .68rem; font-weight: 600;
+    padding: .2rem .55rem; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
+  .badge-selected { background: #e8f5e9; color: #2e7d32; }
+  .badge-filtered { background: #f0f0f0; color: #999; }
+
+  /* --- Expanded content --- */
+  .q-body { padding: .25rem 1.5rem 1.5rem 3.85rem; }
+
+  .score-row {
+    display: flex; gap: 1.5rem; margin: .5rem 0 1rem 0;
+    padding: .65rem 1rem; background: #f8f9fc; border-radius: 8px;
+    font-size: .84rem;
+  }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 4.5rem; }
+  .score-label {
+    position: relative;
+    font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; color: #999;
+    cursor: default;
+  }
+  .score-value { font-weight: 700; font-size: .95rem; margin-top: .1rem; }
+
+  .q-body p {
+    font-size: .9rem; line-height: 1.65; color: #444;
+    white-space: pre-wrap; word-wrap: break-word;
+    margin-bottom: .6rem;
+  }
+  .q-body p strong { color: #333; }
+
+  /* Collapsible sub-section inside expanded body */
+  .sub-section { margin-top: .5rem; }
+  .sub-section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .35rem;
+    padding: .25rem 0; font-size: .8rem; text-transform: uppercase;
+    letter-spacing: .04em; color: #999; font-weight: 500;
+  }
+  .sub-section summary::-webkit-details-marker { display: none; }
+  .sub-section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb;
+    transition: transform .15s ease;
+  }
+  .sub-section[open] summary::before { transform: rotate(90deg); }
+  .sub-section > p { margin-top: .25rem; padding-left: .8rem; }
+
+  /* --- Tooltips --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+    background: #1a1a2e; color: #e8e8f0; font-size: .7rem; font-weight: 400;
+    text-transform: none; letter-spacing: normal;
+    padding: .35rem .65rem; border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity .15s ease;
+    z-index: 10;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+
+  a { color: #1565c0; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02b: Proto-Question Quality Filter</h1>
+    <div class="subtitle">Measuring AI R&amp;D Automation</div>
+    <div class="page-stats">
+      <span>7 total</span>
+      <span>2 selected (top 2)</span>
+      <span>Cutoff score: 88</span>
+      <span>Project: ai_rd_automation</span>
+    </div>
+  </div>
+
+  <div class="sort-bar">
+    <span>Sort by</span>
+    <button class="sort-btn active" data-sort="quality" onclick="sortBy('quality')">Quality Score</button>
+    <button class="sort-btn" data-sort="status" onclick="sortBy('status')">Status (selected first)</button>
+  </div>
+
+  <div class="question-list" id="question-list">
+    <details class="q-item" id="q-0" data-quality="92.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">By December 31, 2027, will any &#x27;frontier AI company&#x27; (defined as OpenAI, Anthropic, or Google DeepMind) publicly state in an official blog post or report that they have used an AI agent to autonomously initiate and manage a training run costing more than $1 million without human-in-the-loop approval for individual step execution?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper emphasizes tracking the &#x27;oversight gap&#x27; and &#x27;AI use in high-stakes decisions&#x27; (Metric #7) [2a3bbc]. Granting AI systems the authority to manage large-scale training runs (Metric #14) is a critical transition from &#x27;assistance&#x27; to &#x27;automation&#x27; in the &#x27;Running experiments&#x27; stage (Section 2) [2a3bbc]. OpenAI has already set a &#x27;North Star&#x27; goal for an autonomous research intern by 2026/2027, making this a timely and high-entropy indicator of institutional trust in AIRDA.</p>
+        <p><strong>Paper reference:</strong> Metric #7: Extent of AI use in high-stakes decisions &amp; Metric #14: AI permission lists (Table 1) [2a3bbc]</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This question is excellent for tracking critical transitions in AI autonomy. It directly operationalizes Metric #7 (high-stakes decisions) and Metric #14 (permission lists) from the Chan et al. (2026) framework for measuring AI R&amp;D automation [[PDF] Measuring AI R&amp;D Automation - arXiv](<a href="https://arxiv.org/pdf/2603.03992" target="_blank" rel="noopener">https://arxiv.org/pdf/2603.03992</a>). The focus on autonomous training runs costing &gt;$1M is a clear, high-stakes indicator of &#x27;North Star&#x27; goals like OpenAI&#x27;s autonomous research intern. While the resolution depends on public disclosure, the high-profile nature of such a milestone makes it likely to be reported if achieved. There is significant room for disagreement on when (or if) companies will bypass human-in-the-loop approval for million-dollar investments, making it a high-entropy question. It requires deep research into company safety frameworks and internal R&amp;D roadmaps.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-1" data-quality="88.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will any AI model achieve a success rate of 70% or higher on the &#x27;SWE-bench Pro&#x27; benchmark by December 31, 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper identifies SWE-bench as a key evaluation for AI R&amp;D capabilities [a512a0]. As of March 2026, top-tier models were scoring approximately 56-57% on the more difficult, contamination-resistant &#x27;SWE-bench Pro&#x27; variant. Reaching 70% would represent a significant leap in an agent&#x27;s ability to handle complex, multi-repository software engineering tasks, which is a core upstream indicator of automated R&amp;D progress.</p>
+        <p><strong>Paper reference:</strong> Metric #1: AI R&amp;D Evaluations (Chan et al., 2026) [a512a0]</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question. It uses a well-established and objective benchmark (SWE-bench Pro) which is recognized as a rigorous test for AI agents <a href="https://ethanbholland.com/2026/03/07/ai-news-127-week-ending-march-06-2026-with-32-executive-summaries/" target="_blank" rel="noopener">AI News #127: Week Ending March 06, 2026 with 32 Executive ...</a>. The 70% threshold is ambitious but plausible given that current top-tier models like GPT-5.4 are scoring around 57.7% and Bito&#x27;s AI Architect reached 60.8% in early 2026. The question has high entropy as progress could either plateau or accelerate with new agentic architectures. The resolution source (Scale AI/SWE-bench leaderboard) is reliable and publicly accessible. Difficulty is appropriate: forecasters must analyze scaling laws, agentic scaffolding trends, and historical benchmark progress to update their estimates.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-2" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will any AI model achieve a score of 85.0% or higher on the SWE-bench Verified leaderboard by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> As of February 2026, the state-of-the-art score on SWE-bench Verified is 76.80% (Claude 4.5 Opus) [a398bf]. SWE-bench measures the ability of models to autonomously resolve real-world software issues, a core capability for AI R&amp;D automation. An 85% threshold represents a significant leap toward full automation of software engineering, which the provided paper identifies as a key driver of potential intelligence explosions.</p>
+        <p><strong>Paper reference:</strong> SWE-bench: Can language models resolve real-world GitHub issues? (Jimenez et al., 2023) and recent 2026 leaderboard updates.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question is high quality. It uses a well-established and reliable benchmark (SWE-bench Verified) with a clear, objective resolution source. The threshold of 85% is well-calibrated: as of March 2026, state-of-the-art scores range from 79.2% to 80.9%, making an 85% target by late 2027 a non-trivial but plausible milestone that allows for significant forecaster disagreement and research into scaling laws and agentic improvements.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-3" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will a peer-reviewed study or a technical report from a major AI lab, published before December 31, 2027, conclude that AI-only teams outperformed human-only teams in a controlled &#x27;AI R&amp;D Performance RCT&#x27; involving a complex task such as &#x27;replicating a state-of-the-art ML paper&#x27;?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper highlights the importance of RCTs comparing AI-only, human-only, and human-AI teams (Metric #2) [401564]. Replicating complex research is a core R&amp;D task. While AI currently assists humans, the shift to AI-only teams outperforming experts on high-level research tasks would be a definitive signal of nearing full automation. This is a high-entropy indicator of whether AI can handle the &quot;ambiguous objectives&quot; and &quot;longer time horizons&quot; that the paper notes as limitations of current benchmarks. [401564]</p>
+        <p><strong>Paper reference:</strong> Metric #2: AI performance compared to humans (AI R&amp;D Performance RCTs) [401564]</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question (Score: 85). It targets a significant milestone in AI capabilities proposed in recent literature (Metric #2 in &#x27;Measuring AI R&amp;D Automation&#x27;) <a href="https://arxiv.org/abs/2603.03992" target="_blank" rel="noopener">https://arxiv.org/abs/2603.03992</a>. The resolution is tied to a verifiable output (peer-reviewed study or technical report) <a href="https://github.com/openai/mle-bench" target="_blank" rel="noopener">MLE-bench is a benchmark for measuring how well AI ... - GitHub</a>. While the specific definition of &#x27;AI-only&#x27; and &#x27;human-only&#x27; will require precision in refinement, the concept is non-trivial, high-entropy, and addresses a genuine uncertainty in the trajectory of AI R&amp;D automation [[PDF] MLE-bench - arXiv](<a href="https://arxiv.org/pdf/2410.07095" target="_blank" rel="noopener">https://arxiv.org/pdf/2410.07095</a>).</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-4" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">By December 31, 2027, will any AI model from a major developer (e.g., OpenAI, Anthropic, or Google DeepMind) be reported by a recognized AI safety institute (such as US AISI or UK AISI) to have demonstrated &quot;alignment faking&quot; during a pre-deployment evaluation?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper highlights alignment faking (Greenblatt et al., 2024) as a key misalignment evaluation metric that increases oversight demand. As frontier models increasingly recognize evaluation contexts, this becomes a high-stakes upstream signal for whether safety protocols are being subverted. Reports from the US or UK AI Safety Institutes provide an objective, authoritative source of truth.</p>
+        <p><strong>Paper reference:</strong> 4.1.4 Metric #4: Misalignment evaluations</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question is high-quality because it targets a specific, technically defined failure mode (alignment faking) that is a major focus of current AI safety research <a href="https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-openais-o1-model" target="_blank" rel="noopener">Pre-Deployment evaluation of OpenAI&#x27;s o1 model | AISI Work</a>. It is &#x27;somewhat difficult&#x27; as it requires monitoring official reports from specialized institutes like the UK and US AISI, which have already begun conducting and publishing pre-deployment evaluations for models like OpenAI&#x27;s o1 and Anthropic&#x27;s Claude 3.5 Sonnet <a href="https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-openais-o1-model" target="_blank" rel="noopener">Pre-Deployment evaluation of OpenAI&#x27;s o1 model | AISI Work</a> <a href="https://www.nist.gov/news-events/news/2024/12/pre-deployment-evaluation-openais-o1-model" target="_blank" rel="noopener">Pre-Deployment Evaluation of OpenAI&#x27;s o1 Model | NIST</a>. The question has high entropy: while internal lab reports (like the o1 system card) already mention &#x27;instrumental alignment faking&#x27;, an official confirmation from a third-party government institute by 2027 is a significant and uncertain milestone. Potential data issues include the risk of safety institutes using different terminology (e.g., &#x27;deceptive alignment&#x27;); however, the prompt&#x27;s inclusion of a specific paper reference (Greenblatt et al., 2024) and the increasing standardization of these terms mitigate this. The reliance on public reporting by AISIs is a minor risk, as their current trend is toward transparency in technical findings <a href="https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-openais-o1-model" target="_blank" rel="noopener">Pre-Deployment evaluation of OpenAI&#x27;s o1 model | AISI Work</a> <a href="https://www.nist.gov/news-events/news/2024/12/pre-deployment-evaluation-openais-o1-model" target="_blank" rel="noopener">Pre-Deployment Evaluation of OpenAI&#x27;s o1 Model | NIST</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-5" data-quality="72.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#ef6c00;background:#fff3e0" data-tooltip="Quality score (0-100)">72</span><span class="q-summary-text">By December 31, 2027, will a leading AI developer (OpenAI, Anthropic, or Google DeepMind) publish an &quot;oversight retrospective&quot; or &quot;audit&quot; that includes a specific error or defect rate for AI-generated code compared to human-written code in their internal production environment?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#ef6c00">72</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> This question targets the &quot;oversight gap&quot; metric [12b8c2]. The paper notes that defining and catching defects in AI-generated R&amp;D outputs is a major hurdle for measuring automation progress [12b8c2]. A public report on these rates would provide the first objective baseline for how much human review is required as AI takes over R&amp;D tasks.</p>
+        <p><strong>Paper reference:</strong> Section 4.3.2 Metric #9: Oversight effectiveness retrospectives</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This question is acceptable but faces potential resolution challenges. While it addresses a critical concept (the &#x27;oversight gap&#x27; from recent AI R&amp;D automation research <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>), it relies on the voluntary disclosure of internal data by private labs. The paper defining this metric notes the data has &#x27;moderate to high&#x27; sensitivity <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>, which may discourage publication. The term &#x27;oversight retrospective&#x27; is specific to the cited paper, so resolution criteria must strictly define what qualifies to avoid ambiguity if a lab releases a general &#x27;safety update&#x27; without specific defect rates.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-6" data-quality="20.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#c62828;background:#ffebee" data-tooltip="Quality score (0-100)">20</span><span class="q-summary-text">Will any AI model achieve a score of 50.0% or higher on the &quot;High-complexity&quot; task subset of the MLE-bench benchmark, as officially recorded on the benchmark&#x27;s GitHub or associated leaderboard, by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#c62828">20</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper highlights MLE-bench as a metric for ML engineering, noting that high-complexity tasks represent a significant hurdle for current agents [2410.07095]. As of early 2026, top models are reaching high overall scores, but a 50% threshold on &#x27;high-complexity&#x27; tasks represents a non-trivial leap into autonomous R&amp;D [6788a7].</p>
+        <p><strong>Paper reference:</strong> The paper identifies MLE-bench (Chan et al., 2025) as a key benchmark for evaluating machine learning engineering capabilities [2410.07095].</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This question needs significant work or is essentially obsolete (Score: 20). Research into the MLE-bench leaderboard reveals that the 50% threshold for &#x27;High-complexity&#x27; tasks has already been surpassed. Specifically, the &#x27;Disarray&#x27; ensemble agent is recorded as having achieved a score of 71.11% on this subset as of early 2026 <a href="https://github.com/openai/mle-bench" target="_blank" rel="noopener">MLE-bench is a benchmark for measuring how well AI ... - GitHub</a> <a href="https://github.com/openai/mle-bench" target="_blank" rel="noopener">MLE-bench is a benchmark for measuring how well AI ... - GitHub</a>. Consequently, the question lacks the &#x27;high entropy&#x27; required for a good forecasting question as the target event has already occurred or is trivial to achieve by the 2027 deadline <a href="https://github.com/openai/mle-bench" target="_blank" rel="noopener">MLE-bench is a benchmark for measuring how well AI ... - GitHub</a>.</p></details>
+      </div>
+    </details>
+  </div>
+
+<script>
+function sortBy(mode) {
+  var list = document.getElementById('question-list');
+  var items = Array.from(list.querySelectorAll('.q-item'));
+  items.sort(function(a, b) {
+    if (mode === 'quality') {
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    if (mode === 'status') {
+      var s = parseInt(a.dataset.status) - parseInt(b.dataset.status);
+      if (s !== 0) return s;
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    return 0;
+  });
+  items.forEach(function(el) { list.appendChild(el); });
+  var btns = document.querySelectorAll('.sort-btn');
+  btns.forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.sort === mode);
+  });
+}
+</script>
+</div></body></html>

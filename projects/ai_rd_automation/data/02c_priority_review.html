@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Priority Scoring &mdash; Measuring AI R&amp;D Automation</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f5f5f5; color: #222; line-height: 1.6; padding: 2rem 1rem; }
+  .container { max-width: 56rem; margin: 0 auto; }
+  .page-header { background: #1a1a2e; color: #eee; border-radius: 10px; padding: 1.5rem 2rem; margin-bottom: 1.5rem; }
+  .page-header h1 { font-size: 1.4rem; margin-bottom: .5rem; }
+  .page-header .subtitle { font-size: .9rem; color: #aaa; margin-bottom: .5rem; }
+  .page-header .page-stats { display: flex; flex-wrap: wrap; gap: .75rem; font-size: .85rem; color: #999; }
+  .page-header .page-stats span { background: rgba(255,255,255,.1); padding: .2rem .6rem; border-radius: 4px; }
+  .toc { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .toc h2 { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: .75rem; }
+  .toc-item { display: flex; align-items: baseline; gap: .6rem; padding: .35rem 0; text-decoration: none; color: #222; border-bottom: 1px solid #f0f0f0; }
+  .toc-item:last-child { border-bottom: none; }
+  .toc-item:hover { color: #1a1a2e; }
+  .toc-score { font-size: .85rem; font-weight: 700; min-width: 2.8rem; text-align: center; padding: .15rem .35rem; border-radius: 4px; }
+  .toc-title { font-size: .9rem; font-weight: 500; flex: 1; }
+  .toc-cluster { font-size: .72rem; color: #666; background: #f0f0f0; padding: .1rem .45rem; border-radius: 10px; white-space: nowrap; }
+  .toc-status { font-size: .75rem; min-width: 7rem; text-align: right; }
+  .card { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 1.25rem; }
+  .card-header { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .75rem; }
+  .card h2 { font-size: 1.05rem; line-height: 1.4; }
+  .badge { font-size: .7rem; color: #666; background: #f0f0f0; padding: .1rem .45rem; border-radius: 10px; }
+  .badge-advanced { background: #e8f5e9; color: #2e7d32; font-weight: 600; }
+  .badge-demoted { background: #fff3e0; color: #ef6c00; font-weight: 600; }
+  .badge-low { background: #ffebee; color: #c62828; font-weight: 600; }
+  .score-row { display: flex; flex-wrap: wrap; gap: .75rem; margin: .5rem 0; padding: .6rem 1rem; background: #f8f9fc; border-radius: 6px; font-size: .84rem; }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 5.5rem; }
+  .score-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .03em; color: #888; }
+  .score-value { font-weight: 700; font-size: .95rem; }
+  .composite { font-size: 1.1rem; }
+  .section { margin-top: .5rem; }
+  .section summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: .4rem; padding: .3rem 0; }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before { content: "\25B6"; font-size: .5rem; color: #aaa; transition: transform .15s; }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section > p, .section > .content { margin-top: .3rem; padding-left: .9rem; }
+  .card p { font-size: .9rem; white-space: pre-wrap; word-wrap: break-word; }
+  .card h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin: 0; }
+  a { color: #1565c0; }
+  .cluster-summary { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .cluster-summary h2 { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: .75rem; }
+  .cluster-row { display: flex; align-items: center; gap: .6rem; padding: .3rem 0; border-bottom: 1px solid #f0f0f0; font-size: .85rem; }
+  .cluster-row:last-child { border-bottom: none; }
+  .cluster-name { min-width: 12rem; font-weight: 600; }
+  .cluster-bar { height: .5rem; border-radius: 3px; background: #1565c0; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02c: Priority Scoring (ITN + Soon/Sudden/Sharp)</h1>
+    <div class="subtitle">Measuring AI R&amp;D Automation</div>
+    <div class="page-stats">
+      <span>2 scored</span>
+      <span>2 advanced</span>
+      <span>0 diversity-demoted</span>
+      <span>0 low priority</span>
+      <span>Threshold: 60</span>
+      <span>Max/cluster: 3</span>
+      <span>Project: ai_rd_automation</span>
+    </div>
+  </div>
+  <div class="cluster-summary"><h2>Topic Clusters</h2>
+    <div class="cluster-row"><span class="cluster-name">AI R&amp;D automation / Operational autonomy</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+    <div class="cluster-row"><span class="cluster-name">capability benchmarks</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+  </div>
+  <nav class="toc"><h2>All Questions (by priority score)</h2>
+    <a class="toc-item" href="#q-0"><span class="toc-score" style="color:#ef6c00;background:#fff3e0">80</span><span class="toc-title">By December 31, 2027, will any &#x27;frontier AI company&#x27; (defined as OpenAI, Anthropic, or Google DeepMind) publicly state i</span><span class="toc-cluster">AI R&amp;D automation / Operational autonomy</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+    <a class="toc-item" href="#q-1"><span class="toc-score" style="color:#ef6c00;background:#fff3e0">66</span><span class="toc-title">Will any AI model achieve a success rate of 70% or higher on the &#x27;SWE-bench Pro&#x27; benchmark by December 31, 2027?</span><span class="toc-cluster">capability benchmarks</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+  </nav>
+  <div class="card" id="q-0">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#ef6c00;background:#fff3e0">80</span>
+    <div><h2>By December 31, 2027, will any &#x27;frontier AI company&#x27; (defined as OpenAI, Anthropic, or Google DeepMind) publicly state in an official blog post or report that they have used an AI agent to autonomously initiate and manage a training run costing more than $1 million without human-in-the-loop approval for individual step execution?</h2>
+      <span class="toc-cluster">AI R&amp;D automation / Operational autonomy</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#ef6c00">75</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#ef6c00">70</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#2e7d32">90</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#2e7d32">80</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 92</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>The paper emphasizes tracking the &#x27;oversight gap&#x27; and &#x27;AI use in high-stakes decisions&#x27; (Metric #7) [2a3bbc]. Granting AI systems the authority to manage large-scale training runs (Metric #14) is a critical transition from &#x27;assistance&#x27; to &#x27;automation&#x27; in the &#x27;Running experiments&#x27; stage (Section 2) [2a3bbc]. OpenAI has already set a &#x27;North Star&#x27; goal for an autonomous research intern by 2026/2027, making this a timely and high-entropy indicator of institutional trust in AIRDA.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Metric #7: Extent of AI use in high-stakes decisions &amp; Metric #14: AI permission lists (Table 1) [2a3bbc]</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>The question tracks a &#x27;crucial transition&#x27; from AI as an assistant to AI as an autonomous agent <a href="https://arxiv.org/html/2603.03992v3" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. Granting AI systems the authority to manage large-scale training runs (Metric #14) is a leading indicator for the &#x27;oversight gap&#x27; <a href="https://arxiv.org/html/2603.03992v3" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. OpenAI has already set a &#x27;North Star&#x27; goal for an &#x27;autonomous research intern&#x27; by 2026/2027, making this a highly decision-relevant indicator of institutional trust in AI R&amp;D automation (AIRDA). Resolution would meaningfully update beliefs about the trajectory of AI capabilities and the speed at which human oversight is being removed from the critical path of AI development.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>While general AI agent capabilities are tracked (e.g., SWE-bench), specific public disclosures of &#x27;autonomous management of large-scale training runs&#x27; are not systematically tracked by existing policy trackers or major forecasting platforms. Searches on Metaculus, Polymarket, and Manifold found related questions on AGI and general automation, but none specifically targeting the $1 million autonomous training run threshold or the use of &#x27;permission lists&#x27; (Metric #14) for R&amp;D <a href="https://arxiv.org/html/2603.03992v3" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. This specific operational indicator is currently neglected by formal forecasting markets.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>The question is tractable because it relies on monitoring official communications (blog posts, reports) from a small, defined set of &#x27;frontier&#x27; companies. While not a simple base-rate lookup, a researcher can synthesise evidence from corporate roadmaps, leaked memos, and technical disclosures to update their forecast. The rich information environment provided by these companies allows for a non-trivial synthesis of evidence.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>The question is highly time-sensitive as frontier companies like OpenAI are actively targeting &#x27;autonomous research interns&#x27; for 2026 and &#x27;fully automated researchers&#x27; for 2028. The window for observing this transition and implementing corresponding oversight mechanisms is currently open but closing rapidly as the technology approaches these inflection points.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>The event would likely be a discrete announcement in a technical blog post or system card, representing a state change from human-led to AI-led R&amp;D. While the general direction of travel is visible, the specific crossing of the $1 million autonomous threshold could happen with limited public anticipation, surprising observers with the degree of trust placed in the agentic system.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>This is a &#x27;sharp&#x27; risk because the first publicly observable instance of a $1M+ autonomous training run might also be the first time a serious oversight failure (e.g., unintended resource consumption or subversion) occurs <a href="https://arxiv.org/html/2603.03992v3" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. There are unlikely to be clear, smaller-scale &#x27;warning shots&#x27; that trigger corrective policy action before a frontier company reaches this level of operational autonomy. Problems in AIRDA may compound silently until a major milestone is reached.</p></details>
+  </div>
+  <div class="card" id="q-1">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#ef6c00;background:#fff3e0">66</span>
+    <div><h2>Will any AI model achieve a success rate of 70% or higher on the &#x27;SWE-bench Pro&#x27; benchmark by December 31, 2027?</h2>
+      <span class="toc-cluster">capability benchmarks</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#c62828">55</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#ef6c00">75</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#2e7d32">80</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#c62828">50</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#c62828">35</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 88</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>The paper identifies SWE-bench as a key evaluation for AI R&amp;D capabilities [a512a0]. As of March 2026, top-tier models were scoring approximately 56-57% on the more difficult, contamination-resistant &#x27;SWE-bench Pro&#x27; variant. Reaching 70% would represent a significant leap in an agent&#x27;s ability to handle complex, multi-repository software engineering tasks, which is a core upstream indicator of automated R&amp;D progress.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Metric #1: AI R&amp;D Evaluations (Chan et al., 2026) [a512a0]</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>The question tracks a critical leading indicator for AI R&amp;D capabilities, a key risk pathway for automated capability acceleration [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. Reaching 70% on the &#x27;Pro&#x27; variant—which requires handling enterprise-grade, long-horizon tasks—would represent a significant leap from current SOTA levels (approx. 41-56% as of early 2026) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. This outcome would substantially update beliefs about the proximity of autonomous AI engineers [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>While general &#x27;SWE-bench&#x27; and &#x27;SWE-bench Verified&#x27; are frequently forecasted on platforms like Metaculus and Manifold, the &#x27;SWE-bench Pro&#x27; variant is newer and less saturated [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). However, because it is a high-profile benchmark released by Scale AI and already has an active public leaderboard, it is being monitored by industry analysts and some prediction markets (e.g., Manifold has a market on the EOY 2026 score) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. No long-term (2027) forecast specifically for the 70% threshold was found on Metaculus, Polymarket, or INFER.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Forecasting this requires synthesizing technical scaling laws, agentic workflow improvements, and historical benchmark saturation rates [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). There is a rich information environment (leaderboards, research papers, and compute trends) that allows a skilled researcher to move significantly beyond a naive prior <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>The question tracks an actively unfolding development at a critical juncture for AI agent deployment [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). The 2027 resolution window aligns with industry expectations for the next generation of frontier models (GPT-6, etc.) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. Knowing the answer now is highly valuable for calibrating safety and economic transition timelines.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>While model releases are discrete events, benchmark improvements generally follow a predictable, gradual scaling trend <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. However, the shift from &#x27;Verified&#x27; (bug fixes) to &#x27;Pro&#x27; (long-horizon engineering) represents a more discrete state change in capability that could surprise observers if architectural breakthroughs occur [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>Progress on this metric follows a visible, incremental trajectory with many &#x27;warning shots&#x27; in the form of intermediate model releases (e.g., GPT-5.2, Claude 4.5) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. It is not an &#x27;all-or-nothing&#x27; risk where the first signal is the catastrophe, as improvements in coding agents are publicly tracked and debated [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).</p></details>
+  </div>
+</div></body></html>
