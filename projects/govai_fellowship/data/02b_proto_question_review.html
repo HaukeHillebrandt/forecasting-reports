@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proto-Question Quality Filter &mdash; GovAI Winter Fellowship 2026 Presentations</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f7f8fa; color: #2c2c2c; line-height: 1.65; padding: 2.5rem 1.5rem;
+  }
+  .container { max-width: 54rem; margin: 0 auto; }
+
+  /* --- Header --- */
+  .page-header {
+    background: #1a1a2e; color: #eee; border-radius: 12px;
+    padding: 2rem 2.5rem; margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(26,26,46,.18);
+  }
+  .page-header h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: .4rem; letter-spacing: -.01em; }
+  .page-header .subtitle { font-size: .88rem; color: #a0a0b8; margin-bottom: .75rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #8888a0;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .25rem .7rem; border-radius: 6px;
+  }
+
+  /* --- Sort controls --- */
+  .sort-bar {
+    display: flex; align-items: center; gap: .75rem;
+    margin-bottom: 1.5rem; font-size: .82rem; color: #888;
+  }
+  .sort-bar span { font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+  .sort-btn {
+    appearance: none; border: none; cursor: pointer;
+    background: #fff; color: #555; font-size: .8rem; font-weight: 500;
+    padding: .4rem .9rem; border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    transition: box-shadow .15s, color .15s, background .15s;
+  }
+  .sort-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); color: #1a1a2e; }
+  .sort-btn.active { background: #1a1a2e; color: #fff; box-shadow: 0 2px 8px rgba(26,26,46,.2); }
+
+  /* --- Question list (expandable details) --- */
+  .question-list { display: flex; flex-direction: column; gap: .75rem; }
+
+  .q-item {
+    background: #fff; border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.05);
+    transition: box-shadow .2s ease, transform .2s ease;
+    overflow: hidden;
+  }
+  .q-item:hover { box-shadow: 0 3px 14px rgba(0,0,0,.08); }
+  .q-item[open] { box-shadow: 0 4px 20px rgba(0,0,0,.09); }
+
+  .q-item summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: 1rem 1.5rem;
+    transition: background .15s;
+  }
+  .q-item summary::-webkit-details-marker { display: none; }
+  .q-item summary:hover { background: #fafbfd; }
+
+  .q-item summary .chevron {
+    flex-shrink: 0; width: 1rem; text-align: center;
+    font-size: .6rem; color: #b0b0b0;
+    transition: transform .2s ease;
+  }
+  .q-item[open] summary .chevron { transform: rotate(90deg); }
+
+  .q-score-badge {
+    flex-shrink: 0; font-size: .82rem; font-weight: 700;
+    min-width: 2.6rem; text-align: center;
+    padding: .2rem .5rem; border-radius: 6px;
+  }
+  .q-summary-text {
+    flex: 1; font-size: .92rem; font-weight: 500; color: #2c2c2c;
+    line-height: 1.45;
+  }
+  .badge {
+    flex-shrink: 0; font-size: .68rem; font-weight: 600;
+    padding: .2rem .55rem; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
+  .badge-selected { background: #e8f5e9; color: #2e7d32; }
+  .badge-filtered { background: #f0f0f0; color: #999; }
+
+  /* --- Expanded content --- */
+  .q-body { padding: .25rem 1.5rem 1.5rem 3.85rem; }
+
+  .score-row {
+    display: flex; gap: 1.5rem; margin: .5rem 0 1rem 0;
+    padding: .65rem 1rem; background: #f8f9fc; border-radius: 8px;
+    font-size: .84rem;
+  }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 4.5rem; }
+  .score-label {
+    position: relative;
+    font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; color: #999;
+    cursor: default;
+  }
+  .score-value { font-weight: 700; font-size: .95rem; margin-top: .1rem; }
+
+  .q-body p {
+    font-size: .9rem; line-height: 1.65; color: #444;
+    white-space: pre-wrap; word-wrap: break-word;
+    margin-bottom: .6rem;
+  }
+  .q-body p strong { color: #333; }
+
+  /* Collapsible sub-section inside expanded body */
+  .sub-section { margin-top: .5rem; }
+  .sub-section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .35rem;
+    padding: .25rem 0; font-size: .8rem; text-transform: uppercase;
+    letter-spacing: .04em; color: #999; font-weight: 500;
+  }
+  .sub-section summary::-webkit-details-marker { display: none; }
+  .sub-section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb;
+    transition: transform .15s ease;
+  }
+  .sub-section[open] summary::before { transform: rotate(90deg); }
+  .sub-section > p { margin-top: .25rem; padding-left: .8rem; }
+
+  /* --- Tooltips --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+    background: #1a1a2e; color: #e8e8f0; font-size: .7rem; font-weight: 400;
+    text-transform: none; letter-spacing: normal;
+    padding: .35rem .65rem; border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity .15s ease;
+    z-index: 10;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+
+  a { color: #1565c0; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02b: Proto-Question Quality Filter</h1>
+    <div class="subtitle">GovAI Winter Fellowship 2026 Presentations</div>
+    <div class="page-stats">
+      <span>8 total</span>
+      <span>2 selected (top 2)</span>
+      <span>Cutoff score: 92</span>
+      <span>Project: govai_fellowship</span>
+    </div>
+  </div>
+
+  <div class="sort-bar">
+    <span>Sort by</span>
+    <button class="sort-btn active" data-sort="quality" onclick="sortBy('quality')">Quality Score</button>
+    <button class="sort-btn" data-sort="status" onclick="sortBy('status')">Status (selected first)</button>
+  </div>
+
+  <div class="question-list" id="question-list">
+    <details class="q-item" id="q-0" data-quality="94.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">94</span><span class="q-summary-text">By December 31, 2027, will a peer-reviewed paper or a report from a national AI Safety Institute (e.g., US AISI or UK AISI) document a case of &quot;strategic deception&quot; or &quot;scheming&quot; in a frontier model, where the model covertly pursued an objective contrary to its explicit instructions during a red-teaming exercise?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">94</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper identifies &quot;deception&quot; and &quot;power-seeking&quot; as intrinsic factors leading to Loss of Control [3d94a3]. While research by groups like Apollo Research has shown early evidence of deception, a confirmed case in a frontier model during formal safety testing would be a critical signal for regulators. This question is non-trivial as current &quot;alignment&quot; techniques aim to prevent this, making its occurrence a major &quot;systemic risk&quot; event as defined in the paper.</p>
+        <p><strong>Paper reference:</strong> Section 2, Slide 2: &quot;Risk emerge from: Deception, Power-seeking&quot; and Section 3, Slide 8: &quot;No instances of Deviation.&quot; [3d94a3]</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question on a central technical AI safety risk. It addresses a highly uncertain future event with high stakes. The criteria for resolution (peer-reviewed papers or AISI reports) are high-quality and reliable. Current research (e.g., Apollo Research, OpenAI, and UK AISI&#x27;s &#x27;Scheming in the Wild&#x27;) shows the topic is at the frontier of safety research, ensuring the question is difficult and requires deep technical research to forecast accurately. The 2027 deadline is appropriate given the current pace of model development and evaluation. The distinction between &#x27;alignment faking&#x27; and &#x27;covertly pursuing a contrary objective&#x27; is clear enough to allow for meaningful disagreement between experts.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-1" data-quality="92.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will a frontier AI model (defined as any model by OpenAI, Anthropic, or Google DeepMind) achieve a success rate of 50% or higher on the METR &#x27;Rogue Replication&#x27; or &#x27;RepliBench&#x27; autonomous replication evaluation tasks by December 31, 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper identifies Autonomous Replication and Adaptation (ARA) as a key loss of control (LoC) scenario recognized by all three major labs. Tracking performance on standardized benchmarks like METR&#x27;s tasks or the UK AISI&#x27;s RepliBench provides a concrete capability threshold for when a model might pose a real-world risk of escaping human oversight.</p>
+        <p><strong>Paper reference:</strong> Slide 6: Risk Scenarios in the Literature (ARA); Slide 7: Risk Scenarios Developers Include (Anthropic, OpenAI, Google DeepMind)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent technical forecasting question. It targets a &#x27;loss of control&#x27; capability (Autonomous Replication and Adaptation) that is widely recognized as a critical safety milestone by labs (OpenAI, Anthropic, Google DeepMind) and regulators. The question uses established, high-quality benchmarks (METR&#x27;s Rogue Replication and UK AISI&#x27;s RepliBench). Current state-of-the-art models like Claude 3.7 Sonnet (as of 2025/2026) have already shown success in &#x27;task families&#x27; (e.g., &gt;50% pass@10 on 15/20 families), but achieving an overall 50% success rate on the full, difficult suite remains a significant and uncertain challenge. The clear resolution source (METR/AISI reports) and the high degree of expert disagreement over AI capability trajectories ensure high entropy and difficulty. The only minor risk is the definition of &#x27;success rate&#x27; (pass@1 vs pass@10), which can be clarified in stage 03 refinement.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-2" data-quality="92.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will at least one of the three &#x27;frontier&#x27; US AI startups mentioned in the paper (OpenAI, Anthropic, or xAI) complete an Initial Public Offering (IPO) on a US stock exchange by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper emphasizes the reliance on massive private equity rounds. As valuations for these firms reach unprecedented levels (e.g., OpenAI at $150B+, Anthropic raising $30B), the transition to public markets is a critical signal of the &#x27;burn rate&#x27; sustainability and the maturation of the AI capital cycle the authors discuss. Recent news suggests Anthropic is already eyeing a 2026/2027 IPO.</p>
+        <p><strong>Paper reference:</strong> The paper observes that &#x27;U.S. AI firms have been burning billions of dollars in cash per year&#x27; and that &#x27;equity financing is a prerequisite for competitiveness.&#x27; It identifies Anthropic, OpenAI, and xAI as the top-tier US firms.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question. It addresses a genuinely uncertain and significant event in the AI industry. Current market reports suggest Anthropic and OpenAI are preparing for IPOs in the 2026-2027 window, but specific timing is highly dependent on market conditions and regulatory approvals, making it non-trivial. There is sufficient public information (hiring of law firms, corporate restructuring) for forecasters to research, yet enough uncertainty for reasonable disagreement. The resolution source (major stock exchanges) is reliable and definitive.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-3" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">By December 31, 2027, will the UK Parliament pass an amendment to the Interpretation Act 1978 that explicitly defines &#x27;person&#x27; or &#x27;officer&#x27; (or an equivalent term used for statutory duties) to include a &#x27;computer system&#x27; or &#x27;artificial intelligence&#x27; for the purpose of administrative decision-making?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper identifies delegation barriers—where legislation requires specific humans to exercise discretion—as a primary legal blocker for public sector AI adoption. A formal amendment to the Interpretation Act 1978 is the most direct and broad-reaching legislative solution proposed to resolve this &#x27;rubberstamping&#x27; risk. This question tracks the success of a core institutional reform intended to unlock AI at scale in government.</p>
+        <p><strong>Paper reference:</strong> Slide 17: Proposal to amend the Interpretation Act 1978 to make it lawful by default to use AI in place of a human decision-maker.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This question is well-structured and addresses a specific, impactful legal hurdle for AI adoption. The Interpretation Act 1978 is the correct legislative vehicle for such a change. While the UK&#x27;s Data (Use and Access) Act 2025 has already begun modernizing automated decision-making rules, it did not go as far as defining &#x27;person&#x27; to include AI, leaving the &#x27;delegation barrier&#x27; mentioned in the rationale as an open issue. The question is difficult, requiring tracking of UK parliamentary bills and legal scholarship. It has high entropy as the government may prefer sector-specific guidance over a broad constitutional-level amendment. The resolution is clear via legislation.gov.uk.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-4" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will a new version of the &quot;MonitorBench&quot; or a successor to the Guan et al. (2025) benchmark be adopted by at least two major AI labs (OpenAI, Anthropic, or Google DeepMind) to report &quot;monitor-aware evasion&quot; scores by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper mentions that current benchmarks (Guan et al.) are acknowledged as &quot;unrealistically easy&quot; (Page 10). Research into &quot;monitor-aware evasion&quot; (where the model tries to hide its CoT) is an emerging upstream signal of model-monitor dynamics. Adoption of a standardized &quot;hard&quot; benchmark would show progress in evaluation realism.</p>
+        <p><strong>Paper reference:</strong> Rec 5: Realistic Synthetic Attacks and Guan et al. (Page 10).</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question (Score: 88). It targets a specific, emerging technical safety challenge (&#x27;monitor-aware evasion&#x27;) identified in recent literature as a critical gap in current evaluations (Guan et al., 2025). The emergence of MonitorBench in early 2026 provides a concrete successor benchmark for forecasters to track. The requirement for adoption by at least two major labs (OpenAI, Anthropic, Google DeepMind) is a non-trivial hurdle that requires models to move beyond &#x27;easy&#x27; monitoring to &#x27;evasion-aware&#x27; monitoring, creating high entropy. Data issues are minimal as these labs frequently publish system cards and safety reports where such scores would be disclosed. The 2027 deadline allows sufficient time for the field to mature while remaining highly relevant to the development of reasoning-heavy models.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-5" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">By December 31, 2027, will the Cyberspace Administration of China (CAC) or the Ministry of Industry and Information Technology (MIIT) issue a formal regulation or &#x27;Provisional Measure&#x27; specifically governing the security and deployment of &#x27;AI agents&#x27; or &#x27;autonomous agents&#x27;?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper highlights the tension between public &#x27;overadoption&#x27; of AI agents (OpenClaw) and government security warnings. Formalizing these warnings into regulations is a key upstream signal of how China will manage the &#x27;anxiety-driven&#x27; adoption risks identified in the research. Current drafts focus on &#x27;interactive AI,&#x27; but a specific &#x27;agent&#x27; framework would signal a major regulatory milestone.</p>
+        <p><strong>Paper reference:</strong> Slide 6: &quot;2026 Install OpenClaw — or be left behind&quot; and Slide 7: &quot;People didn&#x27;t queue despite the government&#x27;s OpenClaw security warnings.&quot;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a high-quality forecasting question. It addresses a specific, plausible regulatory development in a major AI jurisdiction. As of April 2026, China has just issued &#x27;Draft Measures on Interactive AI Services&#x27;, which the rationale correctly identifies as a precursor or broader category. The question focuses on a more specific &#x27;agent&#x27; or &#x27;autonomous agent&#x27; framework, which represents a clear and significant regulatory hurdle. The binary resolution (will they or won&#x27;t they) is well-defined, and the involvement of CAC/MIIT ensures a reliable resolution source. The timeframe (Dec 2027) is sufficient for significant policy shifts, making it a non-trivial forecast with high entropy. Research into Chinese AI policy trends and the specific &#x27;OpenClaw&#x27; security concerns would significantly influence a forecaster&#x27;s probability assessment.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-6" data-quality="86.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">86</span><span class="q-summary-text">By 31 December 2027, will the Singapore AI Safety Hub (SASH) announce a joint AI safety evaluation or red-teaming project involving both a US-headquartered AI lab (e.g., OpenAI, Anthropic, Google) and a Chinese-headquartered AI lab?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">86</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper positions Singapore as a &#x27;neutral bridge&#x27; between the US and China. This question tests the viability of this theory of change by tracking whether Singapore can successfully facilitate technical safety cooperation between the two competing AI superpowers.</p>
+        <p><strong>Paper reference:</strong> Section 2: &#x27;Singapore AI Safety Hub... Position Singapore as a situationally aware, technically capable AI governance testbed via joint research projects&#x27;.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question is well-defined and targets a specific, plausible geopolitical role for Singapore as a neutral bridge in AI safety governance. It is non-trivial, as US-China technical cooperation is currently limited, making the outcome genuinely uncertain. Research into Singapore&#x27;s diplomatic efforts (e.g., the &#x27;Singapore Consensus&#x27; and SASH&#x27;s &#x27;togaither&#x27; events) would meaningfully update a forecaster&#x27;s probability. The resolution source (SASH announcements) is likely to be reliable. One minor risk is the definition of &#x27;joint&#x27;—whether it requires a formal tripartite agreement or just simultaneous participation in a SASH-led initiative—but this can be addressed in stage 03 refinement. Overall, it has high entropy and tests a clear theory of change.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-7" data-quality="84.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">84</span><span class="q-summary-text">Will a joint statement or consensus document be released by the official US-China intergovernmental AI dialogue (Track 1) specifically committing to a shared technical safety benchmark or evaluation framework by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">84</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper suggests that Track 1/2 dialogues should shift toward &#x27;concrete governance mechanisms&#x27; rather than basic threat models. A commitment to shared technical benchmarks would indicate a successful transition from abstract discussion to actionable safety cooperation, as proposed in the paper&#x27;s outcomes.</p>
+        <p><strong>Paper reference:</strong> Implications for Track 1 and 2 dialogues (Page 12)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a strong forecasting question (Score: 84) that effectively bridges geopolitics and technical safety. It builds on the established Track 1 intergovernmental dialogue initiated in May 2024 and targets a specific recommendation from the 2025 Oxford Martin report (Siddiqui et al.) regarding &#x27;concrete governance mechanisms&#x27;. The question is difficult because moving from high-level consensus (like the Bletchley Declaration) to a &#x27;shared technical safety benchmark&#x27; requires overcoming significant geopolitical friction. It has high entropy, as experts reasonably disagree on whether the US and China can cooperate at a technical level. Resolution is straightforward via official government press releases or joint communiqués, avoiding the &#x27;black box&#x27; issues common in AI safety forecasting.</p></details>
+      </div>
+    </details>
+  </div>
+
+<script>
+function sortBy(mode) {
+  var list = document.getElementById('question-list');
+  var items = Array.from(list.querySelectorAll('.q-item'));
+  items.sort(function(a, b) {
+    if (mode === 'quality') {
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    if (mode === 'status') {
+      var s = parseInt(a.dataset.status) - parseInt(b.dataset.status);
+      if (s !== 0) return s;
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    return 0;
+  });
+  items.forEach(function(el) { list.appendChild(el); });
+  var btns = document.querySelectorAll('.sort-btn');
+  btns.forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.sort === mode);
+  });
+}
+</script>
+</div></body></html>

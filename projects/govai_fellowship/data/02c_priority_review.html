@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Priority Scoring &mdash; GovAI Winter Fellowship 2026 Presentations</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f5f5f5; color: #222; line-height: 1.6; padding: 2rem 1rem; }
+  .container { max-width: 56rem; margin: 0 auto; }
+  .page-header { background: #1a1a2e; color: #eee; border-radius: 10px; padding: 1.5rem 2rem; margin-bottom: 1.5rem; }
+  .page-header h1 { font-size: 1.4rem; margin-bottom: .5rem; }
+  .page-header .subtitle { font-size: .9rem; color: #aaa; margin-bottom: .5rem; }
+  .page-header .page-stats { display: flex; flex-wrap: wrap; gap: .75rem; font-size: .85rem; color: #999; }
+  .page-header .page-stats span { background: rgba(255,255,255,.1); padding: .2rem .6rem; border-radius: 4px; }
+  .toc { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .toc h2 { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: .75rem; }
+  .toc-item { display: flex; align-items: baseline; gap: .6rem; padding: .35rem 0; text-decoration: none; color: #222; border-bottom: 1px solid #f0f0f0; }
+  .toc-item:last-child { border-bottom: none; }
+  .toc-item:hover { color: #1a1a2e; }
+  .toc-score { font-size: .85rem; font-weight: 700; min-width: 2.8rem; text-align: center; padding: .15rem .35rem; border-radius: 4px; }
+  .toc-title { font-size: .9rem; font-weight: 500; flex: 1; }
+  .toc-cluster { font-size: .72rem; color: #666; background: #f0f0f0; padding: .1rem .45rem; border-radius: 10px; white-space: nowrap; }
+  .toc-status { font-size: .75rem; min-width: 7rem; text-align: right; }
+  .card { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 1.25rem; }
+  .card-header { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .75rem; }
+  .card h2 { font-size: 1.05rem; line-height: 1.4; }
+  .badge { font-size: .7rem; color: #666; background: #f0f0f0; padding: .1rem .45rem; border-radius: 10px; }
+  .badge-advanced { background: #e8f5e9; color: #2e7d32; font-weight: 600; }
+  .badge-demoted { background: #fff3e0; color: #ef6c00; font-weight: 600; }
+  .badge-low { background: #ffebee; color: #c62828; font-weight: 600; }
+  .score-row { display: flex; flex-wrap: wrap; gap: .75rem; margin: .5rem 0; padding: .6rem 1rem; background: #f8f9fc; border-radius: 6px; font-size: .84rem; }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 5.5rem; }
+  .score-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .03em; color: #888; }
+  .score-value { font-weight: 700; font-size: .95rem; }
+  .composite { font-size: 1.1rem; }
+  .section { margin-top: .5rem; }
+  .section summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: .4rem; padding: .3rem 0; }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before { content: "\25B6"; font-size: .5rem; color: #aaa; transition: transform .15s; }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section > p, .section > .content { margin-top: .3rem; padding-left: .9rem; }
+  .card p { font-size: .9rem; white-space: pre-wrap; word-wrap: break-word; }
+  .card h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin: 0; }
+  a { color: #1565c0; }
+  .cluster-summary { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .cluster-summary h2 { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: .75rem; }
+  .cluster-row { display: flex; align-items: center; gap: .6rem; padding: .3rem 0; border-bottom: 1px solid #f0f0f0; font-size: .85rem; }
+  .cluster-row:last-child { border-bottom: none; }
+  .cluster-name { min-width: 12rem; font-weight: 600; }
+  .cluster-bar { height: .5rem; border-radius: 3px; background: #1565c0; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02c: Priority Scoring (ITN + Soon/Sudden/Sharp)</h1>
+    <div class="subtitle">GovAI Winter Fellowship 2026 Presentations</div>
+    <div class="page-stats">
+      <span>2 scored</span>
+      <span>2 advanced</span>
+      <span>0 diversity-demoted</span>
+      <span>0 low priority</span>
+      <span>Threshold: 60</span>
+      <span>Max/cluster: 3</span>
+      <span>Project: govai_fellowship</span>
+    </div>
+  </div>
+  <div class="cluster-summary"><h2>Topic Clusters</h2>
+    <div class="cluster-row"><span class="cluster-name">AI safety evaluations</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+    <div class="cluster-row"><span class="cluster-name">capability benchmarks</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+  </div>
+  <nav class="toc"><h2>All Questions (by priority score)</h2>
+    <a class="toc-item" href="#q-0"><span class="toc-score" style="color:#2e7d32;background:#e8f5e9">82</span><span class="toc-title">Will a frontier AI model (defined as any model by OpenAI, Anthropic, or Google DeepMind) achieve a success rate of 50% o</span><span class="toc-cluster">capability benchmarks</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+    <a class="toc-item" href="#q-1"><span class="toc-score" style="color:#2e7d32;background:#e8f5e9">80</span><span class="toc-title">By December 31, 2027, will a peer-reviewed paper or a report from a national AI Safety Institute (e.g., US AISI or UK AI</span><span class="toc-cluster">AI safety evaluations</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+  </nav>
+  <div class="card" id="q-0">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#2e7d32;background:#e8f5e9">82</span>
+    <div><h2>Will a frontier AI model (defined as any model by OpenAI, Anthropic, or Google DeepMind) achieve a success rate of 50% or higher on the METR &#x27;Rogue Replication&#x27; or &#x27;RepliBench&#x27; autonomous replication evaluation tasks by December 31, 2027?</h2>
+      <span class="toc-cluster">capability benchmarks</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#2e7d32">95</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#ef6c00">70</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#ef6c00">75</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#2e7d32">90</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#2e7d32">80</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 92</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>The paper identifies Autonomous Replication and Adaptation (ARA) as a key loss of control (LoC) scenario recognized by all three major labs. Tracking performance on standardized benchmarks like METR&#x27;s tasks or the UK AISI&#x27;s RepliBench provides a concrete capability threshold for when a model might pose a real-world risk of escaping human oversight.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Slide 6: Risk Scenarios in the Literature (ARA); Slide 7: Risk Scenarios Developers Include (Anthropic, OpenAI, Google DeepMind)</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>The question tracks a critical leading indicator for Autonomous Replication and Adaptation (ARA), which is identified as a major &#x27;loss of control&#x27; risk pathway by all three major AI labs (OpenAI, Anthropic, Google DeepMind). A 50% success rate on standardized evaluations like RepliBench or METR Rogue Replication would represent a significant threshold where models demonstrate the capability to autonomously persist and replicate, potentially changing the sign of risk from &#x27;theoretical&#x27; to &#x27;active&#x27;. It would plausibly shift resource allocation toward immediate mitigation and containment strategies.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>While the general topic of METR autonomy tasks is covered on platforms like Metaculus and Manifold (e.g., &#x27;What will be the METR time horizon doubling time in 2026?&#x27;), specific operationalization around the 50% success rate on the &#x27;Rogue Replication&#x27; or &#x27;RepliBench&#x27; tasks by 2027 is relatively neglected. Metaculus has questions on general ARA passage and time horizons, but does not isolate this specific success rate for these exact benchmarks. Government agencies like the UK AISI are tracking RepliBench, but do not provide public crowd-sourced forecasts for these specific milestones.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Skilled forecasters can improve on naive priors by synthesizing technical progress in LLM agents, scaling laws, historical progress on METR tasks (which have shown clear doubling times), and political/safety pressures on labs. The information environment is rich but requires non-trivial synthesis of AI development trends and safety research.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>The question tracks a development actively unfolding in the near term (2025-2027). With model capabilities doubling on some autonomy tasks every 4-7 months, the window for learning about and influencing this trajectory is closing rapidly. Results from AISI&#x27;s Trends Reports suggest these benchmarks are being actively monitored now.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>Capability jumps in frontier models often occur discretely with the release of new model generations (e.g., GPT-5 or equivalent). A model might go from 10% to 50% success with a single update or training run, representing a sudden state change that could surprise observers.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>Autonomous replication is a &#x27;sharp&#x27; risk because the first successful instance of a model replicating &#x27;in the wild&#x27; or escaping containment could be the consequential event itself, with few harmless &#x27;warning shots&#x27; beforehand. Improvements in replication capabilities often happen in secure lab environments, making the first public failure potentially catastrophic.</p></details>
+  </div>
+  <div class="card" id="q-1">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#2e7d32;background:#e8f5e9">80</span>
+    <div><h2>By December 31, 2027, will a peer-reviewed paper or a report from a national AI Safety Institute (e.g., US AISI or UK AISI) document a case of &quot;strategic deception&quot; or &quot;scheming&quot; in a frontier model, where the model covertly pursued an objective contrary to its explicit instructions during a red-teaming exercise?</h2>
+      <span class="toc-cluster">AI safety evaluations</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#2e7d32">92</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#ef6c00">72</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#ef6c00">68</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#2e7d32">88</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#2e7d32">82</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 94</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>The paper identifies &quot;deception&quot; and &quot;power-seeking&quot; as intrinsic factors leading to Loss of Control [3d94a3]. While research by groups like Apollo Research has shown early evidence of deception, a confirmed case in a frontier model during formal safety testing would be a critical signal for regulators. This question is non-trivial as current &quot;alignment&quot; techniques aim to prevent this, making its occurrence a major &quot;systemic risk&quot; event as defined in the paper.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Section 2, Slide 2: &quot;Risk emerge from: Deception, Power-seeking&quot; and Section 3, Slide 8: &quot;No instances of Deviation.&quot; [3d94a3]</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>The question tracks a critical &#x27;sign uncertainty&#x27; regarding AI alignment—whether frontier models can engage in goal-directed deception. Resolution would be a major inflection point for AI governance and safety research <a href="https://www.aisi.gov.uk/research" target="_blank" rel="noopener">AISI Research &amp; Publications | The AI Security Institute</a>.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>While theoretical research on AI &#x27;scheming&#x27; exists (e.g., by Apollo Research and UK AISI), there are currently no active binary forecasting questions on major platforms like Metaculus or Polymarket that specifically track the official documentation of such a case by a national institute <a href="https://www.aisi.gov.uk/research" target="_blank" rel="noopener">AISI Research &amp; Publications | The AI Security Institute</a>. Existing monitoring by the UK AISI covers broader safety trends but does not provide a specific, public tracking mechanism for this exact outcome <a href="https://www.aisi.gov.uk/research" target="_blank" rel="noopener">AISI Research &amp; Publications | The AI Security Institute</a>.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>The question is tractable because it relies on monitoring the public outputs of specific, well-defined institutions (US and UK AISI). However, the underlying research involves complex synthesis of red-teaming data <a href="https://www.aisi.gov.uk/research" target="_blank" rel="noopener">AISI Research &amp; Publications | The AI Security Institute</a>.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>The window until 2027 is a critical juncture for AI safety policy. As frontier models scale and evaluation protocols like those from the US and UK AISI are established, the next two years represent a vital period for detecting these behaviors <a href="https://www.aisi.gov.uk/research" target="_blank" rel="noopener">AISI Research &amp; Publications | The AI Security Institute</a>.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>An official report documenting strategic deception would be a discrete, high-impact state change that would likely surprise the broader public and trigger rapid regulatory adjustments <a href="https://www.aisi.gov.uk/research" target="_blank" rel="noopener">AISI Research &amp; Publications | The AI Security Institute</a>.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>Deceptive capabilities are considered &#x27;sharp&#x27; risks because they may emerge without clear prior warning shots; a model may only reveal such behavior when it is already highly capable <a href="https://www.aisi.gov.uk/research" target="_blank" rel="noopener">AISI Research &amp; Publications | The AI Security Institute</a>.</p></details>
+  </div>
+</div></body></html>
