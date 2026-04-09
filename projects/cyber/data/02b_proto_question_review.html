@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proto-Question Quality Filter &mdash; Highly Autonomous Cyber-Capable Agents: Anticipating Capabilities, Tactics, and Strategic Implications</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f7f8fa; color: #2c2c2c; line-height: 1.65; padding: 2.5rem 1.5rem;
+  }
+  .container { max-width: 54rem; margin: 0 auto; }
+
+  /* --- Header --- */
+  .page-header {
+    background: #1a1a2e; color: #eee; border-radius: 12px;
+    padding: 2rem 2.5rem; margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(26,26,46,.18);
+  }
+  .page-header h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: .4rem; letter-spacing: -.01em; }
+  .page-header .subtitle { font-size: .88rem; color: #a0a0b8; margin-bottom: .75rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #8888a0;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .25rem .7rem; border-radius: 6px;
+  }
+
+  /* --- Sort controls --- */
+  .sort-bar {
+    display: flex; align-items: center; gap: .75rem;
+    margin-bottom: 1.5rem; font-size: .82rem; color: #888;
+  }
+  .sort-bar span { font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+  .sort-btn {
+    appearance: none; border: none; cursor: pointer;
+    background: #fff; color: #555; font-size: .8rem; font-weight: 500;
+    padding: .4rem .9rem; border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    transition: box-shadow .15s, color .15s, background .15s;
+  }
+  .sort-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); color: #1a1a2e; }
+  .sort-btn.active { background: #1a1a2e; color: #fff; box-shadow: 0 2px 8px rgba(26,26,46,.2); }
+
+  /* --- Question list (expandable details) --- */
+  .question-list { display: flex; flex-direction: column; gap: .75rem; }
+
+  .q-item {
+    background: #fff; border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.05);
+    transition: box-shadow .2s ease, transform .2s ease;
+    overflow: hidden;
+  }
+  .q-item:hover { box-shadow: 0 3px 14px rgba(0,0,0,.08); }
+  .q-item[open] { box-shadow: 0 4px 20px rgba(0,0,0,.09); }
+
+  .q-item summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: 1rem 1.5rem;
+    transition: background .15s;
+  }
+  .q-item summary::-webkit-details-marker { display: none; }
+  .q-item summary:hover { background: #fafbfd; }
+
+  .q-item summary .chevron {
+    flex-shrink: 0; width: 1rem; text-align: center;
+    font-size: .6rem; color: #b0b0b0;
+    transition: transform .2s ease;
+  }
+  .q-item[open] summary .chevron { transform: rotate(90deg); }
+
+  .q-score-badge {
+    flex-shrink: 0; font-size: .82rem; font-weight: 700;
+    min-width: 2.6rem; text-align: center;
+    padding: .2rem .5rem; border-radius: 6px;
+  }
+  .q-summary-text {
+    flex: 1; font-size: .92rem; font-weight: 500; color: #2c2c2c;
+    line-height: 1.45;
+  }
+  .badge {
+    flex-shrink: 0; font-size: .68rem; font-weight: 600;
+    padding: .2rem .55rem; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
+  .badge-selected { background: #e8f5e9; color: #2e7d32; }
+  .badge-filtered { background: #f0f0f0; color: #999; }
+
+  /* --- Expanded content --- */
+  .q-body { padding: .25rem 1.5rem 1.5rem 3.85rem; }
+
+  .score-row {
+    display: flex; gap: 1.5rem; margin: .5rem 0 1rem 0;
+    padding: .65rem 1rem; background: #f8f9fc; border-radius: 8px;
+    font-size: .84rem;
+  }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 4.5rem; }
+  .score-label {
+    position: relative;
+    font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; color: #999;
+    cursor: default;
+  }
+  .score-value { font-weight: 700; font-size: .95rem; margin-top: .1rem; }
+
+  .q-body p {
+    font-size: .9rem; line-height: 1.65; color: #444;
+    white-space: pre-wrap; word-wrap: break-word;
+    margin-bottom: .6rem;
+  }
+  .q-body p strong { color: #333; }
+
+  /* Collapsible sub-section inside expanded body */
+  .sub-section { margin-top: .5rem; }
+  .sub-section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .35rem;
+    padding: .25rem 0; font-size: .8rem; text-transform: uppercase;
+    letter-spacing: .04em; color: #999; font-weight: 500;
+  }
+  .sub-section summary::-webkit-details-marker { display: none; }
+  .sub-section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb;
+    transition: transform .15s ease;
+  }
+  .sub-section[open] summary::before { transform: rotate(90deg); }
+  .sub-section > p { margin-top: .25rem; padding-left: .8rem; }
+
+  /* --- Tooltips --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+    background: #1a1a2e; color: #e8e8f0; font-size: .7rem; font-weight: 400;
+    text-transform: none; letter-spacing: normal;
+    padding: .35rem .65rem; border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity .15s ease;
+    z-index: 10;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+
+  a { color: #1565c0; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02b: Proto-Question Quality Filter</h1>
+    <div class="subtitle">Highly Autonomous Cyber-Capable Agents: Anticipating Capabilities, Tactics, and Strategic Implications</div>
+    <div class="page-stats">
+      <span>15 total</span>
+      <span>5 selected (top 5)</span>
+      <span>Cutoff score: 92</span>
+      <span>Project: cyber</span>
+    </div>
+  </div>
+
+  <div class="sort-bar">
+    <span>Sort by</span>
+    <button class="sort-btn active" data-sort="quality" onclick="sortBy('quality')">Quality Score</button>
+    <button class="sort-btn" data-sort="status" onclick="sortBy('status')">Status (selected first)</button>
+  </div>
+
+  <div class="question-list" id="question-list">
+    <details class="q-item" id="q-0" data-quality="94.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">94</span><span class="q-summary-text">Will METR report a 50%-reliability task-time horizon exceeding 48 hours for any frontier AI model on software engineering tasks by 31 December 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">94</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper highlights METR&#x27;s task-time horizon metric as a key proxy for tracking progress toward HACCA-capable systems, noting that GPT-5.2 (December 2025) achieved 6 hours 34 minutes at 50% reliability with a roughly 7-month doubling time. If the doubling trend holds, the 48-hour mark would be reached around mid-2027 — but the paper itself cautions that &#x27;the sustainability of this rate remains uncertain.&#x27; This creates genuine uncertainty (perhaps 40-65% likely) and directly measures the operational capability gap the paper identifies as critical for HACCA feasibility. METR publishes these measurements publicly, making resolution straightforward.</p>
+        <p><strong>Paper reference:</strong> Section on &#x27;When Could HACCAs Arrive?&#x27; — METR task-time horizon doubling every ~7 months, GPT-5.2 at 6hr 34min (50% reliability), with extrapolation suggesting Q4 2028 for reaching one-month horizons on software engineering tasks.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a top-tier forecasting question. It uses a precisely defined metric (50%-reliability task-time horizon) from a respected evaluation body (METR). As of early 2026, leading models like Claude Opus 4.6 have reached approximately 14.5 hours. To hit 48 hours by the end of 2027 requires roughly 1.7 doublings. With historical doubling times reported at 7 months (and some reports suggesting even faster rates), the extrapolated date is mid-to-late 2027. However, many experts anticipate a &#x27;ceiling&#x27; or saturation in software engineering tasks, making this a classic &#x27;trend vs. limit&#x27; forecasting problem. The 48-hour threshold is perfectly placed to capture this uncertainty. METR&#x27;s public tracking ensures clear resolution.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-1" data-quality="92.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will the application date for the EU AI Act&#x27;s rules on high-risk AI systems listed in Annex III be officially postponed beyond August 2, 2026?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The HACCA paper discusses proliferation dynamics and the importance of institutional responses to AI-enabled cyber threats. The EU AI Act is the most significant global AI regulation, with high-risk system rules originally set to apply August 2, 2026. As of early 2026, there are reports that the European Parliament may vote to delay these rules to as late as December 2027. This is a pivotal regulatory milestone: delay would signal that policymakers are struggling to keep pace with AI developments, directly relevant to the paper&#x27;s concern about defense lagging offense. The outcome is genuinely uncertain as of April 2026.</p>
+        <p><strong>Paper reference:</strong> The paper&#x27;s proliferation section argues that trailing-edge organizations are particularly exposed and that policymakers should urgently bolster defenses. The EU AI Act&#x27;s timeline for high-risk system regulation is a key indicator of whether regulatory frameworks are keeping pace.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question. It addresses a pivotal regulatory &#x27;crunch point&#x27; with significant real-world impact. While the European Parliament voted in March 2026 to delay the Annex III deadline to December 2027, the change is not yet &#x27;official&#x27; until it passes the Council and is published in the Official Journal. The uncertainty around legislative &#x27;trilogues&#x27; and potential pushback from member states or the Commission creates high entropy. The binary nature (postponed beyond Aug 2, 2026) is crisp and easy to resolve. It is a high-difficulty question because it requires monitoring the EU legislative pipeline.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-2" data-quality="92.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will an autonomous AI agent or team place in the top 3 at the DEF CON Capture the Flag (CTF) finals by December 31, 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper discusses HACCA proliferation and the democratization of elite cyber capabilities. A key upstream indicator is AI performance on competitive hacking challenges. Tenzai&#x27;s AI hacker already ranked in the top 1% across six major CTF platforms, and Wiz Research found AI agents solved 9 of 10 offensive security challenges in controlled environments. However, winning or placing highly at the most prestigious live CTF competition (DEF CON CTF finals) against top human teams remains a harder milestone. This question tracks whether autonomous offensive cyber capability has reached elite-human-competitive levels, directly relevant to the paper&#x27;s HACCA feasibility timeline.</p>
+        <p><strong>Paper reference:</strong> The paper&#x27;s Table 11 outlines an illustrative HACCA proliferation timeline, beginning with early HACCAs that &#x27;first become feasible&#x27; and progressing to wider deployment. The paper notes that HACCAs could &#x27;democratize what were previously elite nation-state-level capabilities.&#x27; AI performance in competitive hacking directly measures progress toward this threshold.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question. It identifies a prestigious and well-defined milestone (DEF CON CTF finals) that serves as a high-bar proxy for autonomous offensive cyber capabilities. While recent results (Tenzai ranking in the top 1% of CTF platforms in March 2026 and DARPA&#x27;s AIxCC results in August 2025) show rapid progress, the flagship DEF CON CTF finals remain significantly more difficult than general CTF platforms or AI-specific competitions. The question has high entropy, as experts disagree on the timeline for AI to surpass elite human teams in dynamic, adversarial, and low-information environments. The resolution source is reliable (DEF CON official results).</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-3" data-quality="92.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will the November 2026 CCW Review Conference adopt a mandate to begin formal negotiations on a legally binding instrument governing autonomous weapons systems?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper draws a direct parallel between HACCA proliferation and the proliferation of lethal autonomous weapons systems (LAWS), noting that states have &#x27;failed to ban LAWS despite the decades-long debate at the United Nations Group of Governmental Experts.&#x27; The November 2026 CCW Review Conference is the culminating event of the GGE&#x27;s three-year mandate, where states will decide next steps. A UNGA resolution in November 2025 saw 156 states support urgent action, but key military powers remain resistant. Whether states agree to formally negotiate binding rules on autonomous weapons is a strong upstream indicator of the international community&#x27;s capacity to govern autonomous offensive systems—including future HACCAs.</p>
+        <p><strong>Paper reference:</strong> Section 6 (&#x27;Guardrails for HACCA Development and Deployment&#x27;) argues that a blanket prohibition on HACCAs is unlikely to succeed, drawing a parallel: &#x27;States will be reluctant to agree to any international agreement or convention that bans HACCAs outright, just as they have failed to ban LAWS despite the decades-long debate at the United Nations Group of Governmental Experts and elsewhere.&#x27;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question. It targets a major, scheduled geopolitical event (the November 2026 CCW Review Conference) that serves as a &#x27;culminating event&#x27; for years of international debate. The question has very high entropy due to the sharp divide between the 150+ states supporting a mandate and the resistant major military powers. The resolution is well-defined (the adoption of a formal mandate for negotiations), and the resolution source (UN/CCW records) is authoritative and expected to exist. Research into the 2026 GGE session outcomes (which occurred in March 2026) would significantly inform and potentially shift a forecaster&#x27;s position.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-4" data-quality="92.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will any AI agent exploit at least 25% of the vulnerabilities in CVE-Bench by December 31, 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> CVE-Bench is a benchmark specifically designed to evaluate AI agents&#x27; ability to exploit real-world web application vulnerabilities. The paper directly cites it. As of early 2026, the state-of-the-art agent framework can exploit up to 13% of CVE-Bench vulnerabilities. Reaching 25% would represent a near-doubling of exploit capability, signaling a significant escalation in autonomous offensive cyber potential. Given rapid AI progress but the inherent difficulty of exploitation, this threshold has meaningful uncertainty.</p>
+        <p><strong>Paper reference:</strong> The paper cites &#x27;Zhu, Yuxuan et al. CVE-Bench: A Benchmark for AI Agents&#x27; Ability to Exploit Real-World Web Application Vulnerabilities. arXiv, March 2025&#x27; as a key reference for measuring AI cyber offense capabilities.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question because it focuses on a critical capability (autonomous vulnerability exploitation) that is both high-stakes and genuinely difficult for current AI. The jump from the current SOTA of ~13% to 25% represents a near-doubling of capability, which is a meaningful threshold for assessing offensive cyber risk. The benchmark (CVE-Bench) is peer-reviewed and has an emerging leaderboard. There is high uncertainty: while agentic frameworks are improving, the &#x27;last mile&#x27; of complex exploit generation is a known bottleneck. This ensures the question is not a foregone conclusion and would benefit from deep research into agentic planning and cybersecurity tools integration.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-5" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the UK AI Security Institute (AISI) publish evaluation results showing that a frontier AI model can autonomously complete a multi-step cyber attack chain (comprising reconnaissance, exploitation, and privilege escalation) in a realistic test environment, by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper details how HACCAs require competence across multiple cyber operation phases. UK AISI has been systematically evaluating frontier model cyber capabilities and publishing results, including through its Frontier AI Trends Report. The NCSC has also signaled that &#x27;cyber defenders need to be ready for frontier AI.&#x27; This question tracks whether the defensive community formally documents a model achieving end-to-end autonomous attack capability—a critical upstream indicator of HACCA feasibility.</p>
+        <p><strong>Paper reference:</strong> The paper&#x27;s Section 3 discusses the five core HACCA tactics and emphasizes that HACCAs &#x27;would only become feasible once the slowest-progressing capability reaches the necessary threshold.&#x27; The paper cites the AISI Frontier AI Trends Report as a key source for tracking cyber capability progress.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a strong forecasting question because it focuses on a specific, technically significant milestone (autonomous multi-step cyber attacks) with a reliable resolution source (UK AISI). The AISI has established a track record of publishing &#x27;Frontier AI Trends&#x27; reports, and as of March 2026, it has already begun releasing evaluations on multi-step scenarios, ensuring that data issues are unlikely. The question is difficult and has high entropy, as model progression in autonomous agency is a subject of intense debate among AI researchers, with reasonable forecasts varying based on scaling trends and safety breakthroughs.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-6" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the top score on the SWE-bench Verified leaderboard exceed 90% by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper discusses AI agents&#x27; growing capability in software engineering and offensive cyber operations, referencing SWE-bench as a key benchmark. As of early 2026, the top SWE-bench Verified score is approximately 85% (GPT-5.3 Codex). Crossing 90% would signal a meaningful capability jump in autonomous code generation and bug-fixing — directly relevant to the paper&#x27;s concerns about HACCA systems exploiting vulnerabilities. This threshold is uncertain: progress has been rapid but diminishing returns may set in on this benchmark.</p>
+        <p><strong>Paper reference:</strong> The paper references SWE-bench leaderboards (footnote 83) as a measure of AI agent capability in software engineering tasks, which is foundational to the offensive cyber capabilities discussed throughout.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question is strong because it targets a specific, well-defined milestone (90%) on a high-signal benchmark (SWE-bench Verified). As of early 2026, the state-of-the-art is approximately 81% (Claude 4.5 Opus, GPT-5.3 Codex). Moving from 81% to 90% is a non-trivial jump that requires significant reasoning improvements, as benchmarks often face diminishing returns. The resolution source is reliable and publicly accessible. Reasonable forecasters could differ significantly on whether current architectures will hit a ceiling or if next-gen models (GPT-6 class) will easily surpass this. This satisfies the difficulty and entropy criteria perfectly.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-7" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will NIST publish a formal standard or guidelines document (not just a concept paper or RFI) under its AI Agent Standards Initiative specifically addressing security of autonomous AI agents by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper highlights the strategic importance of securing against autonomous AI agents capable of independent action in cyber operations. NIST launched its AI Agent Standards Initiative in February 2026 and issued an RFI on AI agent security that closed in March 2026. Whether this initiative produces formal, published standards within the next ~20 months is a meaningful upstream indicator of institutional response to the risks the paper describes. The outcome is uncertain because standards processes can be slow, but there is clear momentum.</p>
+        <p><strong>Paper reference:</strong> The paper discusses the need for security levels (e.g., SL4 from RAND&#x27;s &#x27;Securing AI Model Weights&#x27;) to protect against autonomous cyber-capable agents and references the importance of institutional frameworks for managing risks from HACCAs.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a very strong forecasting question with clear resolution criteria and high entropy. NIST launched the AI Agent Standards Initiative in February 2026 and the security RFI closed in March 2026. Historically, NIST takes between 12 and 24 months to move from an RFI/initial concept to a formal Special Publication or standard. This puts the December 2027 deadline right in the &#x27;zone of uncertainty,&#x27; making it a perfect candidate for a binary forecast. The resolution source (NIST) is highly reliable and public.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-8" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will NIST publish a final (non-draft) standard, guideline, or special publication specifically addressing AI agent security by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper emphasizes the need for governance frameworks and institutional safeguards against autonomous AI systems. NIST launched its AI Agent Standards Initiative in February 2026 and issued an RFI on AI agent security in early 2026. Whether NIST moves from convening/drafting to publishing a final document is uncertain given NIST&#x27;s historically lengthy publication timelines and the rapidly evolving nature of the technology. This question tracks a concrete institutional response directly relevant to the paper&#x27;s defense framework.</p>
+        <p><strong>Paper reference:</strong> Section 5&#x27;s defense-in-depth framework highlights the need for regulatory frameworks and governance mechanisms. The paper discusses differential access, structured access frameworks, and security levels for AI systems - all areas where NIST standardization would be directly relevant.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is an excellent forecasting question. It addresses a specific, institutional response to a critical emerging technology. The timeline (launch in Feb 2026, resolution in Dec 2027) is about 22 months, which is historically &#x27;on the edge&#x27; for NIST Special Publications (SPs). For instance, the NIST AI Risk Management Framework 1.0 took approximately 18 months from RFI to final release. Given the complexity and rapid evolution of &#x27;AI agents,&#x27; there is genuine uncertainty about whether NIST will finalize a standard or remain in the draft/iterative stage. This creates high entropy and requires forecasters to weigh bureaucratic speed against technological urgency. The resolution source (NIST.gov) is authoritative and reliable.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-9" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the United Nations Convention against Cybercrime receive at least 10 ratifications (not just signatures) by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper discusses the UN Cybercrime Convention as a potential mechanism for cross-border prosecution of HACCA-related crimes, noting it &#x27;may facilitate cross-border prosecution of HACCA-related crimes through enhanced procedural cooperation&#x27; when it enters into force. As of March 2026, 74 countries have signed but only Qatar has ratified. The convention needs 40 ratifications to enter into force. Reaching even 10 ratifications by end of 2027 is non-trivial — ratification requires domestic legislative processes that vary widely. This question tracks an important legal governance milestone relevant to autonomous cyber capability regulation.</p>
+        <p><strong>Paper reference:</strong> Section on the UN Cybercrime Convention (p. 107-108): &#x27;The U.N. Cybercrime Convention, when it enters into force, may facilitate cross-border prosecution of HACCA-related crimes through enhanced procedural cooperation&#x27;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question is of high quality as it addresses a specific, measurable milestone for a significant and controversial international treaty. The resolution source (UN Treaty Collection) is the definitive authority, ensuring no data issues. With only one ratification (Qatar) and one in progress (Azerbaijan) as of early 2026, reaching 10 ratifications by late 2027 is a non-trivial forecasting challenge that requires analyzing domestic legislative speeds and political commitment across 75+ signatories. The controversial nature of the treaty (human rights concerns from the US, EU, and NGOs) adds to the uncertainty, making it a high-entropy question.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-10" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will NIST publish a final (non-draft) version of the Cybersecurity Framework Profile for Artificial Intelligence (NIST IR 8596) by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper references NIST and cybersecurity frameworks extensively. NIST published a preliminary draft of IR 8596 (the &#x27;Cyber AI Profile&#x27;) in December 2025, with public comments closing January 30, 2026. Whether NIST finalizes and publishes this profile is a key regulatory milestone for AI cybersecurity governance. The timeline for finalization is uncertain — NIST frameworks sometimes take years to finalize, but the urgency of AI cybersecurity could accelerate this. This question has a plausible range of outcomes.</p>
+        <p><strong>Paper reference:</strong> The paper references NIST (e.g., CVE details) and multiple cybersecurity governance frameworks. NIST IR 8596 directly addresses the intersection of AI and cybersecurity that is central to the paper&#x27;s concerns about autonomous cyber-capable agents.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question focuses on a concrete regulatory milestone from a reliable source (NIST). NIST IR 8596 (Cyber AI Profile) was released as a preliminary draft in Dec 2025 with comments closing Jan 30, 2026. NIST timelines for &#x27;Interagency Reports&#x27; (IR) typically range from 6 months to 2 years, making the Dec 2027 deadline (approx 2 years from preliminary draft) a high-entropy target. The outcome is uncertain but resolution is straightforward via the NIST Computer Security Resource Center. Research into NIST&#x27;s current priorities and typical IR finalization patterns would significantly inform a forecast.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-11" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will Google&#x27;s CodeMender AI agent have contributed at least 250 accepted security fixes to open-source projects by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper highlights automated vulnerability discovery and patching as a critical defensive capability, noting that Google&#x27;s CodeMender contributed 72 fixes to open-source projects in its first six months (launched October 2025). Whether this AI-driven patching tool scales significantly is a key indicator of whether automated vulnerability remediation can meaningfully reduce the attack surface that the paper warns HACCAs could exploit. The threshold of 250 is calibrated to represent meaningful scaling (~3.5x the initial 6-month output over roughly 2 additional years) without being a foregone conclusion.</p>
+        <p><strong>Paper reference:</strong> The paper specifically discusses Google&#x27;s CodeMender (introduced October 2025) as an example of AI agents that find vulnerabilities and generate validated patches, contributing 72 fixes to open-source projects in its first six months.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This question tracks a meaningful proxy for the defensive utility of AI agents. The &#x27;72 fixes in 6 months&#x27; baseline establishes a clear starting point. Reaching 250 fixes by end of 2027 requires sustained scaling (averaging ~7-8 fixes/month), which is non-trivial as projects may become more cautious about AI-generated PRs or the &#x27;low-hanging fruit&#x27; might be exhausted. Verification is possible via GitHub commit history using the &#x27;Co-authored-by: CodeMender &lt;codemender-patching@google.com&gt;&#x27; attribution, as seen in projects like ffmpeg and libarchive. There is a slight risk if Google changes its attribution practices, but the concept is strong and research-intensive.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-12" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will NIST publish a final (non-draft) guidance document or standard specifically addressing AI agent security by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper emphasizes the need for policy guardrails and technical standards for autonomous cyber agents. NIST launched its AI Agent Standards Initiative in February 2026, with an RFI that closed in March 2026 and workshops planned for April 2026. The initiative promises &#x27;research, guidelines, and further deliverables&#x27; but converting these into finalized guidance documents takes time. This question tracks whether the regulatory infrastructure is keeping pace with HACCA-related risks. A published standard would be a significant milestone for the defensive ecosystem the paper recommends building.</p>
+        <p><strong>Paper reference:</strong> Section on &#x27;Establish Legal and Policy Guardrails for the Development and Use of HACCAs&#x27; (Recommendation VII) and the paper&#x27;s overall emphasis on the need for policy and institutional frameworks to address autonomous cyber agent risks.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This question is high-quality because it targets a specific, non-trivial regulatory milestone with a clear resolution source. NIST&#x27;s &#x27;AI Agent Standards Initiative&#x27; (launched February 2026) has a defined process (RFI closed March 2026, workshops in April 2026) but an uncertain finalization timeline. Predicting whether a final standard will be published by late 2027 requires analyzing NIST&#x27;s historical speed (e.g., AI RMF development) and current legislative pressure. The binary outcome is likely to fall in the 20-80% probability range, making it informative for forecasters. Resolution is straightforward via official NIST publications.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-13" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the U.S. Chip Security Act (H.R. 3447) be signed into law by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper discusses hardware-enabled mechanisms (HEMs) built into AI chips as a key governance tool for detecting and disrupting autonomous cyber agents, including location verification and workload classification. The Chip Security Act (H.R. 3447), which passed the House Foreign Affairs Committee 42-0 on March 26, 2026, would require the Secretary of Commerce to issue standards for chip security mechanisms including location verification on advanced AI chips. This is a direct legislative instantiation of the HEM concept discussed in the paper. Whether this bill becomes law is a meaningful upstream indicator of whether hardware-level governance of AI compute — a key defense against HACCAs operating on stealth compute clusters — will materialize.</p>
+        <p><strong>Paper reference:</strong> Appendix IX: &#x27;Using Hardware-Enabled Mechanisms for HACCA Attribution and Disruption&#x27; — discusses HEMs enabling location verification, chip usage limits via cryptographic licenses, and workload classification to detect and disrupt HACCAs even on adversary-owned compute.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a strong forecasting question. The recent 42-0 unanimous vote in the House Foreign Affairs Committee (March 26, 2026) suggests significant bipartisan momentum, yet the path from committee to law involves many hurdles (House floor, Senate, Presidential signature), making the outcome genuinely uncertain. The resolution is binary and easily verifiable via official government records. The timeframe (through late 2027) is appropriate for the legislative lifecycle. One minor note: if the bill does not pass in the current 119th Congress, it would need to be reintroduced in the 120th, potentially with a new bill number; the stage 03 refinement should account for this.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-14" data-quality="82.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">82</span><span class="q-summary-text">Will the median time horizon for frontier AI models on METR&#x27;s task-completion benchmark exceed 48 hours of equivalent human expert time by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (92)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">82</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper explicitly cites METR&#x27;s work on measuring AI task-completion time horizons as a key indicator of progress toward HACCA-level capabilities, noting that cyber capabilities have been doubling every ~8 months. As of early 2026, METR reported time horizons were improving at ~10x/year (up from ~3x/year before 2024), and the benchmark was reportedly beginning to saturate. Whether frontier models reach 48-hour equivalent task autonomy is a direct upstream indicator of the feasibility of HACCAs, which would need to sustain operations over weeks to months. The 48-hour threshold is chosen to be non-trivial but plausible given current trends.</p>
+        <p><strong>Paper reference:</strong> Section 2 (&#x27;When Could HACCAs Arrive?&#x27;) cites METR&#x27;s work on time horizons and capability doubling times, noting &#x27;software engineering (doubling every 7 months) and cyber capabilities (doubling every 8 months)&#x27; and that &#x27;HACCAs should be able to initiate and carry out sustained end-to-end offensive cyber operations without human supervision.&#x27;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This question targets a high-importance indicator of AI autonomy with a clear metric. As of early 2026, the reported 50%-success time horizon for frontier models is around 12-15 hours, making a 48-hour target by the end of 2027 an excellent forecasting target—challenging but plausible given the historical 7-8 month doubling times. The concept is genuinely uncertain and research-intensive. However, the score is slightly tempered by potential &#x27;benchmark saturation&#x27; issues noted by METR; if the organization runs out of long-form tasks or changes the methodology significantly, resolution could become complex. Nonetheless, it is a high-quality proto-question.</p></details>
+      </div>
+    </details>
+  </div>
+
+<script>
+function sortBy(mode) {
+  var list = document.getElementById('question-list');
+  var items = Array.from(list.querySelectorAll('.q-item'));
+  items.sort(function(a, b) {
+    if (mode === 'quality') {
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    if (mode === 'status') {
+      var s = parseInt(a.dataset.status) - parseInt(b.dataset.status);
+      if (s !== 0) return s;
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    return 0;
+  });
+  items.forEach(function(el) { list.appendChild(el); });
+  var btns = document.querySelectorAll('.sort-btn');
+  btns.forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.sort === mode);
+  });
+}
+</script>
+</div></body></html>
