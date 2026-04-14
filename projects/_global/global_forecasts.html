@@ -254,13 +254,13 @@
     <h1>Global Forecast Repository</h1>
   </div>
 
-  <details class="section" style="margin-bottom: 1.2rem; background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.05); padding: 0;">
+  <details class="section" open style="margin-bottom: 1.2rem; background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.05); padding: 0;">
     <summary style="cursor: pointer; list-style: none; padding: .85rem 1.2rem; font-weight: 600; font-size: .92rem; color: #555;">
       <span style="font-size: .55rem; color: #aaa; margin-right: .5rem;">&#9654;</span>
       About this report &amp; methodology
     </summary>
     <div style="padding: 0 1.2rem 1rem; font-size: .88rem; color: #555; line-height: 1.6;">
-      <p>An automated pipeline reads seed papers and generates binary forecasting questions, then scores, filters, and forecasts them through multiple stages:</p>
+      <p>An automated pipeline reads seed papers and generates binary forecasting questions, then scores, filters, and forecasts them through multiple stages. For a detailed description, see the <a href="paper/main.pdf" style="color: #1a73e8; font-weight: 600;">full methodology paper (PDF)</a>.</p>
       <ol style="margin: .4rem 0; padding-left: 1.5rem;">
         <li><strong>Generate</strong> &mdash; LLM extracts falsifiable claims from each paper and drafts proto-questions</li>
         <li><strong>Quality filter</strong> &mdash; questions scored for clarity, specificity, and resolvability; low-scoring ones filtered</li>
