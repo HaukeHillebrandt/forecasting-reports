@@ -255,7 +255,7 @@
 <div class="container">
   <div class="page-header">
     <h1>Forecasts</h1>
-    <div class="subtitle">x</div>
+    <div class="subtitle"><a href='https://www.owlposting.com/p/reasons-to-be-pessimistic-and-optimistic' target='_blank' style='color: #a0a0b8;'>x</a></div>
     <div class="page-stats">
       <span>2 forecasts</span>
       <span>Avg probability: 36%</span>
@@ -263,6 +263,25 @@
       <span>2 revised</span>
     </div>
   </div>
+
+  <details class="section" style="margin-bottom: 1.2rem; background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.05); padding: 0;">
+    <summary style="cursor: pointer; list-style: none; padding: .85rem 1.2rem; font-weight: 600; font-size: .92rem; color: #555;">
+      <span style="font-size: .55rem; color: #aaa; margin-right: .5rem;">&#9654;</span>
+      About this report &amp; methodology
+    </summary>
+    <div style="padding: 0 1.2rem 1rem; font-size: .88rem; color: #555; line-height: 1.6;">
+      <p>An automated pipeline reads the source paper and generates binary forecasting questions, then scores, filters, and forecasts them through multiple stages:</p>
+      <ol style="margin: .4rem 0; padding-left: 1.5rem;">
+        <li><strong>Generate</strong> &mdash; LLM extracts falsifiable claims and drafts proto-questions</li>
+        <li><strong>Quality filter</strong> &mdash; scored for clarity, specificity, and resolvability</li>
+        <li><strong>Priority score</strong> &mdash; Importance, Tractability, Neglectedness, and temporal urgency (Soon/Sudden/Sharp)</li>
+        <li><strong>Refine</strong> &mdash; detailed background, resolution criteria, and fine-print</li>
+        <li><strong>Verify &amp; review</strong> &mdash; adversarial review for ambiguity and edge cases</li>
+        <li><strong>Forecast</strong> &mdash; LLM probability estimate with rationale</li>
+        <li><strong>Decompose &amp; reconcile</strong> &mdash; broken into subquestions, researched, then reconciled</li>
+      </ol>
+    </div>
+  </details>
   <div class="sort-bar">
     <span class="sort-label">Sort by</span>
     <button class="sort-btn" data-sortkey="probability">Probability<span class="sort-arrow"></span></button>

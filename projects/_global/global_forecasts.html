@@ -248,6 +248,33 @@
   <div class="page-header">
     <h1>Global Forecast Repository</h1>
   </div>
+
+  <details class="section" style="margin-bottom: 1.2rem; background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.05); padding: 0;">
+    <summary style="cursor: pointer; list-style: none; padding: .85rem 1.2rem; font-weight: 600; font-size: .92rem; color: #555;">
+      <span style="font-size: .55rem; color: #aaa; margin-right: .5rem;">&#9654;</span>
+      About this report &amp; methodology
+    </summary>
+    <div style="padding: 0 1.2rem 1rem; font-size: .88rem; color: #555; line-height: 1.6;">
+      <p>An automated pipeline reads seed papers and generates binary forecasting questions, then scores, filters, and forecasts them through multiple stages:</p>
+      <ol style="margin: .4rem 0; padding-left: 1.5rem;">
+        <li><strong>Generate</strong> &mdash; LLM extracts falsifiable claims from each paper and drafts proto-questions</li>
+        <li><strong>Quality filter</strong> &mdash; questions scored for clarity, specificity, and resolvability; low-scoring ones filtered</li>
+        <li><strong>Priority score</strong> &mdash; remaining questions scored on Importance, Tractability, Neglectedness, and temporal urgency (Soon/Sudden/Sharp)</li>
+        <li><strong>Refine</strong> &mdash; top questions get detailed background, resolution criteria, and fine-print</li>
+        <li><strong>Verify &amp; review</strong> &mdash; adversarial review checks for ambiguity, edge cases, and question quality</li>
+        <li><strong>Forecast</strong> &mdash; LLM probability estimate with rationale</li>
+        <li><strong>Decompose &amp; reconcile</strong> &mdash; question is broken into subquestions, each researched independently, then forecasts are reconciled</li>
+      </ol>
+      <p style="margin-top: .5rem;"><strong>Source papers:</strong></p>
+      <ul style="margin: .3rem 0; padding-left: 1.5rem;">
+        <li><a href="https://80000hours.org/podcast/episodes/richard-moulange-ai-bioweapons-biorisk/" target="_blank" style="color: #1a73e8;">AI &amp; Biosecurity Risks — 80,000 Hours Podcast with Dr Richard Moulange</a></li>
+        <li><a href="https://arxiv.org/abs/2603.03992" target="_blank" style="color: #1a73e8;">Measuring AI R&amp;D Automation</a></li>
+        <li><a href="https://www.owlposting.com/p/reasons-to-be-pessimistic-and-optimistic" target="_blank" style="color: #1a73e8;">Reasons to be pessimistic (and optimistic) on the future of biosecurity</a></li>
+        <li><a href="https://www.iaps.ai/research/highly-autonomous-cyber-capable-agents" target="_blank" style="color: #1a73e8;">Highly Autonomous Cyber-Capable Agents</a></li>
+        <li><a href="https://www.governance.ai/post/winter-fellowship-2026" target="_blank" style="color: #1a73e8;">GovAI Winter Fellowship 2026 Presentations</a></li>
+      </ul>
+    </div>
+  </details>
   <div class="tab-bar">
     <button class="tab-btn active" data-tab="all">All<span class="tab-count">115</span></button>
     <button class="tab-btn" data-tab="80k_biosec_pod">80k_biosec_pod<span class="tab-count">19</span></button>
