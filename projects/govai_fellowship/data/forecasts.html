@@ -68,6 +68,30 @@
     width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
   }
 
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: #fff; border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #888; font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid #e0e0e0; background: #fff; color: #555; cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: #1a73e8; color: #fff; border-color: #1a73e8; }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-row.filter-hidden { display: none; }
+
   /* Question rows — expandable <details> */
   .question-list { display: flex; flex-direction: column; gap: .6rem; }
 
@@ -266,9 +290,23 @@
     <button class="expand-btn section-toggle" data-section="forecast">Forecast</button>
     <button class="expand-btn section-toggle" data-section="decomp">Decomposition</button>
   </div>
+  <div class="filter-bar">
+    <span class="filter-label">Filter</span>
+    <button class="filter-btn" data-filter="has-forecast" data-filter-value="1">Forecasted<span class="filter-count">7</span></button>
+    <button class="filter-btn" data-filter="has-review" data-filter-value="1">Has Review<span class="filter-count">7</span></button>
+    <button class="filter-btn" data-filter="has-decomp" data-filter-value="1">Decomposition<span class="filter-count">7</span></button>
+    <button class="filter-btn" data-filter="has-probdecomp" data-filter-value="1">Prob. Decomp<span class="filter-count">7</span></button>
+    <button class="filter-btn" data-filter="has-reconciliation" data-filter-value="1">Reconciled<span class="filter-count">7</span></button>
+    <span class="expand-sep"></span>
+    <span class="filter-label">Status</span>
+    <button class="filter-btn" data-filter="status" data-filter-value="PASS">PASS<span class="filter-count">5</span></button>
+    <button class="filter-btn" data-filter="status" data-filter-value="REVISED">REVISED<span class="filter-count">2</span></button>
+    <span class="expand-sep"></span>
+    <button class="filter-btn" id="filter-clear" style="color:#c62828;border-color:#ffcdd2;">Clear filters</button>
+  </div>
   <div class="question-list">
   <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">01_govai_winter_fellowship_bridge</div>
-  <details class="q-row" id="q-0" data-probability="23.0" data-importance="85.0" data-quality="88.0" data-ambiguity="98.0" data-itnsss="81.25" data-neglectedness="90.0" data-tractability="75.0" data-soon="75.0" data-sudden="70.0" data-sharp="80.0">
+  <details class="q-row" id="q-0" data-probability="23.0" data-importance="85.0" data-quality="88.0" data-ambiguity="98.0" data-itnsss="81.25" data-neglectedness="90.0" data-tractability="75.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="75.0" data-sudden="70.0" data-sharp="80.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
       <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
@@ -442,7 +480,7 @@ Key factors for a NO resolution include the government&#x27;s stated preference 
     </div>
   </details>
   <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">03_loc_risk_scenarios_avramidou</div>
-  <details class="q-row" id="q-1" data-probability="53.0" data-importance="92.0" data-quality="92.0" data-ambiguity="82.0" data-itnsss="81.5" data-neglectedness="78.0" data-tractability="80.0" data-soon="85.0" data-sudden="70.0" data-sharp="75.0">
+  <details class="q-row" id="q-1" data-probability="53.0" data-importance="92.0" data-quality="92.0" data-ambiguity="82.0" data-itnsss="81.5" data-neglectedness="78.0" data-tractability="80.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="85.0" data-sudden="70.0" data-sharp="75.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
       <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">92</span>
@@ -664,7 +702,7 @@ The estimate is balanced by the fact that while multi-agent systems can improve 
     </div>
   </details>
   <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">04_offline_monitoring_jorgensen</div>
-  <details class="q-row" id="q-2" data-probability="85.0" data-importance="85.0" data-quality="88.0" data-ambiguity="95.0" data-itnsss="79.25" data-neglectedness="80.0" data-tractability="75.0" data-soon="75.0" data-sudden="70.0" data-sharp="85.0">
+  <details class="q-row" id="q-2" data-probability="85.0" data-importance="85.0" data-quality="88.0" data-ambiguity="95.0" data-itnsss="79.25" data-neglectedness="80.0" data-tractability="75.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="75.0" data-sudden="70.0" data-sharp="85.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
       <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
@@ -878,7 +916,7 @@ Given the technical progress in MonitorBench but the high institutional bar for 
     </div>
   </details>
   <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">05_cop_compliance_chinese_ai_richardson</div>
-  <details class="q-row" id="q-3" data-probability="28.0" data-importance="85.0" data-quality="86.0" data-ambiguity="95.0" data-itnsss="79.25" data-neglectedness="80.0" data-tractability="75.0" data-soon="85.0" data-sudden="70.0" data-sharp="75.0">
+  <details class="q-row" id="q-3" data-probability="28.0" data-importance="85.0" data-quality="86.0" data-ambiguity="95.0" data-itnsss="79.25" data-neglectedness="80.0" data-tractability="75.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="85.0" data-sudden="70.0" data-sharp="75.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
       <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
@@ -1059,7 +1097,7 @@ Historical base rates for US-China high-tech collaboration are low due to &quot;
     </div>
   </details>
   <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">06_last_bus_china_ai_qian</div>
-  <details class="q-row" id="q-4" data-probability="72.0" data-importance="85.0" data-quality="88.0" data-ambiguity="92.0" data-itnsss="73.95" data-neglectedness="82.0" data-tractability="72.0" data-soon="88.0" data-sudden="55.0" data-sharp="35.0">
+  <details class="q-row" id="q-4" data-probability="72.0" data-importance="85.0" data-quality="88.0" data-ambiguity="92.0" data-itnsss="73.95" data-neglectedness="82.0" data-tractability="72.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="88.0" data-sudden="55.0" data-sharp="35.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
       <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
@@ -1245,7 +1283,7 @@ However, the 35% probability reflects the &#x27;model-breaking&#x27; possibility
     </div>
   </details>
   <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">07_frontier_ai_funding_us_china_wu</div>
-  <details class="q-row" id="q-5" data-probability="84.0" data-importance="85.0" data-quality="92.0" data-ambiguity="95.0" data-itnsss="67.5" data-neglectedness="35.0" data-tractability="80.0" data-soon="90.0" data-sudden="65.0" data-sharp="60.0">
+  <details class="q-row" id="q-5" data-probability="84.0" data-importance="85.0" data-quality="92.0" data-ambiguity="95.0" data-itnsss="67.5" data-neglectedness="35.0" data-tractability="80.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="90.0" data-sudden="65.0" data-sharp="60.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
       <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
@@ -1475,7 +1513,7 @@ The probability is low due to the historical rarity of complete market freezes a
     </div>
   </details>
   <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">08_chinese_pickup_western_ai_duff</div>
-  <details class="q-row" id="q-6" data-probability="25.0" data-importance="85.0" data-quality="84.0" data-ambiguity="92.0" data-itnsss="82.25" data-neglectedness="92.0" data-tractability="70.0" data-soon="85.0" data-sudden="80.0" data-sharp="75.0">
+  <details class="q-row" id="q-6" data-probability="25.0" data-importance="85.0" data-quality="84.0" data-ambiguity="92.0" data-itnsss="82.25" data-neglectedness="92.0" data-tractability="70.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="85.0" data-sudden="80.0" data-sharp="75.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
       <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
@@ -1802,13 +1840,11 @@ document.addEventListener('DOMContentLoaded', function() {
     btn.addEventListener('click', function() {
       var sec = btn.dataset.section;
       var targets = document.querySelectorAll('.section[data-section="' + sec + '"]');
-      // If any are closed, open all; otherwise close all
       var anyClosed = false;
       targets.forEach(function(d) { if (!d.open) anyClosed = true; });
       var shouldOpen = anyClosed;
       targets.forEach(function(d) {
         d.open = shouldOpen;
-        // Also open the parent q-row if we're opening a section
         if (shouldOpen) {
           var parent = d.closest('.q-row');
           if (parent) parent.open = true;
@@ -1817,6 +1853,55 @@ document.addEventListener('DOMContentLoaded', function() {
       btn.classList.toggle('active', shouldOpen);
     });
   });
+
+  // --- Filters ---
+  var filterBtns = document.querySelectorAll('.filter-btn[data-filter]');
+  var activeFilters = {};
+
+  function applyFilters() {
+    var keys = Object.keys(activeFilters);
+    document.querySelectorAll('.q-row').forEach(function(row) {
+      if (keys.length === 0) {
+        row.classList.remove('filter-hidden');
+        return;
+      }
+      var visible = true;
+      for (var i = 0; i < keys.length; i++) {
+        var attr = 'data-' + keys[i];
+        var expected = activeFilters[keys[i]];
+        var actual = row.getAttribute(attr) || '';
+        if (actual !== expected) { visible = false; break; }
+      }
+      row.classList.toggle('filter-hidden', !visible);
+    });
+  }
+
+  filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var key = btn.dataset.filter;
+      var val = btn.dataset.filterValue;
+      if (activeFilters[key] === val) {
+        delete activeFilters[key];
+        btn.classList.remove('active');
+      } else {
+        filterBtns.forEach(function(b) {
+          if (b.dataset.filter === key) b.classList.remove('active');
+        });
+        activeFilters[key] = val;
+        btn.classList.add('active');
+      }
+      applyFilters();
+    });
+  });
+
+  var clearBtn = document.getElementById('filter-clear');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function() {
+      activeFilters = {};
+      filterBtns.forEach(function(b) { b.classList.remove('active'); });
+      applyFilters();
+    });
+  }
 });
 </script>
 </div>
