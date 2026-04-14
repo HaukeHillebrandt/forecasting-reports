@@ -149,7 +149,9 @@
       "_project_name": "80k_biosec_pod",
       "_paper_title": "AI & Biosecurity Risks \u2014 80,000 Hours Podcast with Dr Richard Moulange",
       "_model": "GEMINI_3_FLASH_MINIMAL",
-      "_cheap_mode": true
+      "_cheap_mode": true,
+      "manifold_url": "https://manifold.markets/HaukeHillebrandt/will-the-biosecurity-modernization",
+      "manifold_id": ""
     },
     {
       "id": 6,
@@ -306,7 +308,9 @@
       "_project_name": "ai_rd_automation",
       "_paper_title": "Measuring AI R&D Automation",
       "_model": "GEMINI_3_FLASH_MINIMAL",
-      "_cheap_mode": true
+      "_cheap_mode": true,
+      "manifold_url": "https://manifold.markets/HaukeHillebrandt/any-frontier-ai-company-states-ai-f",
+      "manifold_id": ""
     },
     {
       "id": 2,
@@ -547,7 +551,9 @@
       "_project_name": "biosecurity",
       "_paper_title": "Reasons to be pessimistic (and optimistic) on the future of biosecurity",
       "_model": "unknown",
-      "_cheap_mode": false
+      "_cheap_mode": false,
+      "manifold_url": "https://manifold.markets/HaukeHillebrandt/will-the-biosecurity-modernization",
+      "manifold_id": ""
     },
     {
       "id": 15,
@@ -923,7 +929,9 @@
       "_project_name": "govai_fellowship",
       "_paper_title": "GovAI Winter Fellowship 2026 Presentations",
       "_model": "GEMINI_3_FLASH_MINIMAL",
-      "_cheap_mode": true
+      "_cheap_mode": true,
+      "manifold_url": "https://manifold.markets/HaukeHillebrandt/uschina-track-1-ai-dialogue-commits",
+      "manifold_id": ""
     },
     {
       "id": 3,
@@ -1029,7 +1037,9 @@
       "_project_name": "govai_fellowship",
       "_paper_title": "GovAI Winter Fellowship 2026 Presentations",
       "_model": "GEMINI_3_FLASH_MINIMAL",
-      "_cheap_mode": true
+      "_cheap_mode": true,
+      "manifold_url": "https://manifold.markets/HaukeHillebrandt/frontier-ai-model-hits-50-on-metr-r",
+      "manifold_id": ""
     },
     {
       "id": 1,
@@ -1135,7 +1145,9 @@
       "_project_name": "govai_fellowship",
       "_paper_title": "GovAI Winter Fellowship 2026 Presentations",
       "_model": "GEMINI_3_FLASH_MINIMAL",
-      "_cheap_mode": true
+      "_cheap_mode": true,
+      "manifold_url": "https://manifold.markets/HaukeHillebrandt/uk-parliament-redefines-person-to-i",
+      "manifold_id": ""
     },
     {
       "id": 4,
@@ -1241,7 +1253,9 @@
       "_project_name": "govai_fellowship",
       "_paper_title": "GovAI Winter Fellowship 2026 Presentations",
       "_model": "GEMINI_3_FLASH_MINIMAL",
-      "_cheap_mode": true
+      "_cheap_mode": true,
+      "manifold_url": "https://manifold.markets/HaukeHillebrandt/two-of-openai-anthropic-or-deepmind",
+      "manifold_id": ""
     },
     {
       "id": 5,
