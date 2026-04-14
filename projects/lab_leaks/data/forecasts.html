@@ -47,6 +47,27 @@
   .sort-btn.active { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
   .sort-btn .sort-arrow { font-size: .65rem; margin-left: .15rem; opacity: .7; }
 
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: #fff; border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #888; font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid #e0e0e0; background: #fff; color: #555; cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
   /* Question rows — expandable <details> */
   .question-list { display: flex; flex-direction: column; gap: .6rem; }
 
@@ -233,6 +254,19 @@
     <button class="sort-btn" data-sortkey="sudden">Sudden<span class="sort-arrow"></span></button>
     <button class="sort-btn" data-sortkey="sharp">Sharp<span class="sort-arrow"></span></button>
   </div>
+  <div class="expand-bar">
+    <span class="expand-label">Toggle</span>
+    <button class="expand-btn" id="expand-all">Expand All</button>
+    <button class="expand-btn" id="collapse-all">Collapse All</button>
+    <span class="expand-sep"></span>
+    <span class="expand-label">Sections</span>
+    <button class="expand-btn section-toggle" data-section="priority">Priority Scores</button>
+    <button class="expand-btn section-toggle" data-section="proto">Proto-question</button>
+    <button class="expand-btn section-toggle" data-section="refinement">Refinement</button>
+    <button class="expand-btn section-toggle" data-section="review">Review</button>
+    <button class="expand-btn section-toggle" data-section="forecast">Forecast</button>
+    <button class="expand-btn section-toggle" data-section="decomp">Decomposition</button>
+  </div>
   <div class="question-list">
   <details class="q-row" id="q-0" data-probability="4.0" data-importance="95.0" data-quality="95.0" data-ambiguity="95.0" data-itnsss="71.0" data-neglectedness="70.0" data-tractability="70.0" data-soon="70.0" data-sudden="55.0" data-sharp="70.0">
     <summary>
@@ -251,17 +285,17 @@
       </span>
     </summary>
     <div class="q-body">
-      <details class="section">
+      <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
         <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">71.0</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">70.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">70.0</span></div></div><p><strong>Neglectedness:</strong> No existing forecasting questions found on Metaculus, Polymarket, Manifold, INFER, or Good Judgment Open for this specific regulatory milestone. Metaculus has questions about DNA synthesizer capabilities and benchtop synthesizer sales, but nothing on mandatory screening regulations for non-federally funded orders. The general TOPIC is well-monitored by policy organizations: Johns Hopkins Center for Health Security maintains a gene synthesis screening information hub; NTI, FAS, ARI, IBBIS, and EBRC all actively track and advocate on this issue. However, the specific INDICATOR — whether mandatory regulations will be finalized by a particular date — is not systematically forecast anywhere. This gives it moderate-to-high neglectedness: the topic is covered but not in probabilistic forecasting form.</p><p><strong>Tractability:</strong> Forecasting this well requires synthesizing multiple independent lines of evidence: (1) Executive branch action — the May 2025 EO directed OSTP to revise the framework within 90 days, but as of late 2025 the revised framework had not been publicly released; (2) Legislative pathway — the Biosecurity Modernization and Innovation Act (S. 3741) was introduced Jan 29, 2026, directing Commerce to promulgate regulations, but it is in early legislative stages; (3) Historical base rates for regulatory rulemaking timelines; (4) Political dynamics around biosecurity in the current administration. The distinction between a revised framework (guidance) and mandatory regulations (legally binding rules) adds analytical complexity. Reasonable forecasters could arrive at meaningfully different probabilities depending on how they weight executive vs. legislative pathways.</p><p><strong>Soon:</strong> The policy window is actively open: EO 14292 was signed May 2025 with a 90-day OSTP revision deadline that appears to have lapsed without public output. The Biosecurity Modernization and Innovation Act was introduced in January 2026. The question asks about finalization by Dec 31, 2026 (resolution deadline is Dec 31, 2027). The biosecurity community is actively pushing for action now, and there is genuine urgency given advancing benchtop DNA synthesis capabilities. However, the regulatory process is inherently slow, meaning the window extends beyond 2026.</p><p><strong>Sudden:</strong> Regulatory finalization is a discrete event (rules are either finalized or not), but the process leading up to it is typically visible — notice-and-comment periods, committee hearings, executive guidance documents. The direction of travel is broadly visible (both legislative and executive branches are pursuing screening), but exact timing is uncertain. An executive order pathway could produce faster, less-anticipated action than the legislative route.</p><p><strong>Sharp:</strong> The underlying biosecurity risk (covert pathogen synthesis through unscreened channels) is a sharp risk — the first observable failure could be catastrophic without prior warning shots. Screening gaps compound silently; there is no power-law distribution of smaller incidents that would trigger corrective action before a serious biosecurity event. However, the question itself tracks regulatory action, not the underlying risk event, so the sharpness is somewhat attenuated. The regulatory response could be prompted by AI-biosecurity concerns (which are escalating) rather than an actual bioweapon incident.</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
         <div class="content"><p>Will a peer-reviewed publication demonstrate an AI model generating a functional genome of a mammalian-infecting virus (not limited to bacteriophages) by December 31, 2026?</p>
         <p><strong>Why this question?</strong> The paper describes a scenario where AI &#x27;identifies a mammalian poxvirus candidate and guides a bioengineering strategy to generate a novel capsid variant.&#x27; In 2025, Stanford researchers demonstrated AI-generated functional bacteriophage genomes using Evo models, but these are far simpler than mammalian viruses. Whether AI crosses the threshold to design functional mammalian virus genomes is a critical capability indicator for the paper&#x27;s threat model.</p>
         <p><strong>Paper reference:</strong> The qualitative scenario in Section 4 describes AI identifying &#x27;a mammalian poxvirus candidate&#x27; and guiding design of a novel variant. Table 4 lists &#x27;Threat Enhancement&#x27; (scenario 2A) where AI is used to increase agent capabilities. The paper also references King et al. 2025 showing generative AI tools can generate &#x27;novel, functional viral genomes.&#x27;</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Refined question <span class="badge" data-tooltip="Question refined with background, resolution criteria, and structure">Stage 2</span></h3></summary>
         <p><strong>Question Title:</strong>
 Will a peer-reviewed publication demonstrate an AI generative model producing a functional genome of a mammalian-infecting virus, with substantial sequence novelty, between March 19, 2026 and December 31, 2026?
@@ -311,7 +345,7 @@ This question resolves <strong>Yes</strong> if, by <strong>December 31, 2026, 11
 
 This question resolves <strong>No</strong> if no such peer-reviewed publication meeting all of the above criteria is identified by December 31, 2026, 11:59 PM UTC.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Background</h3></summary>
         <p>In September 2025, researchers at Stanford University and the Arc Institute posted a landmark preprint (King et al., &quot;Generative design of novel bacteriophages with genome language models,&quot; bioRxiv, September 17, 2025) reporting the first-ever AI-generated functional viral genomes. Using fine-tuned versions of the Evo 1 and Evo 2 genome language models—transformer-based foundation models trained on millions of prokaryotic and phage genomes—the team generated approximately 302 candidate bacteriophage genomes modeled on ΦX174, a virus that infects <em>E. coli</em>. Of these, 16 proved viable after synthesis and experimental testing, producing functional phages capable of killing bacteria. Several designs exhibited substantial evolutionary novelty, with genome sequences sharing less than 95% identity with any known natural phage genome.
 
@@ -321,7 +355,7 @@ These results represent a critical inflection point for AI-enabled biosecurity r
 
 As of March 2026, the King et al. bacteriophage study appears to remain a preprint and has not yet been published in a peer-reviewed journal. No published study has demonstrated AI generation of a functional mammalian-infecting virus genome. A March 2026 <em>Nature</em> news feature (&quot;AI can write genomes—how long until it creates synthetic life?&quot;) noted that significant further advances are needed to move from short phage genomes to more complex living systems.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Resolution criteria</h3></summary>
         <p>This question resolves <strong>Yes</strong> if, by <strong>December 31, 2026, 11:59 PM UTC</strong>, a peer-reviewed publication meets ALL of the following criteria:
 
@@ -346,13 +380,13 @@ As of March 2026, the King et al. bacteriophage study appears to remain a prepri
 
 This question resolves <strong>No</strong> if no such peer-reviewed publication meeting all of the above criteria is identified by December 31, 2026, 11:59 PM UTC.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
         <div class="content"><p><strong>Quality:</strong> 95.0 &nbsp; <strong>Ambiguity:</strong> 95.0</p>
         <p><strong>Quality notes:</strong> The question addresses a high-stakes, technically difficult milestone in AI and biosecurity. It is well-grounded in recent developments (e.g., Evo 2 and King et al.) and has a high degree of uncertainty given the technical and ethical barriers. [&lt;642566&gt;]</p>
         <p><strong>Ambiguity notes:</strong> The question provides exceptionally precise definitions for &#x27;AI generative model&#x27;, &#x27;mammalian-infecting virus&#x27;, and &#x27;functional genome&#x27;, with clear links to authoritative databases like ICTV and PubMed. The distinction between preprints and peer-reviewed articles is explicit. [&lt;642566&gt;]</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Adversarial review <span class="badge">NAN</span> <span class="badge">Edge risk: NAN</span></h3></summary>
         <div class="content"><p><strong>Assessment:</strong> NAN &nbsp; <strong>Edge case risk:</strong> NAN</p>
         <p>ASSESSMENT: nan
@@ -369,7 +403,7 @@ SUGGESTION: nan</p>
 nan</p>
         </details></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Forecast rationale</h3></summary>
         <p>This question requires ALL of the following to be met by December 31, 2026: (1) an AI generative model produces a mammalian-infecting virus genome, (2) the genome is functional in mammalian cell culture, (3) it has &lt;90% nucleotide identity to any known natural virus, (4) the results appear in a peer-reviewed PubMed-indexed publication, and (5) the work was submitted on or after March 19, 2026.
 
@@ -408,7 +442,7 @@ However, these factors are substantially outweighed by the barriers above. The A
 
 The probability is very low, constrained primarily by the absence of any demonstrated capability, the tight submission-to-publication window, and the conjunction of demanding technical and procedural requirements.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Importance rationale</h3></summary>
         <p>This question identifies a critical &#x27;canary in the coal mine&#x27; threshold for AI-enabled biosecurity risk. While proof-of-concept has been demonstrated for simple bacteriophages, the generation of a functional, novel genome for a mammalian-infecting virus would represent a major jump in risk capability. Knowing the answer would likely change resource allocation for AI safety, trigger a paradigm shift in how biological datasets are shared, and force immediate security reviews of DNA synthesis screening protocols. For domain researchers and biosecurity experts, this is not just an academic milestone but a leading indicator of whether generative AI can now bypass natural evolutionary constraints to create viable, novel human or animal pathogens. Its resolution would provide a concrete data point for the &#x27;red lines&#x27; currently being debated in international AI governance.</p>
       </details>
@@ -431,17 +465,17 @@ The probability is very low, constrained primarily by the absence of any demonst
       </span>
     </summary>
     <div class="q-body">
-      <details class="section">
+      <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
         <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">67.9</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">70.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">70.0</span></div></div><p><strong>Neglectedness:</strong> Web searches conducted across all major forecasting platforms found NO dedicated VCT forecast questions: site:metaculus.com yielded only a tangential mention in a general AI competence question (Q5276), not a specific VCT threshold question. Polymarket returned no results for VCT or virology AI benchmarks. Manifold Markets returned no results for &quot;virology capabilities test.&quot; INFER returned no relevant results. However, the GENERAL topic of AI biosecurity is moderately well-covered: Metaculus has a Biosecurity Tournament (Long-Term), and the forecastingaifutures substack has published forecasts about AI biological capability timelines. The International AI Safety Report 2026 discusses VCT prominently [69b076]. Benchmark leaderboards (llm-stats.com) track VCT scores. The specific 80% threshold operationalisation is not being forecast anywhere, but indirect monitoring of the general area exists.</p><p><strong>Tractability:</strong> Forecasting this question well requires synthesising multiple lines of evidence: current benchmark progression trajectory (43.8% in April 2025 → 61% by November 2025 per llm-stats.com/Grok 4.1 model card), AI scaling trends, upcoming model release cadences, multimodal reasoning improvements, and the specific difficulty distribution of VCT questions. The ~17pp improvement over ~7 months provides a useful trend to extrapolate, but the rate of improvement may be non-linear, and benchmark-specific factors (e.g., question difficulty distribution, saturation effects) require inside-view analysis. Not a simple base-rate lookup, but there&#x27;s a dominant signal (extrapolating the improvement trend) that limits the range of reasonable forecaster disagreement.</p><p><strong>Soon:</strong> The resolution window closes December 31, 2026 — approximately 9 months from now. AI capabilities in scientific reasoning are advancing rapidly, and the current best VCT score (61%) needs a ~19pp improvement to reach 80%. The rate of improvement (~17pp in 7 months from April-November 2025) suggests this is plausible within the window but not certain. This is a relevant juncture given the pace of frontier model releases, but the same question could be re-asked with a later deadline if it doesn&#x27;t resolve, making the temporal urgency moderate rather than extreme.</p><p><strong>Sudden:</strong> New frontier model releases cause discrete jumps in benchmark scores — the leap from 43.8% (o3) to 61% (Grok 4.1 Thinking) occurred over about 7 months. However, the general trajectory of AI improvement on biology benchmarks is a visible, gradual trend that is widely tracked. The direction of travel toward higher VCT scores is clear; only the exact timing of crossing 80% is uncertain. Informed observers of AI capabilities would find a score exceeding 80% unsurprising in direction, though the specific timing might be somewhat surprising. This is a moderately predictable endpoint of a well-documented trajectory.</p><p><strong>Sharp:</strong> There are clear &quot;warning shots&quot; in the VCT trajectory: the progression from initial low scores to 43.8% to 61% is publicly visible on benchmark leaderboards and in published research. Each major model release provides updated VCT scores. The approach toward 80% would be observable as models score in the 60s and 70s first. However, the real-world biosecurity implications of reaching 80% may not have intermediate warning shots — the benchmark score is itself the warning shot for policy action. In the broader biosecurity domain, AI-enabled biological risk follows a gradual escalation pattern with multiple observable precursors, not an all-or-nothing dynamic.</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
         <div class="content"><p>Will any major frontier AI lab (Anthropic, OpenAI, Google DeepMind, or Meta) publicly classify a model as requiring their highest-tier biosecurity safeguards (e.g., Anthropic&#x27;s ASL-4 or equivalent) by December 31, 2026?</p>
         <p><strong>Why this question?</strong> The paper discusses how state actors might exploit advanced AI systems and notes that &#x27;companies might need to pause deployment for over one year to implement SL 4 controls.&#x27; As of early 2026, Anthropic has activated ASL-3 safeguards for Claude 4 Opus but no model has triggered ASL-4. Whether rapidly improving AI capabilities will trigger the highest-tier biological risk safeguards is a key upstream indicator of the risk level the paper models.</p>
         <p><strong>Paper reference:</strong> Footnote 8 states: &#x27;Mitigating state-level misuse of frontier models could require restricting capability improvements, enhanced monitoring and/or securing model weights as per SL 4 standards (RAND, 2024). Although the costs are uncertain, several experts we consulted suggested that companies might need to pause deployment for over one year to implement SL 4 controls.&#x27;</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Refined question <span class="badge" data-tooltip="Question refined with background, resolution criteria, and structure">Stage 2</span></h3></summary>
         <p><strong>Question Title:</strong>
 Will any major frontier AI lab (Anthropic, OpenAI, Google DeepMind, or Meta) publicly classify a model as triggering their highest-tier biosecurity risk level between March 19, 2026 and December 31, 2026?
@@ -495,7 +529,7 @@ If no qualifying announcement is made by any of the four labs by 23:59 UTC on De
 - Google DeepMind: <a href="https://deepmind.google/blog/" target="_blank" rel="noopener">https://deepmind.google/blog/</a>
 - Meta: <a href="https://ai.meta.com/blog/" target="_blank" rel="noopener">https://ai.meta.com/blog/</a> and <a href="https://about.fb.com/news/" target="_blank" rel="noopener">https://about.fb.com/news/</a></p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Background</h3></summary>
         <p>As of March 2026, four major frontier AI labs—Anthropic, OpenAI, Google DeepMind, and Meta—maintain voluntary safety frameworks that define escalating tiers of risk for AI capabilities, including in the domain of biosecurity (i.e., the risk that an AI system could materially assist in the development or deployment of biological weapons). Each framework defines capability thresholds at which increasingly stringent safeguards must be activated:
 
@@ -511,17 +545,17 @@ This question asks whether any of these labs will formally classify a model at t
 
 ---</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Resolution criteria</h3></summary>
         <p>This question resolves <strong>Yes</strong> if, between March 19, 2026 (00:00 UTC) and December 31, 2026 (23:59 UTC), any of the following four organizations publishes a qualifying announcement that explicitly classifies or assesses a specific AI model as having reached or exceeded the <strong>highest-tier biosecurity risk level</strong> defined in that organization&#x27;s own published safety framework, as specified below.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
         <div class="content"><p><strong>Quality:</strong> 88.0 &nbsp; <strong>Ambiguity:</strong> 85.0</p>
         <p><strong>Quality notes:</strong> This is a highly relevant &#x27;meta&#x27; question about AI safety governance. It is genuinely uncertain due to the tension between rapid capability gains and shifting lab safety commitments.</p>
         <p><strong>Ambiguity notes:</strong> The question is well-defined and maps to specific tiers in company frameworks. However, corporate announcements can occasionally be nuanced or use non-standard phrasing, introducing a small risk of interpretation issues (e.g., what constitutes &#x27;explicitly&#x27; meeting a tier if names change).</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Adversarial review <span class="badge">NEEDS_REVISION</span> <span class="badge">Edge risk: MEDIUM</span></h3></summary>
         <div class="content"><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge case risk:</strong> MEDIUM</p>
         <p>ASSESSMENT: NEEDS_REVISION
@@ -618,7 +652,7 @@ FIX: Add language specifying: &quot;If a lab expands the scope of a lower tier t
 </p>
         </details></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Revised question <span class="badge-status badge-revised">REVISED</span></h3></summary>
         <p><strong>Question Title:</strong>
 Will any major frontier AI lab (Anthropic, OpenAI, Google DeepMind, or Meta) publicly classify a model as triggering their highest-tier biosecurity risk level between March 19, 2026 and December 31, 2026?
@@ -681,7 +715,7 @@ If no qualifying announcement is made by any of the four labs by 23:59 UTC on De
 - Google DeepMind: <a href="https://deepmind.google/blog/" target="_blank" rel="noopener">https://deepmind.google/blog/</a> and <a href="https://ai.google/" target="_blank" rel="noopener">https://ai.google/</a>
 - Meta: <a href="https://ai.meta.com/blog/" target="_blank" rel="noopener">https://ai.meta.com/blog/</a> and <a href="https://about.fb.com/news/" target="_blank" rel="noopener">https://about.fb.com/news/</a></p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Forecast rationale</h3></summary>
         <p>This question asks whether any of four major AI labs will formally classify a model at their highest-tier biosecurity risk level by December 31, 2026. I synthesize the evidence as follows:
 
@@ -701,11 +735,11 @@ If no qualifying announcement is made by any of the four labs by 23:59 UTC on De
 
 <strong>Synthesis:</strong> The institutional barriers to a formal highest-tier classification are substantial. Labs have restructured their frameworks to provide more flexibility, and the evaluation science gap gives them room to remain at &#x27;High/ASL-3.&#x27; The 0% historical base rate is telling. However, 287 days is meaningful, next-gen models may arrive, and external pressure is growing. The Metaculus estimate of ~18% is a reasonable anchor, but I believe the institutional resistance and evaluation gaps warrant a slightly lower estimate. The structural shift away from binary tripwires toward flexible &#x27;Risk Reports&#x27; [649691] is particularly significant — it means labs can apply higher-tier mitigations without the formal classification that would trigger this question.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Importance rationale</h3></summary>
         <p>This question tracks a critical leading indicator for catastrophic risk in the biosecurity domain. A formal classification of a model at the highest risk tier (e.g., ASL-4 or &#x27;Critical&#x27;) would be a watershed event in AI governance, triggering stringent safety protocols and likely necessitating immediate government intervention or international regulatory responses. Since these tiers are specifically defined to represent thresholds for near-catastrophic capabilities, knowing whether a lab reaches this point is of paramount importance for policymakers deciding on scaling pauses, security mandates, and resource allocation for AI safety. The transition would mark the end of the &#x27;zone of ambiguity&#x27; for frontier risk, significantly altering the risk-benefit calculus for advanced model deployment.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="decomp">
         <summary><h3>Decomposition &amp; Research <span class="badge" data-tooltip="Question decomposed into subquestions with targeted research">Stage 6b</span> <span class="badge">5 subquestions</span></h3></summary>
         <div class="content"><div class="prob-comparison"><span><strong>Initial forecast:</strong> <span style="color: #c62828; font-weight: 700">14%</span></span><span class="arrow">&rarr;</span><span><strong>Research-informed:</strong> <span style="color: #c62828; font-weight: 700">5%</span></span> <span style="color: #888">(-9pp)</span></div><details class="section"><summary><h3>Re-forecast rationale</h3></summary><p>This question asks whether any of four major frontier AI labs (Anthropic, OpenAI, Google DeepMind, Meta) will publicly classify a model at their highest-tier biosecurity risk level between March 19 and December 31, 2026. I analyze this through five key dimensions:
 
@@ -1436,17 +1470,17 @@ The most likely external pressure pathway to a highest-tier classification would
       </span>
     </summary>
     <div class="q-body">
-      <details class="section">
+      <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
         <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">31.1</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">28.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">18.0</span></div></div><p><strong>Neglectedness:</strong> Platforms searched: (1) Metaculus — has a directly related question at metaculus.com/c/risk/38786/ titled &quot;Dates that OpenAI reports an AI reached these Biological &amp; Chemical risk levels&quot; which tracks this exact indicator. (2) Polymarket — no specific market found on this topic. (3) Manifold Markets — no specific question found matching &quot;OpenAI Bio High.&quot; (4) INFER/Good Judgment Open — no matching question found. However, extensive indirect monitoring exists: multiple media outlets (Fortune, The Hill, VentureBeat, Axios) and policy organizations (NTI) covered ChatGPT Agent&#x27;s Bio High classification. LessWrong and the Forecasting Research Institute have also published analysis of AI biological risk thresholds. The event has already occurred and been widely documented, meaning the information is readily available to decision-makers through existing channels.</p><p><strong>Tractability:</strong> The question appears already resolved: ChatGPT Agent was classified as Bio High at deployment in mid-2025 per OpenAI&#x27;s own system card and multiple credible news sources. A forecaster would discover this with minimal research — essentially a single lookup. Even before resolution, the question primarily required monitoring OpenAI&#x27;s announcements rather than synthesizing multiple independent evidence streams. OpenAI explicitly warned in June 2025 that upcoming models would reach Bio High, making the eventual classification highly predictable. The forecast would have been near-certain (&gt;90%) shortly after that warning, offering minimal room for skill differentiation among forecasters.</p><p><strong>Soon:</strong> The event has already occurred. ChatGPT Agent was deployed and classified as Bio High in mid-2025, approximately 9 months before the current date (March 2026) and well within the resolution deadline of December 31, 2026. There is no remaining temporal urgency — the window for influence or learning from this specific question has closed. The question could have been valuable in early-to-mid 2025 when the outcome was still uncertain, but that window has passed.</p><p><strong>Sudden:</strong> The classification of ChatGPT Agent as Bio High was not sudden or surprising. OpenAI published a blog post in June 2025 explicitly warning that &quot;upcoming AI models will reach &#x27;High&#x27; levels of capability in biology, as measured by our Preparedness Framework.&quot; The classification followed within weeks. The direction of travel was clearly visible through OpenAI&#x27;s own public communications, making this a telegraphed rather than surprising development. The general trajectory of increasing AI bio capabilities was well-documented.</p><p><strong>Sharp:</strong> There were meaningful &quot;warning shots&quot; before this classification. OpenAI&#x27;s earlier models showed incremental increases in bio-relevant capabilities (documented in prior system cards). The June 2025 preparedness blog post served as an explicit warning shot. The broader AI safety community had been tracking biological capability uplift for years through evaluations like the VCT (Virology Capability Test). However, the general domain of AI-enabled biological risk does have some sharp characteristics — the transition from &quot;models can&#x27;t meaningfully help&quot; to &quot;models provide substantial uplift&quot; could happen quickly, and the consequences of crossing that threshold are severe.</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
         <div class="content"><p>Will the U.S. Congress pass federal legislation mandating universal DNA synthesis screening (covering non-federally-funded orders) by December 31, 2026?</p>
         <p><strong>Why this question?</strong> The paper discusses AI-enabled pathogen design as a key risk pathway and notes that DNA synthesis screening is a critical mitigation. The current OSTP Framework only covers federally funded research. The Biosecurity Modernization and Innovation Act of 2026 (S. 3741), introduced by Senators Cotton (R-AR) and Klobuchar (D-MN) on January 29, 2026, would extend screening requirements to all orders. Whether Congress passes this or similar legislation is genuinely uncertain — it has bipartisan support but Congressional timelines are unpredictable.</p>
         <p><strong>Paper reference:</strong> The paper notes that &#x27;improved real-time information sharing and screening of dual-use materials may increase the economic and political costs of bioweapon development&#x27; (Section 3, bullet on offense-defense balance). Table 9 references scenarios where AI helps design pathogens that bypass detection. The paper also discusses DNA synthesis screening evasion (citing Wittmann et al. 2025).</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Refined question <span class="badge" data-tooltip="Question refined with background, resolution criteria, and structure">Stage 2</span></h3></summary>
         <p><strong>Question Title:</strong>
 Will the U.S. President sign into law federal legislation mandating nucleic acid synthesis screening for all synthesis providers (not limited to federally funded orders) between March 19, 2026 and December 31, 2026 (11:59 PM UTC)?
@@ -1485,7 +1519,7 @@ Specific clarifications:
 
 <strong>Primary Resolution Source:</strong> The bill&#x27;s status page on Congress.gov (<a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info</a>) or, if enacted through a different legislative vehicle, the relevant enrolled bill page on Congress.gov or the published law in the Federal Register. Credible news reporting from outlets such as Reuters, the Associated Press, or domain-specific outlets may serve as supplementary sources.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Background</h3></summary>
         <p>Nucleic acid synthesis screening is a biosecurity measure in which providers of synthetic DNA and RNA check incoming orders against databases of known pathogen sequences to prevent malicious actors from obtaining dangerous biological materials. The current U.S. screening regime is governed by the &quot;Framework for Nucleic Acid Synthesis Screening,&quot; released by the White House Office of Science and Technology Policy (OSTP) in September 2024 (<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>). This Framework defines key terms including &quot;Sequence of Concern&quot; (broadly, a nucleotide sequence that is a best match to a sequence from a federally regulated pathogen or toxin) and establishes requirements for sequence-level and customer-level screening. Critically, the 2024 OSTP Framework applies only as a condition of receiving U.S. governmental life sciences research funding — it does not mandate screening for privately funded or commercial orders.
 
@@ -1499,7 +1533,7 @@ Historically, most bills introduced in Congress do not advance beyond committee 
 
 ---</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Resolution criteria</h3></summary>
         <p>This question resolves <strong>Yes</strong> if, between March 19, 2026 (00:00 UTC) and December 31, 2026 (23:59 UTC), the President of the United States signs into law any federal legislation that includes a legally binding requirement for nucleic acid synthesis providers operating in the United States to screen synthesis orders against sequences of concern, where this requirement applies to all orders — not solely those funded by U.S. government research funding.
 
@@ -1515,7 +1549,7 @@ Specific clarifications:
 
 5. <strong>Regulatory delegation:</strong> If the signed legislation directs a federal agency (e.g., the Department of Commerce) to promulgate regulations establishing universal screening, this counts — even if the implementing regulations have not yet been finalized by December 31, 2026 — as long as the statute itself creates a binding legal mandate for universal screening (not merely a directive to &quot;study&quot; or &quot;develop a strategy&quot; for screening).</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
         <div class="content"><p><strong>Quality:</strong> 88.0 &nbsp; <strong>Ambiguity:</strong> 100.0</p>
         <p><strong>Quality notes:</strong> The question is of high quality. It asks about a significant legislative event with a clear binary outcome. Forecasting the passage of S. 3741 or similar mandates requires analyzing bipartisan support, committee priorities, and the legislative calendar, making it a &quot;good&quot; difficulty level. The background is comprehensive, and the resolution criteria are extremely robust.</p>
@@ -1536,7 +1570,7 @@ The question leaves no room for ambiguity. It uses standard legislative terms (&
 <strong>final_answer_ambiguity</strong>
 great</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Adversarial review <span class="badge">PASS</span> <span class="badge">Edge risk: MEDIUM</span></h3></summary>
         <div class="content"><p><strong>Assessment:</strong> PASS &nbsp; <strong>Edge case risk:</strong> MEDIUM</p>
         <p>ASSESSMENT: PASS
@@ -1611,7 +1645,7 @@ SUGGESTION: </p>
 The resolution criteria are well-drafted and anticipate many common ambiguities (broader legislation vehicles, regulatory delegation, the study-vs-mandate distinction). However, the most significant risks center on: (1) the precise nature of the legislative mandate in S. 3741 or any successor bill — the FAS description suggests the bill may be more focused on assessment than binding mandates [c5d524]; (2) the blurry line between a statutory directive to &quot;promulgate regulations&quot; (which the resolution criteria accept) and a directive to &quot;develop a strategy&quot; (which they reject); and (3) the likelihood that any enacted legislation will contain exemptions, thresholds, or delayed effective dates that complicate the &quot;universal&quot; determination.</p>
         </details></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Forecast rationale</h3></summary>
         <p>This question asks whether the U.S. President will sign into law legislation mandating universal nucleic acid synthesis screening (covering all orders, not just federally funded ones) by December 31, 2026. Here is my analysis:
 
@@ -1635,11 +1669,11 @@ The resolution criteria are well-drafted and anticipate many common ambiguities 
 
 <strong>Synthesis:</strong> Blending the low base rates (~2-5%), the favorable but insufficient political dynamics, the concrete structural obstacles, and partially weighting the ~40% Manifold estimate (which I believe overestimates the probability given current legislative stagnation), I arrive at approximately 10%.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Importance rationale</h3></summary>
         <p>This question tracks a pivotal transition in biosecurity governance: the move from a voluntary, funding-contingent screening regime to a universal federal mandate. Knowing the answer is highly relevant for policy and decision-making because it identifies whether a known security loophole—the &#x27;non-federally funded&#x27; gap—will be closed. For industry, the answer determines whether synthesis providers must invest in new compliance infrastructure. For policymakers, it serves as a measure of legislative appetite for regulating the bioeconomy to prevent the illicit synthesis of pandemic-capable pathogens. The bipartisan nature of the tracked bill (S. 3741) and its alignment with Executive Order 14292 make this a critical leading indicator for the future of U.S. biological defense policy.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="decomp">
         <summary><h3>Decomposition &amp; Research <span class="badge" data-tooltip="Question decomposed into subquestions with targeted research">Stage 6b</span> <span class="badge">5 subquestions</span></h3></summary>
         <div class="content"><div class="prob-comparison"><span><strong>Initial forecast:</strong> <span style="color: #e65100; font-weight: 700">18%</span></span><span class="arrow">&rarr;</span><span><strong>Research-informed:</strong> <span style="color: #c62828; font-weight: 700">4%</span></span> <span style="color: #888">(-14pp)</span></div><details class="section"><summary><h3>Re-forecast rationale</h3></summary><p>This question asks whether the President will sign into law a universal nucleic acid synthesis screening mandate by December 31, 2026. Let me assess the probability systematically.
 
@@ -2159,13 +2193,13 @@ The most plausible pathway for S. 3741&#x27;s provisions to become law in 2026 w
       </span>
     </summary>
     <div class="q-body">
-      <details class="section">
+      <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
         <div class="content"><p>Will the BWC Working Group on Strengthening the Convention produce a consensus final report recommending a formal verification or compliance mechanism by December 31, 2026?</p>
         <p><strong>Why this question?</strong> The paper emphasizes that the BWC &#x27;does not have a formal verification process&#x27; as a major gap enabling covert state bioweapons programs. The BWC Working Group has its 8th session (Feb 2026) and 9th session (Aug 17-21, 2026) scheduled. Whether it achieves consensus on verification is genuinely uncertain given geopolitical tensions between Russia, China, and Western states. This is a critical institutional indicator of whether the international community can constrain the state-level risks the paper models.</p>
         <p><strong>Paper reference:</strong> The paper notes that &#x27;184 states are party to the BWC&#x27; but that &#x27;the BWC does not have a formal verification process and no state has publicly acknowledged a current offensive bioweapon programme&#x27; (Section 1). Section 5 discusses attribution as a key deterrent and notes the &#x27;absence of verification mechanisms within the BWC.&#x27;</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Refined question <span class="badge" data-tooltip="Question refined with background, resolution criteria, and structure">Stage 2</span></h3></summary>
         <p><strong>Title:</strong> Will the BWC Working Group on Strengthening the Convention adopt a consensus final report recommending establishment of a new subsidiary body dedicated to verification or compliance measures by December 31, 2026?
 
@@ -2220,7 +2254,7 @@ The official documents of the BWC Working Group, as published on the United Nati
 
 If the final report is adopted at any of these sessions, the adopted text published on the corresponding UNODA documents page will serve as the primary resolution source. The BWC documents library at <a href="https://docs-library.unoda.org/" target="_blank" rel="noopener">https://docs-library.unoda.org/</a> may also be consulted. If no final report is published on any of these pages by December 31, 2026, the question resolves No.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Background</h3></summary>
         <p>The Biological Weapons Convention (BWC; full title: Convention on the Prohibition of the Development, Production and Stockpiling of Bacteriological (Biological) and Toxin Weapons and on their Destruction) is a multilateral disarmament treaty banning biological weapons. As of 2025, the BWC has 189 States Parties and 4 Signatory States (Egypt, Haiti, Somalia, and Syria). Unlike the Chemical Weapons Convention (CWC), which is overseen by the Organisation for the Prohibition of Chemical Weapons (OPCW) and includes a comprehensive verification regime with routine inspections, the BWC does not have a formal verification process or a standing organizational body dedicated to monitoring compliance. This absence has been widely identified as a major gap in the international biosecurity regime.
 
@@ -2239,7 +2273,7 @@ Three remaining sessions are scheduled in 2026:
 
 Geopolitical tensions significantly complicate consensus-building. Russia—which has been assessed by some states as maintaining an active offensive bioweapons program—has historically resisted binding verification measures. China and other states have expressed concerns about intrusiveness. Western states and a majority of States Parties generally support stronger verification measures. However, the consensus requirement gives any single State Party present an effective veto over the final report.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Resolution criteria</h3></summary>
         <p>This question resolves <strong>Yes</strong> if, between March 19, 2026 (00:00 UTC) and December 31, 2026 (23:59 UTC), the BWC Working Group on the Strengthening of the Convention adopts by consensus a final report that contains an explicit recommendation to establish a new subsidiary body—such as an Open-Ended Working Group (OEWG), Ad Hoc Committee, Ad Hoc Group, or equivalent institutional arrangement—with a specific mandate to develop, negotiate, or implement measures for verification of compliance with the BWC, or to develop a legally binding compliance or verification instrument.
 
@@ -2248,13 +2282,13 @@ This question resolves <strong>No</strong> if any of the following conditions ho
 - The Working Group adopts a consensus final report that does not contain a recommendation to establish a new subsidiary body with a specific mandate focused on verification or compliance; or
 - The final report mentions verification or compliance only in general or aspirational terms (e.g., &quot;States Parties should consider further discussions on verification&quot;) without recommending the establishment of a specific new dedicated body or institutional process.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
         <div class="content"><p><strong>Quality:</strong> 92.0 &nbsp; <strong>Ambiguity:</strong> 95.0</p>
         <p><strong>Quality notes:</strong> This is a high-quality forecasting question. It addresses a genuinely uncertain and significant geopolitical event with a clear binary outcome. The requirement for consensus in the BWC context creates a high-stakes environment where a single dissenting state (like Russia or China) can block the outcome, making the probability non-trivial and research-dependent. The inclusion of recent context (8th session in Feb 2026) and specific upcoming milestones ensures the question is timely and &#x27;high entropy&#x27;.</p>
         <p><strong>Ambiguity notes:</strong> The question provides exceptionally clear definitions for technical terms (Consensus, Final Report, Recommendation) and specifies the exact linguistic markers required for a &#x27;Yes&#x27; resolution. It also correctly distinguishes between procedural reports and the final substantive report. The resolution source (UNODA) is the authoritative primary source for this domain. The only minor ambiguity lies in the &#x27;equivalent institutional arrangement&#x27; clause, but the functional mandate requirement (verification/compliance) provides a strong guardrail. <a href="http://meetings.unoda.org/bwc-/biological-weapons-convention-working-group-on-the-strengthening-of-the-convention-eighth-session-2026" target="_blank" rel="noopener">UNODA BWC Meetings</a>.</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Adversarial review <span class="badge">PASS</span> <span class="badge">Edge risk: MEDIUM</span></h3></summary>
         <div class="content"><p><strong>Assessment:</strong> PASS &nbsp; <strong>Edge case risk:</strong> MEDIUM</p>
         <p>ASSESSMENT: PASS
@@ -2358,7 +2392,7 @@ Based on research into the current state of BWC Working Group negotiations, incl
 The highest-risk edge cases involve the likely diplomatic compromises around (1) whether a multi-mandate body counts as &quot;dedicated to&quot; verification, (2) whether conditional/aspirational recommendation language meets the threshold, and (4) whether a mandate to &quot;study&quot; verification qualifies as developing verification measures. These reflect the real negotiation dynamics where Russia and other skeptical states may agree to watered-down compromises that test the boundaries of the resolution criteria [4d8f35] [0f8b49].</p>
         </details></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Forecast rationale</h3></summary>
         <p>This question asks whether the BWC Working Group will adopt a consensus final report with a specific recommendation to establish a new subsidiary body dedicated to verification/compliance by December 31, 2026. The resolution criteria are demanding: it requires not just any consensus report, but one with explicit language recommending a new body with a specific verification/compliance mandate.
 
@@ -2393,7 +2427,7 @@ The highest-risk edge cases involve the likely diplomatic compromises around (1)
 
 Synthesizing all factors, I estimate approximately 15% probability. The broad conceptual support and existing draft language provide a non-trivial path to YES, but the consensus requirement, deep substantive disagreements, geopolitical barriers, and the demanding resolution criteria make NO the much more likely outcome.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Importance rationale</h3></summary>
         <p>The absence of a verification mechanism has been the defining weakness of the Biological Weapons Convention (BWC) for half a century. A consensus recommendation to establish a dedicated verification or compliance body would be the most significant institutional development in the history of the treaty, directly impacting global arms control architecture. Knowing the answer is highly decision-relevant for national biosecurity strategies, diplomatic resource allocation, and the long-term stability of the biological disarmament regime. Such a step would represent a rare geopolitical breakthrough among major powers (USA, Russia, China) on a high-stakes security issue, serving as a leading indicator for the viability of multilateral disarmament in a period of high international tension.</p>
       </details>
@@ -2412,13 +2446,13 @@ Synthesizing all factors, I estimate approximately 15% probability. The broad co
       </span>
     </summary>
     <div class="q-body">
-      <details class="section">
+      <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
         <div class="content"><p>Will the OSTP Framework&#x27;s October 13, 2026 deadline for reducing DNA synthesis screening windows to 50 nucleotides be maintained without postponement or rescission by the Trump administration by December 31, 2026?</p>
         <p><strong>Why this question?</strong> The paper discusses DNA synthesis screening evasion as a key risk factor. The OSTP Framework set an October 13, 2026 deadline for providers to screen orders down to 50 nucleotides, a significant technical tightening. However, the Trump administration has shown a deregulatory stance on AI, and the Framework was issued under the Biden administration. Whether this deadline survives is a genuinely uncertain upstream indicator of biosecurity governance.</p>
         <p><strong>Paper reference:</strong> The paper discusses AI-designed sequences capable of &#x27;evading commercial DNA synthesis screening&#x27; (Wittmann et al. 2025) and notes that &#x27;improved real-time information sharing and screening of dual-use materials may increase the economic and political costs of bioweapon development&#x27; (Section 3).</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Refined question <span class="badge" data-tooltip="Question refined with background, resolution criteria, and structure">Stage 2</span></h3></summary>
         <p><strong>Question Title:</strong>
 Will U.S. federal policy require nucleic acid synthesis providers to screen orders at a 50-nucleotide window effective on or before October 13, 2026?
@@ -2478,7 +2512,7 @@ This question resolves <strong>NO</strong> if any of the following are true as o
 
 <strong>Ambiguity Clause:</strong> If the 2024 Framework has not been formally rescinded or replaced but a credible official U.S. government source (e.g., OSTP, NIH, or another implementing agency) states that the 50-nucleotide requirement is not being enforced or has been indefinitely suspended, the question resolves <strong>NO</strong>. Conversely, if no formal rescission has occurred and implementing agencies (such as NIH) continue to reference the 2024 Framework&#x27;s 50-nucleotide requirement as active policy, the question resolves <strong>YES</strong>.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Background</h3></summary>
         <p>In September 2024, the White House Office of Science and Technology Policy (OSTP) released the revised <a href="https://bidenwhitehouse.archives.gov/wp-content/uploads/2024/10/OSTP-Nucleic-Acid_Synthesis_Screening_Framework-Sep2024-Final.pdf" target="_blank" rel="noopener">Framework for Nucleic Acid Synthesis Screening</a> (the &quot;2024 Framework&quot;). This document established a phased timeline for providers of synthetic <a href="https://en.wikipedia.org/wiki/Nucleic_acid" target="_blank" rel="noopener">nucleic acids</a> (DNA and RNA) and manufacturers of benchtop nucleic acid synthesis equipment. The Framework requires that entities receiving U.S. federal funding only procure synthetic nucleic acids from providers who adhere to specified screening standards. Central to these standards is the concept of a &quot;screening window&quot;—the minimum length of a <a href="https://en.wikipedia.org/wiki/Nucleotide" target="_blank" rel="noopener">nucleotide</a> sequence that must be checked against databases of <a href="https://en.wikipedia.org/wiki/Dual-use_technology" target="_blank" rel="noopener">sequences of concern</a> (SOCs), which include potential bioweapon agents.
 
@@ -2489,7 +2523,7 @@ Under the 2024 Framework&#x27;s phased timeline:
 
 <a href="https://en.wikipedia.org/wiki/Gene_synthesis#Biosecurity" target="_blank" rel="noopener">DNA synthesis screening</a> is a key biosecurity measure designed to prevent malicious actors from ordering synthetic DNA sequences that encode dangerous pathogens or toxins. The 50-nucleotide threshold is significant because shorter sequences are harder to screen but can still be assembled into dangerous constructs, particularly with AI-assisted sequence design.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Resolution criteria</h3></summary>
         <p>This question resolves <strong>YES</strong> if, as of <strong>December 31, 2026, 23:59 UTC</strong>, there exists an active, publicly available U.S. federal policy document that meets <strong>both</strong> of the following conditions:
 
@@ -2510,7 +2544,7 @@ This question resolves <strong>NO</strong> if any of the following are true as o
 - <strong>Not affirmatively active:</strong> The 2024 Framework has not been formally rescinded but no official federal implementation page affirmatively presents the 50-nucleotide requirement as current, active policy (e.g., the requirement is described only as &quot;under revision&quot; or the implementation page states it will be updated once a new framework is available); OR
 - <strong>No active policy:</strong> No qualifying U.S. federal policy document containing a 50-nucleotide screening requirement with an effective date on or before October 13, 2026 can be identified.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
         <div class="content"><p><strong>Quality:</strong> 92.0 &nbsp; <strong>Ambiguity:</strong> 95.0</p>
         <p><strong>Quality notes:</strong> The question is high-quality because it focuses on a specific, technically demanding biosecurity requirement (the 50-nucleotide window) that is currently under review by a new administration (EO 14292). The probability is not binary or trivial; it requires assessing the trade-off between &quot;commonsense&quot; deregulation and biosecurity risks. The resolution sources are reliable and expected to exist. Research into OSTP posture and legislative progress (Biosecurity Modernization and Innovation Act of 2026) will clearly differentiate forecasts.</p>
@@ -2531,7 +2565,7 @@ The question provides clear definitions, precise dates, and a hierarchy of resol
 <strong>final_answer_ambiguity</strong>
 great</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Adversarial review <span class="badge">PASS</span> <span class="badge">Edge risk: HIGH</span></h3></summary>
         <div class="content"><p><strong>Assessment:</strong> PASS &nbsp; <strong>Edge case risk:</strong> HIGH</p>
         <p>ASSESSMENT: PASS
@@ -2650,7 +2684,7 @@ FIX: Add language specifying: &quot;The question resolves YES if any class of sy
 <strong>Summary:</strong> The overall risk is HIGH primarily because of Edge Cases 1-3, which are already partially manifesting. The 2024 Framework is in a legal limbo — the ASPR page describes it as being revised [16af58], EO 14292 directed revision, the 90-day deadline for that revision has long passed, and different agencies and institutions are interpreting the framework&#x27;s status differently. This creates a scenario where, absent further government action, the framework&#x27;s &quot;active&quot; status on December 31, 2026 will be genuinely contested.</p>
         </details></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Revised question <span class="badge-status badge-revised">REVISED</span></h3></summary>
         <p><strong>Question Title:</strong>
 Will U.S. federal policy require nucleic acid synthesis providers to screen orders at a 50-nucleotide window effective on or before October 13, 2026?
@@ -2719,7 +2753,7 @@ This question resolves <strong>NO</strong> if any of the following are true as o
 
 Conversely, if no formal rescission has occurred and the 50-nucleotide requirement is affirmatively presented as active policy on official federal implementation pages (meeting the criteria above), the question resolves <strong>YES</strong>.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Forecast rationale</h3></summary>
         <p>This question asks whether, by December 31, 2026, an active U.S. federal policy will require 50-nucleotide screening with an effective date on or before October 13, 2026. The resolution criteria are quite specific and demanding.
 
@@ -2739,7 +2773,7 @@ Conversely, if no formal rescission has occurred and the 50-nucleotide requireme
 
 <strong>Synthesis:</strong> The current state already effectively meets NO resolution criteria (&#x27;not affirmatively active&#x27;). For YES, something must actively change: either OSTP must issue a revised framework with the 50-nt requirement and original deadline, or agencies must affirmatively reinstate it. Given the deregulatory environment, missed deadlines, and the practical impossibility of the legislative path meeting the specific October 2026 effective date requirement, the probability is low.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Importance rationale</h3></summary>
         <p>This question is highly decision-relevant as it tracks the implementation of a critical biosecurity regulation. The 50-nucleotide screening window is a significant technical threshold intended to prevent the assembly of dangerous pathogens from small synthetic fragments, especially in an era of AI-assisted design. The transition from Biden-era frameworks to Trump administration policies—or potential legislative codification—creates substantial uncertainty for DNA synthesis providers and federally funded researchers. Knowing the outcome directly informs resource allocation for biosecurity compliance and national strategies for mitigating biological risks.</p>
       </details>
@@ -2762,17 +2796,17 @@ Conversely, if no formal rescission has occurred and the 50-nucleotide requireme
       </span>
     </summary>
     <div class="q-body">
-      <details class="section">
+      <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
         <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">60.85000000000001</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">62.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">58.0</span></div></div><p><strong>Neglectedness:</strong> Searched Metaculus (site:metaculus.com biosecurity legislation, nucleic acid synthesis screening), Polymarket (site:polymarket.com biosecurity legislation), Manifold Markets, and INFER/Good Judgment Open — no existing forecasting questions found on this specific bill or its close variants. However, the bill IS tracked by standard legislative trackers (Congress.gov, LegiScan, TrackBill, BillTrack50). Multiple high-profile organizations are actively monitoring it: FAS published analysis calling it a &#x27;major step&#x27; [3c4020], Johns Hopkins Center for Health Security commended it, NTI endorsed it, and AEI&#x27;s CTSE commented on it. Reuters covered the bill&#x27;s introduction. So while no formal probabilistic forecast exists, the broader policy space is well-monitored by think tanks and media, reducing the marginal information value somewhat.</p><p><strong>Tractability:</strong> Forecasting this question requires synthesizing multiple lines of evidence: bipartisan dynamics (Cotton-Klobuchar sponsorship), committee composition and priorities, legislative calendar constraints, executive branch posture (noting the May 2025 EO pausing the existing synthesis screening framework), industry lobbying positions, and competing legislative priorities. Historical base rates for Senate bills provide a starting point (most introduced bills never pass), and inside-view analysis of political dynamics can meaningfully adjust from that prior. However, the question ultimately reduces to tracking a relatively standard legislative process, and a lawbc.com forecast document suggested &#x27;little if any legislation will be considered or passed in 2026&#x27; in the Senate, which provides a fairly strong anchor.</p><p><strong>Soon:</strong> The bill was introduced on January 29, 2026, and the question asks about Senate passage before December 31, 2026 — well before the overall resolution deadline of December 31, 2027. The 119th Congress (2025-2026) session creates a natural legislative window that is closing. The outcome will be substantially determined within 2026, making the information time-sensitive. However, biosecurity legislation is likely to remain a policy priority beyond this specific session, so similar questions could recur.</p><p><strong>Sudden:</strong> Legislative passage is a discrete event (the bill either passes or doesn&#x27;t), but the process leading to it is generally visible through committee referrals, hearings, markups, and floor scheduling. The direction of travel becomes increasingly apparent as the legislative session progresses. Informed observers tracking committee activity would have advance notice of likely passage or failure. The bill could potentially be folded into a larger package (e.g., NDAA) somewhat suddenly, which adds a degree of unpredictability to the exact mechanism of passage.</p><p><strong>Sharp:</strong> Legislative processes provide many &#x27;warning shots&#x27; — committee hearings, markups, floor debates, and procedural votes all precede final passage. The broader biosecurity policy space has seen a gradual buildup of action: the 2023 HHS Guidance, the 2024 OSTP Framework, the May 2025 Executive Order, California&#x27;s AB1864, and prior congressional discussions (National Security Commission on Emerging Biotechnology recommendations). These precursors mean this specific legislative outcome is not &#x27;sharp&#x27; — the policy trajectory is visible and escalating gradually.</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
         <div class="content"><p>Will any frontier AI model achieve a score above 70% on SecureBio&#x27;s Virology Capabilities Test (VCT) by December 31, 2026?</p>
         <p><strong>Why this question?</strong> The paper highlights AI-enabled virology uplift as a key risk pathway (Table 9 mentions &#x27;LLMs provide substantial high-risk virology uplift, e.g. &gt;80% accuracy on VCT&#x27;). The VCT is a real benchmark published by SecureBio that measures AI capability to troubleshoot complex virology lab protocols. As of early 2026, the highest VCT score is 0.610 (61%) by Grok-4.1 Thinking. Given rapid AI capability improvements, whether models will cross the 70% threshold is genuinely uncertain and would represent a significant capability milestone in the paper&#x27;s risk framework.</p>
         <p><strong>Paper reference:</strong> Table 9 identifies &#x27;LLMs provide substantial high-risk virology uplift (e.g. &gt;80% accuracy on VCT, wet-lab studies)&#x27; as a potential red line scenario that could affect P(BW) and P(PPP). Section 3 discusses AI as a &#x27;Lab Coach&#x27; (Table 4, scenario 2C) providing cross-domain assistance with wet lab protocols.</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Refined question <span class="badge" data-tooltip="Question refined with background, resolution criteria, and structure">Stage 2</span></h3></summary>
         <p>
 <strong>Question Title:</strong>
@@ -2821,7 +2855,7 @@ The question resolves <strong>No</strong> if no credible source reports a VCT sc
 If the VCT benchmark is substantially revised, replaced, or discontinued before December 31, 2026, the question resolves based on the last available version of the benchmark that is consistent with the original VCT methodology. If no VCT evaluations are published during the resolution period, the question resolves <strong>No</strong>.
 </p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Background</h3></summary>
         <p>The Virology Capabilities Test (VCT) is an expert-level, multimodal multiple-choice benchmark developed by SecureBio and the Center for AI Safety (CAIS) that measures an AI model&#x27;s capability to troubleshoot complex virology laboratory protocols. The benchmark was published in 2025 and is available at <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">https://www.virologytest.ai/</a>. VCT is designed to assess dual-use virology knowledge — the kind of practical, contextualized assistance that could lower barriers to dangerous biological research. Expert virologists with internet access score an average of 22.1% on questions specifically within their sub-areas of expertise, making this a challenging benchmark even for human domain experts.
 
@@ -2829,7 +2863,7 @@ The full multimodal VCT consists of <strong>322 expert-validated virology questi
 
 VCT is referenced in the biosecurity literature as a key indicator of AI-enabled biological uplift risk. For instance, one prominent risk framework identifies &quot;LLMs provide substantial high-risk virology uplift, e.g. &gt;80% accuracy on VCT&quot; as a potential red-line scenario that could materially affect the probability of catastrophic biological events.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Resolution criteria</h3></summary>
         <p>This question resolves <strong>Yes</strong> if, between <strong>March 19, 2026</strong> and <strong>December 31, 2026, 11:59 PM UTC</strong>, any frontier AI model (as defined above) achieves an accuracy score strictly greater than 70% (i.e., &gt;0.700) on the <strong>full multimodal SecureBio Virology Capabilities Test (VCT, 322 questions)</strong>, as reported in any of the following credible sources:
 
@@ -2838,13 +2872,13 @@ VCT is referenced in the biosecurity literature as a key indicator of AI-enabled
 3. <strong>An AI developer&#x27;s official system card or model card</strong> (e.g., published by OpenAI, Anthropic, Google DeepMind, xAI, etc.);
 4. <strong>A peer-reviewed or preprint academic publication</strong> (e.g., on arXiv) that reports VCT evaluation results.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
         <div class="content"><p><strong>Quality:</strong> 95.0 &nbsp; <strong>Ambiguity:</strong> 90.0</p>
         <p><strong>Quality notes:</strong> This question addresses a critical &#x27;red-line&#x27; in AI safety. The threshold of 70% is well-chosen, sitting between current state-of-the-art (61-65%) and the expert/risk threshold (80%). The rapid improvement in VCT scores (4x in a year) ensures the question is timely and uncertain.</p>
         <p><strong>Ambiguity notes:</strong> The question defines &#x27;Frontier AI Model&#x27; using multiple regulatory and functional criteria. It specifies the exact benchmark version (VCT vs VCT-Text) and allows for different reporting conventions (single run vs. average). The list of acceptable sources is comprehensive, minimizing ambiguity.</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Adversarial review <span class="badge">NEEDS_REVISION</span> <span class="badge">Edge risk: MEDIUM</span></h3></summary>
         <div class="content"><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge case risk:</strong> MEDIUM</p>
         <p>ASSESSMENT: NEEDS_REVISION
@@ -2963,7 +2997,7 @@ The overall risk is <strong>MEDIUM</strong>. The question is well-constructed wi
 The question would benefit most from tightening the language around (a) which VCT version/variant counts, (b) what evaluation configuration is permissible, and (c) how to handle conflicting scores from different credible sources.</p>
         </details></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Revised question <span class="badge-status badge-revised">REVISED</span></h3></summary>
         <p>
 <strong>Question Title:</strong>
@@ -3026,7 +3060,7 @@ The question resolves <strong>No</strong> if no credible source reports a full m
 If the VCT benchmark is substantially revised, replaced, or discontinued before December 31, 2026, the question resolves based on the last available version of the benchmark that is consistent with the original VCT methodology. A VCT version is considered &quot;consistent with the original VCT methodology&quot; if it retains at least 80% of the original 322 questions and uses the same scoring methodology. If no VCT evaluations are published during the resolution period, the question resolves <strong>No</strong>.
 </p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Forecast rationale</h3></summary>
         <p><strong>Synthesis and Rationale:</strong>
 
@@ -3052,7 +3086,7 @@ This question asks whether any frontier AI model will score above 70% on the ful
 
 Balancing the strong historical trajectory and multiple upcoming model releases against the multimodal ceiling, market skepticism, and safety considerations, I estimate this at moderately above the market consensus.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Importance rationale</h3></summary>
         <p>This question tracks a critical leading indicator of AI-enabled biosecurity risk. The Virology Capabilities Test (VCT) specifically measures an AI model&#x27;s &#x27;dual-use&#x27; capability to provide expert-level assistance in troubleshooting dangerous biological research. Achieving a 70% accuracy score would signal that AI models are approaching a &#x27;red-line&#x27; threshold (typically cited at 80%) where they could materially lower the barriers to producing or weaponizing pathogens. This result would likely catalyze immediate policy shifts regarding model access controls, safety guardrails, and &#x27;Know Your Customer&#x27; requirements for AI labs.</p>
       </details>
@@ -3513,6 +3547,44 @@ document.addEventListener('DOMContentLoaded', function() {
     impBtn.classList.add('active');
     impBtn.querySelector('.sort-arrow').textContent = ' \u2193';
   }
+
+  // --- Expand / Collapse all ---
+  var expandAllBtn = document.getElementById('expand-all');
+  var collapseAllBtn = document.getElementById('collapse-all');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function() {
+      document.querySelectorAll('.q-row').forEach(function(d) { d.open = true; });
+      document.querySelectorAll('.q-row .section[data-section]').forEach(function(d) { d.open = true; });
+    });
+  }
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function() {
+      document.querySelectorAll('.q-row').forEach(function(d) { d.open = false; });
+    });
+  }
+
+  // --- Section toggles ---
+  var sectionToggles = document.querySelectorAll('.section-toggle');
+  sectionToggles.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var sec = btn.dataset.section;
+      var targets = document.querySelectorAll('.section[data-section="' + sec + '"]');
+      // If any are closed, open all; otherwise close all
+      var anyClosed = false;
+      targets.forEach(function(d) { if (!d.open) anyClosed = true; });
+      var shouldOpen = anyClosed;
+      targets.forEach(function(d) {
+        d.open = shouldOpen;
+        // Also open the parent q-row if we're opening a section
+        if (shouldOpen) {
+          var parent = d.closest('.q-row');
+          if (parent) parent.open = true;
+        }
+      });
+      btn.classList.toggle('active', shouldOpen);
+    });
+  });
 });
 </script>
 </div>

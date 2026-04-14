@@ -47,6 +47,27 @@
   .sort-btn.active { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
   .sort-btn .sort-arrow { font-size: .65rem; margin-left: .15rem; opacity: .7; }
 
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: #fff; border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #888; font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid #e0e0e0; background: #fff; color: #555; cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
   /* Question rows — expandable <details> */
   .question-list { display: flex; flex-direction: column; gap: .6rem; }
 
@@ -231,6 +252,19 @@
     <button class="sort-btn" data-sortkey="sudden">Sudden<span class="sort-arrow"></span></button>
     <button class="sort-btn" data-sortkey="sharp">Sharp<span class="sort-arrow"></span></button>
   </div>
+  <div class="expand-bar">
+    <span class="expand-label">Toggle</span>
+    <button class="expand-btn" id="expand-all">Expand All</button>
+    <button class="expand-btn" id="collapse-all">Collapse All</button>
+    <span class="expand-sep"></span>
+    <span class="expand-label">Sections</span>
+    <button class="expand-btn section-toggle" data-section="priority">Priority Scores</button>
+    <button class="expand-btn section-toggle" data-section="proto">Proto-question</button>
+    <button class="expand-btn section-toggle" data-section="refinement">Refinement</button>
+    <button class="expand-btn section-toggle" data-section="review">Review</button>
+    <button class="expand-btn section-toggle" data-section="forecast">Forecast</button>
+    <button class="expand-btn section-toggle" data-section="decomp">Decomposition</button>
+  </div>
   <div class="question-list">
   <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">Part 7</div>
   <details class="q-row" id="q-0" data-probability="6.0" data-importance="82.0" data-quality="92.0" data-ambiguity="85.0" data-itnsss="72.0" data-neglectedness="72.0" data-tractability="70.0" data-soon="70.0" data-sudden="65.0" data-sharp="60.0">
@@ -250,17 +284,17 @@
       </span>
     </summary>
     <div class="q-body">
-      <details class="section">
+      <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
         <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">72.0</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">72.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">70.0</span></div></div><p><strong>Neglectedness:</strong> Web search found no existing forecasting question on Metaculus, Manifold, Polymarket, or other platforms specifically asking about AI placing top 3 at DEF CON CTF finals. Metaculus has related questions about Cybench scores and AI cybersecurity benchmarks, but not this specific competitive milestone. However, the general topic of AI offensive cyber capability is receiving increasing attention: SRLabs competed with an AI agent at DEF CON 33 CTF finals placing 8th (2025), Tenzai&#x27;s AI achieved top 1% on six CTF platforms (March 2026, per Forbes), and DARPA&#x27;s AIxCC at DEF CON focused on defensive AI. The specific operationalization (top 3 at DEF CON CTF finals) is not being tracked, but the broader domain has growing monitoring. Scored medium-high because no direct forecast exists but adjacent monitoring is increasing.</p><p><strong>Tractability:</strong> Forecasting this well requires synthesizing multiple lines of evidence: current AI CTF performance trajectories (SRLabs placed 8th in 2025, Tenzai top 1% on platforms), rate of improvement in AI coding/reasoning capabilities, the specific challenge format of DEF CON CTF finals (attack-defense format requiring real-time adaptation), and the competitive landscape of top human teams. There&#x27;s meaningful room for inside-view analysis beyond base rates, but the question partly reduces to extrapolating AI capability improvement curves. A skilled forecaster can meaningfully outperform a naive prior by tracking capability benchmarks and competition results.</p><p><strong>Soon:</strong> This is tracking a development at an active inflection point. AI CTF performance is rapidly improving — from no competitive presence to 8th place at DEF CON in 2025 to top 1% on major platforms in early 2026. The resolution deadline of end-2027 gives two more DEF CON CTF cycles (2026 and 2027). The window for this capability threshold is actively being approached, making the forecast time-sensitive.</p><p><strong>Sudden:</strong> A top-3 placement would be a discrete event at a specific competition, but the trajectory toward it is somewhat visible. We can observe incremental improvements (8th place in 2025, etc.). However, capability jumps in AI can be nonlinear — a new model generation or novel agent architecture could produce a sudden leap in competitive performance. The exact timing of crossing the top-3 threshold could surprise observers.</p><p><strong>Sharp:</strong> There are partial warning shots — AI placing 8th at DEF CON 2025, top 1% on online platforms — that signal the trajectory. These warning shots exist but may be underappreciated by the broader policy community. The gap between &quot;top 1% on online platforms&quot; and &quot;top 3 at DEF CON finals&quot; is significant enough that crossing it could still catch many stakeholders off guard, but the cybersecurity community is increasingly aware of AI offensive capability improvement.</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
         <div class="content"><p>Will an autonomous AI agent or team place in the top 3 at the DEF CON Capture the Flag (CTF) finals by December 31, 2027?</p>
         <p><strong>Why this question?</strong> The paper discusses HACCA proliferation and the democratization of elite cyber capabilities. A key upstream indicator is AI performance on competitive hacking challenges. Tenzai&#x27;s AI hacker already ranked in the top 1% across six major CTF platforms, and Wiz Research found AI agents solved 9 of 10 offensive security challenges in controlled environments. However, winning or placing highly at the most prestigious live CTF competition (DEF CON CTF finals) against top human teams remains a harder milestone. This question tracks whether autonomous offensive cyber capability has reached elite-human-competitive levels, directly relevant to the paper&#x27;s HACCA feasibility timeline.</p>
         <p><strong>Paper reference:</strong> The paper&#x27;s Table 11 outlines an illustrative HACCA proliferation timeline, beginning with early HACCAs that &#x27;first become feasible&#x27; and progressing to wider deployment. The paper notes that HACCAs could &#x27;democratize what were previously elite nation-state-level capabilities.&#x27; AI performance in competitive hacking directly measures progress toward this threshold.</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Refined question <span class="badge" data-tooltip="Question refined with background, resolution criteria, and structure">Stage 2</span></h3></summary>
         <p>
 ## Question Title
@@ -311,7 +345,7 @@ This question resolves <strong>Yes</strong> if, between April 8, 2026 (00:00 UTC
 The question resolves <strong>No</strong> if no autonomous AI agent or AI-only team (as defined above) finishes in the top 3 at any DEF CON CTF finals held within the evaluation period.
 </p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Background</h3></summary>
         <p>The DEF CON Capture the Flag (CTF) competition is widely regarded as the most prestigious live hacking competition in the world. The main CTF finals take place annually in Las Vegas during the DEF CON conference, typically in August. It uses an attack-defense format in which approximately 15–20 qualified teams must simultaneously attack other teams&#x27; services while defending their own, in real time over multiple days. The competition is organized by a rotating group of hosts; from 2018–2021, the Order of the Overflow ran the event, followed by the Nautilus Institute from 2022–2025. For DEF CON 34 (2026), the new organizers are the &quot;Benevolent Bureau of Birds,&quot; with qualifiers scheduled for May 22–24, 2026.
 
@@ -329,17 +363,17 @@ The question resolves <strong>No</strong> if no autonomous AI agent or AI-only t
 
 ---</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Resolution criteria</h3></summary>
         <p>This question resolves <strong>Yes</strong> if, between April 8, 2026 (00:00 UTC) and December 31, 2027 (23:59 UTC), an autonomous AI agent or AI-only team finishes in <strong>3rd place or higher</strong> (i.e., 1st, 2nd, or 3rd) in the <strong>unified overall final standings</strong> of the main DEF CON Capture the Flag (CTF) finals competition.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
         <div class="content"><p><strong>Quality:</strong> 92.0 &nbsp; <strong>Ambiguity:</strong> 85.0</p>
         <p><strong>Quality notes:</strong> This is an excellent forecasting question. It identifies a prestigious and well-defined milestone (DEF CON CTF finals) that serves as a high-bar proxy for autonomous offensive cyber capabilities. While recent results (Tenzai ranking in the top 1% of CTF platforms in March 2026 and DARPA&#x27;s AIxCC results in August 2025) show rapid progress, the flagship DEF CON CTF finals remain significantly more difficult than general CTF platforms or AI-specific competitions. The question has high entropy, as experts disagree on the timeline for AI to surpass elite human teams in dynamic, adversarial, and low-information environments. The resolution source is reliable (DEF CON official results).</p>
         <p><strong>Ambiguity notes:</strong> The question is very strong, with clear definitions of the event, the ranking, and the timeframes. The &#x27;autonomous&#x27; definition is particularly detailed, covering infrastructure vs. cognitive tasks and providing a hierarchy of sources for adjudication. The main reason for not being &#x27;great&#x27; is the inherent difficulty in proving a negative (i.e., that no human cognitive assistance occurred) if a team is not fully transparent, though the criteria&#x27;s reliance on &#x27;public statements&#x27; and &#x27;credible reporting&#x27; provides a solid fallback for resolution.</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Adversarial review <span class="badge">NEEDS_REVISION</span> <span class="badge">Edge risk: MEDIUM</span></h3></summary>
         <div class="content"><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge case risk:</strong> MEDIUM</p>
         <p>ASSESSMENT: NEEDS_REVISION
@@ -402,7 +436,7 @@ SEVERITY: HIGH
 FIX: Add language: &quot;A hybrid team where humans handle some challenge categories and AI handles others does not qualify. The entire team&#x27;s competition effort — both offensive and defensive — must be performed by AI systems without human cognitive assistance for the team to be considered an &#x27;AI-only team.&#x27;&quot;</p>
         </details></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Revised question <span class="badge-status badge-revised">REVISED</span></h3></summary>
         <p>
 ## Question Title
@@ -460,15 +494,15 @@ This question resolves <strong>Yes</strong> if, between April 8, 2026 (00:00 UTC
 The question resolves <strong>No</strong> if no autonomous AI agent or AI-only team (as defined above) finishes in the top 3 at any DEF CON CTF finals held within the evaluation period.
 </p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Forecast rationale</h3></summary>
         <p>About 632 days remain, but in practice there are only two relevant shots: DEF CON finals in 2026 and 2027. The status quo is No: the strongest known AI finals result is 8th place in 2025, and this question requires a top-3 finish by an AI-only team with no real-time human cognitive help. Scope matters: top 3 in the unified overall DEF CON standings is much harder than top 1% on online CTF sites, a good LiveCTF showing, or a hybrid human-AI team doing well; those broader scopes are more plausible than the actual one. Why No: DEF CON attack-defense demands simultaneous offense, defense, patching, adaptation, and strategy against elite teams, and the autonomy requirement removes the easiest path to incremental gains (human oversight). Also, strong human teams will themselves use AI tools, raising the bar. Why Yes: jumping from 8th to podium in two years is aggressive but not absurd given rapid model and scaffolding improvements, autonomous participation is already possible, and a single standout weekend from one well-funded team would be enough. In bet terms, I’m about indifferent at 23 cents YES versus 77 cents NO.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Importance rationale</h3></summary>
         <p>This question tracks a leading indicator for autonomous offensive cyber capability reaching elite-human-competitive levels. The paper identifies HACCA (Hacking AI Capability) proliferation as a major risk pathway. An AI placing top 3 at DEF CON CTF finals — the most prestigious live hacking competition — would represent a clear threshold crossing for offensive AI capability, directly relevant to the paper&#x27;s HACCA feasibility timeline. This would meaningfully update beliefs about the timeline for democratized nation-state-level cyber capabilities and change resource allocation for cyber defense.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="decomp">
         <summary><h3>Decomposition &amp; Research <span class="badge" data-tooltip="Question decomposed into subquestions with targeted research">Stage 6b</span> <span class="badge">5 subquestions</span></h3></summary>
         <div class="content"><div class="prob-comparison"><span><strong>Initial forecast:</strong> <span style="color: #e65100; font-weight: 700">23%</span></span><span class="arrow">&rarr;</span><span><strong>Research-informed:</strong> <span style="color: #c62828; font-weight: 700">6%</span></span> <span style="color: #888">(-17pp)</span></div><details class="section"><summary><h3>Re-forecast rationale</h3></summary><p>## Probability Decomposition for AI-Only Team Finishing Top 3 at DEF CON CTF Finals (2026-2027)
 
@@ -928,17 +962,17 @@ The competitive landscape for autonomous AI CTF agents has expanded significantl
       </span>
     </summary>
     <div class="q-body">
-      <details class="section">
+      <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
         <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">64.95</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">62.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">70.0</span></div></div><p><strong>Neglectedness:</strong> Web search findings: Metaculus has a related but distinct question (&quot;US Sign Killer Robot Ban by 2031&quot;) which focuses on US signing rather than the CCW adopting a negotiation mandate. No direct market found on Polymarket (search returned only Anthropic/Pentagon-related results). No relevant question found on Manifold Markets, Good Judgment Open, or INFER. However, the topic is extensively monitored by civil society organizations (Stop Killer Robots, ICRC, Reaching Critical Will tracks CCW proceedings in detail), Reuters covered the March 2026 GGE session, and the UN itself publishes GGE working papers. The specific operationalization — whether the Review Conference adopts a formal negotiation mandate — is not being forecast on any platform found, but the broader topic area has substantial indirect monitoring.</p><p><strong>Tractability:</strong> Rich information environment: GGE deliberations and working papers are publicly available, state positions are documented through UNGA votes and statements, historical CCW precedents (e.g., how Protocol V on explosive remnants of war was negotiated) provide reference classes. Forecasting requires synthesizing geopolitical dynamics (US, Russia, China positions), institutional dynamics (consensus vs. majority requirements), civil society pressure, and technical developments. Reasonable forecasters could diverge meaningfully based on how they weight these factors.</p><p><strong>Soon:</strong> The CCW Review Conference is scheduled for November 16-20, 2026, well within the resolution window. GGE sessions are actively underway in 2026, and the outcome will be determined at a specific, imminent event. Reuters reported in March 2026 that the Review Conference &#x27;could decide to launch negotiations for a binding protocol.&#x27; This is a time-critical juncture where the window for influence is closing.</p><p><strong>Sudden:</strong> The outcome represents a discrete state change (mandate adopted or not), but the direction of travel is partially visible through GGE proceedings, state statements, and UNGA votes. However, the CCW operates by consensus, meaning a single state&#x27;s blocking action could determine the outcome in ways that are hard to predict. The exact outcome could still surprise given the gap between broad support (156 states) and key holdouts among military powers.</p><p><strong>Sharp:</strong> This domain has had extensive &#x27;warning shots&#x27; — decades of GGE debate, failed prior attempts to advance binding instruments, the 2021 CCW Review Conference stalemate, and multiple UNGA resolutions. The gradual escalation of the issue through these forums means there is substantial institutional awareness. Failure at the 2026 Review Conference would not be unprecedented and would likely lead to continued efforts through alternative venues (e.g., standalone treaty process outside CCW).</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
         <div class="content"><p>Will the November 2026 CCW Review Conference adopt a mandate to begin formal negotiations on a legally binding instrument governing autonomous weapons systems?</p>
         <p><strong>Why this question?</strong> The paper draws a direct parallel between HACCA proliferation and the proliferation of lethal autonomous weapons systems (LAWS), noting that states have &#x27;failed to ban LAWS despite the decades-long debate at the United Nations Group of Governmental Experts.&#x27; The November 2026 CCW Review Conference is the culminating event of the GGE&#x27;s three-year mandate, where states will decide next steps. A UNGA resolution in November 2025 saw 156 states support urgent action, but key military powers remain resistant. Whether states agree to formally negotiate binding rules on autonomous weapons is a strong upstream indicator of the international community&#x27;s capacity to govern autonomous offensive systems—including future HACCAs.</p>
         <p><strong>Paper reference:</strong> Section 6 (&#x27;Guardrails for HACCA Development and Deployment&#x27;) argues that a blanket prohibition on HACCAs is unlikely to succeed, drawing a parallel: &#x27;States will be reluctant to agree to any international agreement or convention that bans HACCAs outright, just as they have failed to ban LAWS despite the decades-long debate at the United Nations Group of Governmental Experts and elsewhere.&#x27;</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Refined question <span class="badge" data-tooltip="Question refined with background, resolution criteria, and structure">Stage 2</span></h3></summary>
         <p>
 <strong>Title:</strong> Will the November 2026 CCW Seventh Review Conference adopt a mandate to begin formal negotiations on a legally binding instrument governing autonomous weapons systems (LAWS)?
@@ -975,7 +1009,7 @@ This question resolves <strong>No</strong> if the Review Conference:
 <strong>Resolution source:</strong> The Final Document of the Seventh Review Conference, expected to be published under document number CCW/CONF.VII/[X] on the <a href="https://meetings.unoda.org/" target="_blank" rel="noopener">UNODA documents library</a> and/or the <a href="https://docs-library.unoda.org/" target="_blank" rel="noopener">UNODA documents search portal</a>. The decisions of the Review Conference will also be reported by <a href="https://reachingcriticalwill.org/disarmament-fora/ccw/2026/revcon" target="_blank" rel="noopener">Reaching Critical Will</a>, Reuters, and other credible outlets. If the Review Conference is postponed, resolution will be based on whether the conference is held and takes the specified decision before 31 December 2027.
 </p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Background</h3></summary>
         <p>Since 2014, the Convention on Certain Conventional Weapons (CCW) has been the primary international forum for deliberations on lethal autonomous weapons systems (LAWS). The CCW&#x27;s Group of Governmental Experts (GGE) on LAWS has been meeting under a three-year mandate (2024–2026), with a mandate to develop elements of a possible normative and operational framework on autonomous weapons systems and submit a final report to the Seventh Review Conference of the CCW.
 
@@ -987,7 +1021,7 @@ However, a critical structural factor constrains outcomes: the CCW operates by c
 
 The Sixth Review Conference in December 2021 (Final Document: CCW/CONF.VI/11) failed to establish a negotiating mandate on LAWS, instead extending the GGE process. Whether the Seventh Review Conference breaks this pattern by adopting any substantively new decision — even if short of a full negotiating mandate — is a key indicator of the international community&#x27;s capacity to advance governance of autonomous weapons systems through the CCW.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Resolution criteria</h3></summary>
         <p>This question resolves <strong>Yes</strong> if, between 1 January 2026 (00:00 UTC) and 31 December 2027 (23:59 UTC), the Seventh Review Conference of the Convention on Certain Conventional Weapons (CCW), scheduled for 16–20 November 2026, adopts a decision on autonomous weapons systems (also referred to as lethal autonomous weapons systems, or LAWS) that constitutes a substantive advance beyond merely extending, renewing, or continuing the Group of Governmental Experts (GGE) mandate or similar exploratory/deliberative process.
 
@@ -1002,13 +1036,13 @@ This question resolves <strong>No</strong> if the Review Conference:
 - adopts a decision that merely continues, extends, or renews the GGE mandate or an equivalent exploratory/deliberative body without a qualitatively new mandate or outcome;
 - is postponed beyond 31 December 2027 without having taken the above decision.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
         <div class="content"><p><strong>Quality:</strong> 92.0 &nbsp; <strong>Ambiguity:</strong> 95.0</p>
         <p><strong>Quality notes:</strong> This is an excellent forecasting question. It targets a major, scheduled geopolitical event (the November 2026 CCW Review Conference) that serves as a &#x27;culminating event&#x27; for years of international debate. The question has very high entropy due to the sharp divide between the 150+ states supporting a mandate and the resistant major military powers. The resolution is well-defined (the adoption of a formal mandate for negotiations), and the resolution source (UN/CCW records) is authoritative and expected to exist. Research into the 2026 GGE session outcomes (which occurred in March 2026) would significantly inform and potentially shift a forecaster&#x27;s position.</p>
         <p><strong>Ambiguity notes:</strong> The question is exceptionally well-structured for a diplomatic/international law topic. It clearly defines the specific language required for a &#x27;Yes&#x27; resolution (&#x27;negotiate&#x27; vs. &#x27;discuss&#x27;), which is the most common pitfall in CCW forecasting. Dates, timezones, and resolution sources are precise. The inclusion of a postponement clause and a specific time-bound window (ending Dec 2027) ensures resolvability even if the Review Conference schedule shifts slightly. The distinction between binding instruments and non-binding outputs is clearly addressed.</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Adversarial review <span class="badge">NEEDS_REVISION</span> <span class="badge">Edge risk: HIGH</span></h3></summary>
         <div class="content"><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge case risk:</strong> HIGH</p>
         <p>ASSESSMENT: NEEDS_REVISION
@@ -1072,7 +1106,7 @@ SEVERITY: MEDIUM
 FIX: Add language stating: &quot;If the Seventh Review Conference suspends and reconvenes at a later date (but before 31 December 2027), decisions adopted at the continuation session count as decisions of the Seventh Review Conference for resolution purposes.&quot;</p>
         </details></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Revised question <span class="badge-status badge-revised">REVISED</span></h3></summary>
         <p>
 <strong>Title:</strong> Will the November 2026 CCW Seventh Review Conference adopt any decision on autonomous weapons systems (LAWS) that goes beyond merely extending or renewing the Group of Governmental Experts mandate?
@@ -1123,15 +1157,15 @@ This question resolves <strong>No</strong> if the Review Conference:
 <strong>Resolution source:</strong> The Final Document of the Seventh Review Conference, expected to be published under document number CCW/CONF.VII/[X] on the UNODA documents library (<a href="https://meetings.unoda.org/" target="_blank" rel="noopener">https://meetings.unoda.org/</a>) and/or the UNODA documents search portal (<a href="https://docs-library.unoda.org/" target="_blank" rel="noopener">https://docs-library.unoda.org/</a>). The decisions of the Review Conference will also be reported by Reaching Critical Will, Reuters, and other credible outlets. If the Review Conference is postponed, resolution will be based on whether the conference is held and takes the specified decision before 31 December 2027.
 </p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Forecast rationale</h3></summary>
         <p>(a) Time left: The 7th RevCon takes place in November 2026, roughly 7 months away. (b) Status quo: Major powers (US, Russia, India) continue to resist legally binding instruments on LAWS, and the CCW operates strictly by consensus. (c) Scope: The conference must adopt a decision that constitutes a substantive advance beyond merely extending the GGE mandate (e.g., an OEWG or formal treaty mandate). (d) Reason for No: The consensus requirement means that any single state can veto substantive advances. Historically, when deadlocked, the CCW&#x27;s path of least resistance is to simply renew or extend the GGE mandate to prevent the forum from collapsing. (e) Reason for Yes: Immense pressure from the UNGA (with 161 states voting for an instrument) could force major powers to compromise on a non-binding political declaration with a formal review mechanism or an upgrade to an OEWG just to maintain the CCW&#x27;s relevance. (f) Betting perspective: Geopolitical consensus mechanisms are inherently biased toward the status quo. I am confident it will be deadlocked and would be indifferent paying 14 cents on Yes.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Importance rationale</h3></summary>
         <p>This question tracks a leading indicator for the international community&#x27;s capacity to govern autonomous offensive systems. The November 2026 CCW Review Conference is the culminating decision point after years of GGE work. Resolution would meaningfully update beliefs about feasibility of binding international governance of autonomous weapons (and by extension HACCAs). The UNGA vote (156+ states in favor) and ICRC advocacy show strong momentum, but key military powers&#x27; resistance creates genuine uncertainty about the outcome, making this a critical upstream indicator for resource allocation decisions in arms control governance.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="decomp">
         <summary><h3>Decomposition &amp; Research <span class="badge" data-tooltip="Question decomposed into subquestions with targeted research">Stage 6b</span> <span class="badge">5 subquestions</span></h3></summary>
         <div class="content"><div class="prob-comparison"><span><strong>Initial forecast:</strong> <span style="color: #c62828; font-weight: 700">14%</span></span><span class="arrow">&rarr;</span><span><strong>Research-informed:</strong> <span style="color: #c62828; font-weight: 700">10%</span></span> <span style="color: #888">(-4pp)</span></div><details class="section"><summary><h3>Re-forecast rationale</h3></summary><p>## Detailed Rationale
 
@@ -1557,17 +1591,17 @@ The discourse has been more binary than the question&#x27;s framing suggests—s
       </span>
     </summary>
     <div class="q-body">
-      <details class="section">
+      <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
         <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">74.3</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">82.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">68.0</span></div></div><p><strong>Neglectedness:</strong> Web search found no existing forecasting questions on CVE-Bench performance specifically on Metaculus, Polymarket, Manifold, INFER, or Good Judgment Open. Metaculus has related but distinct questions: one on AI unauthorized access before 2033, and one on OpenAI cybersecurity risk levels. These are broader and don&#x27;t track this specific benchmark metric. The CVE-Bench leaderboard exists but is a tracking tool, not a forecast. Anthropic has published on AI cyber range performance but doesn&#x27;t forecast specific benchmark thresholds. This specific operationalization — 25% on CVE-Bench by end of 2027 — is not being tracked anywhere as a forecasting question.</p><p><strong>Tractability:</strong> A skilled forecaster can synthesize multiple evidence streams: AI capability scaling trends, model architecture improvements, CVE-Bench leaderboard updates (v2.0 already released), Anthropic&#x27;s cyber range evaluations, and frontier model release cadences. However, the question partly reduces to tracking a single benchmark&#x27;s progress, and performance jumps on benchmarks can be lumpy and hard to predict. There&#x27;s meaningful room for inside-view analysis (e.g., whether new agent frameworks or tool-use improvements will matter more than raw model capability), but less room than for multi-factor geopolitical questions.</p><p><strong>Soon:</strong> AI cyber offense capabilities are at an active inflection point. CVE-Bench was published in March 2025, received ICML Spotlight, and v2.0 is already out. Frontier AI labs are actively evaluating and publishing on cyber capabilities (e.g., Anthropic&#x27;s January 2026 cyber ranges update). The resolution window (end 2027) aligns with a period of rapid AI agent capability development. This is genuinely time-sensitive — the answer would be much more valuable now than in 3 years.</p><p><strong>Sudden:</strong> Benchmark performance can jump suddenly with new model releases or agent framework innovations — a new frontier model could double exploit rates overnight. However, the general trajectory of AI capability improvement is visible and gradual. The 25% threshold could be crossed abruptly with a single major model release, but the direction of travel is broadly predictable.</p><p><strong>Sharp:</strong> AI cyber offense capabilities may not produce clear warning shots before becoming dangerous. Unlike physical attacks where smaller incidents serve as warnings, AI exploit capability could scale rapidly from benchmark performance to real-world deployment without intermediate observable incidents. However, the benchmark itself and publications from safety teams (like Anthropic&#x27;s) do provide some early signals, making this not fully &quot;sharp&quot; in Ord&#x27;s sense.</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
         <div class="content"><p>Will any AI agent exploit at least 25% of the vulnerabilities in CVE-Bench by December 31, 2027?</p>
         <p><strong>Why this question?</strong> CVE-Bench is a benchmark specifically designed to evaluate AI agents&#x27; ability to exploit real-world web application vulnerabilities. The paper directly cites it. As of early 2026, the state-of-the-art agent framework can exploit up to 13% of CVE-Bench vulnerabilities. Reaching 25% would represent a near-doubling of exploit capability, signaling a significant escalation in autonomous offensive cyber potential. Given rapid AI progress but the inherent difficulty of exploitation, this threshold has meaningful uncertainty.</p>
         <p><strong>Paper reference:</strong> The paper cites &#x27;Zhu, Yuxuan et al. CVE-Bench: A Benchmark for AI Agents&#x27; Ability to Exploit Real-World Web Application Vulnerabilities. arXiv, March 2025&#x27; as a key reference for measuring AI cyber offense capabilities.</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Refined question <span class="badge" data-tooltip="Question refined with background, resolution criteria, and structure">Stage 2</span></h3></summary>
         <p>
 ## Question Title
@@ -1606,7 +1640,7 @@ Key definitions and conditions:
    - (c) If none of the above sources are available, the question resolves <strong>No</strong>.
 </p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Background</h3></summary>
         <p><a href="https://arxiv.org/abs/2503.17332" target="_blank" rel="noopener">CVE-Bench</a> is a benchmark developed by researchers at the University of Illinois at Urbana-Champaign (Zhu et al., March 2025) that evaluates AI agents&#x27; ability to autonomously exploit real-world web application <a href="https://csrc.nist.gov/glossary/term/vulnerability" target="_blank" rel="noopener">vulnerabilities</a>. The benchmark comprises 40 critical-severity <a href="https://www.cve.org/" target="_blank" rel="noopener">Common Vulnerabilities and Exposures (CVEs)</a> in web applications, each deployed in a sandboxed Docker environment that mimics real-world conditions. The benchmark received an ICML 2025 Spotlight award. A public leaderboard is maintained at <a href="https://cvebench.com/" target="_blank" rel="noopener">cvebench.com</a>.
 
@@ -1618,7 +1652,7 @@ As of early-to-mid 2026, frontier AI models have shown improvements in cybersecu
 
 Key factors that could accelerate progress include: new frontier model releases, improvements in agentic scaffolding and tool use (e.g., integration of specialized security tools), and advances in multi-step planning and reasoning. Factors that could slow progress include: the &quot;last mile&quot; difficulty of complex exploits, improvements in CVE-Bench evaluation rigor (e.g., further validity fixes in future versions), and potential restrictions on model cybersecurity capabilities by AI labs.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="refinement">
         <summary><h3>Resolution criteria</h3></summary>
         <p>This question resolves <strong>Yes</strong> if, at any time between <strong>April 8, 2026</strong> and <strong>December 31, 2027, 23:59 UTC</strong>, an entry on the official CVE-Bench Leaderboard at <a href="https://cvebench.com/" target="_blank" rel="noopener">https://cvebench.com/</a> shows an <a href="https://en.wikipedia.org/wiki/Intelligent_agent" target="_blank" rel="noopener">AI agent</a> achieving a success rate of <strong>50% or higher</strong> on CVE-Bench.
 
@@ -1643,13 +1677,13 @@ Key definitions and conditions:
    - (b) Results reported in a peer-reviewed publication (e.g., at venues such as ICML, NeurIPS, ICLR, IEEE S&amp;P, USENIX Security, or ACM CCS) or an official AI model system card from a major AI lab (e.g., OpenAI, Anthropic, Google DeepMind, Meta) that reports CVE-Bench results. For system card results to count, the reporting entity must explicitly state (i) the specific CVE-Bench version used and (ii) that it used the unmodified CVE-Bench evaluation scripts from the official GitHub repository. The same autonomy, validity, and success-rate-threshold requirements apply to fallback sources; OR
    - (c) If none of the above sources are available, the question resolves <strong>No</strong>.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
         <div class="content"><p><strong>Quality:</strong> 92.0 &nbsp; <strong>Ambiguity:</strong> 95.0</p>
         <p><strong>Quality notes:</strong> This is an excellent forecasting question because it focuses on a critical capability (autonomous vulnerability exploitation) that is both high-stakes and genuinely difficult for current AI. The jump from the current SOTA of ~13% to 25% represents a near-doubling of capability, which is a meaningful threshold for assessing offensive cyber risk. The benchmark (CVE-Bench) is peer-reviewed and has an emerging leaderboard. There is high uncertainty: while agentic frameworks are improving, the &#x27;last mile&#x27; of complex exploit generation is a known bottleneck. This ensures the question is not a foregone conclusion and would benefit from deep research into agentic planning and cybersecurity tools integration.</p>
         <p><strong>Ambiguity notes:</strong> The question is exceptionally well-structured with clear definitions, specific resolution sources, and robust fallback procedures for technicalities like version updates or website downtime. The use of a specific leaderboard and verification scripts makes resolution highly objective.</p></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Adversarial review <span class="badge">NEEDS_REVISION</span> <span class="badge">Edge risk: MEDIUM</span></h3></summary>
         <div class="content"><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge case risk:</strong> MEDIUM</p>
         <p>ASSESSMENT: NEEDS_REVISION
@@ -1725,7 +1759,7 @@ SEVERITY: MEDIUM
 FIX: Add: &quot;For system card results to count under the fallback procedure, the reporting lab must explicitly state that it used the unmodified CVE-Bench evaluation scripts from the official GitHub repository, and must report the specific CVE-Bench version used.&quot;</p>
         </details></div>
       </details>
-      <details class="section">
+      <details class="section" data-section="review">
         <summary><h3>Revised question <span class="badge-status badge-revised">REVISED</span></h3></summary>
         <p>
 ## Question Title
@@ -1770,15 +1804,15 @@ Key definitions and conditions:
    - (c) If none of the above sources are available, the question resolves <strong>No</strong>.
 </p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Forecast rationale</h3></summary>
         <p>(a) Time left: ~20.5 months until December 31, 2027. (b) Status quo: SOTA success on CVE-Bench sits around 25-30% as of early 2026, up from 13% in early 2025. (c) Scope: 50% corresponds to successfully exploiting 20 out of 40 CVEs. We must consider that agentic cybersecurity benchmarks (like SWE-bench and EVMBench) have historically scaled very rapidly. (d) Reason for No: Stricter evaluations in CVE-Bench v2.0+ patch &quot;loopholes&quot; in automated exploitation. Furthermore, leading AI labs might strictly enforce safety guardrails that artificially limit autonomous offensive capabilities, creating an artificial ceiling. (e) Reason for Yes: Rapid iterations in agentic scaffolding (e.g., HPTSA) combined with frontier models (like GPT-5.4 or Claude 4.5/4.6) will likely bridge the gap from 30% to 50% given the nearly two years of runway left. (f) Betting perspective: With strong historical precedents in AI coding benchmarks, I&#x27;d comfortably pay 74 cents to win a dollar on a Yes outcome, feeling indifferent at that price.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="forecast">
         <summary><h3>Importance rationale</h3></summary>
         <p>CVE-Bench tracks a leading indicator for autonomous AI cyber offense capability — a major risk pathway identified in AI safety and cybersecurity literature. A near-doubling from 13% to 25% exploit rate would signal significant escalation in AI&#x27;s ability to autonomously exploit real-world vulnerabilities, directly informing decisions about AI safety evaluations, red-teaming investments, and cyber defense resource allocation. This is a genuine crux where the pace of AI offensive capability development matters enormously for governance.</p>
       </details>
-      <details class="section">
+      <details class="section" data-section="decomp">
         <summary><h3>Decomposition &amp; Research <span class="badge" data-tooltip="Question decomposed into subquestions with targeted research">Stage 6b</span> <span class="badge">5 subquestions</span></h3></summary>
         <div class="content"><div class="prob-comparison"><span><strong>Initial forecast:</strong> <span style="color: #2e7d32; font-weight: 700">74%</span></span><span class="arrow">&rarr;</span><span><strong>Research-informed:</strong> <span style="color: #2e7d32; font-weight: 700">80%</span></span> <span style="color: #888">(+6pp)</span></div><details class="section"><summary><h3>Re-forecast rationale</h3></summary><p>## Probability Decomposition
 
@@ -2469,6 +2503,44 @@ document.addEventListener('DOMContentLoaded', function() {
     impBtn.classList.add('active');
     impBtn.querySelector('.sort-arrow').textContent = ' \u2193';
   }
+
+  // --- Expand / Collapse all ---
+  var expandAllBtn = document.getElementById('expand-all');
+  var collapseAllBtn = document.getElementById('collapse-all');
+
+  if (expandAllBtn) {
+    expandAllBtn.addEventListener('click', function() {
+      document.querySelectorAll('.q-row').forEach(function(d) { d.open = true; });
+      document.querySelectorAll('.q-row .section[data-section]').forEach(function(d) { d.open = true; });
+    });
+  }
+  if (collapseAllBtn) {
+    collapseAllBtn.addEventListener('click', function() {
+      document.querySelectorAll('.q-row').forEach(function(d) { d.open = false; });
+    });
+  }
+
+  // --- Section toggles ---
+  var sectionToggles = document.querySelectorAll('.section-toggle');
+  sectionToggles.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var sec = btn.dataset.section;
+      var targets = document.querySelectorAll('.section[data-section="' + sec + '"]');
+      // If any are closed, open all; otherwise close all
+      var anyClosed = false;
+      targets.forEach(function(d) { if (!d.open) anyClosed = true; });
+      var shouldOpen = anyClosed;
+      targets.forEach(function(d) {
+        d.open = shouldOpen;
+        // Also open the parent q-row if we're opening a section
+        if (shouldOpen) {
+          var parent = d.closest('.q-row');
+          if (parent) parent.open = true;
+        }
+      });
+      btn.classList.toggle('active', shouldOpen);
+    });
+  });
 });
 </script>
 </div>
