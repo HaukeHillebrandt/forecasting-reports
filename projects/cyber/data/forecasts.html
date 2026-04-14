@@ -28,25 +28,29 @@
     background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
   }
 
-  /* Sort bar — right-aligned to match q-meta score badges */
+  /* Sort bar — mirrors q-row summary layout so buttons align with q-meta badges */
   .sort-bar {
-    display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem;
-    padding: .5rem 1.2rem; justify-content: flex-end;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .35rem 1.2rem; margin-bottom: .2rem;
   }
+  .sort-bar .sort-spacer { flex: 1; }
   .sort-bar .sort-label {
     font-size: .6rem; text-transform: uppercase; letter-spacing: .03em;
-    color: #aaa; font-weight: 600; margin-right: .1rem;
+    color: #aaa; font-weight: 600;
+  }
+  .sort-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
   }
   .sort-btn {
-    font-size: .72rem; font-weight: 600; color: #888; cursor: pointer;
+    font-size: .6rem; font-weight: 600; color: #aaa; cursor: pointer;
     transition: all .15s ease; user-select: none;
     display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
-    text-align: center; background: none; border: none; padding: .15rem .2rem;
-    border-bottom: 2px solid transparent; border-radius: 0;
+    text-align: center; background: none; border: none; padding: 0;
+    text-transform: uppercase; letter-spacing: .03em; line-height: 1;
   }
-  .sort-btn:hover { color: #333; border-bottom-color: #ccc; }
-  .sort-btn.active { color: #1a1a2e; border-bottom-color: #1a1a2e; }
-  .sort-btn .sort-arrow { font-size: .55rem; opacity: .7; line-height: 1; }
+  .sort-btn:hover { color: #333; }
+  .sort-btn.active { color: #1a1a2e; }
+  .sort-btn .sort-arrow { font-size: .5rem; opacity: .6; line-height: 1; }
 
   /* Expand / Collapse controls */
   .expand-bar {
@@ -311,17 +315,19 @@
     <button class="filter-btn" id="filter-clear" style="color:#c62828;border-color:#ffcdd2;">Clear filters</button>
   </div>
   <div class="sort-bar">
-    <span class="sort-label">Sort&nbsp;by</span>
-    <button class="sort-btn" data-sortkey="quality">Qual<span class="sort-arrow"></span></button>
-    <button class="sort-btn" data-sortkey="ambiguity">Amb<span class="sort-arrow"></span></button>
-    <button class="sort-btn" data-sortkey="itnsss">ITNSSS<span class="sort-arrow"></span></button>
-    <button class="sort-btn" data-sortkey="neglectedness">Neglect<span class="sort-arrow"></span></button>
-    <button class="sort-btn" data-sortkey="tractability">Tract<span class="sort-arrow"></span></button>
-    <button class="sort-btn" data-sortkey="soon">Soon<span class="sort-arrow"></span></button>
-    <button class="sort-btn" data-sortkey="sudden">Sudden<span class="sort-arrow"></span></button>
-    <button class="sort-btn" data-sortkey="sharp">Sharp<span class="sort-arrow"></span></button>
-    <button class="sort-btn" data-sortkey="probability">Prob<span class="sort-arrow"></span></button>
-    <button class="sort-btn" data-sortkey="importance">Imp<span class="sort-arrow"></span></button>
+    <span class="sort-spacer"><span class="sort-label">Sort&nbsp;by</span></span>
+    <span class="sort-meta">
+      <span style="min-width:2.5rem"></span>
+      <button class="sort-btn" data-sortkey="quality">Qual<span class="sort-arrow"></span></button>
+      <button class="sort-btn" data-sortkey="ambiguity">Amb<span class="sort-arrow"></span></button>
+      <button class="sort-btn" data-sortkey="itnsss">ITNSSS<span class="sort-arrow"></span></button>
+      <button class="sort-btn" data-sortkey="neglectedness">Neglect<span class="sort-arrow"></span></button>
+      <button class="sort-btn" data-sortkey="tractability">Tract<span class="sort-arrow"></span></button>
+      <button class="sort-btn" data-sortkey="soon">Soon<span class="sort-arrow"></span></button>
+      <button class="sort-btn" data-sortkey="sudden">Sudden<span class="sort-arrow"></span></button>
+      <button class="sort-btn" data-sortkey="sharp">Sharp<span class="sort-arrow"></span></button>
+      <button class="sort-btn" data-sortkey="probability">Prob<span class="sort-arrow"></span></button>
+    </span>
   </div>
   <div class="question-list">
   <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">Part 7</div>
@@ -3520,12 +3526,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Initial sort: importance descending
-  sortQuestions('importance', 'desc');
-  var impBtn = document.querySelector('.sort-btn[data-sortkey="importance"]');
-  if (impBtn) {
-    impBtn.classList.add('active');
-    impBtn.querySelector('.sort-arrow').textContent = ' \u2193';
+  // Initial sort: ITNSSS descending
+  sortQuestions('itnsss', 'desc');
+  var defBtn = document.querySelector('.sort-btn[data-sortkey="itnsss"]');
+  if (defBtn) {
+    defBtn.classList.add('active');
+    defBtn.querySelector('.sort-arrow').textContent = ' \u2193';
   }
 
   // --- Expand / Collapse all ---
