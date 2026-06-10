@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Priority Scoring &mdash; Diversifying AI Ownership</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f5f5f5; color: #222; line-height: 1.6; padding: 2rem 1rem; }
+  .container { max-width: 56rem; margin: 0 auto; }
+  .page-header { background: #1a1a2e; color: #eee; border-radius: 10px; padding: 1.5rem 2rem; margin-bottom: 1.5rem; }
+  .page-header h1 { font-size: 1.4rem; margin-bottom: .5rem; }
+  .page-header .subtitle { font-size: .9rem; color: #aaa; margin-bottom: .5rem; }
+  .page-header .page-stats { display: flex; flex-wrap: wrap; gap: .75rem; font-size: .85rem; color: #999; }
+  .page-header .page-stats span { background: rgba(255,255,255,.1); padding: .2rem .6rem; border-radius: 4px; }
+  .toc { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .toc h2 { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: .75rem; }
+  .toc-item { display: flex; align-items: baseline; gap: .6rem; padding: .35rem 0; text-decoration: none; color: #222; border-bottom: 1px solid #f0f0f0; }
+  .toc-item:last-child { border-bottom: none; }
+  .toc-item:hover { color: #1a1a2e; }
+  .toc-score { font-size: .85rem; font-weight: 700; min-width: 2.8rem; text-align: center; padding: .15rem .35rem; border-radius: 4px; }
+  .toc-title { font-size: .9rem; font-weight: 500; flex: 1; }
+  .toc-cluster { font-size: .72rem; color: #666; background: #f0f0f0; padding: .1rem .45rem; border-radius: 10px; white-space: nowrap; }
+  .toc-status { font-size: .75rem; min-width: 7rem; text-align: right; }
+  .card { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 1.25rem; }
+  .card-header { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .75rem; }
+  .card h2 { font-size: 1.05rem; line-height: 1.4; }
+  .badge { font-size: .7rem; color: #666; background: #f0f0f0; padding: .1rem .45rem; border-radius: 10px; }
+  .badge-advanced { background: #e8f5e9; color: #2e7d32; font-weight: 600; }
+  .badge-demoted { background: #fff3e0; color: #ef6c00; font-weight: 600; }
+  .badge-low { background: #ffebee; color: #c62828; font-weight: 600; }
+  .score-row { display: flex; flex-wrap: wrap; gap: .75rem; margin: .5rem 0; padding: .6rem 1rem; background: #f8f9fc; border-radius: 6px; font-size: .84rem; }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 5.5rem; }
+  .score-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .03em; color: #888; }
+  .score-value { font-weight: 700; font-size: .95rem; }
+  .composite { font-size: 1.1rem; }
+  .section { margin-top: .5rem; }
+  .section summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: .4rem; padding: .3rem 0; }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before { content: "\25B6"; font-size: .5rem; color: #aaa; transition: transform .15s; }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section > p, .section > .content { margin-top: .3rem; padding-left: .9rem; }
+  .card p { font-size: .9rem; white-space: pre-wrap; word-wrap: break-word; }
+  .card h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin: 0; }
+  a { color: #1565c0; }
+  .cluster-summary { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .cluster-summary h2 { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: .75rem; }
+  .cluster-row { display: flex; align-items: center; gap: .6rem; padding: .3rem 0; border-bottom: 1px solid #f0f0f0; font-size: .85rem; }
+  .cluster-row:last-child { border-bottom: none; }
+  .cluster-name { min-width: 12rem; font-weight: 600; }
+  .cluster-bar { height: .5rem; border-radius: 3px; background: #1565c0; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02c: Priority Scoring (ITN + Soon/Sudden/Sharp)</h1>
+    <div class="subtitle">Diversifying AI Ownership</div>
+    <div class="page-stats">
+      <span>5 scored</span>
+      <span>3 advanced</span>
+      <span>0 diversity-demoted</span>
+      <span>2 low priority</span>
+      <span>Threshold: 60</span>
+      <span>Max/cluster: 3</span>
+      <span>Project: ai_ownership</span>
+    </div>
+  </div>
+  <div class="cluster-summary"><h2>Topic Clusters</h2>
+    <div class="cluster-row"><span class="cluster-name">event: anthropic-ipo</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+    <div class="cluster-row"><span class="cluster-name">ipo: frontier-ai-lab</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+    <div class="cluster-row"><span class="cluster-name">lawsuit: us-ai-antitrust-complaint</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+    <div class="cluster-row"><span class="cluster-name">legislation: ai-equity-acquisition</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+    <div class="cluster-row"><span class="cluster-name">policy: us-government-equity-ai-labs</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+  </div>
+  <nav class="toc"><h2>All Questions (by priority score)</h2>
+    <a class="toc-item" href="#q-0"><span class="toc-score" style="color:#ef6c00;background:#fff3e0">70</span><span class="toc-title">Will the US Department of Justice or Federal Trade Commission file an antitrust complaint in federal court naming Micros</span><span class="toc-cluster">lawsuit: us-ai-antitrust-complaint</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+    <a class="toc-item" href="#q-1"><span class="toc-score" style="color:#ef6c00;background:#fff3e0">67</span><span class="toc-title">Will the U.S. Congress enact and the President sign federal legislation between June 10, 2026 and December 31, 2027 that</span><span class="toc-cluster">legislation: ai-equity-acquisition</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+    <a class="toc-item" href="#q-2"><span class="toc-score" style="color:#ef6c00;background:#fff3e0">63</span><span class="toc-title">Will the US federal government hold an equity stake of at least 1% in any of OpenAI Holdings, Anthropic PBC, xAI Holding</span><span class="toc-cluster">policy: us-government-equity-ai-labs</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+    <a class="toc-item" href="#q-3"><span class="toc-score" style="color:#c62828;background:#ffebee">37</span><span class="toc-title">Will any of OpenAI, Anthropic, or xAI complete an initial public offering with common shares trading on a US national se</span><span class="toc-cluster">ipo: frontier-ai-lab</span><span class="toc-status"><span class="badge badge-low">LOW PRIORITY</span></span></a>
+    <a class="toc-item" href="#q-4"><span class="toc-score" style="color:#c62828;background:#ffebee">31</span><span class="toc-title">Will Anthropic PBC complete an initial public offering priced on a US national securities exchange by December 31, 2027?</span><span class="toc-cluster">event: anthropic-ipo</span><span class="toc-status"><span class="badge badge-low">LOW PRIORITY</span></span></a>
+  </nav>
+  <div class="card" id="q-0">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#ef6c00;background:#fff3e0">70</span>
+    <div><h2>Will the US Department of Justice or Federal Trade Commission file an antitrust complaint in federal court naming Microsoft, OpenAI, Anthropic, Google, NVIDIA, or Meta as a defendant primarily based on AI or cloud-AI market conduct on or before December 31, 2027?</h2>
+      <span class="toc-cluster">lawsuit: us-ai-antitrust-complaint</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#ef6c00">76</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#ef6c00">68</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#ef6c00">72</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#c62828">58</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#ef6c00">68</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#ef6c00">74</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 92</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>Paper claim: &#x27;where potential anticompetitive conduct is also detrimental to national security, we should not be surprised if the USG takes a more aggressive approach to enforcement.&#x27; Current value (June 2026): No formal antitrust complaint has yet been filed against any of these companies based on AI-market conduct; however, FTC has accelerated its Microsoft cloud/AI probe (Bloomberg, Feb 13, 2026) and DOJ has subpoenaed NVIDIA (Sept 2024). Fallback resolution sources (two independent): (a) DOJ Antitrust Case Filings page (justice.gov/atr/antitrust-case-filings), (b) PACER federal court records / FTC press releases (ftc.gov/news-events).</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Section 5 Notes — quote on USG enforcement when anticompetitive conduct overlaps with national security.</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>Real-world outcome (federal court complaint), not benchmark — no cap applies. A formal complaint would be a major regulatory signal forcing industry-wide compliance/deal restructuring decisions and directly settles the paper&#x27;s crux that USG would take &quot;a more aggressive approach to enforcement&quot; when anticompetitive conduct overlaps national security. Six-company &quot;any of&quot; structure increases policy salience. Documented consequences: FTC Microsoft probe could trigger structural remedies; DOJ Nvidia probe could affect chip supply chain.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>Web search across Metaculus/Polymarket/Manifold/INFER found no direct question tracking a federal antitrust complaint against these six AI companies by end-2027. Adjacent items only: Polymarket &quot;Will OpenAI accuse Microsoft of violating antitrust before August&quot; (different actor/timeframe), Polymarket &quot;US enacts AI safety bill before 2027&quot; at 13-14% (different topic), Metaculus OpenAI lawsuits Q (2024-focused), Manifold Meta divestiture questions (existing 2020 case). Heavy media coverage (Bloomberg Feb 2026 Microsoft probe acceleration, WSJ, Reuters) but no prediction-market operationalisation of this specific event by deadline <a href="https://www.jdsupra.com/legalnews/2026-antitrust-year-in-preview-big-tech-5925037/" target="_blank" rel="noopener">2026 Antitrust Year in Preview: Big Tech | JD Supra</a> <a href="https://techpolicy.press/looking-ahead-on-us-antitrust-enforcement-and-tech-will-2026-deliver-more-of-the-same" target="_blank" rel="noopener">Looking Ahead on US Antitrust Enforcement and Tech: Will 2026 ...</a>.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Forecaster must synthesize multiple independent lines: (1) current FTC Microsoft probe trajectory and CID timing <a href="https://www.jdsupra.com/legalnews/2026-antitrust-year-in-preview-big-tech-5925037/" target="_blank" rel="noopener">2026 Antitrust Year in Preview: Big Tech | JD Supra</a>, (2) DOJ Nvidia probe status post-2024 subpoena, (3) Trump-FTC commissioner staffing (only 2 commissioners early 2026) <a href="https://techpolicy.press/looking-ahead-on-us-antitrust-enforcement-and-tech-will-2026-deliver-more-of-the-same" target="_blank" rel="noopener">Looking Ahead on US Antitrust Enforcement and Tech: Will 2026 ...</a>, (4) base rate from investigation→complaint timelines (typically 18-36 months), (5) AI Action Plan ambiguity (DOJ official said it &quot;supports antitrust enforcement&quot; but Trump rolled back Biden-era probes), (6) EU parallel actions as pressure. Reasonable forecasters can land 20+ points apart given mixed signals.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>18-month window to Dec 2027 deadline. FTC Microsoft probe accelerated in Feb 2026 (CIDs to rivals), suggesting decisions are being made now. However the question could be largely re-asked in 2028 with similar stakes if not resolved; not maximally time-sensitive.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>Filing a federal antitrust complaint is a discrete administrative act that can occur with limited public warning post-investigation. Some lead signals exist (CIDs, leaked drafts, commissioner votes) but the formal filing date itself is essentially a step-change event.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>The first observable signal (a filed complaint on DOJ Antitrust Case Filings page or PACER) IS the consequential event itself — there is no smaller precursor that would trigger the resolution-relevant response separately. Investigations and subpoenas already exist and have not constituted resolution.</p></details>
+  </div>
+  <div class="card" id="q-1">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#ef6c00;background:#fff3e0">67</span>
+    <div><h2>Will the U.S. Congress enact and the President sign federal legislation between June 10, 2026 and December 31, 2027 that imposes a mandatory federal equity acquisition of at least 10% (whether as a tax-in-stock or required share transfer) in any of the top-10 U.S. AI companies by market valuation?</h2>
+      <span class="toc-cluster">legislation: ai-equity-acquisition</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#ef6c00">72</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#c62828">55</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#ef6c00">72</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#ef6c00">78</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#ef6c00">60</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#ef6c00">70</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 88</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>The paper highlights that nations can gain AI exposure through ownership structures without direct selective influence. Sen. Sanders publicly announced the &#x27;American AI Sovereign Wealth Fund Act&#x27; on June 1-2, 2026, proposing a one-time 50% tax-in-stock on top AI firms. The bill has been previewed but not formally introduced as of June 10, 2026. Given partisan opposition and short timeframe, probability is roughly 5-20%. Resolution paths: (1) Congress.gov status tracker; fallback: (2) the White House press releases / Federal Register publication of any enacted public law. Question is not bill-specific — any qualifying enacted law resolves YES.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Section 1: SWFs allow countries to benefit from AI without directly investing in AI; the paper notes that even non-voting shares give influence, suggesting GMP-style stakes.</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>Real-world outcome (enacted federal law with enforcement, not a benchmark). Resolution would settle a genuine crux on whether the US will pursue state-equity acquisition in AI — a major shift in industrial policy with direct deployment/contractual consequences (federal voting shares, mandatory share transfer). The paper&#x27;s SWF thesis hinges on this pathway. Sign-uncertainty is real: Sanders&#x27; 50% bill and Trump&#x27;s parallel equity-stake exploration <a href="https://manifold.markets/topic/ai-regulation" target="_blank" rel="noopener">AI Regulation - Manifold Markets</a> could converge on a 10%+ legislated outcome, or both fail. Capability vs. preparedness pace: ownership precedes regulation here.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>Manifold has a direct market on Sanders&#x27; bill at 6% <a href="https://manifold.markets/JoeandSeth/will-bernies-50-ai-tax-pass" target="_blank" rel="noopener">Will Bernie&#x27;s 50% AI tax pass? | Manifold</a>, plus broader markets on US government control/nationalization of AI firms before 2030 <a href="https://manifold.markets/topic/ai-regulation" target="_blank" rel="noopener">AI Regulation - Manifold Markets</a>. Metaculus has a related &quot;US government control of any US AI company before 2029&quot; question. Polymarket has a US AI safety bill question (13%) but no direct match to this 10% equity-acquisition threshold. The specific operationalization (10% threshold, top-10 by valuation, by Dec 2027, any qualifying law) is not directly mirrored — partial monitoring gap. Heavy media coverage (NYT, Politico, WaPo, Reuters) means general topic is well-tracked.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Requires synthesizing: (1) Sanders bill prospects given partisan opposition and short timeframe, (2) Trump&#x27;s parallel equity-stake exploration <a href="https://manifold.markets/topic/ai-regulation" target="_blank" rel="noopener">AI Regulation - Manifold Markets</a> and whether it requires legislation, (3) midterm dynamics, (4) precedents (Intel 10% stake done administratively, not via tax), (5) ambiguity over whether a non-tax statutory equity transfer counts. Reasonable forecasters could easily diverge 20+ points (e.g., 5% vs. 25%).</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>Highly time-sensitive: bill announced June 1, 2026; Trump administration actively negotiating equity stakes <a href="https://manifold.markets/topic/ai-regulation" target="_blank" rel="noopener">AI Regulation - Manifold Markets</a>; deadline Dec 2027 is ~18 months; 119th Congress legislative window closing. Re-asking next year would lose the live policy momentum.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>Legislative passage of major tax/equity legislation typically telegraphs via markup, CBO scoring, floor votes — gradual. But a rider attached to reconciliation or a deal-driven Trump-Sanders convergence could produce a discrete state change with little warning. Moderate suddenness.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>Presidential signing IS the consequential event — binary state change. Bill introduction and committee passage are precursors but the enactment itself is what triggers mandatory equity transfer. First observable signal of a deal could be very close to enactment in a rider scenario.</p></details>
+  </div>
+  <div class="card" id="q-2">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#ef6c00;background:#fff3e0">63</span>
+    <div><h2>Will the US federal government hold an equity stake of at least 1% in any of OpenAI Holdings, Anthropic PBC, xAI Holdings Corp., or Meta Platforms Inc. by December 31, 2027?</h2>
+      <span class="toc-cluster">policy: us-government-equity-ai-labs</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#ef6c00">78</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#c62828">35</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#ef6c00">60</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#ef6c00">75</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#ef6c00">70</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 88</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>Current value (June 10, 2026): zero. The US government holds a 9.9% stake in Intel via a 2025 conversion of CHIPS Act grants but has no equity in any frontier AI lab. Senator Sanders announced the American A.I. Sovereign Wealth Fund Act on June 1, 2026, proposing a one-time 50% equity tax payable in stock [f036a0], and President Trump&#x27;s February 3, 2025 executive order initiated a US Sovereign Wealth Fund planning process [ef2f71]. Resolution paths: (1) SEC EDGAR 13D/13G filings by the US Department of the Treasury (standing disclosure obligation under Section 13(d) of the Securities Exchange Act); (2) Treasury Department press releases. Fallback: GAO reports on federal equity holdings.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Senator Sanders Proposes Gov&#x27;t Take 50% Ownership of AI Labs (LessWrong link / American A.I. Sovereign Wealth Fund Act).</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>Real-world outcome (not benchmark): direct federal equity in frontier AI labs would shift governance leverage, IPO economics, antitrust posture, safety-regime design, and US-industry-China dynamics. Resolution would settle a sign-uncertainty crux (does state ownership help or hurt safety/concentration). Cross-administration political signal (Trump+Sanders+Altman convergence) elevates decision-relevance for both AI policy and capital-markets actors.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>Polymarket already runs &quot;Which companies will the US take a stake in?&quot; with OpenAI at ~28% and Anthropic at ~68%, though it resolves 31 Dec 2026 and excludes xAI/Meta <a href="https://polymarket.com/event/which-companies-will-the-us-take-a-stake-in" target="_blank" rel="noopener">Which companies will the US take a stake in? - Polymarket</a>. Metaculus AI-2027 tournament hosts &quot;US government control of any US AI company or project before 2029?&quot; — a near-duplicate broader version. Manifold has multiple related markets (Anthropic-vs-US-government outcomes, OpenAI bailout, OpenAI acquisition) <a href="https://manifold.markets/Bayesian/outcomes-of-the-anthropic-vs-us-gov" target="_blank" rel="noopener">Outcomes of the Anthropic vs. US government feud? | Manifold</a>. PredictionHunt is publishing daily odds on OpenAI government-stake (e.g., 64% headline). Heavy mainstream media tracking (CNBC, WaPo, BBC, NOTUS) <a href="https://www.notus.org/technology/trump-ai-stake-openai" target="_blank" rel="noopener">Senior U.S. Officials Eye Government Shares in AI Giants - NOTUS</a>. The 2027 deadline + 1% threshold + 4-lab basket is a specific operationalisation not exactly mirrored, but the general indicator is heavily monitored.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Not a single lookup: requires synthesising (a) OpenAI–White House negotiation trajectory, (b) IPO timing, (c) Sanders bill legislative odds, (d) Trump EO implementation, (e) Anthropic&#x27;s distinct posture, (f) corporate-structure mechanics (PBC/recap). Skilled forecasters can plausibly diverge 20+ points by weighting talks-to-deal conversion vs. structural blockers. Some risk it collapses to &quot;did OpenAI sign?&quot; if other three remain dormant.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>Decision window active now: Trump–Altman talks ongoing per CNBC (5 Jun 2026), White House meeting with AI execs scheduled, Sanders bill just introduced (1 Jun 2026) <a href="https://www.notus.org/technology/trump-ai-stake-openai" target="_blank" rel="noopener">Senior U.S. Officials Eye Government Shares in AI Giants - NOTUS</a>. Outcome largely shaped in next 6–18 months — re-asking next year carries materially different stakes.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>Resolution event (signed agreement, 13D filing, Treasury press release) is discrete and can be announced with little public warning, mirroring the Intel 9.9% conversion. However, multi-week negotiation leaks would likely precede any deal.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>The first observable signal (binding agreement / SEC filing) is essentially the consequential event itself — there is no smaller precursor that triggers the resolution. Talks-stage leaks don&#x27;t resolve YES; only an executed stake does.</p></details>
+  </div>
+  <div class="card" id="q-3">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#c62828;background:#ffebee">37</span>
+    <div><h2>Will any of OpenAI, Anthropic, or xAI complete an initial public offering with common shares trading on a US national securities exchange before December 31, 2027?</h2>
+      <span class="toc-cluster">ipo: frontier-ai-lab</span> <span class="badge badge-low">LOW PRIORITY</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#ef6c00">62</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#c62828">15</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#c62828">22</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#2e7d32">82</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#c62828">25</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#c62828">22</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 88</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>Anthropic confidentially filed an S-1 with the SEC in early June 2026 per Reuters, with analyst forecasts of Q4 2026–Q1 2027 listing (median forecasted date ~March 2027 at $560B per FutureSearch). OpenAI reportedly aims for late-2026 filing with 2027 listing; xAI was merged into SpaceX (Feb 2026), making its IPO contingent on SpaceX. Resolution paths: SEC EDGAR filings + NYSE/Nasdaq listing notifications. Probability ~50–75%.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Part I: &#x27;Current state of diversification&#x27; — limited public ownership of leading AI labs</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>Real-world outcome (market/regulatory event), not benchmark. Directly addresses the paper&#x27;s thesis on &quot;limited public ownership of leading AI labs&quot; — an IPO triggers SEC disclosure regime, public-investor exposure, and governance shift. Decision-relevant but not in the top tier of risk pathways (no enacted policy hinges on it). Default to medium-high.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>Heavily monitored. Polymarket &quot;OpenAI IPO by...&quot; multi-date market with 70% by Dec 31, 2026 and 30% chance of slip to 2027 <a href="https://uk.finance.yahoo.com/news/openai-faces-30-chance-ipo-094500079.html" target="_blank" rel="noopener">OpenAI faces 30% chance of IPO slipping into 2027 as rivals race ...</a>; Manifold &quot;Will Anthropic IPO by...&quot; with monthly resolution dates up to 90% by Dec 31, 2026 <a href="https://manifold.markets/Jack1/will-anthropic-ipo-by" target="_blank" rel="noopener">Will Anthropic IPO by….? - Manifold Markets</a> and a multi-company &quot;IPOs in 2026&quot; basket showing Anthropic 86%/OpenAI 79%/xAI 3%/SpaceX 98.5% <a href="https://manifold.markets/Bayesian/ipos-in-2026" target="_blank" rel="noopener">IPOs in 2026? - Manifold Markets</a>; Metaculus has at least three active questions (#40552 OpenAI S-1 before 2027 at 87% <a href="https://www.metaculus.com/questions/40552/will-openai-file-an-s-1-before-2027/" target="_blank" rel="noopener">Will OpenAI file an S-1 before 2027? - Metaculus</a>, #41141 OpenAI IPO 2026, #41206 Anthropic S-1 before July 1 2026). Routine WSJ/CNBC/Reuters coverage. Near-duplicate active markets exist.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Single-lookup question. With Anthropic at ~90% Manifold by end-2026 <a href="https://manifold.markets/Jack1/will-anthropic-ipo-by" target="_blank" rel="noopener">Will Anthropic IPO by….? - Manifold Markets</a>, OpenAI at 70-79% by end-2026 <a href="https://uk.finance.yahoo.com/news/openai-faces-30-chance-ipo-094500079.html" target="_blank" rel="noopener">OpenAI faces 30% chance of IPO slipping into 2027 as rivals race ...</a> <a href="https://manifold.markets/Bayesian/ipos-in-2026" target="_blank" rel="noopener">IPOs in 2026? - Manifold Markets</a>, and a longer 18-month buffer to Dec 31, 2027, the disjunctive resolves to near-certain YES (&gt;97%). A skilled forecaster&#x27;s posterior won&#x27;t materially beat a 10-minute prior. Spread between reasonable forecasters likely &lt;10 points.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>Being determined now: confidential S-1 already in for Anthropic (June 1, 2026) <a href="https://www.anthropic.com/news/confidential-draft-s1-sec" target="_blank" rel="noopener">Anthropic confidentially submits draft S-1 to the SEC</a> and OpenAI (May 22, 2026) <a href="https://uk.finance.yahoo.com/news/openai-faces-30-chance-ipo-094500079.html" target="_blank" rel="noopener">OpenAI faces 30% chance of IPO slipping into 2027 as rivals race ...</a>; Anthropic targeting October 2026 listing <a href="https://uk.finance.yahoo.com/news/openai-faces-30-chance-ipo-094500079.html" target="_blank" rel="noopener">OpenAI faces 30% chance of IPO slipping into 2027 as rivals race ...</a>. Cannot be re-asked next year with same stakes — outcome will be realized well before deadline.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>IPO process is highly telegraphed: confidential S-1 → public S-1/A → roadshow → pricing → listing, each step months apart and publicly announced. Gradual escalation of signals long before the listing date.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>Many smaller precursors trigger responses before the consequential event: confidential filings, public filings, valuation guidance, regulatory comments all move markets/policy before listing day. The IPO completion is the culmination, not the first observable signal.</p></details>
+  </div>
+  <div class="card" id="q-4">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#c62828;background:#ffebee">31</span>
+    <div><h2>Will Anthropic PBC complete an initial public offering priced on a US national securities exchange by December 31, 2027?</h2>
+      <span class="toc-cluster">event: anthropic-ipo</span> <span class="badge badge-low">LOW PRIORITY</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#c62828">55</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#c62828">8</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#c62828">15</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#ef6c00">70</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#c62828">25</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#c62828">30</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 90</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>Current value (June 10, 2026): not completed. Anthropic confidentially submitted a draft S-1 to the SEC on June 1, 2026, after raising $65B at a $965B post-money valuation. Bloomberg target timing reports point to as early as Q4 2026, but profitability rules and market conditions create uncertainty. The paper cites the Jonas Vollmer claim that requiring AGI companies to be publicly listed is a key OGI step. Resolution paths: (1) SEC EDGAR effective Form S-1/424B prospectus (standing disclosure under Securities Act of 1933); (2) Nasdaq/NYSE listing notification. Fallback: FINRA&#x27;s Daily List for new listings.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Jonas Vollmer quote: &#x27;a key step towards realizing OGI would be to require AGI companies to be listed publicly.&#x27;</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>Real-world corporate/governance event tied to Vollmer&#x27;s OGI thesis (requiring AGI companies to be publicly listed). An Anthropic IPO forces mandatory disclosures (financials, risks, governance) and creates SEC-jurisdiction policy levers — a genuine real-world outcome, not a capability proxy. However, given S-1 already filed and the underlying transparency dynamics are largely procedural, the marginal decision-relevance of a 2027 vs 2028 timing is modest. No specific policy/contractual trigger named.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>Heavily monitored. Polymarket has near-exact duplicate: &quot;Anthropic IPO Closing Market Cap&quot; prices &quot;No IPO by Dec 31, 2027&quot; at only 3% (i.e., 97% Yes) <a href="https://polymarket.com/event/anthropic-ipo-closing-market-cap-119" target="_blank" rel="noopener">Anthropic IPO Closing Market Cap (Lower Brackets) - Polymarket</a>. Polymarket&#x27;s &quot;Anthropic IPO by __?&quot; market shows 90% by Dec 31, 2026 <a href="https://polymarket.com/event/anthropic-ipo-by" target="_blank" rel="noopener">Anthropic IPO by __? Predictions &amp; Odds 2026 | Polymarket</a>. Polymarket &quot;IPOs before 2027?&quot; market at 90% Yes for Anthropic <a href="https://polymarket.com/event/ipos-before-2027" target="_blank" rel="noopener">IPOs before 2027? Trading Odds &amp; Predictions | Polymarket</a>. Additional active markets on Manifold (&quot;When will Anthropic IPO?&quot;), Kalshi (dedicated kxipoanthropic markets), and FutureSearch forecasts. Resolution sources (SEC EDGAR, exchange notifications) are routinely tracked by financial media.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Single-lookup question. Polymarket already prices YES at 97% <a href="https://polymarket.com/event/anthropic-ipo-closing-market-cap-119" target="_blank" rel="noopener">Anthropic IPO Closing Market Cap (Lower Brackets) - Polymarket</a>; S-1 already confidentially submitted June 1, 2026 with reported Q4 2026/Q1 2027 target. Skilled forecasters would all cluster within ~5pp near consensus — no synthesis room. The threshold is near-certain absent a black-swan market collapse.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>High urgency — SEC review window is active now, pricing decisions are being made in 2026, and timing is the entire question. Not re-askable next year at the same stakes (likely resolved YES well before deadline).</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>Low. IPO pipeline is highly telegraphed: confidential S-1 → public S-1 → roadshow → pricing → listing. Each step is a public signal weeks/months ahead of the resolution event.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>Low-medium. While IPO completion is itself the consequential event, multiple sharp precursor signals (effective S-1, ticker assignment, pricing announcement) give days-to-weeks warning before final listing.</p></details>
+  </div>
+</div></body></html>

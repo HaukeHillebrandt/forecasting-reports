@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proto-Question Quality Filter &mdash; Diversifying AI Ownership</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f7f8fa; color: #2c2c2c; line-height: 1.65; padding: 2.5rem 1.5rem;
+  }
+  .container { max-width: 54rem; margin: 0 auto; }
+
+  /* --- Header --- */
+  .page-header {
+    background: #1a1a2e; color: #eee; border-radius: 12px;
+    padding: 2rem 2.5rem; margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(26,26,46,.18);
+  }
+  .page-header h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: .4rem; letter-spacing: -.01em; }
+  .page-header .subtitle { font-size: .88rem; color: #a0a0b8; margin-bottom: .75rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #8888a0;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .25rem .7rem; border-radius: 6px;
+  }
+
+  /* --- Sort controls --- */
+  .sort-bar {
+    display: flex; align-items: center; gap: .75rem;
+    margin-bottom: 1.5rem; font-size: .82rem; color: #888;
+  }
+  .sort-bar span { font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+  .sort-btn {
+    appearance: none; border: none; cursor: pointer;
+    background: #fff; color: #555; font-size: .8rem; font-weight: 500;
+    padding: .4rem .9rem; border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    transition: box-shadow .15s, color .15s, background .15s;
+  }
+  .sort-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); color: #1a1a2e; }
+  .sort-btn.active { background: #1a1a2e; color: #fff; box-shadow: 0 2px 8px rgba(26,26,46,.2); }
+
+  /* --- Question list (expandable details) --- */
+  .question-list { display: flex; flex-direction: column; gap: .75rem; }
+
+  .q-item {
+    background: #fff; border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.05);
+    transition: box-shadow .2s ease, transform .2s ease;
+    overflow: hidden;
+  }
+  .q-item:hover { box-shadow: 0 3px 14px rgba(0,0,0,.08); }
+  .q-item[open] { box-shadow: 0 4px 20px rgba(0,0,0,.09); }
+
+  .q-item summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: 1rem 1.5rem;
+    transition: background .15s;
+  }
+  .q-item summary::-webkit-details-marker { display: none; }
+  .q-item summary:hover { background: #fafbfd; }
+
+  .q-item summary .chevron {
+    flex-shrink: 0; width: 1rem; text-align: center;
+    font-size: .6rem; color: #b0b0b0;
+    transition: transform .2s ease;
+  }
+  .q-item[open] summary .chevron { transform: rotate(90deg); }
+
+  .q-score-badge {
+    flex-shrink: 0; font-size: .82rem; font-weight: 700;
+    min-width: 2.6rem; text-align: center;
+    padding: .2rem .5rem; border-radius: 6px;
+  }
+  .q-summary-text {
+    flex: 1; font-size: .92rem; font-weight: 500; color: #2c2c2c;
+    line-height: 1.45;
+  }
+  .badge {
+    flex-shrink: 0; font-size: .68rem; font-weight: 600;
+    padding: .2rem .55rem; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
+  .badge-selected { background: #e8f5e9; color: #2e7d32; }
+  .badge-filtered { background: #f0f0f0; color: #999; }
+
+  /* --- Expanded content --- */
+  .q-body { padding: .25rem 1.5rem 1.5rem 3.85rem; }
+
+  .score-row {
+    display: flex; gap: 1.5rem; margin: .5rem 0 1rem 0;
+    padding: .65rem 1rem; background: #f8f9fc; border-radius: 8px;
+    font-size: .84rem;
+  }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 4.5rem; }
+  .score-label {
+    position: relative;
+    font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; color: #999;
+    cursor: default;
+  }
+  .score-value { font-weight: 700; font-size: .95rem; margin-top: .1rem; }
+
+  .q-body p {
+    font-size: .9rem; line-height: 1.65; color: #444;
+    white-space: pre-wrap; word-wrap: break-word;
+    margin-bottom: .6rem;
+  }
+  .q-body p strong { color: #333; }
+
+  /* Collapsible sub-section inside expanded body */
+  .sub-section { margin-top: .5rem; }
+  .sub-section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .35rem;
+    padding: .25rem 0; font-size: .8rem; text-transform: uppercase;
+    letter-spacing: .04em; color: #999; font-weight: 500;
+  }
+  .sub-section summary::-webkit-details-marker { display: none; }
+  .sub-section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb;
+    transition: transform .15s ease;
+  }
+  .sub-section[open] summary::before { transform: rotate(90deg); }
+  .sub-section > p { margin-top: .25rem; padding-left: .8rem; }
+
+  /* --- Tooltips --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+    background: #1a1a2e; color: #e8e8f0; font-size: .7rem; font-weight: 400;
+    text-transform: none; letter-spacing: normal;
+    padding: .35rem .65rem; border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity .15s ease;
+    z-index: 10;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+
+  a { color: #1565c0; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02b: Proto-Question Quality Filter</h1>
+    <div class="subtitle">Diversifying AI Ownership</div>
+    <div class="page-stats">
+      <span>16 total</span>
+      <span>5 selected (top 5)</span>
+      <span>Cutoff score: 88</span>
+      <span>Project: ai_ownership</span>
+    </div>
+  </div>
+
+  <div class="sort-bar">
+    <span>Sort by</span>
+    <button class="sort-btn active" data-sort="quality" onclick="sortBy('quality')">Quality Score</button>
+    <button class="sort-btn" data-sort="status" onclick="sortBy('status')">Status (selected first)</button>
+  </div>
+
+  <div class="question-list" id="question-list">
+    <details class="q-item" id="q-0" data-quality="92.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">92</span><span class="q-summary-text">Will the US Department of Justice or Federal Trade Commission file an antitrust complaint in federal court naming Microsoft, OpenAI, Anthropic, Google, NVIDIA, or Meta as a defendant primarily based on AI or cloud-AI market conduct on or before December 31, 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">92</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Paper claim: &#x27;where potential anticompetitive conduct is also detrimental to national security, we should not be surprised if the USG takes a more aggressive approach to enforcement.&#x27; Current value (June 2026): No formal antitrust complaint has yet been filed against any of these companies based on AI-market conduct; however, FTC has accelerated its Microsoft cloud/AI probe (Bloomberg, Feb 13, 2026) and DOJ has subpoenaed NVIDIA (Sept 2024). Fallback resolution sources (two independent): (a) DOJ Antitrust Case Filings page (justice.gov/atr/antitrust-case-filings), (b) PACER federal court records / FTC press releases (ftc.gov/news-events).</p>
+        <p><strong>Paper reference:</strong> Section 5 Notes — quote on USG enforcement when anticompetitive conduct overlaps with national security.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question is a high-quality <strong>real-world</strong> metric tracking regulatory escalation in the AI sector. It is difficult (requires a specific legal filing) and high entropy (investigations are active but litigation is not guaranteed). As of June 10, 2026, the FTC has accelerated a probe into <strong>Microsoft&#x27;s</strong> cloud and AI practices (as of February 2026) <a href="https://www.bloomberg.com/news/articles/2026-02-13/ftc-ratchets-up-microsoft-probe-queries-rivals-on-cloud-ai" target="_blank" rel="noopener">FTC Ratchets Up Microsoft Probe, Queries Rivals on Cloud, AI</a>, and the DOJ issued subpoenas to <strong>Nvidia</strong> in September 2024 <a href="https://www.reuters.com/legal/nvidia-hit-with-subpoena-us-justice-department-bloomberg-news-reports-2024-09-03/" target="_blank" rel="noopener">Nvidia gets subpoena from US DoJ, Bloomberg News reports</a>. While broad investigations are underway, no formal federal antitrust complaint has been filed against the named defendants specifically for AI/Cloud-AI conduct yet. The question is clearly resolvable via DOJ/FTC press releases and PACER records. It avoids vague magnitude words and compound success conditions. SOTA: Formal investigations (subpoenas/CIDs) are active for Nvidia and Microsoft; no formal complaints filed.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-1" data-quality="90.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">90</span><span class="q-summary-text">Will Anthropic PBC complete an initial public offering priced on a US national securities exchange by December 31, 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">90</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Current value (June 10, 2026): not completed. Anthropic confidentially submitted a draft S-1 to the SEC on June 1, 2026, after raising $65B at a $965B post-money valuation. Bloomberg target timing reports point to as early as Q4 2026, but profitability rules and market conditions create uncertainty. The paper cites the Jonas Vollmer claim that requiring AGI companies to be publicly listed is a key OGI step. Resolution paths: (1) SEC EDGAR effective Form S-1/424B prospectus (standing disclosure under Securities Act of 1933); (2) Nasdaq/NYSE listing notification. Fallback: FINRA&#x27;s Daily List for new listings.</p>
+        <p><strong>Paper reference:</strong> Jonas Vollmer quote: &#x27;a key step towards realizing OGI would be to require AGI companies to be listed publicly.&#x27;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a &#x27;real-world&#x27; question tracking the public listing of a major AGI lab. It is highly difficult and high-entropy, as a confidential S-1 filing (confirmed on June 1, 2026) does not guarantee an IPO within the 18-month window, especially given market volatility and the company&#x27;s massive $965B valuation. Resolution is straightforward via SEC filings and exchange notifications. Strength: High decision relevance for market structure and OGI steps. Risk: Low, though the $965B valuation is extremely high, making the IPO a major event. Status: Confidentially filed draft S-1 on June 1, 2026.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-2" data-quality="88.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will any of OpenAI, Anthropic, or xAI complete an initial public offering with common shares trading on a US national securities exchange before December 31, 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Anthropic confidentially filed an S-1 with the SEC in early June 2026 per Reuters, with analyst forecasts of Q4 2026–Q1 2027 listing (median forecasted date ~March 2027 at $560B per FutureSearch). OpenAI reportedly aims for late-2026 filing with 2027 listing; xAI was merged into SpaceX (Feb 2026), making its IPO contingent on SpaceX. Resolution paths: SEC EDGAR filings + NYSE/Nasdaq listing notifications. Probability ~50–75%.</p>
+        <p><strong>Paper reference:</strong> Part I: &#x27;Current state of diversification&#x27; — limited public ownership of leading AI labs</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question is a strong <strong>real-world</strong> indicator of AI sector maturity and public market appetite. It is difficult and high entropy, as IPO timelines for multi-billion dollar companies are highly sensitive to market volatility, interest rates, and internal readiness. <strong>Anthropic</strong> filed a confidential S-1 on June 1, 2026 <a href="https://www.reuters.com/business/ai-giant-anthropic-confidentially-files-us-ipo-2026-06-01/" target="_blank" rel="noopener">Anthropic moves toward IPO, stepping up race with OpenAI - Reuters</a>. <strong>OpenAI</strong> followed with a confidential filing on June 8, 2026, targeting a valuation of up to $1 trillion and a debut as early as September 2026 <a href="https://www.reuters.com/technology/openai-files-us-ipo-after-anthropic-ai-giants-head-public-markets-2026-06-08/" target="_blank" rel="noopener">OpenAI files for US IPO after Anthropic as AI giants head to public ...</a>. <strong>xAI</strong> was acquired by <strong>SpaceX</strong> in February 2026; SpaceX subsequently filed for an IPO on June 8, 2026, with a planned market debut under the symbol &#x27;SPCX&#x27; <a href="https://satnews.com/2026/03/25/spacex-accelerates-record-breaking-ipo-following-trillion-dollar-xai-merger/" target="_blank" rel="noopener">SpaceX Accelerates Record-Breaking IPO Following Trillion-Dollar ...</a> <a href="https://www.reuters.com/technology/openai-files-us-ipo-after-anthropic-ai-giants-head-public-markets-2026-06-08/" target="_blank" rel="noopener">OpenAI files for US IPO after Anthropic as AI giants head to public ...</a>. The inclusion of multiple entities (&#x27;any of...&#x27;) makes it slightly less atomic but is standard for sector-tracking questions and does not violate the &#x27;compound condition&#x27; penalty (as any one success resolves it). The resolution is clearly verifiable through SEC EDGAR filings and exchange notices. SOTA: No IPOs completed for these entities as of June 10, 2026.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-3" data-quality="88.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the U.S. Congress enact and the President sign federal legislation between June 10, 2026 and December 31, 2027 that imposes a mandatory federal equity acquisition of at least 10% (whether as a tax-in-stock or required share transfer) in any of the top-10 U.S. AI companies by market valuation?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper highlights that nations can gain AI exposure through ownership structures without direct selective influence. Sen. Sanders publicly announced the &#x27;American AI Sovereign Wealth Fund Act&#x27; on June 1-2, 2026, proposing a one-time 50% tax-in-stock on top AI firms. The bill has been previewed but not formally introduced as of June 10, 2026. Given partisan opposition and short timeframe, probability is roughly 5-20%. Resolution paths: (1) Congress.gov status tracker; fallback: (2) the White House press releases / Federal Register publication of any enacted public law. Question is not bill-specific — any qualifying enacted law resolves YES.</p>
+        <p><strong>Paper reference:</strong> Section 1: SWFs allow countries to benefit from AI without directly investing in AI; the paper notes that even non-voting shares give influence, suggesting GMP-style stakes.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. This question is highly decision-relevant, tracking a major legislative proposal (the &#x27;American AI Sovereign Wealth Fund Act&#x27; proposed by Senator Sanders on June 1, 2026 <a href="https://www.nytimes.com/2026/06/01/opinion/artificial-intelligence-bernie-sanders.html?eafs_enabled=false" target="_blank" rel="noopener">Bernie Sanders: A.I. Is a Public Resource. You Should Own Half of It.</a>) that would impose a significant equity tax (50% proposed, vs. the 10% threshold in the question) <a href="https://www.nytimes.com/2026/06/01/opinion/artificial-intelligence-bernie-sanders.html?eafs_enabled=false" target="_blank" rel="noopener">Bernie Sanders: A.I. Is a Public Resource. You Should Own Half of It.</a>. It is high-entropy given the partisan nature of the U.S. Congress and the radical nature of the proposal. Resolution via Congress.gov or the Federal Register is reliable. Current SOTA: No federal AI equity tax exists; the first formal proposal was previewed in June 2026 <a href="https://www.nytimes.com/2026/06/01/opinion/artificial-intelligence-bernie-sanders.html?eafs_enabled=false" target="_blank" rel="noopener">Bernie Sanders: A.I. Is a Public Resource. You Should Own Half of It.</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-4" data-quality="88.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the US federal government hold an equity stake of at least 1% in any of OpenAI Holdings, Anthropic PBC, xAI Holdings Corp., or Meta Platforms Inc. by December 31, 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Current value (June 10, 2026): zero. The US government holds a 9.9% stake in Intel via a 2025 conversion of CHIPS Act grants but has no equity in any frontier AI lab. Senator Sanders announced the American A.I. Sovereign Wealth Fund Act on June 1, 2026, proposing a one-time 50% equity tax payable in stock [f036a0], and President Trump&#x27;s February 3, 2025 executive order initiated a US Sovereign Wealth Fund planning process [ef2f71]. Resolution paths: (1) SEC EDGAR 13D/13G filings by the US Department of the Treasury (standing disclosure obligation under Section 13(d) of the Securities Exchange Act); (2) Treasury Department press releases. Fallback: GAO reports on federal equity holdings.</p>
+        <p><strong>Paper reference:</strong> Senator Sanders Proposes Gov&#x27;t Take 50% Ownership of AI Labs (LessWrong link / American A.I. Sovereign Wealth Fund Act).</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question is highly decision-relevant and tracks a concrete policy outcome (government equity in private AI labs). It is resolvable via standing disclosure obligations (SEC 13D/13G) and official Treasury reports. The rationale correctly identifies the current context: no existing stakes in frontier labs (June 10, 2026), a 9.9% stake in Intel acquired in August 2025 <a href="https://www.intc.com/news-events/press-releases/detail/1748/intel-and-trump-administration-reach-historic-agreement-to" target="_blank" rel="noopener">Intel and Trump Administration Reach Historic Agreement to ...</a>, and active policy proposals like the American A.I. Sovereign Wealth Fund Act <a href="https://www.nytimes.com/2026/06/01/opinion/artificial-intelligence-bernie-sanders.html" target="_blank" rel="noopener">Bernie Sanders: A.I. Is a Public Resource. You Should Own Half of It.</a> and Executive Order 14196 <a href="https://www.govinfo.gov/app/details/DCPD-202500218" target="_blank" rel="noopener">DCPD-202500218 - Executive Order 14196—A Plan for ... - GovInfo</a>. It is well-structured and avoids compound conditions. Tag: real-world. Current SOTA for the target metric is 0%.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-5" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will US federal law or a US federal agency final rule mandating that all commercial nucleic acid synthesis providers selling in the United States screen orders against a hazardous-sequence list be in force on December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Paper claim: &#x27;great improvements in our quality of life from technology don&#x27;t come for free. They come with a shadow cost in risk&#x27; — biosecurity is the canonical example. Current value (June 2026): screening remains voluntary under the HHS/OSTP Framework; a May 5, 2025 Executive Order paused the 2024 Framework; the Biosecurity Modernization and Innovation Act (S.3741) was introduced January 2026. A Manifold market priced the probability of mandate-by-2027 at 22% [2193bb]. Fallback resolution sources (two independent): (a) Congress.gov bill status pages, (b) Federal Register final rule publications.</p>
+        <p><strong>Paper reference:</strong> Section 5 Notes — &#x27;shadow cost in risk&#x27; / &#x27;hidden debt&#x27; from technology.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Strong real-world policy question with high entropy (22% per Manifold). It tracks a clear regulatory outcome: a mandatory screening requirement. Current SOTA: The 2024 HHS Framework was paused by EO 14292 in May 2025; S.3741 (Biosecurity Modernization and Innovation Act) was introduced in Jan 2026 to create a mandate. The resolution criteria are robust (Federal Register/Congress.gov). Tag: real-world.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-6" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the US Federal Trade Commission or US Department of Justice file a federal antitrust complaint in US district court alleging that an investment or partnership between Microsoft, Amazon, Google, or Nvidia and OpenAI, Anthropic, or xAI violates the Sherman Act or Clayton Act on or before 31 December 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper&#x27;s Section 6.1/7.4 explicitly raises antitrust risk from concentrated AI ownership (Posner-Morton-Weyl) as the central limit on mutual diversification. The FTC issued its January 2025 6(b) staff report flagging concerns with these partnerships, and opened a broader Microsoft antitrust probe in March 2025. As of June 2026, no federal complaint has been filed alleging Sherman/Clayton violations from CSP-AI lab investments. Probability of a complaint within 18 months is uncertain (entropy ~20-45%). Primary: FTC and DOJ press releases. Fallback: PACER federal court records.</p>
+        <p><strong>Paper reference:</strong> Section 6.1 &#x27;Diversification and Efficiency: The Argument&#x27;; Section 7.4 &#x27;Mutual Diversification&#x27; — explicit antitrust concerns.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. The question tracks a high-stakes, decision-relevant outcome of current regulatory scrutiny. Federal investigations by the FTC and DOJ into these specific partnerships (Microsoft/OpenAI, Amazon/Anthropic) were confirmed to be active as of mid-2024 and ongoing through early 2026. As of June 2026, no formal complaint has been filed, making the 18-month window to the end of 2027 a high-entropy period. The outcome is easily verifiable via agency press releases and PACER. The list of entities is specific and the legal basis (Sherman/Clayton Acts) provides a clear resolution trigger. No hard penalties or caps.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-7" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the European Commission&#x27;s AI Office or an EU Member State competent authority publicly announce at least one financial penalty issued under Article 99 or Article 101 of the EU AI Act on or before 31 December 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper&#x27;s account of national-security and antitrust concerns of concentrated AI ownership presumes governments will enforce AI-specific rules. The EU AI Act entered into force August 2024; obligations for general-purpose AI providers begin August 2, 2026, and Commission enforcement powers begin the same date. No financial penalty has been issued under the AI Act yet. Whether any penalty is issued within 16 months of enforcement powers vesting is genuinely uncertain (entropy ~30-60%). Primary: European Commission AI Office press releases (digital-strategy.ec.europa.eu). Fallback: Official Journal of the European Union (eur-lex.europa.eu).</p>
+        <p><strong>Paper reference:</strong> Section 7.4 / 6.1 — discussion of antitrust enforcement risk to common-ownership / diversification proposals.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. The question is clear, atomic, and tracks a critical regulatory milestone. It is resolvable through official EU AI Office press releases or the Official Journal. Current SOTA: European Commission enforcement powers for general-purpose AI (Article 101) begin August 2, 2026, while Member State penalty frameworks (Article 99) were required by August 2, 2025 <a href="https://artificialintelligenceact.eu/implementation-timeline/" target="_blank" rel="noopener">Implementation Timeline | EU Artificial Intelligence Act</a> <a href="https://www.mayerbrown.com/en/insights/publications/2025/08/eu-ai-act-news-rules-on-general-purpose-ai-start-applying-guidelines-and-template-for-summary-of-training-data-finalized" target="_blank" rel="noopener">EU AI Act News: Rules on General-Purpose AI Start ... - Mayer Brown</a> <a href="https://aiexponent.com/eu-ai-act/penalties" target="_blank" rel="noopener">EU AI Act Penalties — Articles 99 and 101 Fine Structure | AI Exponent</a>. As of June 2026, no financial penalties have been publicly announced under these articles <a href="https://artificialintelligenceact.eu/implementation-timeline/" target="_blank" rel="noopener">Implementation Timeline | EU Artificial Intelligence Act</a> <a href="https://www.mayerbrown.com/en/insights/publications/2025/08/eu-ai-act-news-rules-on-general-purpose-ai-start-applying-guidelines-and-template-for-summary-of-training-data-finalized" target="_blank" rel="noopener">EU AI Act News: Rules on General-Purpose AI Start ... - Mayer Brown</a> <a href="https://aiexponent.com/eu-ai-act/penalties" target="_blank" rel="noopener">EU AI Act Penalties — Articles 99 and 101 Fine Structure | AI Exponent</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-8" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will a US state attorney general publicly file or settle one or more formal enforcement actions against a company under a state AI-specific statute (such as Colorado SB24-205/SB26-189, California SB 53 &#x27;TFAIA&#x27;, or the Texas Responsible Artificial Intelligence Governance Act) between 10 June 2026 and 31 December 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Mirroring the paper&#x27;s point that &#x27;greater risk of litigation&#x27; is one explanation for sin-stock anomalies, state AI laws are about to create new enforcement venues. As of June 2026, no state AG has filed under any of these statutes (Colorado SB26-189 takes effect 1 January 2027; California SB 53 took effect 1 January 2026; Texas TRAIGA took effect 1 January 2026). Primary resolution: state AG press releases and state court dockets. Fallback: enforcement trackers maintained by Cooley, NetChoice, or the Future of Privacy Forum.</p>
+        <p><strong>Paper reference:</strong> Section 8 claim regarding &#x27;greater risk of litigation&#x27; as a possible explanation for sin-stock outperformance.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a &#x27;real-world&#x27; question tracking the first wave of enforcement under new state AI laws. It is difficult and high-entropy as it requires the transition from statute enactment to active litigation or settlement, which often takes 12-24 months. Current SOTA: As of June 10, 2026, no enforcement actions have been filed. Colorado&#x27;s replacement act (SB 26-189) takes effect Jan 1, 2027; California&#x27;s SB 53 (TFAIA) and Texas&#x27;s TRAIGA took effect Jan 1, 2026. Strength: Clear resolution via AG press releases; highly relevant to the &#x27;risk of litigation&#x27; theory of AI governance. Risk: None significant.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-9" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the U.S. Department of the Treasury (or any U.S. federal agency it delegates authority to) publicly announce at least one civil monetary penalty or enforcement action under the Outbound Investment Security Program (OISP) — established by EO 14105 and codified in the COINS Act — between June 10, 2026 and December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper discusses foreign investment control reform and outbound investment as an AI ownership lever. The OISP rules took effect Jan 2, 2025, and the COINS Act was signed into law Dec 18, 2025, codifying outbound investment controls covering AI. As of June 10, 2026, no public OISP civil penalties have been announced. Probability of first enforcement action by end-2027: ~30-50%, given the rule has been in effect for 2+ years. Resolution paths: (1) Treasury press releases at home.treasury.gov; fallback: (2) Federal Register enforcement notices.</p>
+        <p><strong>Paper reference:</strong> Foreign investment control reform: &#x27;US closer to curbing investments in China&#x27;s AI, tech sector&#x27; and the paper&#x27;s discussion of US outbound restrictions.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world question focusing on U.S. investment security enforcement. The OISP (Executive Order 14105) took effect January 2, 2025, and was codified/expanded by the COINS Act on December 18, 2025 <a href="https://www.skadden.com/insights/publications/2026/01/us-treasurys-reverse-cfius-authority" target="_blank" rel="noopener">US Treasury&#x27;s &#x27;Reverse CFIUS&#x27; Authority Is Codified and Some ...</a>. As of June 10, 2026, no civil monetary penalties or enforcement actions have been publicly announced by the Treasury Department <a href="https://home.treasury.gov/policy-issues/international/outbound-investment-program" target="_blank" rel="noopener">Outbound Investment Security Program - Treasury Department</a>. The question is high-entropy, as the program is in its early stages and first enforcement actions are expected but timing is uncertain. It is resolvable through official Treasury press releases or the Federal Register <a href="https://home.treasury.gov/policy-issues/international/outbound-investment-program" target="_blank" rel="noopener">Outbound Investment Security Program - Treasury Department</a>. Tag: real-world. Current SOTA: 0 public enforcement actions as of June 2026.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-10" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will OpenAI&#x27;s Senate Lobbying Disclosure Act filings show federal lobbying expenditures of at least $10 million for calendar year 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Section 3.8 directly warns that giving more resources to unsafe AI firms means &#x27;malevolent actors have more resources, which they could use to (e.g.) lobby governments more efficiently.&#x27; OpenAI reported $2.99M in federal lobbying for 2025 [ddb06d] and $1M in Q1 2026 alone (annualizing toward ~$4M), so the $10M threshold for 2027 represents a 3.3x escalation that is plausible but uncertain. Resolution source: Senate LDA database (lda.senate.gov, mandated quarterly disclosure under 2 U.S.C. §1604). Fallback: OpenSecrets.org client lobbying profile for OpenAI.</p>
+        <p><strong>Paper reference:</strong> Section 3.8 &#x27;The Effects of Divestment&#x27; — claim that AI firms can use marginal resources to &#x27;lobby governments more efficiently.&#x27;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. OpenAI&#x27;s lobbying expenditures have shown a strong upward trend: $1.76M in 2024, $2.99M in 2025, and $1.02M in Q1 2026 (annualizing to ~$4M). A $10M threshold for 2027 represents a ~2.5x increase from the 2026 run rate, which is significant but plausible given the intense regulatory scrutiny and &#x27;Big Tech&#x27; spending levels (e.g., Meta and Amazon regularly exceed $15M-$20M). The question is highly resolvable via the Senate LDA database. It tracks a clear proxy for political influence and resource allocation as suggested by the research paper. High entropy and no hard penalties.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-11" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the European Commission or any EU member state national competent authority publicly announce one or more fines totaling €15 million or more against a company under the EU AI Act between 2 August 2026 and 31 December 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper observes that &#x27;sin stocks consistently outperform the market&#x27; partly because &#x27;they face a greater risk of litigation,&#x27; suggesting regulatory cost of capital matters. The EU AI Act&#x27;s enforcement powers enter application on 2 August 2026, with prohibited-practice fines up to €35 million or 7% of worldwide turnover. As of June 2026, no fines have been announced. Primary resolution: Official Journal of the European Union and national regulator press releases (e.g., Spain&#x27;s AESIA, France&#x27;s CNIL). Fallback: European AI Office annual report and major law-firm enforcement trackers.</p>
+        <p><strong>Paper reference:</strong> Section 8 claim that sin-stock outperformance may stem from &#x27;other features of these industries, such as that they face a greater risk of litigation.&#x27;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This question effectively tracks the enforcement of the EU AI Act, a major regulatory milestone. It is specific, measurable (EUR 15M threshold), and uses reliable public resolution paths (Official Journal, national regulators). The timeline (starting August 2, 2026) aligns with the Act&#x27;s enforcement application date <a href="https://artificialintelligenceact.eu/article/99/" target="_blank" rel="noopener">Article 99: Penalties | EU Artificial Intelligence Act</a>. It is a high-entropy question as regulatory action is plausible but not guaranteed by the deadline. Tag: real-world. Current SOTA for fines under the EU AI Act is EUR 0 as of June 2026.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-12" data-quality="82.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">82</span><span class="q-summary-text">Will a United States Government sovereign wealth fund disclose at least $1 billion in aggregate equity holdings of OpenAI, Anthropic, xAI, Alphabet, Microsoft, or Meta by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">82</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The entire paper proposes SWFs as a mechanism for diversified AI ownership (Sections 3.6–3.10), and the most concrete near-term realization is the US SWF mandated by Trump&#x27;s 3 February 2025 Executive Order. As of mid-2026, the SWF has not been established; the White House missed its plan-release deadline due to dissatisfaction with the Treasury/Commerce draft [f12404]. Resolution source: Treasury Department public disclosures and SEC Form 13F filings (mandatory for institutional investors &gt;$100M AUM). Fallback: Federal Register and GAO oversight reports.</p>
+        <p><strong>Paper reference:</strong> Section 3.6–3.10 — core SWF proposal; the question operationalizes whether a major-power SWF actually acquires concentrated AI equity by the relevant horizon.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. The question is difficult and high-entropy, as it depends on both the successful establishment of a novel US government entity and a specific investment strategy. It is resolvable via mandatory SEC Form 13F filings and Treasury Department disclosures. Current SOTA: As of mid-2026, the US Sovereign Wealth Fund has not yet been established; the White House missed its initial 2025 plan-release deadlines <a href="https://www.top1000funds.com/news/us-sovereign-wealth-fund-could-be-a-game-changer-if-its-well-governed/" target="_blank" rel="noopener">US sovereign wealth fund could be a game-changer – if it&#x27;s well ...</a> <a href="https://www.whitehouse.gov/presidential-actions/2025/02/a-plan-for-establishing-a-united-states-sovereign-wealth-fund/" target="_blank" rel="noopener">A Plan for Establishing a United States Sovereign Wealth Fund</a>. No equity holdings exist as of June 2026 <a href="https://www.top1000funds.com/news/us-sovereign-wealth-fund-could-be-a-game-changer-if-its-well-governed/" target="_blank" rel="noopener">US sovereign wealth fund could be a game-changer – if it&#x27;s well ...</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-13" data-quality="82.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">82</span><span class="q-summary-text">Will the European Commission or any EU Member State competent authority impose at least one fine of €5 million or more for a violation of the EU AI Act (Regulation 2024/1689) by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">82</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper notes that SWFs offer a structural alternative to voluntary altruistic governance; this question tests whether mandatory governance instead has teeth. Current value check: The EU AI Act entered phased enforcement on August 2, 2025 (GPAI) and August 2, 2026 (high-risk systems), with fines up to €35M or 7% of turnover. As of June 2026, no fines have yet been imposed; industry observers (Instagram-cited &#x27;AI Comply&#x27;) expect first fines in autumn 2026. The €5M threshold is well below the maximum and represents a substantive enforcement event. Fallback resolution paths: (1) European Commission official enforcement decisions in the Official Journal, and (2) national supervisory authority announcements (e.g., France&#x27;s CNIL, Italy&#x27;s AGCOM, Germany&#x27;s Bundesnetzagentur).</p>
+        <p><strong>Paper reference:</strong> Section 3.4 &#x27;Kinds of Longtermism&#x27; and overall framing — paper argues governance via SWFs is more incentive-compatible than mandatory rules, making mandatory enforcement effectiveness an empirical test.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world question assessing the enforcement of the EU AI Act (Regulation 2024/1689). The Act entered phased enforcement between 2025 and 2026, with major provisions for high-risk systems applicable from August 2, 2026 <a href="https://legalnodes.com/article/eu-ai-act-2026-updates-compliance-requirements-and-business-risks" target="_blank" rel="noopener">EU AI Act 2026 Updates: Compliance Requirements and Business ...</a>. The €5 million threshold is substantive, as maximum fines can reach €35 million or 7% of turnover <a href="https://legalnodes.com/article/eu-ai-act-2026-updates-compliance-requirements-and-business-risks" target="_blank" rel="noopener">EU AI Act 2026 Updates: Compliance Requirements and Business ...</a>. Industry analysts (e.g., AI Comply) expect first fines as early as autumn 2026 <a href="https://legalnodes.com/article/eu-ai-act-2026-updates-compliance-requirements-and-business-risks" target="_blank" rel="noopener">EU AI Act 2026 Updates: Compliance Requirements and Business ...</a>. The question is resolvable via the EU Official Journal or national authority (CNIL, etc.) announcements. Tag: real-world. Current SOTA: 0 fines imposed as of June 2026.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-14" data-quality="58.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#c62828;background:#ffebee" data-tooltip="Quality score (0-100)">58</span><span class="q-summary-text">Will the FBI&#x27;s Internet Crime Complaint Center (IC3) Annual Report for calendar year 2027 or ENISA&#x27;s 2027 Threat Landscape report attribute at least 5 cybersecurity incidents to autonomous AI agent activity executing actions without contemporaneous human instruction?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#c62828">58</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper warns of risks from concentrated AI power, and a key downstream risk is unauthorized agent actions. Current value check: OWASP GenAI&#x27;s Q1 2026 Exploit Round-up documented 8 major AI security incidents including agentic ones, and Anthropic&#x27;s Project Glasswing (April 2026) demonstrated AI vulnerability discovery, but formal government attribution of attacks to autonomous agents (vs. human-directed AI tools) remains rare. Threshold of 5 documented attributions in 2027 alone is high-entropy (30-50%). Fallback resolution paths: (1) ENISA Threat Landscape (annual statutory publication), and (2) FBI IC3 Annual Report (mandated annual congressional reporting).</p>
+        <p><strong>Paper reference:</strong> Background risks of concentrated AI power; paper implicitly argues diversifying AI ownership reduces concentration of dangerous capabilities.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. The question tracks a high-impact risk (autonomous agent incidents). However, it faces significant &#x27;unverifiable&#x27; risks. Current FBI IC3 reports (2025) use a broad &#x27;AI Related&#x27; descriptor and do not currently distinguish &#x27;autonomous&#x27; actions from &#x27;human-directed&#x27; ones [[PDF] 1 2025 IC3 ANNUAL REPORT - Internet Crime Complaint Center](<a href="https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf" target="_blank" rel="noopener">https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf</a>). Similarly, the ENISA 2025 Threat Landscape report discusses AI as a tool for human actors but does not yet attribute specific incident counts to autonomous agents acting alone [[PDF] ENISA THREAT LANDSCAPE 2025](<a href="https://www.enisa.europa.eu/sites/default/files/2026-01/ENISA%20Threat%20Landscape%202025_v1.2.pdf" target="_blank" rel="noopener">https://www.enisa.europa.eu/sites/default/files/2026-01/ENISA%20Threat%20Landscape%202025_v1.2.pdf</a>). While the OWASP GenAI Q1 2026 report already documents 8 such incidents <a href="https://genai.owasp.org/2026/04/14/owasp-genai-exploit-round-up-report-q1-2026/" target="_blank" rel="noopener">OWASP GenAI Exploit Round-up Report Q1 2026</a>, the question limits resolution to IC3 or ENISA, which may not adopt the required taxonomy by 2027. SOTA: 0 documented attributions by IC3/ENISA for autonomous agents as of early 2026 [[PDF] 1 2025 IC3 ANNUAL REPORT - Internet Crime Complaint Center](<a href="https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf" target="_blank" rel="noopener">https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf</a>) [[PDF] ENISA THREAT LANDSCAPE 2025](<a href="https://www.enisa.europa.eu/sites/default/files/2026-01/ENISA%20Threat%20Landscape%202025_v1.2.pdf" target="_blank" rel="noopener">https://www.enisa.europa.eu/sites/default/files/2026-01/ENISA%20Threat%20Landscape%202025_v1.2.pdf</a>).</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-15" data-quality="35.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#c62828;background:#ffebee" data-tooltip="Quality score (0-100)">35</span><span class="q-summary-text">Will a United States federal Sovereign Wealth Fund be operational and managing at least $10 billion in publicly disclosed invested assets on December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#c62828">35</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Trump signed an Executive Order on Feb 3, 2025 directing Treasury and Commerce to develop an SWF plan within one year, and bills like H.R.3116 are pending in Congress. As of June 2026 no operational US SWF exists. Two resolution paths exist: (a) US Treasury press releases announcing the fund&#x27;s AUM, or (b) a Federal Register notice / enacted public law published on Congress.gov establishing the fund and its initial capital. Forecasters currently estimate 25–40% probability of a fully operational, capitalized fund by end-2027.</p>
+        <p><strong>Paper reference:</strong> Part II: Three Policies to increase common ownership — &#x27;Sovereign Wealth Funds to diversify AI ownership&#x27;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a real-world policy question tracking a significant economic shift. The 2025 Executive Order 14196 and H.R. 3116 establish a clear baseline of interest. Current SOTA: No federal SWF exists as of June 2026. The question faces a &#x27;compound&#x27; penalty because it requires the fund to be both &#x27;operational&#x27; AND &#x27;managing at least $10 billion&#x27; (conjunctive conditions). While $10B is a standard threshold, adding the qualitative &#x27;operational&#x27; status complicates resolution. Probability is well-calibrated (25-40%). Tag: real-world.</p></details>
+      </div>
+    </details>
+  </div>
+
+<script>
+function sortBy(mode) {
+  var list = document.getElementById('question-list');
+  var items = Array.from(list.querySelectorAll('.q-item'));
+  items.sort(function(a, b) {
+    if (mode === 'quality') {
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    if (mode === 'status') {
+      var s = parseInt(a.dataset.status) - parseInt(b.dataset.status);
+      if (s !== 0) return s;
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    return 0;
+  });
+  items.forEach(function(el) { list.appendChild(el); });
+  var btns = document.querySelectorAll('.sort-btn');
+  btns.forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.sort === mode);
+  });
+}
+</script>
+</div></body></html>
