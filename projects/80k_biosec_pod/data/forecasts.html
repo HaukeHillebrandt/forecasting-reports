@@ -6,145 +6,199 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Forecasts &mdash; x</title>
 <style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: #f7f8fa; color: #2a2a2a; line-height: 1.65; padding: 2.5rem 1rem;
-    font-size: 15px;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
   }
-  .container { max-width: 100%; margin: 0 auto; padding: 0 2rem; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
   /* Header */
   .page-header {
-    background: #1a1a2e; color: #eee; border-radius: 12px;
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
     padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
   }
-  .page-header h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: .35rem; letter-spacing: -.01em; }
-  .page-header .subtitle { font-size: .88rem; color: #a0a0b8; margin-bottom: .6rem; }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
   .page-header .page-stats {
-    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #8e8ea0;
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
   }
   .page-header .page-stats span {
     background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
   }
 
-  /* Sort bar — mirrors q-row summary layout so buttons align with q-meta badges */
+  /* Sort bar — a labeled button group, mirrors the filter bar */
   .sort-bar {
-    display: flex; align-items: center; gap: .75rem;
-    padding: .35rem 1.2rem; margin-bottom: .2rem;
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
   }
-  .sort-bar .sort-spacer { flex: 1; }
   .sort-bar .sort-label {
-    font-size: .6rem; text-transform: uppercase; letter-spacing: .03em;
-    color: #aaa; font-weight: 600;
-  }
-  .sort-meta {
-    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
   }
   .sort-btn {
-    font-size: .6rem; font-weight: 600; color: #aaa; cursor: pointer;
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
     transition: all .15s ease; user-select: none;
-    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
-    text-align: center; background: none; border: none; padding: 0;
-    text-transform: uppercase; letter-spacing: .03em; line-height: 1;
   }
-  .sort-btn:hover { color: #333; }
-  .sort-btn.active { color: #1a1a2e; }
-  .sort-btn .sort-arrow { font-size: .5rem; opacity: .6; line-height: 1; }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
 
   /* Expand / Collapse controls */
   .expand-bar {
-    display: flex; align-items: center; gap: .5rem; margin-bottom: 1.2rem;
-    padding: .6rem 1rem; background: #fff; border-radius: 10px;
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
   }
   .expand-bar .expand-label {
     font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
-    color: #888; font-weight: 600; margin-right: .25rem;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
   }
   .expand-btn {
     font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
-    border: 1px solid #e0e0e0; background: #fff; color: #555; cursor: pointer;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
     transition: all .15s ease; user-select: none;
   }
   .expand-btn:hover { background: #f0f1f4; color: #333; }
-  .expand-btn.active { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
   .expand-sep {
     width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
   }
 
   /* Filter bar */
   .filter-bar {
-    display: flex; align-items: center; gap: .5rem; margin-bottom: 1.2rem;
-    padding: .6rem 1rem; background: #fff; border-radius: 10px;
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
   }
   .filter-bar .filter-label {
     font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
-    color: #888; font-weight: 600; margin-right: .25rem;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
   }
   .filter-btn {
     font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
-    border: 1px solid #e0e0e0; background: #fff; color: #555; cursor: pointer;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
     transition: all .15s ease; user-select: none;
   }
   .filter-btn:hover { background: #f0f1f4; color: #333; }
-  .filter-btn.active { background: #1a73e8; color: #fff; border-color: #1a73e8; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
   .filter-btn .filter-count {
     font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
-    border-radius: 8px; margin-left: .3rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
   }
   .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
-  .q-row.filter-hidden { display: none; }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
 
   /* Question rows — expandable <details> */
   .question-list { display: flex; flex-direction: column; gap: .6rem; }
 
   .q-row {
-    background: #fff; border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.05);
-    transition: box-shadow .2s ease;
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
   }
   .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
-  .q-row[open] { box-shadow: 0 2px 10px rgba(0,0,0,.1); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
 
   .q-row > summary {
     cursor: pointer; list-style: none;
     display: flex; align-items: center; gap: .75rem;
     padding: .85rem 1.2rem;
     transition: background .15s ease;
+    border-radius: 9px;
   }
   .q-row > summary::-webkit-details-marker { display: none; }
-  .q-row > summary:hover { background: #fafbfc; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
 
   .q-row > summary .expand-icon {
-    font-size: .55rem; color: #aaa; transition: transform .2s ease;
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
     flex-shrink: 0; width: .8rem; text-align: center;
   }
   .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
 
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
   .q-prob-badge {
-    color: #fff; font-weight: 700; font-size: .82rem;
-    min-width: 3rem; height: 1.65rem;
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
     display: flex; align-items: center; justify-content: center;
-    border-radius: 5px; flex-shrink: 0; padding: 0 .4rem;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
   }
   .q-title {
-    flex: 1; font-size: .92rem; font-weight: 500; color: #2a2a2a;
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
     line-height: 1.35;
   }
   .q-meta {
     display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
   }
   .q-meta-item {
-    font-size: .72rem; color: #888; text-align: center;
+    font-size: .72rem; color: var(--text-2); text-align: center;
     display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
   }
   .q-meta-label {
-    font-size: .6rem; text-transform: uppercase; letter-spacing: .03em;
-    color: #aaa; line-height: 1;
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
   }
-  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
 
   .q-status-badge {
     font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
@@ -152,30 +206,25 @@
   .badge-pass { background: #e8f5e9; color: #2e7d32; }
   .badge-revised { background: #fff3e0; color: #e65100; }
   .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
 
   /* Expanded card content */
-  .q-body { padding: 0 1.4rem 1.2rem 1.4rem; }
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
 
   /* Score row inside expanded content */
   .score-row {
-    display: flex; gap: 1.2rem; align-items: center;
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
     margin: .6rem 0 .8rem; padding: .55rem 1rem;
-    background: #f7f8fa; border-radius: 8px; font-size: .84rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
   }
   .score-item {
     display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
   }
   .score-label {
-    font-size: .65rem; text-transform: uppercase; letter-spacing: .03em;
-    color: #999; line-height: 1;
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
   }
-  .score-value { font-weight: 700; font-size: .92rem; }
-
-  .prob-bar-container {
-    flex: 1; min-width: 6rem; display: flex; flex-direction: column; justify-content: center;
-  }
-  .prob-bar { height: 6px; border-radius: 3px; background: #e8e8e8; overflow: hidden; }
-  .prob-bar-fill { height: 100%; border-radius: 3px; transition: width .3s; }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
 
   /* Collapsible inner sections */
   .section { margin-top: .4rem; }
@@ -190,33 +239,34 @@
   .section[open] summary::before { transform: rotate(90deg); }
   .section summary h3 {
     font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
-    color: #888; margin: 0; display: flex; align-items: center; gap: .4rem;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
     font-weight: 600;
   }
   .section > p, .section > .content {
     margin-top: .25rem; padding-left: .9rem;
-    font-size: .88rem; color: #444;
+    font-size: .9rem; color: #444;
   }
   .section p { white-space: pre-wrap; word-wrap: break-word; }
 
   .badge {
-    font-size: .6rem; color: #777; background: #f0f1f4; padding: .1rem .4rem;
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
     border-radius: 10px; font-weight: 500;
   }
-  .badge-status {
-    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
-  }
-
-  /* Meta row */
-  .meta-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .3rem; }
 
   /* Links */
-  a { color: #3b6fc0; text-decoration: none; }
-  a:hover { color: #1a3f7a; text-decoration: underline; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
 
   /* Decomposition */
   .subq-card {
-    background: #f7f8fa; border: 1px solid #eaeaef; border-radius: 8px;
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
     padding: .65rem .9rem; margin: .35rem 0;
   }
   .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
@@ -225,6 +275,15 @@
     display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
   }
   .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
 
   /* --- Tooltips (CSS-only via data-tooltip) --- */
   [data-tooltip] { position: relative; }
@@ -239,7 +298,6 @@
     letter-spacing: normal;
   }
   [data-tooltip]:hover::after { opacity: 1; }
-  /* Downward arrow on tooltip */
   [data-tooltip]::before {
     content: "";
     position: absolute; bottom: calc(100% + 2px); left: 50%;
@@ -249,6 +307,46 @@
     z-index: 100;
   }
   [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+  /* Stage-07 extras: seed passages, status badges, right-aligned tooltips */
+  .badge-status {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .meta-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .3rem; }
+
+  /* Seed passage (stage 06e): verbatim quote + deep link to PDF page */
+  .seed-quote {
+    background: #fffbea; border-left: 3px solid #f1c40f;
+    padding: .55rem .9rem; margin: .35rem 0 .5rem;
+    border-radius: 0 6px 6px 0;
+    font-style: italic; color: #444; font-size: .9rem; line-height: 1.5;
+  }
+  .seed-quote::before { content: "\201C"; color: #c9a100; margin-right: .1rem; }
+  .seed-quote::after  { content: "\201D"; color: #c9a100; margin-left: .1rem; }
+  .seed-quote-meta {
+    display: flex; flex-wrap: wrap; gap: .6rem; align-items: center;
+    margin-top: .15rem; font-size: .8rem; color: #666;
+  }
+  .seed-quote-meta .seed-page-badge {
+    font-size: .7rem; font-weight: 600; padding: .12rem .5rem;
+    background: #fff4c0; color: #7a5a00; border-radius: 10px;
+  }
+  .seed-quote-meta .seed-match-soft {
+    font-size: .65rem; font-weight: 600; padding: .08rem .4rem;
+    background: #f0f0f0; color: #888; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
 
   /* Tooltip on right for items near left edge */
   .tooltip-right[data-tooltip]::after { left: 0; transform: none; }
@@ -313,46 +411,41 @@
     <button class="filter-btn" data-filter="status" data-filter-value="PASS">PASS<span class="filter-count">1</span></button>
     <button class="filter-btn" data-filter="status" data-filter-value="REVISED">REVISED<span class="filter-count">1</span></button>
     <span class="expand-sep"></span>
-    <button class="filter-btn" id="filter-clear" style="color:#c62828;border-color:#ffcdd2;">Clear filters</button>
+    <input id="q-search" class="q-search" type="search" placeholder="Search questions&hellip;" aria-label="Search questions">
+    <button class="filter-btn" id="filter-clear" style="color:#c62828;border-color:#ffcdd2;">Clear</button>
+    <span id="filter-count-live" class="filter-label" aria-live="polite"></span>
   </div>
   <div class="sort-bar">
-    <span class="sort-spacer"><span class="sort-label">Sort&nbsp;by</span></span>
-    <span class="sort-meta">
-      <span style="min-width:2.5rem"></span>
-      <button class="sort-btn" data-sortkey="quality">Qual<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="ambiguity">Amb<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="itnsss">ITNSSS<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="neglectedness">Neglect<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="tractability">Tract<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="soon">Soon<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="sudden">Sudden<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="sharp">Sharp<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="probability">Prob<span class="sort-arrow"></span></button>
-    </span>
+    <span class="sort-label">Sort by</span>
+    <button class="sort-btn" data-sortkey="itnsss">ITNSSS<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="importance">Importance<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="probability">Probability<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="quality">Quality<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="ambiguity">Ambiguity<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="neglectedness">Neglectedness<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="tractability">Tractability<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="soon">Soon<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="sudden">Sudden<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="sharp">Sharp<span class="sort-arrow"></span></button>
   </div>
   <div class="question-list">
-  <details class="q-row" id="q-0" data-probability="94.0" data-importance="70.0" data-quality="92.0" data-ambiguity="92.0" data-itnsss="77.75" data-neglectedness="85.0" data-tractability="85.0" data-status="PASS" data-has-decomp="0" data-has-probdecomp="0" data-has-reconciliation="0" data-has-review="1" data-has-forecast="1" data-soon="75.0" data-sudden="65.0" data-sharp="80.0">
+  <details class="q-row" id="q-will-a-publicly-available-ai-model-achieve-a-score-of-60-or" data-probability="94.0" data-importance="70.0" data-quality="92.0" data-ambiguity="92.0" data-itnsss="77.75" data-neglectedness="85.0" data-tractability="85.0" data-status="PASS" data-has-decomp="0" data-has-probdecomp="0" data-has-reconciliation="0" data-has-review="1" data-has-forecast="1" data-soon="75.0" data-sudden="65.0" data-sharp="80.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
-      <span class="q-prob-badge" style="background: #f57f17" data-tooltip="How decision-relevant and impactful this question is (0-100)">70</span>
+      <button type="button" class="anchor-link" data-anchor="q-will-a-publicly-available-ai-model-achieve-a-score-of-60-or" aria-label="Copy link to this question">#</button>
+      <span class="q-prob-badge" style="background: #c8e6c9; color: #1b5e20" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">94%</span>
       <span class="q-title">Will a publicly available AI model achieve a score of 60.0% or higher on the Virology Capabilities Test (VCT) by December 31, 2027?</span>
       <span class="q-meta">
         <span class="q-status-badge badge-pass" data-tooltip="Question passed adversarial review without changes">PASS</span>
-        <span class="q-meta-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="q-meta-label">Qual</span><span class="q-meta-value">92.0</span></span>
-        <span class="q-meta-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="q-meta-label">Amb</span><span class="q-meta-value">92.0</span></span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">78</span></span>
-        <span class="q-meta-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="q-meta-label">Neglect</span><span class="q-meta-value">85.0</span></span>
-        <span class="q-meta-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="q-meta-label">Tract</span><span class="q-meta-value">85.0</span></span>
-        <span class="q-meta-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="q-meta-label">Soon</span><span class="q-meta-value">75.0</span></span>
-        <span class="q-meta-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="q-meta-label">Sudden</span><span class="q-meta-value">65.0</span></span>
-        <span class="q-meta-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="q-meta-label">Sharp</span><span class="q-meta-value">80.0</span></span>
-        <span class="q-meta-item" data-tooltip="Estimated likelihood this event occurs by the resolution deadline"><span class="q-meta-label">Prob</span><span class="q-meta-value" style="color:#1b5e20;font-weight:800">94%</span></span>
+        <span class="q-meta-item" data-tooltip="How decision-relevant and impactful this question is (0-100)"><span class="q-meta-label">Imp</span><span class="q-meta-value imp-pill imp-med">70</span></span>
       </span>
     </summary>
     <div class="q-body">
+      <div class="score-row"><div class="score-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="score-label">Quality</span><span class="score-value">92</span></div><div class="score-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="score-label">Ambiguity</span><span class="score-value">92</span></div><div class="score-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="score-label">Soon</span><span class="score-value">75</span></div><div class="score-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="score-label">Sudden</span><span class="score-value">65</span></div><div class="score-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="score-label">Sharp</span><span class="score-value">80</span></div></div>
       <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
-        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">77.75</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">85.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">85.0</span></div></div><p><strong>Neglectedness:</strong> Web searches across Metaculus, Polymarket, Manifold, and INFER (as of April 2026) confirm that while the Virology Capabilities Test (VCT) is cited in academic and safety reports (e.g., International AI Safety Report 2026, OECD), no active forecasting markets or systematic policy trackers currently monitor this specific 60% threshold <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>. Most existing biorisk tracking focuses on broader indicators rather than this specific multimodal benchmark.</p><p><strong>Tractability:</strong> Skilled forecasters can improve on a naive prior by analyzing historical scaling laws for LLM performance on expert benchmarks (like GPQA or MMLU), tracking compute trends, and monitoring developer-specific safety disclosures. The rich information environment of AI progress makes this highly tractable for research-heavy forecasting <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>.</p><p><strong>Soon:</strong> With current state-of-the-art models already at 43.8% (outperforming most human experts) as of early 2025, the 60% milestone is a highly relevant near-term target likely to be tested by next-generation frontier models before the 2027 deadline <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>.</p><p><strong>Sudden:</strong> While model training is a gradual process, the release of a new frontier model (e.g., a successor to o3) often results in a discrete, &#x27;sudden&#x27; jump in benchmark performance that can surprise the policy community.</p><p><strong>Sharp:</strong> Capability benchmarks in biology are &#x27;sharp&#x27; because improvements often happen in private lab settings or via internal model updates before public release. A model crossing a expertise threshold like 60% could occur without a public &#x27;warning shot&#x27; or smaller-scale failure that triggers policy intervention <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>.</p></div>
+        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">78</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">85</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">85</span></div></div><p><strong>Neglectedness:</strong> Web searches across Metaculus, Polymarket, Manifold, and INFER (as of April 2026) confirm that while the Virology Capabilities Test (VCT) is cited in academic and safety reports (e.g., International AI Safety Report 2026, OECD), no active forecasting markets or systematic policy trackers currently monitor this specific 60% threshold <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>. Most existing biorisk tracking focuses on broader indicators rather than this specific multimodal benchmark.</p><p><strong>Tractability:</strong> Skilled forecasters can improve on a naive prior by analyzing historical scaling laws for LLM performance on expert benchmarks (like GPQA or MMLU), tracking compute trends, and monitoring developer-specific safety disclosures. The rich information environment of AI progress makes this highly tractable for research-heavy forecasting <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>.</p><p><strong>Soon:</strong> With current state-of-the-art models already at 43.8% (outperforming most human experts) as of early 2025, the 60% milestone is a highly relevant near-term target likely to be tested by next-generation frontier models before the 2027 deadline <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>.</p><p><strong>Sudden:</strong> While model training is a gradual process, the release of a new frontier model (e.g., a successor to o3) often results in a discrete, &#x27;sudden&#x27; jump in benchmark performance that can surprise the policy community.</p><p><strong>Sharp:</strong> Capability benchmarks in biology are &#x27;sharp&#x27; because improvements often happen in private lab settings or via internal model updates before public release. A model crossing a expertise threshold like 60% could occur without a public &#x27;warning shot&#x27; or smaller-scale failure that triggers policy intervention <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>.</p></div>
       </details>
       <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
@@ -460,28 +553,23 @@ FIX: Specify that the score can be achieved using any prompting technique (e.g.,
       </details>
     </div>
   </details>
-  <details class="q-row" id="q-1" data-probability="24.0" data-importance="85.0" data-quality="92.0" data-ambiguity="95.0" data-itnsss="82.75" data-neglectedness="90.0" data-tractability="80.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="85.0" data-sudden="75.0" data-sharp="70.0">
+  <details class="q-row" id="q-will-the-biosecurity-modernization-and-innovation-act-of-202" data-probability="24.0" data-importance="85.0" data-quality="92.0" data-ambiguity="95.0" data-itnsss="82.75" data-neglectedness="90.0" data-tractability="80.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="85.0" data-sudden="75.0" data-sharp="70.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
-      <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
+      <button type="button" class="anchor-link" data-anchor="q-will-the-biosecurity-modernization-and-innovation-act-of-202" aria-label="Copy link to this question">#</button>
+      <span class="q-prob-badge" style="background: #fbe9e7; color: #e65100" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">24%</span>
       <span class="q-title">Will the &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741) or a successor bill mandating DNA synthesis screening be signed into law in the United States by December 31, 2027?</span>
       <span class="q-meta">
         <span class="q-status-badge badge-revised" data-tooltip="Question was revised after adversarial review found issues">REVISED</span>
-        <span class="q-meta-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="q-meta-label">Qual</span><span class="q-meta-value">92.0</span></span>
-        <span class="q-meta-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="q-meta-label">Amb</span><span class="q-meta-value">95.0</span></span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">83</span></span>
-        <span class="q-meta-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="q-meta-label">Neglect</span><span class="q-meta-value">90.0</span></span>
-        <span class="q-meta-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="q-meta-label">Tract</span><span class="q-meta-value">80.0</span></span>
-        <span class="q-meta-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="q-meta-label">Soon</span><span class="q-meta-value">85.0</span></span>
-        <span class="q-meta-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="q-meta-label">Sudden</span><span class="q-meta-value">75.0</span></span>
-        <span class="q-meta-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="q-meta-label">Sharp</span><span class="q-meta-value">70.0</span></span>
-        <span class="q-meta-item" data-tooltip="Estimated likelihood this event occurs by the resolution deadline"><span class="q-meta-label">Prob</span><span class="q-meta-value" style="color:#e65100;font-weight:800">24%</span></span>
+        <span class="q-meta-item" data-tooltip="How decision-relevant and impactful this question is (0-100)"><span class="q-meta-label">Imp</span><span class="q-meta-value imp-pill imp-high">85</span></span>
       </span>
     </summary>
     <div class="q-body">
+      <div class="score-row"><div class="score-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="score-label">Quality</span><span class="score-value">92</span></div><div class="score-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="score-label">Ambiguity</span><span class="score-value">95</span></div><div class="score-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="score-label">Soon</span><span class="score-value">85</span></div><div class="score-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="score-label">Sudden</span><span class="score-value">75</span></div><div class="score-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="score-label">Sharp</span><span class="score-value">70</span></div></div>
       <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
-        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">82.75</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">90.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">80.0</span></div></div><p><strong>Neglectedness:</strong> A comprehensive search of Metaculus, Polymarket, INFER, and Manifold as of April 2026 confirmed that there are no active forecasting questions or markets specifically tracking S.3741 or the passage of mandatory DNA synthesis screening legislation <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. While broader biosecurity topics are occasionally discussed, this specific legislative outcome is not being systematically monitored by the forecasting community <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. None of the major prediction platforms or specialized policy trackers have operationalized this bill&#x27;s passage as a discrete forecasting target <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p><p><strong>Tractability:</strong> Forecasting the passage of this bill requires synthesizing political signals (bipartisan sponsorship by Sens. Cotton and Klobuchar), technical critiques of its provisions (e.g., homology-based vs. functional screening), and legislative hurdles <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. There is a rich information environment of congressional records and expert policy analysis that a skilled forecaster can exploit to move beyond a simple base rate of bill passage <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p><p><strong>Soon:</strong> S.3741 was introduced in early 2026 and is currently active in the 119th Congress <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. The window for legislative action and the time-sensitive nature of the biosecurity gaps it addresses make this a high-priority &quot;soon&quot; risk; the outcome is likely to be determined within the 2027 resolution window <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p><p><strong>Sudden:</strong> The passage of a bill into law is a discrete state change. While the legislative process is public and visible, the final steps (committee discharge, floor votes, or inclusion in larger packages) can occur rapidly and with limited advance warning to the general public <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a> <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p><p><strong>Sharp:</strong> The indicator sits in a domain where biosecurity risks can compound silently (e.g., through AI-enabled design) without obvious &quot;warning shots&quot; before a major incident <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. While voluntary frameworks exist, this bill addresses a &quot;sharp&quot; risk where the first observable failure of the current screening regime could be catastrophic <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p></div>
+        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">83</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">90</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">80</span></div></div><p><strong>Neglectedness:</strong> A comprehensive search of Metaculus, Polymarket, INFER, and Manifold as of April 2026 confirmed that there are no active forecasting questions or markets specifically tracking S.3741 or the passage of mandatory DNA synthesis screening legislation <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. While broader biosecurity topics are occasionally discussed, this specific legislative outcome is not being systematically monitored by the forecasting community <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. None of the major prediction platforms or specialized policy trackers have operationalized this bill&#x27;s passage as a discrete forecasting target <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p><p><strong>Tractability:</strong> Forecasting the passage of this bill requires synthesizing political signals (bipartisan sponsorship by Sens. Cotton and Klobuchar), technical critiques of its provisions (e.g., homology-based vs. functional screening), and legislative hurdles <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. There is a rich information environment of congressional records and expert policy analysis that a skilled forecaster can exploit to move beyond a simple base rate of bill passage <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p><p><strong>Soon:</strong> S.3741 was introduced in early 2026 and is currently active in the 119th Congress <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. The window for legislative action and the time-sensitive nature of the biosecurity gaps it addresses make this a high-priority &quot;soon&quot; risk; the outcome is likely to be determined within the 2027 resolution window <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p><p><strong>Sudden:</strong> The passage of a bill into law is a discrete state change. While the legislative process is public and visible, the final steps (committee discharge, floor votes, or inclusion in larger packages) can occur rapidly and with limited advance warning to the general public <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a> <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p><p><strong>Sharp:</strong> The indicator sits in a domain where biosecurity risks can compound silently (e.g., through AI-enabled design) without obvious &quot;warning shots&quot; before a major incident <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. While voluntary frameworks exist, this bill addresses a &quot;sharp&quot; risk where the first observable failure of the current screening regime could be catastrophic <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p></div>
       </details>
       <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
@@ -668,20 +756,20 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
   </details>
   </div>
 
-  <details open class="dismissed-section" style="margin-top: 2rem;">
+  <details class="dismissed-section explored-wrap" style="margin-top: 2rem;">
     <summary style="cursor: pointer; list-style: none; display: flex; align-items: center; gap: .5rem;
       padding: 1rem 1.2rem; background: #fff; border-radius: 10px;
       box-shadow: 0 1px 3px rgba(0,0,0,.05); font-size: .95rem; font-weight: 600; color: #555;">
       <span style="font-size: .55rem; color: #aaa; transition: transform .2s ease;">&#9654;</span>
       Explored Proto-Questions (17 explored but not selected in early stages)
     </summary>
-    <div style="margin-top: .6rem; display: flex; flex-direction: column; gap: .5rem;">
+    <div class="question-list" style="margin-top: .6rem;">
 
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">90</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">90</span>
           <span class="q-title" style="color: #666;">Will the United Kingdom pass primary or secondary legislation that mandates DNA synthesis screening for all commercial synthetic nucleic acid providers operating within the UK by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -696,8 +784,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">By December 31, 2027, will OpenAI publicly announce that one of its models has reached the &#x27;High&#x27; or &#x27;Critical&#x27; capability threshold for &#x27;Biological&#x27; risks as defined in its Preparedness Framework?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -712,8 +800,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will the US AI Safety Institute (US AISI) or NIST publish a standardized &#x27;red-teaming&#x27; evaluation framework for frontier models by December 31, 2027, that establishes a quantitative, measurable threshold for &#x27;non-expert uplift&#x27; in biological weapon design?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -728,8 +816,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">By December 31, 2027, will a major frontier AI developer (specifically Anthropic, OpenAI, or Google DeepMind) publish a peer-reviewed study or a formal technical report demonstrating a statistically significant &quot;uplift&quot; in the performance of PhD-level biologists on a biological-weapon-related laboratory task compared to a control group?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -744,8 +832,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will the United Kingdom formally enact legislation or a mandatory regulatory statutory instrument requiring all commercial DNA synthesis providers operating in the UK to screen sequences against a standardized &#x27;biosecurity risk&#x27; database by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -760,8 +848,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">By December 31, 2027, will the UK AI Safety Institute (AISI) or the US AI Safety Institute (NIST) publish a standardized evaluation benchmark for frontier models that specifically measures their &quot;uplift&quot; in identifying or designing &quot;non-natural&quot; genomic precursors for viral enhancement?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -776,8 +864,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">85</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">85</span>
           <span class="q-title" style="color: #666;">By 31st December 2027, will the U.S. National Institute of Standards and Technology (NIST) publish a finalized set of &quot;AI-ready&quot; biological data standards as mandated by the AI-Ready Bio-Data Standards Act of 2026?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -792,8 +880,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">85</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">85</span>
           <span class="q-title" style="color: #666;">Will any publicly available AI model achieve a score of 60% or higher on the Virology Capabilities Test (VCT) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -808,8 +896,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">85</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">85</span>
           <span class="q-title" style="color: #666;">Will any AI model achieve a score of 60% or higher on the Virology Capabilities Test (VCT) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -824,8 +912,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">85</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">85</span>
           <span class="q-title" style="color: #666;">By December 31, 2027, will a major frontier AI lab (OpenAI, Anthropic, or Google DeepMind) publish a peer-reviewed study or technical report that demonstrates a statistically significant performance uplift for PhD-level biologists using an AI model on a multi-step biological protocol, compared to a control group without AI?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -840,8 +928,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">84</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">84</span>
           <span class="q-title" style="color: #666;">Will the U.S. Department of Health and Human Services (HHS) or the Office of Science and Technology Policy (OSTP) finalize a mandatory regulatory requirement by December 31, 2027, that obligates all U.S.-based synthetic nucleic acid providers to screen all orders for &quot;Sequences of Concern&quot; (SOCs) below a 50-nucleotide threshold?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -856,8 +944,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">82</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">82</span>
           <span class="q-title" style="color: #666;">Will the &#x27;Biosecurity Modernization and Innovation Act of 2026&#x27; (S.3741), or a successor U.S. federal bill containing a mandate for DNA synthesis screening by the Department of Commerce, be signed into law by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -872,8 +960,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">82</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">82</span>
           <span class="q-title" style="color: #666;">By December 31, 2027, will a major frontier AI developer (specifically OpenAI, Anthropic, Google DeepMind, or Meta) publicly release a full technical report or peer-reviewed paper detailing a new &#x27;human uplift&#x27; study that measures the assistance provided by a model released after January 1, 2025, in executing a biological or chemical weapon synthesis task?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -888,8 +976,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">78</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">78</span>
           <span class="q-title" style="color: #666;">By December 31, 2027, will a peer-reviewed study in Science, Nature, or Cell report an AI model successfully designing a functional protein sequence that evades current IGSC-standard screening protocols while maintaining its intended biological toxicity?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -904,8 +992,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">78</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">78</span>
           <span class="q-title" style="color: #666;">Will at least two major automated cloud laboratory providers (e.g., Emerald Cloud Lab, Strateos) publicly announce the implementation of a &#x27;human-in-the-loop&#x27; verification requirement for all AI-submitted biological protocols involving &#x27;Select Agents&#x27; by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -920,8 +1008,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #ef6c00; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">45</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">45</span>
           <span class="q-title" style="color: #666;">Will the New York Department of Financial Services (or the designated oversight office under the RAISE Act) initiate at least one formal enforcement action or investigation against a &quot;large developer&quot; for a violation of the RAISE Act&#x27;s safety or reporting requirements by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -936,8 +1024,8 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #ef6c00; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">45</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">45</span>
           <span class="q-title" style="color: #666;">Will DARPA&#x27;s &#x27;Network of Optimal Dynamic Energy Signatures&#x27; (NODES) program, or a successor initiative focused on &#x27;AI-enabled biodefense&#x27;, publicly announce the successful delivery of an AI-driven tool to the U.S. Government that &#x27;reproduces the functions of at least 15 known multifunctional proteins&#x27; as part of its Phase 1 milestones by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -952,22 +1040,25 @@ Legislative history suggests that high-stakes regulatory bills often undergo sig
   </details>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  var list = document.querySelector('.question-list');
-  var btns = document.querySelectorAll('.sort-btn');
-  var currentKey = 'importance';
+  // --- Sorting (works within each question-list) ---
+  var sortBtns = document.querySelectorAll('.sort-btn');
+  var DEFAULT_KEY = 'itnsss';
+  var currentKey = DEFAULT_KEY;
   var currentDir = 'desc';
 
-  function sortQuestions(key, dir) {
-    var items = Array.from(list.querySelectorAll('.q-row'));
-    items.sort(function(a, b) {
-      var va = parseFloat(a.dataset[key]) || 0;
-      var vb = parseFloat(b.dataset[key]) || 0;
-      return dir === 'asc' ? va - vb : vb - va;
+  function sortAllLists(key, dir) {
+    document.querySelectorAll('.question-list').forEach(function(list) {
+      var items = Array.from(list.querySelectorAll('.q-row'));
+      items.sort(function(a, b) {
+        var va = parseFloat(a.dataset[key]) || 0;
+        var vb = parseFloat(b.dataset[key]) || 0;
+        return dir === 'asc' ? va - vb : vb - va;
+      });
+      items.forEach(function(el) { list.appendChild(el); });
     });
-    items.forEach(function(el) { list.appendChild(el); });
   }
 
-  btns.forEach(function(btn) {
+  sortBtns.forEach(function(btn) {
     btn.addEventListener('click', function() {
       var key = btn.dataset.sortkey;
       if (key === currentKey) {
@@ -976,19 +1067,19 @@ document.addEventListener('DOMContentLoaded', function() {
         currentKey = key;
         currentDir = 'desc';
       }
-      btns.forEach(function(b) {
+      sortBtns.forEach(function(b) {
         b.classList.remove('active');
         b.querySelector('.sort-arrow').textContent = '';
       });
       btn.classList.add('active');
       btn.querySelector('.sort-arrow').textContent = currentDir === 'desc' ? ' \u2193' : ' \u2191';
-      sortQuestions(currentKey, currentDir);
+      sortAllLists(currentKey, currentDir);
     });
   });
 
-  // Initial sort: ITNSSS descending
-  sortQuestions('itnsss', 'desc');
-  var defBtn = document.querySelector('.sort-btn[data-sortkey="itnsss"]');
+  // Initial sort
+  sortAllLists(DEFAULT_KEY, 'desc');
+  var defBtn = document.querySelector('.sort-btn[data-sortkey="' + DEFAULT_KEY + '"]');
   if (defBtn) {
     defBtn.classList.add('active');
     defBtn.querySelector('.sort-arrow').textContent = ' \u2193';
@@ -1011,8 +1102,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // --- Section toggles ---
-  var sectionToggles = document.querySelectorAll('.section-toggle');
-  sectionToggles.forEach(function(btn) {
+  document.querySelectorAll('.section-toggle').forEach(function(btn) {
     btn.addEventListener('click', function() {
       var sec = btn.dataset.section;
       var targets = document.querySelectorAll('.section[data-section="' + sec + '"]');
@@ -1030,9 +1120,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // --- Filters ---
+  // --- Filters + search ---
   var filterBtns = document.querySelectorAll('.filter-btn[data-filter]');
-  var activeFilters = {};
+  var searchInput = document.getElementById('q-search');
+  var activeFilters = {};  // { "has-decomp": "1", "status": "REVISED", ... }
 
   function applyFilters() {
     var keys = Object.keys(activeFilters);
@@ -1050,6 +1141,67 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       row.classList.toggle('filter-hidden', !visible);
     });
+    updateGroups();
+  }
+
+  function applySearch() {
+    var term = (searchInput ? searchInput.value : '').trim().toLowerCase();
+    document.querySelectorAll('.q-row').forEach(function(row) {
+      if (!term) {
+        row.classList.remove('search-hidden');
+        return;
+      }
+      var summaryEl = row.querySelector('summary');
+      var text = summaryEl ? summaryEl.textContent.toLowerCase() : '';
+      row.classList.toggle('search-hidden', text.indexOf(term) === -1);
+    });
+    updateGroups();
+  }
+
+  // Hide stranded group headers / empty wrappers; refresh the "N shown"
+  // counter. Handles both report structures: headers preceding a
+  // question-list (global) and headers inline among rows (per-project).
+  function updateGroups() {
+    document.querySelectorAll('.question-list').forEach(function(list) {
+      var anyVisible = !!list.querySelector('.q-row:not(.filter-hidden):not(.search-hidden)');
+      list.classList.toggle('group-hidden', !anyVisible);
+    });
+    document.querySelectorAll('.group-header').forEach(function(headerEl) {
+      var anyVisible = false;
+      var node = headerEl.nextElementSibling;
+      while (node && !node.classList.contains('group-header')) {
+        if (node.classList.contains('q-row')) {
+          if (!node.classList.contains('filter-hidden') && !node.classList.contains('search-hidden')) {
+            anyVisible = true;
+          }
+          if (anyVisible) break;
+        } else if (node.classList.contains('question-list')) {
+          anyVisible = !!node.querySelector('.q-row:not(.filter-hidden):not(.search-hidden)');
+          break;
+        }
+        node = node.nextElementSibling;
+      }
+      headerEl.classList.toggle('group-hidden', !anyVisible);
+    });
+    document.querySelectorAll('.explored-wrap').forEach(function(wrap) {
+      var anyVisible = !!wrap.querySelector('.q-row:not(.filter-hidden):not(.search-hidden)');
+      wrap.classList.toggle('group-hidden', !anyVisible);
+    });
+    var live = document.getElementById('filter-count-live');
+    if (live) {
+      var scope = document.querySelector('.tab-content.active') || document;
+      // Count only forecast cards — explored/FILTERED cards live inside
+      // .explored-wrap and would inflate the headline count.
+      var counted = Array.prototype.filter.call(
+        scope.querySelectorAll('.q-row'),
+        function(r) { return !r.closest('.explored-wrap'); }
+      );
+      var all = counted.length;
+      var shown = counted.filter(function(r) {
+        return !r.classList.contains('filter-hidden') && !r.classList.contains('search-hidden');
+      }).length;
+      live.textContent = (shown === all) ? all + ' questions' : shown + ' of ' + all + ' shown';
+    }
   }
 
   filterBtns.forEach(function(btn) {
@@ -1057,9 +1209,11 @@ document.addEventListener('DOMContentLoaded', function() {
       var key = btn.dataset.filter;
       var val = btn.dataset.filterValue;
       if (activeFilters[key] === val) {
+        // Toggle off
         delete activeFilters[key];
         btn.classList.remove('active');
       } else {
+        // Deactivate other buttons for the same filter key
         filterBtns.forEach(function(b) {
           if (b.dataset.filter === key) b.classList.remove('active');
         });
@@ -1070,14 +1224,77 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  if (searchInput) {
+    searchInput.addEventListener('input', applySearch);
+  }
+
   var clearBtn = document.getElementById('filter-clear');
   if (clearBtn) {
     clearBtn.addEventListener('click', function() {
       activeFilters = {};
       filterBtns.forEach(function(b) { b.classList.remove('active'); });
+      if (searchInput) searchInput.value = '';
       applyFilters();
+      applySearch();
     });
   }
+
+  // --- Copy-link buttons (single delegated listener; file://-safe URL) ---
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.anchor-link');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var url = location.href.split('#')[0] + '#' + btn.dataset.anchor;
+    var copied = navigator.clipboard && navigator.clipboard.writeText
+      ? navigator.clipboard.writeText(url)
+      : Promise.reject();
+    copied.then(function() {
+      btn.classList.add('copied');
+      btn.textContent = '\u2713';
+      setTimeout(function() {
+        btn.classList.remove('copied');
+        btn.textContent = '#';
+      }, 1500);
+    }).catch(function() {
+      window.prompt('Copy link:', url);
+    });
+  });
+
+  // --- Deep links: open the target card (and its tab) from the URL hash ---
+  function openFromHash() {
+    if (!location.hash || location.hash.indexOf('#tab=') === 0) return;
+    var id = decodeURIComponent(location.hash.slice(1));
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('filter-hidden', 'search-hidden');
+    var panel = el.closest('.tab-content');
+    if (panel && !panel.classList.contains('active') && typeof activateTab !== 'undefined') {
+      activateTab(panel.id.replace(/^tab-/, ''), false);
+    }
+    // Open the card itself and every enclosing <details> (sections, Explored wrapper)
+    var node = el;
+    while (node) {
+      if (node.tagName === 'DETAILS') node.open = true;
+      node = node.parentElement;
+    }
+    requestAnimationFrame(function() {
+      el.scrollIntoView({ block: 'start' });
+      el.classList.add('deeplink-flash');
+      setTimeout(function() { el.classList.remove('deeplink-flash'); }, 1700);
+    });
+  }
+
+  window.addEventListener('hashchange', openFromHash);
+
+  // On load: restore tab from #tab=... (global report) or open the deep link
+  var tabMatch = location.hash.match(/^#tab=(.+)$/);
+  if (tabMatch && typeof activateTab !== 'undefined') {
+    activateTab(decodeURIComponent(tabMatch[1]), false);
+  } else {
+    openFromHash();
+  }
+  updateGroups();
 });
 </script>
 </div>

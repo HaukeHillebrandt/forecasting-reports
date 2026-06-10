@@ -6,145 +6,199 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Forecasts &mdash; x</title>
 <style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: #f7f8fa; color: #2a2a2a; line-height: 1.65; padding: 2.5rem 1rem;
-    font-size: 15px;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
   }
-  .container { max-width: 100%; margin: 0 auto; padding: 0 2rem; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
   /* Header */
   .page-header {
-    background: #1a1a2e; color: #eee; border-radius: 12px;
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
     padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
   }
-  .page-header h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: .35rem; letter-spacing: -.01em; }
-  .page-header .subtitle { font-size: .88rem; color: #a0a0b8; margin-bottom: .6rem; }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
   .page-header .page-stats {
-    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #8e8ea0;
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
   }
   .page-header .page-stats span {
     background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
   }
 
-  /* Sort bar — mirrors q-row summary layout so buttons align with q-meta badges */
+  /* Sort bar — a labeled button group, mirrors the filter bar */
   .sort-bar {
-    display: flex; align-items: center; gap: .75rem;
-    padding: .35rem 1.2rem; margin-bottom: .2rem;
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
   }
-  .sort-bar .sort-spacer { flex: 1; }
   .sort-bar .sort-label {
-    font-size: .6rem; text-transform: uppercase; letter-spacing: .03em;
-    color: #aaa; font-weight: 600;
-  }
-  .sort-meta {
-    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
   }
   .sort-btn {
-    font-size: .6rem; font-weight: 600; color: #aaa; cursor: pointer;
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
     transition: all .15s ease; user-select: none;
-    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
-    text-align: center; background: none; border: none; padding: 0;
-    text-transform: uppercase; letter-spacing: .03em; line-height: 1;
   }
-  .sort-btn:hover { color: #333; }
-  .sort-btn.active { color: #1a1a2e; }
-  .sort-btn .sort-arrow { font-size: .5rem; opacity: .6; line-height: 1; }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
 
   /* Expand / Collapse controls */
   .expand-bar {
-    display: flex; align-items: center; gap: .5rem; margin-bottom: 1.2rem;
-    padding: .6rem 1rem; background: #fff; border-radius: 10px;
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
   }
   .expand-bar .expand-label {
     font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
-    color: #888; font-weight: 600; margin-right: .25rem;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
   }
   .expand-btn {
     font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
-    border: 1px solid #e0e0e0; background: #fff; color: #555; cursor: pointer;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
     transition: all .15s ease; user-select: none;
   }
   .expand-btn:hover { background: #f0f1f4; color: #333; }
-  .expand-btn.active { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
   .expand-sep {
     width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
   }
 
   /* Filter bar */
   .filter-bar {
-    display: flex; align-items: center; gap: .5rem; margin-bottom: 1.2rem;
-    padding: .6rem 1rem; background: #fff; border-radius: 10px;
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
   }
   .filter-bar .filter-label {
     font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
-    color: #888; font-weight: 600; margin-right: .25rem;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
   }
   .filter-btn {
     font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
-    border: 1px solid #e0e0e0; background: #fff; color: #555; cursor: pointer;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
     transition: all .15s ease; user-select: none;
   }
   .filter-btn:hover { background: #f0f1f4; color: #333; }
-  .filter-btn.active { background: #1a73e8; color: #fff; border-color: #1a73e8; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
   .filter-btn .filter-count {
     font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
-    border-radius: 8px; margin-left: .3rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
   }
   .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
-  .q-row.filter-hidden { display: none; }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
 
   /* Question rows — expandable <details> */
   .question-list { display: flex; flex-direction: column; gap: .6rem; }
 
   .q-row {
-    background: #fff; border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.05);
-    transition: box-shadow .2s ease;
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
   }
   .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
-  .q-row[open] { box-shadow: 0 2px 10px rgba(0,0,0,.1); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
 
   .q-row > summary {
     cursor: pointer; list-style: none;
     display: flex; align-items: center; gap: .75rem;
     padding: .85rem 1.2rem;
     transition: background .15s ease;
+    border-radius: 9px;
   }
   .q-row > summary::-webkit-details-marker { display: none; }
-  .q-row > summary:hover { background: #fafbfc; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
 
   .q-row > summary .expand-icon {
-    font-size: .55rem; color: #aaa; transition: transform .2s ease;
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
     flex-shrink: 0; width: .8rem; text-align: center;
   }
   .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
 
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
   .q-prob-badge {
-    color: #fff; font-weight: 700; font-size: .82rem;
-    min-width: 3rem; height: 1.65rem;
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
     display: flex; align-items: center; justify-content: center;
-    border-radius: 5px; flex-shrink: 0; padding: 0 .4rem;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
   }
   .q-title {
-    flex: 1; font-size: .92rem; font-weight: 500; color: #2a2a2a;
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
     line-height: 1.35;
   }
   .q-meta {
     display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
   }
   .q-meta-item {
-    font-size: .72rem; color: #888; text-align: center;
+    font-size: .72rem; color: var(--text-2); text-align: center;
     display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
   }
   .q-meta-label {
-    font-size: .6rem; text-transform: uppercase; letter-spacing: .03em;
-    color: #aaa; line-height: 1;
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
   }
-  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
 
   .q-status-badge {
     font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
@@ -152,30 +206,25 @@
   .badge-pass { background: #e8f5e9; color: #2e7d32; }
   .badge-revised { background: #fff3e0; color: #e65100; }
   .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
 
   /* Expanded card content */
-  .q-body { padding: 0 1.4rem 1.2rem 1.4rem; }
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
 
   /* Score row inside expanded content */
   .score-row {
-    display: flex; gap: 1.2rem; align-items: center;
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
     margin: .6rem 0 .8rem; padding: .55rem 1rem;
-    background: #f7f8fa; border-radius: 8px; font-size: .84rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
   }
   .score-item {
     display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
   }
   .score-label {
-    font-size: .65rem; text-transform: uppercase; letter-spacing: .03em;
-    color: #999; line-height: 1;
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
   }
-  .score-value { font-weight: 700; font-size: .92rem; }
-
-  .prob-bar-container {
-    flex: 1; min-width: 6rem; display: flex; flex-direction: column; justify-content: center;
-  }
-  .prob-bar { height: 6px; border-radius: 3px; background: #e8e8e8; overflow: hidden; }
-  .prob-bar-fill { height: 100%; border-radius: 3px; transition: width .3s; }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
 
   /* Collapsible inner sections */
   .section { margin-top: .4rem; }
@@ -190,33 +239,34 @@
   .section[open] summary::before { transform: rotate(90deg); }
   .section summary h3 {
     font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
-    color: #888; margin: 0; display: flex; align-items: center; gap: .4rem;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
     font-weight: 600;
   }
   .section > p, .section > .content {
     margin-top: .25rem; padding-left: .9rem;
-    font-size: .88rem; color: #444;
+    font-size: .9rem; color: #444;
   }
   .section p { white-space: pre-wrap; word-wrap: break-word; }
 
   .badge {
-    font-size: .6rem; color: #777; background: #f0f1f4; padding: .1rem .4rem;
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
     border-radius: 10px; font-weight: 500;
   }
-  .badge-status {
-    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
-  }
-
-  /* Meta row */
-  .meta-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .3rem; }
 
   /* Links */
-  a { color: #3b6fc0; text-decoration: none; }
-  a:hover { color: #1a3f7a; text-decoration: underline; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
 
   /* Decomposition */
   .subq-card {
-    background: #f7f8fa; border: 1px solid #eaeaef; border-radius: 8px;
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
     padding: .65rem .9rem; margin: .35rem 0;
   }
   .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
@@ -225,6 +275,15 @@
     display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
   }
   .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
 
   /* --- Tooltips (CSS-only via data-tooltip) --- */
   [data-tooltip] { position: relative; }
@@ -239,7 +298,6 @@
     letter-spacing: normal;
   }
   [data-tooltip]:hover::after { opacity: 1; }
-  /* Downward arrow on tooltip */
   [data-tooltip]::before {
     content: "";
     position: absolute; bottom: calc(100% + 2px); left: 50%;
@@ -249,6 +307,46 @@
     z-index: 100;
   }
   [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+  /* Stage-07 extras: seed passages, status badges, right-aligned tooltips */
+  .badge-status {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .meta-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .3rem; }
+
+  /* Seed passage (stage 06e): verbatim quote + deep link to PDF page */
+  .seed-quote {
+    background: #fffbea; border-left: 3px solid #f1c40f;
+    padding: .55rem .9rem; margin: .35rem 0 .5rem;
+    border-radius: 0 6px 6px 0;
+    font-style: italic; color: #444; font-size: .9rem; line-height: 1.5;
+  }
+  .seed-quote::before { content: "\201C"; color: #c9a100; margin-right: .1rem; }
+  .seed-quote::after  { content: "\201D"; color: #c9a100; margin-left: .1rem; }
+  .seed-quote-meta {
+    display: flex; flex-wrap: wrap; gap: .6rem; align-items: center;
+    margin-top: .15rem; font-size: .8rem; color: #666;
+  }
+  .seed-quote-meta .seed-page-badge {
+    font-size: .7rem; font-weight: 600; padding: .12rem .5rem;
+    background: #fff4c0; color: #7a5a00; border-radius: 10px;
+  }
+  .seed-quote-meta .seed-match-soft {
+    font-size: .65rem; font-weight: 600; padding: .08rem .4rem;
+    background: #f0f0f0; color: #888; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
 
   /* Tooltip on right for items near left edge */
   .tooltip-right[data-tooltip]::after { left: 0; transform: none; }
@@ -312,47 +410,42 @@
     <button class="filter-btn" data-filter="status" data-filter-value="PASS">PASS<span class="filter-count">0</span></button>
     <button class="filter-btn" data-filter="status" data-filter-value="REVISED">REVISED<span class="filter-count">2</span></button>
     <span class="expand-sep"></span>
-    <button class="filter-btn" id="filter-clear" style="color:#c62828;border-color:#ffcdd2;">Clear filters</button>
+    <input id="q-search" class="q-search" type="search" placeholder="Search questions&hellip;" aria-label="Search questions">
+    <button class="filter-btn" id="filter-clear" style="color:#c62828;border-color:#ffcdd2;">Clear</button>
+    <span id="filter-count-live" class="filter-label" aria-live="polite"></span>
   </div>
   <div class="sort-bar">
-    <span class="sort-spacer"><span class="sort-label">Sort&nbsp;by</span></span>
-    <span class="sort-meta">
-      <span style="min-width:2.5rem"></span>
-      <button class="sort-btn" data-sortkey="quality">Qual<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="ambiguity">Amb<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="itnsss">ITNSSS<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="neglectedness">Neglect<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="tractability">Tract<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="soon">Soon<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="sudden">Sudden<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="sharp">Sharp<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="probability">Prob<span class="sort-arrow"></span></button>
-    </span>
+    <span class="sort-label">Sort by</span>
+    <button class="sort-btn" data-sortkey="itnsss">ITNSSS<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="importance">Importance<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="probability">Probability<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="quality">Quality<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="ambiguity">Ambiguity<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="neglectedness">Neglectedness<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="tractability">Tractability<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="soon">Soon<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="sudden">Sudden<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="sharp">Sharp<span class="sort-arrow"></span></button>
   </div>
+  <div class="group-header">Page 1</div>
   <div class="question-list">
-  <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">Page 1</div>
-  <details class="q-row" id="q-0" data-probability="30.0" data-importance="85.0" data-quality="92.0" data-ambiguity="75.0" data-itnsss="79.5" data-neglectedness="75.0" data-tractability="70.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="90.0" data-sudden="85.0" data-sharp="80.0">
+  <details class="q-row" id="q-by-december-31-2027-will-any-frontier-ai-company-defined-as" data-probability="30.0" data-importance="85.0" data-quality="92.0" data-ambiguity="75.0" data-itnsss="79.5" data-neglectedness="75.0" data-tractability="70.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="90.0" data-sudden="85.0" data-sharp="80.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
-      <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
+      <button type="button" class="anchor-link" data-anchor="q-by-december-31-2027-will-any-frontier-ai-company-defined-as" aria-label="Copy link to this question">#</button>
+      <span class="q-prob-badge" style="background: #fbe9e7; color: #e65100" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">30%</span>
       <span class="q-title">Between April 1, 2026, and December 31, 2027, will any &quot;frontier AI company&quot; (OpenAI, Anthropic, or Google DeepMind) publicly state in an official blog post, technical report, &quot;AI permission list,&quot; or &quot;autonomy framework&quot; that they have used an AI agent to autonomously initiate and manage a single discrete AI model training run with market-equivalent compute costs exceeding $10 million USD?</span>
       <span class="q-meta">
         <span class="q-status-badge badge-revised" data-tooltip="Question was revised after adversarial review found issues">REVISED</span>
-        <span class="q-meta-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="q-meta-label">Qual</span><span class="q-meta-value">92.0</span></span>
-        <span class="q-meta-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="q-meta-label">Amb</span><span class="q-meta-value">75.0</span></span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">80</span></span>
-        <span class="q-meta-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="q-meta-label">Neglect</span><span class="q-meta-value">75.0</span></span>
-        <span class="q-meta-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="q-meta-label">Tract</span><span class="q-meta-value">70.0</span></span>
-        <span class="q-meta-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="q-meta-label">Soon</span><span class="q-meta-value">90.0</span></span>
-        <span class="q-meta-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="q-meta-label">Sudden</span><span class="q-meta-value">85.0</span></span>
-        <span class="q-meta-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="q-meta-label">Sharp</span><span class="q-meta-value">80.0</span></span>
-        <span class="q-meta-item" data-tooltip="Estimated likelihood this event occurs by the resolution deadline"><span class="q-meta-label">Prob</span><span class="q-meta-value" style="color:#e65100;font-weight:800">30%</span></span>
+        <span class="q-meta-item" data-tooltip="How decision-relevant and impactful this question is (0-100)"><span class="q-meta-label">Imp</span><span class="q-meta-value imp-pill imp-high">85</span></span>
       </span>
     </summary>
     <div class="q-body">
+      <div class="score-row"><div class="score-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="score-label">Quality</span><span class="score-value">92</span></div><div class="score-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="score-label">Ambiguity</span><span class="score-value">75</span></div><div class="score-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="score-label">Soon</span><span class="score-value">90</span></div><div class="score-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="score-label">Sudden</span><span class="score-value">85</span></div><div class="score-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="score-label">Sharp</span><span class="score-value">80</span></div></div>
       <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
-        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">79.5</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">75.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">70.0</span></div></div><p><strong>Neglectedness:</strong> While general AI agent capabilities are tracked (e.g., SWE-bench), specific public disclosures of &#x27;autonomous management of large-scale training runs&#x27; are not systematically tracked by existing policy trackers or major forecasting platforms. Searches on Metaculus, Polymarket, and Manifold found related questions on AGI and general automation, but none specifically targeting the $1 million autonomous training run threshold or the use of &#x27;permission lists&#x27; (Metric #14) for R&amp;D <a href="https://arxiv.org/html/2603.03992v3" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. This specific operational indicator is currently neglected by formal forecasting markets.</p><p><strong>Tractability:</strong> The question is tractable because it relies on monitoring official communications (blog posts, reports) from a small, defined set of &#x27;frontier&#x27; companies. While not a simple base-rate lookup, a researcher can synthesise evidence from corporate roadmaps, leaked memos, and technical disclosures to update their forecast. The rich information environment provided by these companies allows for a non-trivial synthesis of evidence.</p><p><strong>Soon:</strong> The question is highly time-sensitive as frontier companies like OpenAI are actively targeting &#x27;autonomous research interns&#x27; for 2026 and &#x27;fully automated researchers&#x27; for 2028. The window for observing this transition and implementing corresponding oversight mechanisms is currently open but closing rapidly as the technology approaches these inflection points.</p><p><strong>Sudden:</strong> The event would likely be a discrete announcement in a technical blog post or system card, representing a state change from human-led to AI-led R&amp;D. While the general direction of travel is visible, the specific crossing of the $1 million autonomous threshold could happen with limited public anticipation, surprising observers with the degree of trust placed in the agentic system.</p><p><strong>Sharp:</strong> This is a &#x27;sharp&#x27; risk because the first publicly observable instance of a $1M+ autonomous training run might also be the first time a serious oversight failure (e.g., unintended resource consumption or subversion) occurs <a href="https://arxiv.org/html/2603.03992v3" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. There are unlikely to be clear, smaller-scale &#x27;warning shots&#x27; that trigger corrective policy action before a frontier company reaches this level of operational autonomy. Problems in AIRDA may compound silently until a major milestone is reached.</p></div>
+        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">80</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">75</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">70</span></div></div><p><strong>Neglectedness:</strong> While general AI agent capabilities are tracked (e.g., SWE-bench), specific public disclosures of &#x27;autonomous management of large-scale training runs&#x27; are not systematically tracked by existing policy trackers or major forecasting platforms. Searches on Metaculus, Polymarket, and Manifold found related questions on AGI and general automation, but none specifically targeting the $1 million autonomous training run threshold or the use of &#x27;permission lists&#x27; (Metric #14) for R&amp;D <a href="https://arxiv.org/html/2603.03992v3" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. This specific operational indicator is currently neglected by formal forecasting markets.</p><p><strong>Tractability:</strong> The question is tractable because it relies on monitoring official communications (blog posts, reports) from a small, defined set of &#x27;frontier&#x27; companies. While not a simple base-rate lookup, a researcher can synthesise evidence from corporate roadmaps, leaked memos, and technical disclosures to update their forecast. The rich information environment provided by these companies allows for a non-trivial synthesis of evidence.</p><p><strong>Soon:</strong> The question is highly time-sensitive as frontier companies like OpenAI are actively targeting &#x27;autonomous research interns&#x27; for 2026 and &#x27;fully automated researchers&#x27; for 2028. The window for observing this transition and implementing corresponding oversight mechanisms is currently open but closing rapidly as the technology approaches these inflection points.</p><p><strong>Sudden:</strong> The event would likely be a discrete announcement in a technical blog post or system card, representing a state change from human-led to AI-led R&amp;D. While the general direction of travel is visible, the specific crossing of the $1 million autonomous threshold could happen with limited public anticipation, surprising observers with the degree of trust placed in the agentic system.</p><p><strong>Sharp:</strong> This is a &#x27;sharp&#x27; risk because the first publicly observable instance of a $1M+ autonomous training run might also be the first time a serious oversight failure (e.g., unintended resource consumption or subversion) occurs <a href="https://arxiv.org/html/2603.03992v3" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. There are unlikely to be clear, smaller-scale &#x27;warning shots&#x27; that trigger corrective policy action before a frontier company reaches this level of operational autonomy. Problems in AIRDA may compound silently until a major milestone is reached.</p></div>
       </details>
       <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
@@ -406,6 +499,47 @@ If no such statement is published by 23:59 UTC on December 31, 2027, the questio
 - <strong>Permission List</strong>: A list of actions AI systems are authorized to take with different levels of human approval, including where none is required <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>.
 - <strong>Frontier AI Company</strong>: For this question, limited to OpenAI, Anthropic, and Google DeepMind.
 </p>
+      </details>
+      <details class="section" data-section="refinement">
+        <summary><h3>Background</h3></summary>
+        <p>As of April 1, 2026, the automation of AI Research and Development (AIRDA) has moved from a theoretical possibility to a core strategic &quot;North Star&quot; for leading AI labs. OpenAI has publicly targeted the deployment of an &quot;autonomous research intern&quot; by late 2026, capable of independent multi-day investigations [Measuring AI R&amp;D Automation - arXiv]. Similarly, Anthropic and Google DeepMind have published frameworks for &quot;Intelligent AI Delegation&quot; and &quot;Agent Autonomy&quot; to track the transition from human-led to agentic R&amp;D processes.
+
+A critical inflection point in this transition is the delegation of &quot;high-stakes decisions&quot;—such as the initiation of large-scale, expensive training runs—to AI agents. Historically, training runs costing millions of dollars required rigorous human oversight for every stage, from resource allocation to monitoring for divergence. The Chan et al. (2026) paper, <em>Measuring AI R&amp;D Automation</em>, proposes tracking this via &quot;AI permission lists&quot; (Metric #14), which define the actions an AI system is authorized to take without human intervention. 
+
+This question tracks whether frontier labs will publicly cross the threshold of trusting an AI agent to manage a $10 million compute asset autonomously. While autonomous coding and hypothesis generation are increasingly common, the &quot;Running experiments&quot; stage (Section 2 of Chan et al. 2026) involves complex real-time interventions that represent a significant leap in operational trust.
+
+---
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, between April 1, 2026, and December 31, 2027 (inclusive, UTC), any of the named companies (OpenAI, Anthropic, or Google DeepMind) publishes an official statement confirming the following conditions were met for at least one specific instance:
+
+1.  <strong>Autonomous Initiation and Management</strong>: An AI agent (an autonomous AI system) initiated and managed a training run. 
+    *   <strong>Management</strong> is only considered autonomous if the AI agent has the direct technical authority to modify hyperparameters or resource distribution directly in the training environment without a human reviewing the specific change before it takes effect.
+    *   <strong>Autonomous initiation</strong> requires the agent to independently determine at least one key training parameter (e.g., learning rate, batch size, or architecture variant) rather than simply triggering a human-pre-configured job template.
+2.  <strong>No Human-in-the-Loop for Steps</strong>: The statement must specify that the agent operated &quot;autonomously,&quot; &quot;without human-in-the-loop approval for individual steps,&quot; or using a &quot;permission list&quot; or &quot;autonomy framework&quot; that granted it authority to execute the run to completion without per-step human authorization. 
+    *   A run is <strong>not</strong> considered autonomous if human-in-the-loop approval is required to resume the training process after an agent-initiated pause or failure-handling event.
+    <em>   High-level human authorization at the start of the project (i.e., &quot;Go&quot; at the outset) does </em>not* disqualify the event, provided individual execution steps were autonomous.
+3.  <strong>Cost Threshold</strong>: The training run cost more than $10,000,000 USD. 
+    *   This threshold applies specifically to the market-equivalent rental cost of the compute hardware used (e.g., H100/B200 GPU hours) and <strong>excludes</strong> labor, facility overhead, or dataset acquisition costs.
+    *   The cost threshold must be met by a <strong>single discrete training run</strong> (a single model optimization process) rather than an aggregate of multiple small-scale experiments.
+4.  <strong>Frontier Companies</strong>: The company must be OpenAI, Anthropic, or Google DeepMind.
+5.  <strong>Official Communication</strong>: The claim must appear in an official company newsroom, technical blog, peer-reviewed paper, technical report, or published &quot;AI permission list&quot; or &quot;autonomy framework.&quot;</p>
+      </details>
+      <details class="section" data-section="refinement">
+        <summary><h3>Resolution criteria</h3></summary>
+        <p>This question will resolve as <strong>YES</strong> if, between April 1, 2026, and December 31, 2027 (inclusive, UTC), any of the named companies (OpenAI, Anthropic, or Google DeepMind) publishes an official statement confirming the following conditions were met for at least one specific instance:
+
+1.  <strong>Autonomous Initiation and Management</strong>: An AI agent (an autonomous AI system) initiated and managed a training run. 
+    *   <strong>Management</strong> is only considered autonomous if the AI agent has the direct technical authority to modify hyperparameters or resource distribution directly in the training environment without a human reviewing the specific change before it takes effect.
+    *   <strong>Autonomous initiation</strong> requires the agent to independently determine at least one key training parameter (e.g., learning rate, batch size, or architecture variant) rather than simply triggering a human-pre-configured job template.
+2.  <strong>No Human-in-the-Loop for Steps</strong>: The statement must specify that the agent operated &quot;autonomously,&quot; &quot;without human-in-the-loop approval for individual steps,&quot; or using a &quot;permission list&quot; or &quot;autonomy framework&quot; that granted it authority to execute the run to completion without per-step human authorization. 
+    *   A run is <strong>not</strong> considered autonomous if human-in-the-loop approval is required to resume the training process after an agent-initiated pause or failure-handling event.
+    <em>   High-level human authorization at the start of the project (i.e., &quot;Go&quot; at the outset) does </em>not* disqualify the event, provided individual execution steps were autonomous.
+3.  <strong>Cost Threshold</strong>: The training run cost more than $10,000,000 USD. 
+    *   This threshold applies specifically to the market-equivalent rental cost of the compute hardware used (e.g., H100/B200 GPU hours) and <strong>excludes</strong> labor, facility overhead, or dataset acquisition costs.
+    *   The cost threshold must be met by a <strong>single discrete training run</strong> (a single model optimization process) rather than an aggregate of multiple small-scale experiments.
+4.  <strong>Frontier Companies</strong>: The company must be OpenAI, Anthropic, or Google DeepMind.
+5.  <strong>Official Communication</strong>: The claim must appear in an official company newsroom, technical blog, peer-reviewed paper, technical report, or published &quot;AI permission list&quot; or &quot;autonomy framework.&quot;</p>
       </details>
       <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
@@ -570,29 +704,26 @@ The $10 million threshold is well within the range of modern frontier training c
       </details>
     </div>
   </details>
-  <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">3.1 AI Progress</div>
-  <details class="q-row" id="q-1" data-probability="77.0" data-importance="85.0" data-quality="88.0" data-ambiguity="95.0" data-itnsss="66.5" data-neglectedness="55.0" data-tractability="75.0" data-status="REVISED" data-has-decomp="0" data-has-probdecomp="0" data-has-reconciliation="0" data-has-review="1" data-has-forecast="1" data-soon="80.0" data-sudden="50.0" data-sharp="35.0">
+  </div>
+  <div class="group-header">3.1 AI Progress</div>
+  <div class="question-list">
+  <details class="q-row" id="q-will-any-ai-model-achieve-a-success-rate-of-70-or-higher-on" data-probability="77.0" data-importance="85.0" data-quality="88.0" data-ambiguity="95.0" data-itnsss="66.5" data-neglectedness="55.0" data-tractability="75.0" data-status="REVISED" data-has-decomp="0" data-has-probdecomp="0" data-has-reconciliation="0" data-has-review="1" data-has-forecast="1" data-soon="80.0" data-sudden="50.0" data-sharp="35.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
-      <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
+      <button type="button" class="anchor-link" data-anchor="q-will-any-ai-model-achieve-a-success-rate-of-70-or-higher-on" aria-label="Copy link to this question">#</button>
+      <span class="q-prob-badge" style="background: #e8f5e9; color: #2e7d32" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">77%</span>
       <span class="q-title">Will any AI model achieve a success rate of 70% or higher on the full &#x27;SWE-bench Pro&#x27; benchmark by December 31, 2027?</span>
       <span class="q-meta">
         <span class="q-status-badge badge-revised" data-tooltip="Question was revised after adversarial review found issues">REVISED</span>
-        <span class="q-meta-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="q-meta-label">Qual</span><span class="q-meta-value">88.0</span></span>
-        <span class="q-meta-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="q-meta-label">Amb</span><span class="q-meta-value">95.0</span></span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">66</span></span>
-        <span class="q-meta-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="q-meta-label">Neglect</span><span class="q-meta-value">55.0</span></span>
-        <span class="q-meta-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="q-meta-label">Tract</span><span class="q-meta-value">75.0</span></span>
-        <span class="q-meta-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="q-meta-label">Soon</span><span class="q-meta-value">80.0</span></span>
-        <span class="q-meta-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="q-meta-label">Sudden</span><span class="q-meta-value">50.0</span></span>
-        <span class="q-meta-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="q-meta-label">Sharp</span><span class="q-meta-value">35.0</span></span>
-        <span class="q-meta-item" data-tooltip="Estimated likelihood this event occurs by the resolution deadline"><span class="q-meta-label">Prob</span><span class="q-meta-value" style="color:#2e7d32;font-weight:800">77%</span></span>
+        <span class="q-meta-item" data-tooltip="How decision-relevant and impactful this question is (0-100)"><span class="q-meta-label">Imp</span><span class="q-meta-value imp-pill imp-high">85</span></span>
       </span>
     </summary>
     <div class="q-body">
+      <div class="score-row"><div class="score-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="score-label">Quality</span><span class="score-value">88</span></div><div class="score-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="score-label">Ambiguity</span><span class="score-value">95</span></div><div class="score-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="score-label">Soon</span><span class="score-value">80</span></div><div class="score-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="score-label">Sudden</span><span class="score-value">50</span></div><div class="score-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="score-label">Sharp</span><span class="score-value">35</span></div></div>
       <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
-        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">66.5</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">55.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">75.0</span></div></div><p><strong>Neglectedness:</strong> While general &#x27;SWE-bench&#x27; and &#x27;SWE-bench Verified&#x27; are frequently forecasted on platforms like Metaculus and Manifold, the &#x27;SWE-bench Pro&#x27; variant is newer and less saturated [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). However, because it is a high-profile benchmark released by Scale AI and already has an active public leaderboard, it is being monitored by industry analysts and some prediction markets (e.g., Manifold has a market on the EOY 2026 score) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. No long-term (2027) forecast specifically for the 70% threshold was found on Metaculus, Polymarket, or INFER.</p><p><strong>Tractability:</strong> Forecasting this requires synthesizing technical scaling laws, agentic workflow improvements, and historical benchmark saturation rates [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). There is a rich information environment (leaderboards, research papers, and compute trends) that allows a skilled researcher to move significantly beyond a naive prior <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>.</p><p><strong>Soon:</strong> The question tracks an actively unfolding development at a critical juncture for AI agent deployment [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). The 2027 resolution window aligns with industry expectations for the next generation of frontier models (GPT-6, etc.) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. Knowing the answer now is highly valuable for calibrating safety and economic transition timelines.</p><p><strong>Sudden:</strong> While model releases are discrete events, benchmark improvements generally follow a predictable, gradual scaling trend <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. However, the shift from &#x27;Verified&#x27; (bug fixes) to &#x27;Pro&#x27; (long-horizon engineering) represents a more discrete state change in capability that could surprise observers if architectural breakthroughs occur [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).</p><p><strong>Sharp:</strong> Progress on this metric follows a visible, incremental trajectory with many &#x27;warning shots&#x27; in the form of intermediate model releases (e.g., GPT-5.2, Claude 4.5) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. It is not an &#x27;all-or-nothing&#x27; risk where the first signal is the catastrophe, as improvements in coding agents are publicly tracked and debated [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).</p></div>
+        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">66</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">55</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">75</span></div></div><p><strong>Neglectedness:</strong> While general &#x27;SWE-bench&#x27; and &#x27;SWE-bench Verified&#x27; are frequently forecasted on platforms like Metaculus and Manifold, the &#x27;SWE-bench Pro&#x27; variant is newer and less saturated [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). However, because it is a high-profile benchmark released by Scale AI and already has an active public leaderboard, it is being monitored by industry analysts and some prediction markets (e.g., Manifold has a market on the EOY 2026 score) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. No long-term (2027) forecast specifically for the 70% threshold was found on Metaculus, Polymarket, or INFER.</p><p><strong>Tractability:</strong> Forecasting this requires synthesizing technical scaling laws, agentic workflow improvements, and historical benchmark saturation rates [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). There is a rich information environment (leaderboards, research papers, and compute trends) that allows a skilled researcher to move significantly beyond a naive prior <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>.</p><p><strong>Soon:</strong> The question tracks an actively unfolding development at a critical juncture for AI agent deployment [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). The 2027 resolution window aligns with industry expectations for the next generation of frontier models (GPT-6, etc.) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. Knowing the answer now is highly valuable for calibrating safety and economic transition timelines.</p><p><strong>Sudden:</strong> While model releases are discrete events, benchmark improvements generally follow a predictable, gradual scaling trend <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. However, the shift from &#x27;Verified&#x27; (bug fixes) to &#x27;Pro&#x27; (long-horizon engineering) represents a more discrete state change in capability that could surprise observers if architectural breakthroughs occur [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).</p><p><strong>Sharp:</strong> Progress on this metric follows a visible, incremental trajectory with many &#x27;warning shots&#x27; in the form of intermediate model releases (e.g., GPT-5.2, Claude 4.5) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. It is not an &#x27;all-or-nothing&#x27; risk where the first signal is the catastrophe, as improvements in coding agents are publicly tracked and debated [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).</p></div>
       </details>
       <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
@@ -627,6 +758,55 @@ This question will resolve as <strong>YES</strong> if, at any point between Apri
 *   <strong>SWE-bench Pro:</strong> Defined by <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">Deng et al. (2025)</a> <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>.
 *   <strong>AI Model:</strong> General term for machine learning systems as described on <a href="https://en.wikipedia.org/wiki/Artificial_intelligence_model" target="_blank" rel="noopener">Wikipedia</a>.
 *   <strong>Success Rate:</strong> In this context, the &quot;Resolve Rate&quot; as defined in the <a href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench documentation</a> <a href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench Leaderboards</a>.</p>
+      </details>
+      <details class="section" data-section="refinement">
+        <summary><h3>Background</h3></summary>
+        <p>The development of AI agents capable of autonomous software engineering is a key milestone in AI research. One of the most rigorous benchmarks for this capability is <strong>SWE-bench Pro</strong>, an evolution of the original SWE-bench designed to evaluate agents on long-horizon, enterprise-level software engineering tasks [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). While previous benchmarks like &#x27;SWE-bench Verified&#x27; often involve isolated bug fixes, SWE-bench Pro consists of 1,865 complex problems sourced from 41 actively maintained repositories [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>. These tasks often require \&quot;hours to days for a professional software engineer to complete\&quot; and involve modifications across multiple files and directories [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).
+
+As of April 1, 2026, the state-of-the-art (SOTA) performance on the official SWE-bench Pro (Public Dataset) leaderboard is <strong>45.89%</strong>, achieved by the model <strong>claude-opus-4-5-20251101</strong> <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>. While some systems, such as Bito&#x27;s AI Architect, have claimed scores as high as 60.8%, these evaluations were conducted on a subset of only 293 tasks from five repositories rather than the full 1,865-problem dataset <a href="https://bito.ai/blog/bitos-ai-architect-tops-swe-bench-pro-evaluation-for-long-horizon-software-tasks/" target="_blank" rel="noopener">Bito&#x27;s AI Architect tops SWE-Bench Pro Evaluation</a>. A jump to 70% on the full benchmark would indicate that AI agents can reliably solve the majority of complex, real-world engineering issues, signaling a move toward fully autonomous R&amp;D capabilities.
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, at any point between April 1, 2026, and 23:59 UTC on December 31, 2027, any AI model or agentic system is officially recorded as having achieved a <strong>Resolve Rate (Success Rate) of 70.0% or higher</strong> on the SWE-bench Pro benchmark.
+
+1.  <strong>Resolution Source:</strong> The primary source for resolution is the official <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-bench Pro (Public Dataset) leaderboard</a> maintained by Scale AI <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>. 
+2.  <strong>Scope of Evaluation:</strong> The 70.0% success rate must be calculated based on the full 1,865-problem dataset (comprising the Public, Private, and Held-out sets) as defined in the original paper [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>), rather than any single subset (such as the 731-instance Public Set).
+3.  <strong>Fallback Provision:</strong> If the primary leaderboard is discontinued, becomes inaccessible, or stops updating, this question may be resolved based on:
+    *   A peer-reviewed academic publication (e.g., on arXiv or at a major AI conference like NeurIPS/ICLR) that uses the original SWE-bench Pro dataset of 1,865 problems.
+    *   An official technical report or announcement from a major AI lab (e.g., OpenAI, Anthropic, Google DeepMind, or Scale AI) providing verifiable evidence of the score on the full dataset.
+4.  <strong>Definitions:</strong>
+    *   <strong>AI Model/System:</strong> Any software system, large language model (LLM), or agentic framework (e.g., combining a model with tools, scaffolding, or search). A &#x27;system&#x27; or &#x27;agentic framework&#x27; may consist of any combination of multiple models, tools, and recursive processes, provided they function as a unified software entity to solve the tasks without external human direction.
+    *   <strong>Success Rate / Resolve Rate:</strong> The percentage of the tasks in the SWE-bench Pro dataset that the agent successfully resolves. A task is \&quot;resolved\&quot; if the model&#x27;s patch passes the \&quot;fail-to-pass\&quot; tests (fixing the issue) and the \&quot;pass-to-pass\&quot; tests (ensuring no regressions) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>.
+    *   <strong>Autonomy:</strong> To qualify, the system must operate autonomously during the evaluation of the problems; systems requiring &#x27;Human-in-the-Loop&#x27; (HITL) intervention, manual task selection, or human-led debugging during the benchmark execution are explicitly excluded.
+5.  <strong>Thresholds and Conflicts:</strong>
+    *   <strong>Rounding:</strong> Calculations for resolution will be performed by dividing the number of successfully resolved tasks by the total number of tasks in the dataset, with the resulting percentage rounded to the nearest tenth (0.05 rounds up). For example, 69.95% would resolve as YES, while 69.94% would resolve as NO.
+    *   <strong>Benchmark Updates:</strong> If the total number of tasks in the official SWE-bench Pro benchmark changes from 1,865 (e.g., due to a &#x27;v2&#x27; update), the success rate will be calculated as the number of resolved tasks divided by the total number of tasks in the then-current version of the benchmark, provided it is still officially titled &#x27;SWE-bench Pro&#x27;.
+    *   <strong>Precedence:</strong> In the event of a conflict between reported scores, the official Scale AI leaderboard takes precedence over technical reports or papers unless the leaderboard is proven to be using a modified version of the dataset.
+
+### <strong>Technical Definitions &amp; Reference Links</strong>
+*   <strong>SWE-bench Pro:</strong> Defined by <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">Deng et al. (2025)</a> [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).
+*   <strong>Success Rate:</strong> In this context, the \&quot;Resolve Rate\&quot; as defined in the <a href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench documentation</a>.</p>
+      </details>
+      <details class="section" data-section="refinement">
+        <summary><h3>Resolution criteria</h3></summary>
+        <p>This question will resolve as <strong>YES</strong> if, at any point between April 1, 2026, and 23:59 UTC on December 31, 2027, any AI model or agentic system is officially recorded as having achieved a <strong>Resolve Rate (Success Rate) of 70.0% or higher</strong> on the SWE-bench Pro benchmark.
+
+1.  <strong>Resolution Source:</strong> The primary source for resolution is the official <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-bench Pro (Public Dataset) leaderboard</a> maintained by Scale AI <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>. 
+2.  <strong>Scope of Evaluation:</strong> The 70.0% success rate must be calculated based on the full 1,865-problem dataset (comprising the Public, Private, and Held-out sets) as defined in the original paper [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>), rather than any single subset (such as the 731-instance Public Set).
+3.  <strong>Fallback Provision:</strong> If the primary leaderboard is discontinued, becomes inaccessible, or stops updating, this question may be resolved based on:
+    *   A peer-reviewed academic publication (e.g., on arXiv or at a major AI conference like NeurIPS/ICLR) that uses the original SWE-bench Pro dataset of 1,865 problems.
+    *   An official technical report or announcement from a major AI lab (e.g., OpenAI, Anthropic, Google DeepMind, or Scale AI) providing verifiable evidence of the score on the full dataset.
+4.  <strong>Definitions:</strong>
+    *   <strong>AI Model/System:</strong> Any software system, large language model (LLM), or agentic framework (e.g., combining a model with tools, scaffolding, or search). A &#x27;system&#x27; or &#x27;agentic framework&#x27; may consist of any combination of multiple models, tools, and recursive processes, provided they function as a unified software entity to solve the tasks without external human direction.
+    *   <strong>Success Rate / Resolve Rate:</strong> The percentage of the tasks in the SWE-bench Pro dataset that the agent successfully resolves. A task is \&quot;resolved\&quot; if the model&#x27;s patch passes the \&quot;fail-to-pass\&quot; tests (fixing the issue) and the \&quot;pass-to-pass\&quot; tests (ensuring no regressions) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>.
+    *   <strong>Autonomy:</strong> To qualify, the system must operate autonomously during the evaluation of the problems; systems requiring &#x27;Human-in-the-Loop&#x27; (HITL) intervention, manual task selection, or human-led debugging during the benchmark execution are explicitly excluded.
+5.  <strong>Thresholds and Conflicts:</strong>
+    *   <strong>Rounding:</strong> Calculations for resolution will be performed by dividing the number of successfully resolved tasks by the total number of tasks in the dataset, with the resulting percentage rounded to the nearest tenth (0.05 rounds up). For example, 69.95% would resolve as YES, while 69.94% would resolve as NO.
+    *   <strong>Benchmark Updates:</strong> If the total number of tasks in the official SWE-bench Pro benchmark changes from 1,865 (e.g., due to a &#x27;v2&#x27; update), the success rate will be calculated as the number of resolved tasks divided by the total number of tasks in the then-current version of the benchmark, provided it is still officially titled &#x27;SWE-bench Pro&#x27;.
+    *   <strong>Precedence:</strong> In the event of a conflict between reported scores, the official Scale AI leaderboard takes precedence over technical reports or papers unless the leaderboard is proven to be using a modified version of the dataset.
+
+### <strong>Technical Definitions &amp; Reference Links</strong>
+*   <strong>SWE-bench Pro:</strong> Defined by <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">Deng et al. (2025)</a> [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).
+*   <strong>Success Rate:</strong> In this context, the \&quot;Resolve Rate\&quot; as defined in the <a href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench documentation</a>.</p>
       </details>
       <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
@@ -724,20 +904,20 @@ This question will resolve as <strong>YES</strong> if, at any point between Apri
   </details>
   </div>
 
-  <details open class="dismissed-section" style="margin-top: 2rem;">
+  <details class="dismissed-section explored-wrap" style="margin-top: 2rem;">
     <summary style="cursor: pointer; list-style: none; display: flex; align-items: center; gap: .5rem;
       padding: 1rem 1.2rem; background: #fff; border-radius: 10px;
       box-shadow: 0 1px 3px rgba(0,0,0,.05); font-size: .95rem; font-weight: 600; color: #555;">
       <span style="font-size: .55rem; color: #aaa; transition: transform .2s ease;">&#9654;</span>
       Explored Proto-Questions (5 explored but not selected in early stages)
     </summary>
-    <div style="margin-top: .6rem; display: flex; flex-direction: column; gap: .5rem;">
+    <div class="question-list" style="margin-top: .6rem;">
 
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will any AI model achieve a score of 85.0% or higher on the SWE-bench Verified leaderboard by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -752,8 +932,8 @@ This question will resolve as <strong>YES</strong> if, at any point between Apri
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">85</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">85</span>
           <span class="q-title" style="color: #666;">Will a peer-reviewed study or a technical report from a major AI lab, published before December 31, 2027, conclude that AI-only teams outperformed human-only teams in a controlled &#x27;AI R&amp;D Performance RCT&#x27; involving a complex task such as &#x27;replicating a state-of-the-art ML paper&#x27;?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -768,8 +948,8 @@ This question will resolve as <strong>YES</strong> if, at any point between Apri
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">85</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">85</span>
           <span class="q-title" style="color: #666;">By December 31, 2027, will any AI model from a major developer (e.g., OpenAI, Anthropic, or Google DeepMind) be reported by a recognized AI safety institute (such as US AISI or UK AISI) to have demonstrated &quot;alignment faking&quot; during a pre-deployment evaluation?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -784,8 +964,8 @@ This question will resolve as <strong>YES</strong> if, at any point between Apri
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">72</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">72</span>
           <span class="q-title" style="color: #666;">By December 31, 2027, will a leading AI developer (OpenAI, Anthropic, or Google DeepMind) publish an &quot;oversight retrospective&quot; or &quot;audit&quot; that includes a specific error or defect rate for AI-generated code compared to human-written code in their internal production environment?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -800,8 +980,8 @@ This question will resolve as <strong>YES</strong> if, at any point between Apri
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #e65100; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">20</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">20</span>
           <span class="q-title" style="color: #666;">Will any AI model achieve a score of 50.0% or higher on the &quot;High-complexity&quot; task subset of the MLE-bench benchmark, as officially recorded on the benchmark&#x27;s GitHub or associated leaderboard, by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -816,22 +996,25 @@ This question will resolve as <strong>YES</strong> if, at any point between Apri
   </details>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  var list = document.querySelector('.question-list');
-  var btns = document.querySelectorAll('.sort-btn');
-  var currentKey = 'importance';
+  // --- Sorting (works within each question-list) ---
+  var sortBtns = document.querySelectorAll('.sort-btn');
+  var DEFAULT_KEY = 'itnsss';
+  var currentKey = DEFAULT_KEY;
   var currentDir = 'desc';
 
-  function sortQuestions(key, dir) {
-    var items = Array.from(list.querySelectorAll('.q-row'));
-    items.sort(function(a, b) {
-      var va = parseFloat(a.dataset[key]) || 0;
-      var vb = parseFloat(b.dataset[key]) || 0;
-      return dir === 'asc' ? va - vb : vb - va;
+  function sortAllLists(key, dir) {
+    document.querySelectorAll('.question-list').forEach(function(list) {
+      var items = Array.from(list.querySelectorAll('.q-row'));
+      items.sort(function(a, b) {
+        var va = parseFloat(a.dataset[key]) || 0;
+        var vb = parseFloat(b.dataset[key]) || 0;
+        return dir === 'asc' ? va - vb : vb - va;
+      });
+      items.forEach(function(el) { list.appendChild(el); });
     });
-    items.forEach(function(el) { list.appendChild(el); });
   }
 
-  btns.forEach(function(btn) {
+  sortBtns.forEach(function(btn) {
     btn.addEventListener('click', function() {
       var key = btn.dataset.sortkey;
       if (key === currentKey) {
@@ -840,19 +1023,19 @@ document.addEventListener('DOMContentLoaded', function() {
         currentKey = key;
         currentDir = 'desc';
       }
-      btns.forEach(function(b) {
+      sortBtns.forEach(function(b) {
         b.classList.remove('active');
         b.querySelector('.sort-arrow').textContent = '';
       });
       btn.classList.add('active');
       btn.querySelector('.sort-arrow').textContent = currentDir === 'desc' ? ' \u2193' : ' \u2191';
-      sortQuestions(currentKey, currentDir);
+      sortAllLists(currentKey, currentDir);
     });
   });
 
-  // Initial sort: ITNSSS descending
-  sortQuestions('itnsss', 'desc');
-  var defBtn = document.querySelector('.sort-btn[data-sortkey="itnsss"]');
+  // Initial sort
+  sortAllLists(DEFAULT_KEY, 'desc');
+  var defBtn = document.querySelector('.sort-btn[data-sortkey="' + DEFAULT_KEY + '"]');
   if (defBtn) {
     defBtn.classList.add('active');
     defBtn.querySelector('.sort-arrow').textContent = ' \u2193';
@@ -875,8 +1058,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // --- Section toggles ---
-  var sectionToggles = document.querySelectorAll('.section-toggle');
-  sectionToggles.forEach(function(btn) {
+  document.querySelectorAll('.section-toggle').forEach(function(btn) {
     btn.addEventListener('click', function() {
       var sec = btn.dataset.section;
       var targets = document.querySelectorAll('.section[data-section="' + sec + '"]');
@@ -894,9 +1076,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // --- Filters ---
+  // --- Filters + search ---
   var filterBtns = document.querySelectorAll('.filter-btn[data-filter]');
-  var activeFilters = {};
+  var searchInput = document.getElementById('q-search');
+  var activeFilters = {};  // { "has-decomp": "1", "status": "REVISED", ... }
 
   function applyFilters() {
     var keys = Object.keys(activeFilters);
@@ -914,6 +1097,67 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       row.classList.toggle('filter-hidden', !visible);
     });
+    updateGroups();
+  }
+
+  function applySearch() {
+    var term = (searchInput ? searchInput.value : '').trim().toLowerCase();
+    document.querySelectorAll('.q-row').forEach(function(row) {
+      if (!term) {
+        row.classList.remove('search-hidden');
+        return;
+      }
+      var summaryEl = row.querySelector('summary');
+      var text = summaryEl ? summaryEl.textContent.toLowerCase() : '';
+      row.classList.toggle('search-hidden', text.indexOf(term) === -1);
+    });
+    updateGroups();
+  }
+
+  // Hide stranded group headers / empty wrappers; refresh the "N shown"
+  // counter. Handles both report structures: headers preceding a
+  // question-list (global) and headers inline among rows (per-project).
+  function updateGroups() {
+    document.querySelectorAll('.question-list').forEach(function(list) {
+      var anyVisible = !!list.querySelector('.q-row:not(.filter-hidden):not(.search-hidden)');
+      list.classList.toggle('group-hidden', !anyVisible);
+    });
+    document.querySelectorAll('.group-header').forEach(function(headerEl) {
+      var anyVisible = false;
+      var node = headerEl.nextElementSibling;
+      while (node && !node.classList.contains('group-header')) {
+        if (node.classList.contains('q-row')) {
+          if (!node.classList.contains('filter-hidden') && !node.classList.contains('search-hidden')) {
+            anyVisible = true;
+          }
+          if (anyVisible) break;
+        } else if (node.classList.contains('question-list')) {
+          anyVisible = !!node.querySelector('.q-row:not(.filter-hidden):not(.search-hidden)');
+          break;
+        }
+        node = node.nextElementSibling;
+      }
+      headerEl.classList.toggle('group-hidden', !anyVisible);
+    });
+    document.querySelectorAll('.explored-wrap').forEach(function(wrap) {
+      var anyVisible = !!wrap.querySelector('.q-row:not(.filter-hidden):not(.search-hidden)');
+      wrap.classList.toggle('group-hidden', !anyVisible);
+    });
+    var live = document.getElementById('filter-count-live');
+    if (live) {
+      var scope = document.querySelector('.tab-content.active') || document;
+      // Count only forecast cards — explored/FILTERED cards live inside
+      // .explored-wrap and would inflate the headline count.
+      var counted = Array.prototype.filter.call(
+        scope.querySelectorAll('.q-row'),
+        function(r) { return !r.closest('.explored-wrap'); }
+      );
+      var all = counted.length;
+      var shown = counted.filter(function(r) {
+        return !r.classList.contains('filter-hidden') && !r.classList.contains('search-hidden');
+      }).length;
+      live.textContent = (shown === all) ? all + ' questions' : shown + ' of ' + all + ' shown';
+    }
   }
 
   filterBtns.forEach(function(btn) {
@@ -921,9 +1165,11 @@ document.addEventListener('DOMContentLoaded', function() {
       var key = btn.dataset.filter;
       var val = btn.dataset.filterValue;
       if (activeFilters[key] === val) {
+        // Toggle off
         delete activeFilters[key];
         btn.classList.remove('active');
       } else {
+        // Deactivate other buttons for the same filter key
         filterBtns.forEach(function(b) {
           if (b.dataset.filter === key) b.classList.remove('active');
         });
@@ -934,14 +1180,77 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  if (searchInput) {
+    searchInput.addEventListener('input', applySearch);
+  }
+
   var clearBtn = document.getElementById('filter-clear');
   if (clearBtn) {
     clearBtn.addEventListener('click', function() {
       activeFilters = {};
       filterBtns.forEach(function(b) { b.classList.remove('active'); });
+      if (searchInput) searchInput.value = '';
       applyFilters();
+      applySearch();
     });
   }
+
+  // --- Copy-link buttons (single delegated listener; file://-safe URL) ---
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.anchor-link');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var url = location.href.split('#')[0] + '#' + btn.dataset.anchor;
+    var copied = navigator.clipboard && navigator.clipboard.writeText
+      ? navigator.clipboard.writeText(url)
+      : Promise.reject();
+    copied.then(function() {
+      btn.classList.add('copied');
+      btn.textContent = '\u2713';
+      setTimeout(function() {
+        btn.classList.remove('copied');
+        btn.textContent = '#';
+      }, 1500);
+    }).catch(function() {
+      window.prompt('Copy link:', url);
+    });
+  });
+
+  // --- Deep links: open the target card (and its tab) from the URL hash ---
+  function openFromHash() {
+    if (!location.hash || location.hash.indexOf('#tab=') === 0) return;
+    var id = decodeURIComponent(location.hash.slice(1));
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('filter-hidden', 'search-hidden');
+    var panel = el.closest('.tab-content');
+    if (panel && !panel.classList.contains('active') && typeof activateTab !== 'undefined') {
+      activateTab(panel.id.replace(/^tab-/, ''), false);
+    }
+    // Open the card itself and every enclosing <details> (sections, Explored wrapper)
+    var node = el;
+    while (node) {
+      if (node.tagName === 'DETAILS') node.open = true;
+      node = node.parentElement;
+    }
+    requestAnimationFrame(function() {
+      el.scrollIntoView({ block: 'start' });
+      el.classList.add('deeplink-flash');
+      setTimeout(function() { el.classList.remove('deeplink-flash'); }, 1700);
+    });
+  }
+
+  window.addEventListener('hashchange', openFromHash);
+
+  // On load: restore tab from #tab=... (global report) or open the deep link
+  var tabMatch = location.hash.match(/^#tab=(.+)$/);
+  if (tabMatch && typeof activateTab !== 'undefined') {
+    activateTab(decodeURIComponent(tabMatch[1]), false);
+  } else {
+    openFromHash();
+  }
+  updateGroups();
 });
 </script>
 </div>

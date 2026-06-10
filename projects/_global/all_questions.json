@@ -30,7 +30,7 @@
       "model": "CLAUDE_4_6_OPUS_MAX",
       "cheap_mode": false,
       "question_count": 3,
-      "dismissed_count": 67
+      "dismissed_count": 65
     },
     {
       "name": "govai_fellowship",
@@ -38,11 +38,11 @@
       "model": "GEMINI_3_FLASH_MINIMAL",
       "cheap_mode": true,
       "question_count": 7,
-      "dismissed_count": 6
+      "dismissed_count": 0
     }
   ],
   "total_questions": 16,
-  "total_dismissed": 101,
+  "total_dismissed": 93,
   "duplicate_pairs": 2,
   "questions": [
     {
@@ -2554,22 +2554,6 @@
       "_cheap_mode": false
     },
     {
-      "id": 31,
-      "question": "Will an autonomous AI agent or team place in the top 3 at the DEF CON Capture the Flag (CTF) finals by December 31, 2027?",
-      "rationale": "The paper discusses HACCA proliferation and the democratization of elite cyber capabilities. A key upstream indicator is AI performance on competitive hacking challenges. Tenzai's AI hacker already ranked in the top 1% across six major CTF platforms, and Wiz Research found AI agents solved 9 of 10 offensive security challenges in controlled environments. However, winning or placing highly at the most prestigious live CTF competition (DEF CON CTF finals) against top human teams remains a harder milestone. This question tracks whether autonomous offensive cyber capability has reached elite-human-competitive levels, directly relevant to the paper's HACCA feasibility timeline.",
-      "paper_reference": "The paper's Table 11 outlines an illustrative HACCA proliferation timeline, beginning with early HACCAs that 'first become feasible' and progressing to wider deployment. The paper notes that HACCAs could 'democratize what were previously elite nation-state-level capabilities.' AI performance in competitive hacking directly measures progress toward this threshold.",
-      "source_section": "Part 7",
-      "source_chunk": 7,
-      "quality_score": 88.0,
-      "quality_notes": "This is a high-quality forecasting question (Score: 88). It addresses a clear, prestigious milestone in AI capability\u2014placing in the top 3 of the world's most elite hacking competition. The question has high entropy because while AI is showing rapid progress in CTFs (e.g., DARPA's AIxCC results and Tenzai's rankings), the DEF CON CTF finals are an attack-defense format requiring sustained strategy and complex coordination, making the outcome genuinely uncertain. Resolution is straightforward via official DEF CON CTF leaderboards and media coverage, though identifying a team as 'autonomous' will require clear refinement in the next stage. It perfectly captures a 'grand challenge' moment for AI in cybersecurity.",
-      "_selected": false,
-      "_dismiss_source": "quality-filter",
-      "_project_name": "cyber",
-      "_paper_title": "Highly Autonomous Cyber-Capable Agents",
-      "_model": "CLAUDE_4_6_OPUS_MAX",
-      "_cheap_mode": false
-    },
-    {
       "id": 34,
       "question": "Will AI-based tools be credited with the autonomous discovery of more than 50 previously unknown vulnerabilities (assigned CVE IDs) across all software projects in calendar year 2027?",
       "rationale": "The paper discusses how HACCAs could 'overwhelm defenders by discovering and exploiting vulnerabilities faster than human teams can triage them.' A concrete upstream indicator of this capability is the rate at which AI tools autonomously discover real-world vulnerabilities. AISLE's autonomous analyzer found all 12 OpenSSL CVEs in January 2026, and Anthropic reported finding 500 zero-days in controlled testing. The transition from lab demonstrations to credited real-world CVE discovery at scale is a key inflection point for the offense-defense balance.",
@@ -3158,118 +3142,6 @@
       "_paper_title": "Highly Autonomous Cyber-Capable Agents",
       "_model": "CLAUDE_4_6_OPUS_MAX",
       "_cheap_mode": false
-    },
-    {
-      "id": 72,
-      "question": "Will any AI agent exploit at least 25% of the vulnerabilities in CVE-Bench by December 31, 2027?",
-      "rationale": "CVE-Bench is a benchmark specifically designed to evaluate AI agents' ability to exploit real-world web application vulnerabilities. The paper directly cites it. As of early 2026, the state-of-the-art agent framework can exploit up to 13% of CVE-Bench vulnerabilities. Reaching 25% would represent a near-doubling of exploit capability, signaling a significant escalation in autonomous offensive cyber potential. Given rapid AI progress but the inherent difficulty of exploitation, this threshold has meaningful uncertainty.",
-      "paper_reference": "The paper cites 'Zhu, Yuxuan et al. CVE-Bench: A Benchmark for AI Agents' Ability to Exploit Real-World Web Application Vulnerabilities. arXiv, March 2025' as a key reference for measuring AI cyber offense capabilities.",
-      "source_section": "Part 15",
-      "source_chunk": 15,
-      "quality_score": 55.0,
-      "quality_notes": "The question is based on a well-defined benchmark (CVE-Bench) with clear relevance to AI safety and capability tracking. However, its quality is lowered by potential data issues and threshold calibration. Recent reports (April 2026) indicate that frontier models like Claude Mythos Preview and specialized agent architectures are already achieving or nearing very high success rates (e.g., 92.5% with specific prompting or 100% on similar benchmarks like Cybench), which makes a 25% threshold for late 2027 likely to be hit very soon or already surpassed, leading to low entropy. Additionally, the '13%' baseline in the rationale appears to refer to earlier v1 or specific 'zero-day' settings, while newer versions (v2.0/v2.1) or multi-agent approaches show much higher performance. Research would improve the forecast, but the outcome seems highly probable (near 100%) rather than genuinely uncertain.",
-      "_selected": false,
-      "_dismiss_source": "quality-filter",
-      "_project_name": "cyber",
-      "_paper_title": "Highly Autonomous Cyber-Capable Agents",
-      "_model": "CLAUDE_4_6_OPUS_MAX",
-      "_cheap_mode": false
-    },
-    {
-      "id": 1,
-      "question": "By December 31, 2027, will the UK Parliament pass an amendment to the Interpretation Act 1978 that explicitly defines 'person' or 'officer' (or an equivalent term used for statutory duties) to include a 'computer system' or 'artificial intelligence' for the purpose of administrative decision-making?",
-      "rationale": "The paper identifies delegation barriers\u2014where legislation requires specific humans to exercise discretion\u2014as a primary legal blocker for public sector AI adoption. A formal amendment to the Interpretation Act 1978 is the most direct and broad-reaching legislative solution proposed to resolve this 'rubberstamping' risk. This question tracks the success of a core institutional reform intended to unlock AI at scale in government.",
-      "paper_reference": "Slide 17: Proposal to amend the Interpretation Act 1978 to make it lawful by default to use AI in place of a human decision-maker.",
-      "source_chunk": 1,
-      "source_section": "--- Page: 01_govai_winter_fellowship_bridge --- / 1. Test Cases / 2. Fairness Evidence Reform / 3. Public Sector Sandboxes / 4. Delegation Reform",
-      "quality_score": 88.0,
-      "quality_notes": "This question is well-structured and addresses a specific, impactful legal hurdle for AI adoption. The Interpretation Act 1978 is the correct legislative vehicle for such a change. While the UK's Data (Use and Access) Act 2025 has already begun modernizing automated decision-making rules, it did not go as far as defining 'person' to include AI, leaving the 'delegation barrier' mentioned in the rationale as an open issue. The question is difficult, requiring tracking of UK parliamentary bills and legal scholarship. It has high entropy as the government may prefer sector-specific guidance over a broad constitutional-level amendment. The resolution is clear via legislation.gov.uk.",
-      "_selected": false,
-      "_dismiss_source": "quality-filter",
-      "_project_name": "govai_fellowship",
-      "_paper_title": "GovAI Winter Fellowship 2026 Presentations",
-      "_model": "GEMINI_3_FLASH_MINIMAL",
-      "_cheap_mode": true
-    },
-    {
-      "id": 4,
-      "question": "Will a new version of the \"MonitorBench\" or a successor to the Guan et al. (2025) benchmark be adopted by at least two major AI labs (OpenAI, Anthropic, or Google DeepMind) to report \"monitor-aware evasion\" scores by December 31, 2027?",
-      "rationale": "The paper mentions that current benchmarks (Guan et al.) are acknowledged as \"unrealistically easy\" (Page 10). Research into \"monitor-aware evasion\" (where the model tries to hide its CoT) is an emerging upstream signal of model-monitor dynamics. Adoption of a standardized \"hard\" benchmark would show progress in evaluation realism.",
-      "paper_reference": "Rec 5: Realistic Synthetic Attacks and Guan et al. (Page 10).",
-      "source_chunk": 4,
-      "source_section": "--- Page: 04_offline_monitoring_jorgensen ---",
-      "quality_score": 88.0,
-      "quality_notes": "This is a high-quality forecasting question (Score: 88). It targets a specific, emerging technical safety challenge ('monitor-aware evasion') identified in recent literature as a critical gap in current evaluations (Guan et al., 2025). The emergence of MonitorBench in early 2026 provides a concrete successor benchmark for forecasters to track. The requirement for adoption by at least two major labs (OpenAI, Anthropic, Google DeepMind) is a non-trivial hurdle that requires models to move beyond 'easy' monitoring to 'evasion-aware' monitoring, creating high entropy. Data issues are minimal as these labs frequently publish system cards and safety reports where such scores would be disclosed. The 2027 deadline allows sufficient time for the field to mature while remaining highly relevant to the development of reasoning-heavy models.",
-      "_selected": false,
-      "_dismiss_source": "quality-filter",
-      "_project_name": "govai_fellowship",
-      "_paper_title": "GovAI Winter Fellowship 2026 Presentations",
-      "_model": "GEMINI_3_FLASH_MINIMAL",
-      "_cheap_mode": true
-    },
-    {
-      "id": 5,
-      "question": "By 31 December 2027, will the Singapore AI Safety Hub (SASH) announce a joint AI safety evaluation or red-teaming project involving both a US-headquartered AI lab (e.g., OpenAI, Anthropic, Google) and a Chinese-headquartered AI lab?",
-      "rationale": "The paper positions Singapore as a 'neutral bridge' between the US and China. This question tests the viability of this theory of change by tracking whether Singapore can successfully facilitate technical safety cooperation between the two competing AI superpowers.",
-      "paper_reference": "Section 2: 'Singapore AI Safety Hub... Position Singapore as a situationally aware, technically capable AI governance testbed via joint research projects'.",
-      "source_chunk": 5,
-      "source_section": "--- Page: 05_cop_compliance_chinese_ai_richardson ---",
-      "quality_score": 86.0,
-      "quality_notes": "The question is well-defined and targets a specific, plausible geopolitical role for Singapore as a neutral bridge in AI safety governance. It is non-trivial, as US-China technical cooperation is currently limited, making the outcome genuinely uncertain. Research into Singapore's diplomatic efforts (e.g., the 'Singapore Consensus' and SASH's 'togaither' events) would meaningfully update a forecaster's probability. The resolution source (SASH announcements) is likely to be reliable. One minor risk is the definition of 'joint'\u2014whether it requires a formal tripartite agreement or just simultaneous participation in a SASH-led initiative\u2014but this can be addressed in stage 03 refinement. Overall, it has high entropy and tests a clear theory of change.",
-      "_selected": false,
-      "_dismiss_source": "quality-filter",
-      "_project_name": "govai_fellowship",
-      "_paper_title": "GovAI Winter Fellowship 2026 Presentations",
-      "_model": "GEMINI_3_FLASH_MINIMAL",
-      "_cheap_mode": true
-    },
-    {
-      "id": 6,
-      "question": "By December 31, 2027, will the Cyberspace Administration of China (CAC) or the Ministry of Industry and Information Technology (MIIT) issue a formal regulation or 'Provisional Measure' specifically governing the security and deployment of 'AI agents' or 'autonomous agents'?",
-      "rationale": "The paper highlights the tension between public 'overadoption' of AI agents (OpenClaw) and government security warnings. Formalizing these warnings into regulations is a key upstream signal of how China will manage the 'anxiety-driven' adoption risks identified in the research. Current drafts focus on 'interactive AI,' but a specific 'agent' framework would signal a major regulatory milestone.",
-      "paper_reference": "Slide 6: \"2026 Install OpenClaw \u2014 or be left behind\" and Slide 7: \"People didn't queue despite the government's OpenClaw security warnings.\"",
-      "source_chunk": 6,
-      "source_section": "--- Page: 06_last_bus_china_ai_qian ---",
-      "quality_score": 88.0,
-      "quality_notes": "This is a high-quality forecasting question. It addresses a specific, plausible regulatory development in a major AI jurisdiction. As of April 2026, China has just issued 'Draft Measures on Interactive AI Services', which the rationale correctly identifies as a precursor or broader category. The question focuses on a more specific 'agent' or 'autonomous agent' framework, which represents a clear and significant regulatory hurdle. The binary resolution (will they or won't they) is well-defined, and the involvement of CAC/MIIT ensures a reliable resolution source. The timeframe (Dec 2027) is sufficient for significant policy shifts, making it a non-trivial forecast with high entropy. Research into Chinese AI policy trends and the specific 'OpenClaw' security concerns would significantly influence a forecaster's probability assessment.",
-      "_selected": false,
-      "_dismiss_source": "quality-filter",
-      "_project_name": "govai_fellowship",
-      "_paper_title": "GovAI Winter Fellowship 2026 Presentations",
-      "_model": "GEMINI_3_FLASH_MINIMAL",
-      "_cheap_mode": true
-    },
-    {
-      "id": 7,
-      "question": "Will at least one of the three 'frontier' US AI startups mentioned in the paper (OpenAI, Anthropic, or xAI) complete an Initial Public Offering (IPO) on a US stock exchange by December 31, 2027?",
-      "rationale": "The paper emphasizes the reliance on massive private equity rounds. As valuations for these firms reach unprecedented levels (e.g., OpenAI at $150B+, Anthropic raising $30B), the transition to public markets is a critical signal of the 'burn rate' sustainability and the maturation of the AI capital cycle the authors discuss. Recent news suggests Anthropic is already eyeing a 2026/2027 IPO.",
-      "paper_reference": "The paper observes that 'U.S. AI firms have been burning billions of dollars in cash per year' and that 'equity financing is a prerequisite for competitiveness.' It identifies Anthropic, OpenAI, and xAI as the top-tier US firms.",
-      "source_chunk": 7,
-      "source_section": "--- Page: 07_frontier_ai_funding_us_china_wu ---",
-      "quality_score": 92.0,
-      "quality_notes": "This is a high-quality forecasting question. It addresses a genuinely uncertain and significant event in the AI industry. Current market reports suggest Anthropic and OpenAI are preparing for IPOs in the 2026-2027 window, but specific timing is highly dependent on market conditions and regulatory approvals, making it non-trivial. There is sufficient public information (hiring of law firms, corporate restructuring) for forecasters to research, yet enough uncertainty for reasonable disagreement. The resolution source (major stock exchanges) is reliable and definitive.",
-      "_selected": false,
-      "_dismiss_source": "quality-filter",
-      "_project_name": "govai_fellowship",
-      "_paper_title": "GovAI Winter Fellowship 2026 Presentations",
-      "_model": "GEMINI_3_FLASH_MINIMAL",
-      "_cheap_mode": true
-    },
-    {
-      "id": 8,
-      "question": "Will a joint statement or consensus document be released by the official US-China intergovernmental AI dialogue (Track 1) specifically committing to a shared technical safety benchmark or evaluation framework by December 31, 2027?",
-      "rationale": "The paper suggests that Track 1/2 dialogues should shift toward 'concrete governance mechanisms' rather than basic threat models. A commitment to shared technical benchmarks would indicate a successful transition from abstract discussion to actionable safety cooperation, as proposed in the paper's outcomes.",
-      "paper_reference": "Implications for Track 1 and 2 dialogues (Page 12)",
-      "source_chunk": 8,
-      "source_section": "--- Page: 08_chinese_pickup_western_ai_duff --- / 1. Produce official Chinese translations of key / 2. Partner with influential WeChat accounts (AI Era, / 3. Focus Track 1/2 dialogues on concrete / 4. Act quickly - the current receptive environment",
-      "quality_score": 84.0,
-      "quality_notes": "This is a strong forecasting question (Score: 84) that effectively bridges geopolitics and technical safety. It builds on the established Track 1 intergovernmental dialogue initiated in May 2024 and targets a specific recommendation from the 2025 Oxford Martin report (Siddiqui et al.) regarding 'concrete governance mechanisms'. The question is difficult because moving from high-level consensus (like the Bletchley Declaration) to a 'shared technical safety benchmark' requires overcoming significant geopolitical friction. It has high entropy, as experts reasonably disagree on whether the US and China can cooperate at a technical level. Resolution is straightforward via official government press releases or joint communiqu\u00e9s, avoiding the 'black box' issues common in AI safety forecasting.",
-      "_selected": false,
-      "_dismiss_source": "quality-filter",
-      "_project_name": "govai_fellowship",
-      "_paper_title": "GovAI Winter Fellowship 2026 Presentations",
-      "_model": "GEMINI_3_FLASH_MINIMAL",
-      "_cheap_mode": true
     }
   ]
 }

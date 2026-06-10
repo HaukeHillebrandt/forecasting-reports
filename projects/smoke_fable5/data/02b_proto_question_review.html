@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proto-Question Quality Filter &mdash; Diversifying AI Ownership (prompt v2 smoke test)</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f7f8fa; color: #2c2c2c; line-height: 1.65; padding: 2.5rem 1.5rem;
+  }
+  .container { max-width: 54rem; margin: 0 auto; }
+
+  /* --- Header --- */
+  .page-header {
+    background: #1a1a2e; color: #eee; border-radius: 12px;
+    padding: 2rem 2.5rem; margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(26,26,46,.18);
+  }
+  .page-header h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: .4rem; letter-spacing: -.01em; }
+  .page-header .subtitle { font-size: .88rem; color: #a0a0b8; margin-bottom: .75rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #8888a0;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .25rem .7rem; border-radius: 6px;
+  }
+
+  /* --- Sort controls --- */
+  .sort-bar {
+    display: flex; align-items: center; gap: .75rem;
+    margin-bottom: 1.5rem; font-size: .82rem; color: #888;
+  }
+  .sort-bar span { font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+  .sort-btn {
+    appearance: none; border: none; cursor: pointer;
+    background: #fff; color: #555; font-size: .8rem; font-weight: 500;
+    padding: .4rem .9rem; border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    transition: box-shadow .15s, color .15s, background .15s;
+  }
+  .sort-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); color: #1a1a2e; }
+  .sort-btn.active { background: #1a1a2e; color: #fff; box-shadow: 0 2px 8px rgba(26,26,46,.2); }
+
+  /* --- Question list (expandable details) --- */
+  .question-list { display: flex; flex-direction: column; gap: .75rem; }
+
+  .q-item {
+    background: #fff; border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.05);
+    transition: box-shadow .2s ease, transform .2s ease;
+    overflow: hidden;
+  }
+  .q-item:hover { box-shadow: 0 3px 14px rgba(0,0,0,.08); }
+  .q-item[open] { box-shadow: 0 4px 20px rgba(0,0,0,.09); }
+
+  .q-item summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: 1rem 1.5rem;
+    transition: background .15s;
+  }
+  .q-item summary::-webkit-details-marker { display: none; }
+  .q-item summary:hover { background: #fafbfd; }
+
+  .q-item summary .chevron {
+    flex-shrink: 0; width: 1rem; text-align: center;
+    font-size: .6rem; color: #b0b0b0;
+    transition: transform .2s ease;
+  }
+  .q-item[open] summary .chevron { transform: rotate(90deg); }
+
+  .q-score-badge {
+    flex-shrink: 0; font-size: .82rem; font-weight: 700;
+    min-width: 2.6rem; text-align: center;
+    padding: .2rem .5rem; border-radius: 6px;
+  }
+  .q-summary-text {
+    flex: 1; font-size: .92rem; font-weight: 500; color: #2c2c2c;
+    line-height: 1.45;
+  }
+  .badge {
+    flex-shrink: 0; font-size: .68rem; font-weight: 600;
+    padding: .2rem .55rem; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
+  .badge-selected { background: #e8f5e9; color: #2e7d32; }
+  .badge-filtered { background: #f0f0f0; color: #999; }
+
+  /* --- Expanded content --- */
+  .q-body { padding: .25rem 1.5rem 1.5rem 3.85rem; }
+
+  .score-row {
+    display: flex; gap: 1.5rem; margin: .5rem 0 1rem 0;
+    padding: .65rem 1rem; background: #f8f9fc; border-radius: 8px;
+    font-size: .84rem;
+  }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 4.5rem; }
+  .score-label {
+    position: relative;
+    font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; color: #999;
+    cursor: default;
+  }
+  .score-value { font-weight: 700; font-size: .95rem; margin-top: .1rem; }
+
+  .q-body p {
+    font-size: .9rem; line-height: 1.65; color: #444;
+    white-space: pre-wrap; word-wrap: break-word;
+    margin-bottom: .6rem;
+  }
+  .q-body p strong { color: #333; }
+
+  /* Collapsible sub-section inside expanded body */
+  .sub-section { margin-top: .5rem; }
+  .sub-section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .35rem;
+    padding: .25rem 0; font-size: .8rem; text-transform: uppercase;
+    letter-spacing: .04em; color: #999; font-weight: 500;
+  }
+  .sub-section summary::-webkit-details-marker { display: none; }
+  .sub-section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb;
+    transition: transform .15s ease;
+  }
+  .sub-section[open] summary::before { transform: rotate(90deg); }
+  .sub-section > p { margin-top: .25rem; padding-left: .8rem; }
+
+  /* --- Tooltips --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+    background: #1a1a2e; color: #e8e8f0; font-size: .7rem; font-weight: 400;
+    text-transform: none; letter-spacing: normal;
+    padding: .35rem .65rem; border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity .15s ease;
+    z-index: 10;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+
+  a { color: #1565c0; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02b: Proto-Question Quality Filter</h1>
+    <div class="subtitle">Diversifying AI Ownership (prompt v2 smoke test)</div>
+    <div class="page-stats">
+      <span>16 total</span>
+      <span>2 selected (top 2)</span>
+      <span>Cutoff score: 88</span>
+      <span>Project: smoke_fable5</span>
+    </div>
+  </div>
+
+  <div class="sort-bar">
+    <span>Sort by</span>
+    <button class="sort-btn active" data-sort="quality" onclick="sortBy('quality')">Quality Score</button>
+    <button class="sort-btn" data-sort="status" onclick="sortBy('status')">Status (selected first)</button>
+  </div>
+
+  <div class="question-list" id="question-list">
+    <details class="q-item" id="q-0" data-quality="88.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will any AI model or agent be publicly credited by a major cybersecurity firm with autonomously discovering and reporting 3 or more previously unknown Zero-Day vulnerabilities (CVEs) in production software by December 31, 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Section 3.7 discusses AGI runway and productive application of funds. In 2024, Google&#x27;s &#x27;Big Sleep&#x27; found a zero-day in SQLite [036b92]. &#x27;Autonomous discovery&#x27; of 3+ net-new CVEs provides a clear threshold for agentic capability. Fallback: MITRE CVE database or CISA Known Exploited Vulnerabilities catalog.</p>
+        <p><strong>Paper reference:</strong> Section 3.7: Non-GDP Takeoff Metrics</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world question focusing on a key agentic capability. Threshold (3+ CVEs) is clear and atomic. Current SOTA is the discovery of 1 zero-day (SQLite) by Google&#x27;s Big Sleep in 2024 <a href="https://projectzero.google/2024/10/from-naptime-to-big-sleep.html" target="_blank" rel="noopener">From Naptime to Big Sleep: Using Large Language Models To ...</a> and subsequent discoveries in 2025 <a href="https://www.mindstudio.ai/blog/ai-cybersecurity-zero-day-exploits-2025/" target="_blank" rel="noopener">AI Cybersecurity in 2025: How Agents Are Finding Zero-Day Exploits</a>. The question is difficult and high entropy given the technical challenge. Tag: real-world.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-1" data-quality="88.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the United States enact a federal statute or Department of Commerce regulation that mandates biosecurity screening for all synthetic nucleic acid orders exceeding 50 base pairs by December 31, 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper highlights the need for &#x27;critical measures&#x27; and &#x27;metrics&#x27; to mitigate &#x27;grave risks&#x27; from AGI sprints. As of June 10, 2026, the US Framework for Nucleic Acid Synthesis Screening is transitioning to a 50 base pair threshold (effective October 2026), but lacks a universal federal mandate for non-federally funded orders. S. 3741 (Biosecurity Modernization and Innovation Act of 2026) is currently under consideration to formalize this. A &#x27;YES&#x27; requires a finalized federal rule or enacted law. Primary source: Federal Register or Congress.gov; Fallback: NTI Biosecurity Policy Tracker.</p>
+        <p><strong>Paper reference:</strong> &#x27;adversarial dynamics might lead to critical measures to ensure AGI is safe&#x27; and &#x27;reducing home bias... lower a country’s cost of capital&#x27; (pg. 5, 8)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a real-world policy question that improves on item 0 by specifying a numeric threshold (50 base pairs) and a specific regulatory pathway (Department of Commerce regulation), matching the language of S.3741 <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. The SOTA is the OSTP Framework&#x27;s upcoming October 2026 transition to 50bp for federally funded orders; this question correctly identifies the gap (non-federally funded orders) <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. It avoids compound conditions by focusing on the legal &#x27;enactment&#x27; of a mandate. High quality and decision-relevant for biosecurity risk mitigation. <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://www.lawbc.com/senate-bill-would-establish-federal-biotechnology-security-framework/" target="_blank" rel="noopener">Senate Bill Would Establish Federal Biotechnology Security ...</a></p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-2" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the share of committed code in professional software development that is reported as &#x27;AI-generated or assisted&#x27; exceed 60% according to the 2027 Sonar State of Code Developer Survey?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper discusses industry-specific impacts of AI, which could lead to labor displacement or &#x27;populist backlash&#x27; [022a2d]. As of early 2026, 42% of committed code is AI-assisted or generated [87f722]. Developers predict this will reach 65% by 2027 [87f722], making 60% a high-entropy threshold. Resolution is the primary finding of the 2027 Sonar survey. Fallback: Stack Overflow Developer Survey (AI usage section).</p>
+        <p><strong>Paper reference:</strong> Section 3.1: Will diversification lead to populism? (AI Adoption)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a real-world question tracking AI adoption in software engineering. The resolution source is a specific, recurring industry survey (Sonar State of Code). As of early 2026, the &#x27;State of Code&#x27; report found that 42% of committed code is AI-assisted or generated <a href="https://www.developersdigest.tech/blog/state-of-ai-coding-april-2026" target="_blank" rel="noopener">State of AI Coding: April 2026 - Developers Digest</a>. The 60% threshold for 2027 is high-entropy, as it represents a significant increase from the 42% baseline but is within the realm of developer predictions (65% by 2027 cited in rationale). The survey is a standing disclosure by SonarSource, ensuring resolvability. Current SOTA: 42% (January 2026) <a href="https://www.developersdigest.tech/blog/state-of-ai-coding-april-2026" target="_blank" rel="noopener">State of AI Coding: April 2026 - Developers Digest</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-3" data-quality="88.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the total net assets of US mutual funds and ETFs that invest according to ESG criteria exceed $1 trillion by 31st December 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper argues that a tipping point (20-40% of the market) is required for impact investing to affect the cost of capital [04c0f6]. As of April 2026, ESG-labelled assets in the US totaled $647.87 billion [04c0f6]. This represents a significant increase from previous years but remains far from the &#x27;trillion-dollar&#x27; milestone often cited as a marker for systemic market influence. Fallback: ICI Monthly ESG Investing Data.</p>
+        <p><strong>Paper reference:</strong> Section 8: <strong>Impact investing in efficient equity markets</strong> (Tipping point for divestment)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Current SOTA: $647.87 billion in US ESG mutual fund and ETF assets as of April 2026 <a href="https://www.ici.org/research/stats/esg_investing" target="_blank" rel="noopener">Release: ESG Investing, April 2026 | Investment Company Institute</a>. Strength: High resolvability via reliable ICI monthly data. Decision-relevant as it tracks a major market milestone ($1T) linked to systemic influence. Entropy: Recent data shows mixed flows (outflows in early 2026), making the 54% growth needed by Dec 2027 (~2.2% monthly) a non-trivial, high-entropy forecast. Tag: real-world.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-4" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the United States Congress enact a federal mandate by December 31, 2027, requiring providers of synthetic DNA to screen all orders for sequences of concern?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper suggests diversification helps coordinate against &quot;global public bads&quot; like biosafety risks. The &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741) was introduced to mandate such screening [8ee3f7]. Current state is a voluntary framework [8ee3f7]. Fallback source: Congress.gov.</p>
+        <p><strong>Paper reference:</strong> Part II: Three Policies to increase common ownership / Section 9</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a real-world policy question tracking a specific legislative mandate (synthetic DNA screening). S.3741 (Biosecurity Modernization and Innovation Act of 2026), introduced in January 2026, aims to transition the current voluntary framework into a federal mandate <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://www.lawbc.com/senate-bill-would-establish-federal-biotechnology-security-framework/" target="_blank" rel="noopener">Senate Bill Would Establish Federal Biotechnology Security ...</a>. The current state-of-the-art (SOTA) is the 2024 OSTP Framework, which is largely voluntary and transition-bound (targeting 50bp screening by October 2026), but lacks a universal federal statute <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. The question is difficult and high-entropy as it depends on a contested legislative process. Note: The rationale&#x27;s mention of a 2026 bill being introduced aligns with current 2026 facts. <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://www.lawbc.com/senate-bill-would-establish-federal-biotechnology-security-framework/" target="_blank" rel="noopener">Senate Bill Would Establish Federal Biotechnology Security ...</a></p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-5" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the U.S. Securities and Exchange Commission (SEC) or a federal court mandate that Microsoft Corporation disclose the specific percentage of equity it holds in OpenAI Global, LLC (OpenAI) by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper notes that Microsoft&#x27;s exact equity stake in OpenAI is not publicly disclosed in its filings, often cited as approximately 49% but potentially much lower (5-10%) [15302a]. As of June 2026, Microsoft holds an investment in OpenAI valued at ~$135 billion, representing roughly 27% on an as-converted basis, but precise ownership of the for-profit remains a point of regulatory scrutiny [15302a]. Fallback source: SEC EDGAR database (Form 10-K/10-Q).</p>
+        <p><strong>Paper reference:</strong> Part I: Diversifying AI ownership / Current state of diversification</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. The question addresses a high-stakes regulatory and corporate governance issue regarding the transparency of the Microsoft-OpenAI partnership. It is difficult and high-entropy, as regulatory pressure from the SEC and FTC is mounting, but a specific mandate is not yet in place. As of June 2026, Microsoft has disclosed a ~27% stake on an as-converted basis in recent filings, but critics and some reports still cite a 49% figure <a href="https://www.microsoft.com/en-us/investor/sec-filings" target="_blank" rel="noopener">SEC Filings - Microsoft Investor Relations</a>. The question is objectively resolvable via SEC EDGAR or court records. It avoids compound conditions (SEC or Court mandate is a single path to public disclosure).</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-6" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will any country currently in the OECD enact a law or regulation that mandates third-party &#x27;security screening&#x27; or &#x27;DNA synthesis order&#x27; verification for all commercial nucleic acid synthesis orders by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper touches on national security and biosecurity screening. Current status: The US requires self-attestation [0d92c8]. The UK has voluntary guidance as of late 2024. A move to mandatory, legally-enforced third-party screening is a key biosecurity milestone. Fallback: Official government gazettes (e.g., Federal Register for US, London Gazette for UK).</p>
+        <p><strong>Paper reference:</strong> What about nationalization? / US outbound investment restrictions.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question addresses a critical biosecurity policy gap and is well-defined. It avoids compound conditions and is verifiable through public legislative records. Current SOTA: As of June 2026, the US uses a procurement-based framework for federally funded research <a href="https://academic.oup.com/jlb/article/13/1/lsag005/8663945" target="_blank" rel="noopener">Biosecurity in the age of synthetic nucleic acids: modernizing the law ...</a> <a href="https://biosecurityhandbook.com/biotechnology/dna-synthesis-screening.html" target="_blank" rel="noopener">DNA Synthesis Screening: The Critical Chokepoint</a>, and France has partial regulations for specific hazardous sequences <a href="https://ibbis.bio/policy-spotlight-french-leadership-defining-and-regulating-genetic-fragments/" target="_blank" rel="noopener">French leadership defining and regulating genetic fragments - IBBIS</a>. Mandatory universal screening legislation (e.g., US S.3741) has been proposed but not enacted <a href="https://biosecurityhandbook.com/biotechnology/dna-synthesis-screening.html" target="_blank" rel="noopener">DNA Synthesis Screening: The Critical Chokepoint</a>. Tag: real-world.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-7" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the Norges Bank Investment Management (NBIM) disclose a stake in Nvidia Corp (NVDA) that is equal to or greater than 2.0% of total shares outstanding by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Norway&#x27;s SWF is the paper&#x27;s primary example of AI ownership [e982b5]. As of March 17, 2026, NBIM&#x27;s stake in Nvidia was 1.3% [3909f4]. Primary source: NBIM official annual/semi-annual holdings reports. Fallback: SEC Form 13F filings.</p>
+        <p><strong>Paper reference:</strong> Section 7.3: &#x27;Norway’s SWF invested many of its assets “in big technology stocks”.&#x27;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question is a clear, resolvable metric of institutional investment in the AI sector. As of March 2026, NBIM&#x27;s stake in Nvidia is approximately 1.3% (holding ~325 million shares worth ~$60.5 billion). Reaching a 2.0% stake would require a significant increase in allocation (likely to ~$90B+ depending on market cap), which is plausible given NBIM&#x27;s historical focus on US tech but remains a high-entropy event for a fund that typically caps individual mega-cap stakes around 1-1.5%. Tag: real-world. Current SOTA: 1.3% ownership as of March 2026.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-8" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the number of &#x27;AI-related&#x27; incidents documented in the Stanford AI Index annual report exceed 500 in the 2027 edition (covering 2026 data)?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper discusses public trust and the risk of harmful effects from AI firms [e982b5]. Documented AI incidents rose to 362 in 2025, up from 233 in 2024 [63ac22]. Primary source: Stanford HAI AI Index Report. Fallback: AI Incident Database (incidentdatabase.ai).</p>
+        <p><strong>Paper reference:</strong> Section 7.3: &#x27;Probably not that big a deal, based on past empirical evidence; people mostly trust SWFs.&#x27;</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world question tracking documented AI harms. Relies on the Stanford AI Index annual report, which is a reputable public source. Current SOTA (as of June 2026) is 362 incidents in the 2025 data (reported in 2026 index) <a href="https://www.mindstudio.ai/blog/ai-cybersecurity-zero-day-exploits-2025/" target="_blank" rel="noopener">AI Cybersecurity in 2025: How Agents Are Finding Zero-Day Exploits</a>. Historical trend: 233 in 2024, 362 in 2025. The threshold of 500 for 2026 data is high entropy and decision-relevant. Tag: real-world.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-9" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the SEC or ESMA issue at least two fines exceeding $1 million specifically for &#x27;AI-washing&#x27; (misleading claims about AI safety or ESG-AI integration) by 31st December 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper highlights &#x27;misleading labelling&#x27; in ESG funds (e.g., Vanguard&#x27;s fund including oil companies) [04c0f6]. As &#x27;AI safety&#x27; becomes an ESG pillar, similar mislabelling is expected. Regulatory fines provide an objective resolution. Fallback: SEC Enforcement Actions archive.</p>
+        <p><strong>Paper reference:</strong> Section 8: <strong>Impact investing in efficient equity markets</strong> (Misleading labelling)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a &#x27;real-world&#x27; question tracking regulatory enforcement. It is specific and objective. Current SOTA: The SEC has already initiated &#x27;AI-washing&#x27; enforcement, such as the January 2025 cease-and-desist against Presto Automation, though no civil penalty was imposed in that case due to financial distress <a href="https://www.thecorporatecounsel.net/blog/2025/01/sec-enforcement-announces-first-ai-washing-case-against-a-public-company.html" target="_blank" rel="noopener">SEC Enforcement Announces First “AI Washing” Case Against a ...</a> <a href="https://www.mofo.com/resources/insights/250226-top-5-sec-enforcement-developments" target="_blank" rel="noopener">Top 5 SEC Enforcement Developments for January 2025</a>. Fines for Delphia and Global Predictions in 2024 totaled $400,000, falling short of the $1 million threshold per fine <a href="https://www.mofo.com/resources/insights/250226-top-5-sec-enforcement-developments" target="_blank" rel="noopener">Top 5 SEC Enforcement Developments for January 2025</a>. The &#x27;at least two fines&#x27; and &#x27;$1 million&#x27; threshold provides a good difficulty level and prevents the question from being near-certain. ESMA is also monitoring AI-washing risks in 2025-2026 but has not yet reported major fines <a href="https://www.mofo.com/resources/insights/250226-top-5-sec-enforcement-developments" target="_blank" rel="noopener">Top 5 SEC Enforcement Developments for January 2025</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-10" data-quality="82.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">82</span><span class="q-summary-text">Will any US state or national government in the G7 enact legislation to establish a &#x27;dividend&#x27; or &#x27;tax credit&#x27; specifically funded by corporate AI profits to be distributed to displaced workers by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">82</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper proposes codifying dividends to low-income workers to avoid a populist backlash [022a2d]. As of June 2026, various &#x27;AI bills&#x27; are being debated (e.g., in the UK and US), but none have established a specific dividend for displaced workers [226642]. Resolution is the signing of such a bill into law. Fallback: Official government gazette or legislative database (e.g., Congress.gov).</p>
+        <p><strong>Paper reference:</strong> Section 3.1: Will diversification lead to populism? (Dividends)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This real-world question tracks a specific economic policy outcome relevant to AI-driven job displacement. It is specific, measurable, and avoids vague magnitude words. Current SOTA: As of June 2026, various bills like the AI Workforce Training Act (US) propose tax credits for training but not a profit-funded dividend for displaced workers <a href="https://fedscoop.com/ai-workforce-tax-credit-house-bill/" target="_blank" rel="noopener">House bill seeks AI workforce tax credits, agency-led outreach</a>. California&#x27;s executive order (May 2026) directs exploration of such policies but does not enact them <a href="https://www.gov.ca.gov/2026/05/21/governor-newsom-signs-first-of-its-kind-executive-order-to-prepare-workers-and-businesses-for-potential-ai-disruption/" target="_blank" rel="noopener">Governor Newsom signs first-of-its-kind executive order to prepare ...</a>. Tag: real-world.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-11" data-quality="78.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#ef6c00;background:#fff3e0" data-tooltip="Quality score (0-100)">78</span><span class="q-summary-text">By December 31, 2027, will an AI agent or autonomous system be publicly credited by a software vendor with the discovery of at least 5 net-new &#x27;Critical&#x27; severity CVEs in production software that were not previously identified by human researchers?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#ef6c00">78</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper discusses how AI agents could share safety research and identify vulnerabilities. Current value: In late 2024, Google DeepMind&#x27;s &#x27;Big Sleep&#x27; found 1 zero-day in SQLite [24dd2f]. Increasing this to 5 requires a shift to more widespread autonomous discovery. Fallback: CISA&#x27;s Known Exploited Vulnerabilities (KEV) catalog or vendor-specific security advisories (e.g., Google, Microsoft).</p>
+        <p><strong>Paper reference:</strong> Appendix: Incentives and Arms Races / Transparency and research sharing.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a real-world question tracking the transition of AI agents from research to production security impact. As of June 2026, Google&#x27;s &#x27;Big Sleep&#x27; agent has already been credited with discovering at least 7 vulnerabilities in major production software, including a critical SQLite zero-day (CVE-2025-6965) <a href="https://blog.google/innovation-and-ai/technology/safety-security/cybersecurity-updates-summer-2025/" target="_blank" rel="noopener">A summer of security: empowering cyber defenders with AI</a>, a critical Chrome use-after-free (CVE-2025-9478), and 5 WebKit vulnerabilities in Safari. The threshold of 5 critical CVEs is already partially met or very close to being met, making the 2027 deadline potentially low-entropy if interpreted broadly, but the &#x27;Critical&#x27; severity requirement for all 5 and the &#x27;not previously identified by humans&#x27; clause maintain sufficient difficulty. Current SOTA: ~7 public credits, with at least 2-3 confirmed as &#x27;Critical&#x27;.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-12" data-quality="75.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#ef6c00;background:#fff3e0" data-tooltip="Quality score (0-100)">75</span><span class="q-summary-text">Will a G7 or G20 member nation officially enact a sovereign wealth fund or &#x27;benefit sharing&#x27; mechanism by December 31, 2027, specifically dedicated to the redistribution of AI-generated corporate tax revenue?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#ef6c00">75</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper cites the &#x27;Windfall Trust&#x27; as a policy accelerator for dealing with transformative AI disruption [input paper]. As of June 2026, the UN High-Level Advisory Body has recommended &#x27;inclusive architecture&#x27; but not a specific global wealth capture fund [09ed4f], and the UK has launched &#x27;AI Growth Zones&#x27; but no windfall redistribution fund [673ec7]. Fallback: Official government gazettes or OECD AI Policy Observatory.</p>
+        <p><strong>Paper reference:</strong> Section 1.5 (Policies to respond to transformative AI: Windfall Trust)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question is a well-structured &#x27;real-world&#x27; policy question [[PDF] Governing AI for Humanity - Final Report - the United Nations](<a href="https://www.un.org/sites/un2.un.org/files/governing_ai_for_humanity_final_report_en.pdf" target="_blank" rel="noopener">https://www.un.org/sites/un2.un.org/files/governing_ai_for_humanity_final_report_en.pdf</a>). While the rationale mentions a &#x27;Windfall Trust&#x27; [09ed4f], current policy proposals like the &#x27;American AI Sovereign Wealth Fund Act&#x27; (June 2026) focus on equity stakes (e.g., 50%) rather than corporate tax redistribution <a href="https://www.meritalk.com/articles/sanders-to-introduce-bill-creating-ai-sovereign-wealth-fund/" target="_blank" rel="noopener">Sanders to Introduce Bill Creating AI Sovereign Wealth Fund</a>. The Trump Administration&#x27;s February 2025 Executive Order on a US SWF focuses on national assets and fiscal sustainability without specific &#x27;AI tax&#x27; redistribution mechanisms <a href="https://www.whitehouse.gov/fact-sheets/2025/02/fact-sheet-president-donald-j-trump-orders-plan-for-a-united-states-sovereign-wealth-fund/" target="_blank" rel="noopener">Fact Sheet: President Donald J. Trump Orders Plan for a United ...</a>. The UN High-Level Advisory Body&#x27;s &#x27;Global Fund for AI&#x27; focuses on capacity building, not tax redistribution [[PDF] Governing AI for Humanity - Final Report - the United Nations](<a href="https://www.un.org/sites/un2.un.org/files/governing_ai_for_humanity_final_report_en.pdf" target="_blank" rel="noopener">https://www.un.org/sites/un2.un.org/files/governing_ai_for_humanity_final_report_en.pdf</a>). The specific condition &#x27;dedicated to the redistribution of AI-generated corporate tax revenue&#x27; makes the question difficult to resolve and likely to fail on a technicality, but it remains a valid, high-entropy policy forecast. 
+Current SOTA: No G7/G20 nation has enacted such a fund as of June 2026.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-13" data-quality="65.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#ef6c00;background:#fff3e0" data-tooltip="Quality score (0-100)">65</span><span class="q-summary-text">Will the National Vulnerability Database (NVD) record at least 250 Common Vulnerabilities and Exposures (CVEs) by December 31, 2027, where the &#x27;Description&#x27; field explicitly credits an autonomous AI agent for the initial discovery?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#ef6c00">65</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> As of June 2026, OpenAI&#x27;s &#x27;Aardvark&#x27; agent has already been credited with 10 CVEs in its beta phase [935860]. Scaling this to 250 represents a shift in the &#x27;adoption/usage&#x27; of AI for cybersecurity research. Fallback: NIST National Vulnerability Database (NVD) search for &#x27;AI agent&#x27; or &#x27;autonomous&#x27; credits.</p>
+        <p><strong>Paper reference:</strong> Section 1.5 (Policies to distribute power: OpenClaw/Aardvark)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Current SOTA: OpenAI&#x27;s Aardvark (Codex Security) has been credited with 10 CVEs as of June 2026 <a href="https://www.ici.org/research/stats/esg_investing" target="_blank" rel="noopener">Release: ESG Investing, April 2026 | Investment Company Institute</a>. Strength: Real-world metric tracking AI agent adoption in cybersecurity. Risk: Resolvability. NVD &#x27;Description&#x27; fields are often inconsistent and may not standardizedly credit the discoverer; credits frequently appear in &#x27;References&#x27; or &#x27;Advisory&#x27; links instead. If the credit is not in the &#x27;Description&#x27; field specifically, it fails. Scoring reflects this verification risk. Tag: real-world.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-14" data-quality="60.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#ef6c00;background:#fff3e0" data-tooltip="Quality score (0-100)">60</span><span class="q-summary-text">Will a single AI agent or autonomous AI system be officially credited in the CVE (Common Vulnerabilities and Exposures) List with discovering at least 1,000 distinct, previously unknown software vulnerabilities in a single calendar year before 2028?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#ef6c00">60</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper discusses &#x27;metrics for measuring how close we are to a runway to AGI&#x27;. Discovery of novel CVEs at scale is a real-world capability metric. As of June 10, 2026, AI tools have been credited with identifying thousands of flaws in &#x27;mythos&#x27; previews, but individual agent credits in the official CVE list for 1,000+ net-new vulnerabilities remain below the threshold (most credits are still to human researchers or human-tool hybrids). Primary source: CVE.org; Fallback: NIST National Vulnerability Database (NVD).</p>
+        <p><strong>Paper reference:</strong> &#x27;AI agents... discovering N net-new CVEs&#x27; (archetype conversion from paper&#x27;s &#x27;metrics for measuring how close we are to AGI&#x27;)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Benchmark. While the discovery of CVEs is a real-world capability, the question functions as a capability benchmark similar to a CTF or leaderboard threshold, warranting a score cap. Current SOTA as of May 2026 indicates that fewer than 200 CVEs have been explicitly credited to AI/LLM-assisted discovery <a href="https://blog.barracuda.com/2026/05/12/mythos-hype-index-ai-vulnerability-discovery" target="_blank" rel="noopener">The Mythos Hype Index: Is AI really changing vulnerability discovery?</a>. Systems like AISLE have been credited with ~15-20 CVEs in specific libraries like OpenSSL and curl <a href="https://www.lesswrong.com/posts/7aJwgbMEiKq5egQbd/ai-found-12-of-12-openssl-zero-days-while-curl-cancelled-its" target="_blank" rel="noopener">AI found 12 of 12 OpenSSL zero-days (while curl cancelled its bug ...</a>. Reaching 1,000 in a single calendar year represents a significant but plausible leap in autonomous capability. The resolution is clear via CVE.org, but the administrative hurdle of &#x27;official credit&#x27; for non-human entities is a known friction point.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-15" data-quality="40.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#c62828;background:#ffebee" data-tooltip="Quality score (0-100)">40</span><span class="q-summary-text">Will the United States enact a federal statute or binding executive order that mandates &#x27;adversarial testing&#x27; and &#x27;customer screening&#x27; for all domestic nucleic acid synthesis providers by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (88)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#c62828">40</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Section 3.7 mentions biosecurity cooperation. The Biosecurity Modernization and Innovation Act (S. 3741) was introduced in Feb 2026 to mandate these standards [49ffd3]. Current screening is largely voluntary or limited to federally funded research [b2ea15]. Fallback: Congress.gov.</p>
+        <p><strong>Paper reference:</strong> Section 3.7: Non-GDP Takeoff Metrics</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question tracks a high-stakes policy outcome (biosecurity regulation) that is currently under debate in the US Congress (S. 3741, the Biosecurity Modernization and Innovation Act of 2026). The bill explicitly includes both &#x27;customer screening&#x27; and &#x27;adversarial testing&#x27; (red-teaming) requirements <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. However, the question as phrased contains a compound condition (&#x27;adversarial testing&#x27; AND &#x27;customer screening&#x27;), which triggers a hard penalty according to the scoring criteria (One atomic condition per question). While both are in the current bill, a final statute could include one but not the other, making the forecast complex. Tag: real-world. Current SOTA: Mandatory screening is currently limited to federally funded research; S. 3741 would expand this to all domestic providers.</p></details>
+      </div>
+    </details>
+  </div>
+
+<script>
+function sortBy(mode) {
+  var list = document.getElementById('question-list');
+  var items = Array.from(list.querySelectorAll('.q-item'));
+  items.sort(function(a, b) {
+    if (mode === 'quality') {
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    if (mode === 'status') {
+      var s = parseInt(a.dataset.status) - parseInt(b.dataset.status);
+      if (s !== 0) return s;
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    return 0;
+  });
+  items.forEach(function(el) { list.appendChild(el); });
+  var btns = document.querySelectorAll('.sort-btn');
+  btns.forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.sort === mode);
+  });
+}
+</script>
+</div></body></html>

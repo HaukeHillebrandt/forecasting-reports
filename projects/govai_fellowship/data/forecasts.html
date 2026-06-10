@@ -6,145 +6,199 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Forecasts &mdash; x</title>
 <style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: #f7f8fa; color: #2a2a2a; line-height: 1.65; padding: 2.5rem 1rem;
-    font-size: 15px;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
   }
-  .container { max-width: 100%; margin: 0 auto; padding: 0 2rem; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
   /* Header */
   .page-header {
-    background: #1a1a2e; color: #eee; border-radius: 12px;
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
     padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
   }
-  .page-header h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: .35rem; letter-spacing: -.01em; }
-  .page-header .subtitle { font-size: .88rem; color: #a0a0b8; margin-bottom: .6rem; }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
   .page-header .page-stats {
-    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #8e8ea0;
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
   }
   .page-header .page-stats span {
     background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
   }
 
-  /* Sort bar — mirrors q-row summary layout so buttons align with q-meta badges */
+  /* Sort bar — a labeled button group, mirrors the filter bar */
   .sort-bar {
-    display: flex; align-items: center; gap: .75rem;
-    padding: .35rem 1.2rem; margin-bottom: .2rem;
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
   }
-  .sort-bar .sort-spacer { flex: 1; }
   .sort-bar .sort-label {
-    font-size: .6rem; text-transform: uppercase; letter-spacing: .03em;
-    color: #aaa; font-weight: 600;
-  }
-  .sort-meta {
-    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
   }
   .sort-btn {
-    font-size: .6rem; font-weight: 600; color: #aaa; cursor: pointer;
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
     transition: all .15s ease; user-select: none;
-    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
-    text-align: center; background: none; border: none; padding: 0;
-    text-transform: uppercase; letter-spacing: .03em; line-height: 1;
   }
-  .sort-btn:hover { color: #333; }
-  .sort-btn.active { color: #1a1a2e; }
-  .sort-btn .sort-arrow { font-size: .5rem; opacity: .6; line-height: 1; }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
 
   /* Expand / Collapse controls */
   .expand-bar {
-    display: flex; align-items: center; gap: .5rem; margin-bottom: 1.2rem;
-    padding: .6rem 1rem; background: #fff; border-radius: 10px;
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
   }
   .expand-bar .expand-label {
     font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
-    color: #888; font-weight: 600; margin-right: .25rem;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
   }
   .expand-btn {
     font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
-    border: 1px solid #e0e0e0; background: #fff; color: #555; cursor: pointer;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
     transition: all .15s ease; user-select: none;
   }
   .expand-btn:hover { background: #f0f1f4; color: #333; }
-  .expand-btn.active { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
   .expand-sep {
     width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
   }
 
   /* Filter bar */
   .filter-bar {
-    display: flex; align-items: center; gap: .5rem; margin-bottom: 1.2rem;
-    padding: .6rem 1rem; background: #fff; border-radius: 10px;
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
   }
   .filter-bar .filter-label {
     font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
-    color: #888; font-weight: 600; margin-right: .25rem;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
   }
   .filter-btn {
     font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
-    border: 1px solid #e0e0e0; background: #fff; color: #555; cursor: pointer;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
     transition: all .15s ease; user-select: none;
   }
   .filter-btn:hover { background: #f0f1f4; color: #333; }
-  .filter-btn.active { background: #1a73e8; color: #fff; border-color: #1a73e8; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
   .filter-btn .filter-count {
     font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
-    border-radius: 8px; margin-left: .3rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
   }
   .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
-  .q-row.filter-hidden { display: none; }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
 
   /* Question rows — expandable <details> */
   .question-list { display: flex; flex-direction: column; gap: .6rem; }
 
   .q-row {
-    background: #fff; border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.05);
-    transition: box-shadow .2s ease;
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
   }
   .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
-  .q-row[open] { box-shadow: 0 2px 10px rgba(0,0,0,.1); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
 
   .q-row > summary {
     cursor: pointer; list-style: none;
     display: flex; align-items: center; gap: .75rem;
     padding: .85rem 1.2rem;
     transition: background .15s ease;
+    border-radius: 9px;
   }
   .q-row > summary::-webkit-details-marker { display: none; }
-  .q-row > summary:hover { background: #fafbfc; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
 
   .q-row > summary .expand-icon {
-    font-size: .55rem; color: #aaa; transition: transform .2s ease;
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
     flex-shrink: 0; width: .8rem; text-align: center;
   }
   .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
 
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
   .q-prob-badge {
-    color: #fff; font-weight: 700; font-size: .82rem;
-    min-width: 3rem; height: 1.65rem;
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
     display: flex; align-items: center; justify-content: center;
-    border-radius: 5px; flex-shrink: 0; padding: 0 .4rem;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
   }
   .q-title {
-    flex: 1; font-size: .92rem; font-weight: 500; color: #2a2a2a;
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
     line-height: 1.35;
   }
   .q-meta {
     display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
   }
   .q-meta-item {
-    font-size: .72rem; color: #888; text-align: center;
+    font-size: .72rem; color: var(--text-2); text-align: center;
     display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
   }
   .q-meta-label {
-    font-size: .6rem; text-transform: uppercase; letter-spacing: .03em;
-    color: #aaa; line-height: 1;
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
   }
-  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
 
   .q-status-badge {
     font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
@@ -152,30 +206,25 @@
   .badge-pass { background: #e8f5e9; color: #2e7d32; }
   .badge-revised { background: #fff3e0; color: #e65100; }
   .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
 
   /* Expanded card content */
-  .q-body { padding: 0 1.4rem 1.2rem 1.4rem; }
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
 
   /* Score row inside expanded content */
   .score-row {
-    display: flex; gap: 1.2rem; align-items: center;
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
     margin: .6rem 0 .8rem; padding: .55rem 1rem;
-    background: #f7f8fa; border-radius: 8px; font-size: .84rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
   }
   .score-item {
     display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
   }
   .score-label {
-    font-size: .65rem; text-transform: uppercase; letter-spacing: .03em;
-    color: #999; line-height: 1;
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
   }
-  .score-value { font-weight: 700; font-size: .92rem; }
-
-  .prob-bar-container {
-    flex: 1; min-width: 6rem; display: flex; flex-direction: column; justify-content: center;
-  }
-  .prob-bar { height: 6px; border-radius: 3px; background: #e8e8e8; overflow: hidden; }
-  .prob-bar-fill { height: 100%; border-radius: 3px; transition: width .3s; }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
 
   /* Collapsible inner sections */
   .section { margin-top: .4rem; }
@@ -190,33 +239,34 @@
   .section[open] summary::before { transform: rotate(90deg); }
   .section summary h3 {
     font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
-    color: #888; margin: 0; display: flex; align-items: center; gap: .4rem;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
     font-weight: 600;
   }
   .section > p, .section > .content {
     margin-top: .25rem; padding-left: .9rem;
-    font-size: .88rem; color: #444;
+    font-size: .9rem; color: #444;
   }
   .section p { white-space: pre-wrap; word-wrap: break-word; }
 
   .badge {
-    font-size: .6rem; color: #777; background: #f0f1f4; padding: .1rem .4rem;
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
     border-radius: 10px; font-weight: 500;
   }
-  .badge-status {
-    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
-  }
-
-  /* Meta row */
-  .meta-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .3rem; }
 
   /* Links */
-  a { color: #3b6fc0; text-decoration: none; }
-  a:hover { color: #1a3f7a; text-decoration: underline; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
 
   /* Decomposition */
   .subq-card {
-    background: #f7f8fa; border: 1px solid #eaeaef; border-radius: 8px;
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
     padding: .65rem .9rem; margin: .35rem 0;
   }
   .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
@@ -225,6 +275,15 @@
     display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
   }
   .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
 
   /* --- Tooltips (CSS-only via data-tooltip) --- */
   [data-tooltip] { position: relative; }
@@ -239,7 +298,6 @@
     letter-spacing: normal;
   }
   [data-tooltip]:hover::after { opacity: 1; }
-  /* Downward arrow on tooltip */
   [data-tooltip]::before {
     content: "";
     position: absolute; bottom: calc(100% + 2px); left: 50%;
@@ -249,6 +307,46 @@
     z-index: 100;
   }
   [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+  /* Stage-07 extras: seed passages, status badges, right-aligned tooltips */
+  .badge-status {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .meta-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .3rem; }
+
+  /* Seed passage (stage 06e): verbatim quote + deep link to PDF page */
+  .seed-quote {
+    background: #fffbea; border-left: 3px solid #f1c40f;
+    padding: .55rem .9rem; margin: .35rem 0 .5rem;
+    border-radius: 0 6px 6px 0;
+    font-style: italic; color: #444; font-size: .9rem; line-height: 1.5;
+  }
+  .seed-quote::before { content: "\201C"; color: #c9a100; margin-right: .1rem; }
+  .seed-quote::after  { content: "\201D"; color: #c9a100; margin-left: .1rem; }
+  .seed-quote-meta {
+    display: flex; flex-wrap: wrap; gap: .6rem; align-items: center;
+    margin-top: .15rem; font-size: .8rem; color: #666;
+  }
+  .seed-quote-meta .seed-page-badge {
+    font-size: .7rem; font-weight: 600; padding: .12rem .5rem;
+    background: #fff4c0; color: #7a5a00; border-radius: 10px;
+  }
+  .seed-quote-meta .seed-match-soft {
+    font-size: .65rem; font-weight: 600; padding: .08rem .4rem;
+    background: #f0f0f0; color: #888; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
 
   /* Tooltip on right for items near left edge */
   .tooltip-right[data-tooltip]::after { left: 0; transform: none; }
@@ -313,47 +411,42 @@
     <button class="filter-btn" data-filter="status" data-filter-value="PASS">PASS<span class="filter-count">5</span></button>
     <button class="filter-btn" data-filter="status" data-filter-value="REVISED">REVISED<span class="filter-count">2</span></button>
     <span class="expand-sep"></span>
-    <button class="filter-btn" id="filter-clear" style="color:#c62828;border-color:#ffcdd2;">Clear filters</button>
+    <input id="q-search" class="q-search" type="search" placeholder="Search questions&hellip;" aria-label="Search questions">
+    <button class="filter-btn" id="filter-clear" style="color:#c62828;border-color:#ffcdd2;">Clear</button>
+    <span id="filter-count-live" class="filter-label" aria-live="polite"></span>
   </div>
   <div class="sort-bar">
-    <span class="sort-spacer"><span class="sort-label">Sort&nbsp;by</span></span>
-    <span class="sort-meta">
-      <span style="min-width:2.5rem"></span>
-      <button class="sort-btn" data-sortkey="quality">Qual<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="ambiguity">Amb<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="itnsss">ITNSSS<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="neglectedness">Neglect<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="tractability">Tract<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="soon">Soon<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="sudden">Sudden<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="sharp">Sharp<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="probability">Prob<span class="sort-arrow"></span></button>
-    </span>
+    <span class="sort-label">Sort by</span>
+    <button class="sort-btn" data-sortkey="itnsss">ITNSSS<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="importance">Importance<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="probability">Probability<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="quality">Quality<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="ambiguity">Ambiguity<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="neglectedness">Neglectedness<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="tractability">Tractability<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="soon">Soon<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="sudden">Sudden<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="sharp">Sharp<span class="sort-arrow"></span></button>
   </div>
+  <div class="group-header">01_govai_winter_fellowship_bridge</div>
   <div class="question-list">
-  <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">01_govai_winter_fellowship_bridge</div>
-  <details class="q-row" id="q-0" data-probability="23.0" data-importance="85.0" data-quality="88.0" data-ambiguity="98.0" data-itnsss="81.25" data-neglectedness="90.0" data-tractability="75.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="75.0" data-sudden="70.0" data-sharp="80.0">
+  <details class="q-row" id="q-by-december-31-2027-will-the-uk-parliament-pass-an-amendment" data-probability="23.0" data-importance="85.0" data-quality="88.0" data-ambiguity="98.0" data-itnsss="81.25" data-neglectedness="90.0" data-tractability="75.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="75.0" data-sudden="70.0" data-sharp="80.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
-      <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
+      <button type="button" class="anchor-link" data-anchor="q-by-december-31-2027-will-the-uk-parliament-pass-an-amendment" aria-label="Copy link to this question">#</button>
+      <span class="q-prob-badge" style="background: #fbe9e7; color: #e65100" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">23%</span>
       <span class="q-title">Will the UK Parliament pass an amendment to the **Interpretation Act 1978** by December 31, 2027, to explicitly define &#x27;person&#x27; or &#x27;officer&#x27; as including a &#x27;computer system&#x27; or &#x27;artificial intelligence&#x27;?</span>
       <span class="q-meta">
         <span class="q-status-badge badge-pass" data-tooltip="Question passed adversarial review without changes">PASS</span>
-        <span class="q-meta-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="q-meta-label">Qual</span><span class="q-meta-value">88.0</span></span>
-        <span class="q-meta-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="q-meta-label">Amb</span><span class="q-meta-value">98.0</span></span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">81</span></span>
-        <span class="q-meta-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="q-meta-label">Neglect</span><span class="q-meta-value">90.0</span></span>
-        <span class="q-meta-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="q-meta-label">Tract</span><span class="q-meta-value">75.0</span></span>
-        <span class="q-meta-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="q-meta-label">Soon</span><span class="q-meta-value">75.0</span></span>
-        <span class="q-meta-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="q-meta-label">Sudden</span><span class="q-meta-value">70.0</span></span>
-        <span class="q-meta-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="q-meta-label">Sharp</span><span class="q-meta-value">80.0</span></span>
-        <span class="q-meta-item" data-tooltip="Estimated likelihood this event occurs by the resolution deadline"><span class="q-meta-label">Prob</span><span class="q-meta-value" style="color:#e65100;font-weight:800">23%</span></span>
+        <span class="q-meta-item" data-tooltip="How decision-relevant and impactful this question is (0-100)"><span class="q-meta-label">Imp</span><span class="q-meta-value imp-pill imp-high">85</span></span>
       </span>
     </summary>
     <div class="q-body">
+      <div class="score-row"><div class="score-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="score-label">Quality</span><span class="score-value">88</span></div><div class="score-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="score-label">Ambiguity</span><span class="score-value">98</span></div><div class="score-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="score-label">Soon</span><span class="score-value">75</span></div><div class="score-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="score-label">Sudden</span><span class="score-value">70</span></div><div class="score-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="score-label">Sharp</span><span class="score-value">80</span></div></div>
       <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
-        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">81.25</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">90.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">75.0</span></div></div><p><strong>Neglectedness:</strong> I searched Metaculus, Polymarket, INFER, Good Judgment Open, and Manifold and found no active or historical forecasting questions regarding amendments to the Interpretation Act 1978 for AI. Policy monitoring focuses on the &#x27;Data (Use and Access) Act 2025&#x27; and broad AI regulation frameworks (e.g., Lord Holmes&#x27; AI Regulation Bill), but this specific, deep-level administrative law reform remains a &#x27;gap in current monitoring&#x27; despite being recognized by legal scholars as a critical bottleneck. Searches on Hansard and UK Parliament records show discussions about automated decision-making in specific bills (e.g., Data Use and Access Bill) but no comprehensive movement to redefine &#x27;person&#x27; or &#x27;officer&#x27; in the Interpretation Act itself.</p><p><strong>Tractability:</strong> A skilled forecaster can synthesize signals from the Law Commission&#x27;s reports, parliamentary debates on the Data (Use and Access) Act 2025, and ministerial statements about &#x27;red tape&#x27; and AI adoption. There is a rich information environment involving legal theory, political incentives for public sector efficiency, and legislative timelines. Different forecasters might weight the &#x27;political will to reform&#x27; vs. &#x27;judicial conservatism&#x27; differently, leading to a meaningful spread in probabilities.</p><p><strong>Soon:</strong> With a resolution date of December 31, 2027, this question captures a development that must unfold within the next two years to align with the UK government&#x27;s stated goal of introducing AI legislation in 2025/2026. The window for this specific &#x27;unlocking&#x27; reform is actively open as the UK clarifies its post-Brexit AI governance.</p><p><strong>Sudden:</strong> Legislative amendments are discrete events. While the policy debate is visible, the actual passage of such a specific amendment would be a state change. However, it is unlikely to be a total surprise as it would follow standard parliamentary procedure, though its specific technical wording might catch some off-guard.</p><p><strong>Sharp:</strong> This is a &#x27;sharp&#x27; risk/opportunity. Legal barriers to AI delegation often compound silently (the &#x27;rubberstamping&#x27; risk) until a major judicial review or administrative failure occurs. There are unlikely to be &#x27;warning shots&#x27; in the form of smaller Interpretation Act amendments; rather, the current legal friction exists until a discrete legislative change resolves it.</p></div>
+        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">81</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">90</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">75</span></div></div><p><strong>Neglectedness:</strong> I searched Metaculus, Polymarket, INFER, Good Judgment Open, and Manifold and found no active or historical forecasting questions regarding amendments to the Interpretation Act 1978 for AI. Policy monitoring focuses on the &#x27;Data (Use and Access) Act 2025&#x27; and broad AI regulation frameworks (e.g., Lord Holmes&#x27; AI Regulation Bill), but this specific, deep-level administrative law reform remains a &#x27;gap in current monitoring&#x27; despite being recognized by legal scholars as a critical bottleneck. Searches on Hansard and UK Parliament records show discussions about automated decision-making in specific bills (e.g., Data Use and Access Bill) but no comprehensive movement to redefine &#x27;person&#x27; or &#x27;officer&#x27; in the Interpretation Act itself.</p><p><strong>Tractability:</strong> A skilled forecaster can synthesize signals from the Law Commission&#x27;s reports, parliamentary debates on the Data (Use and Access) Act 2025, and ministerial statements about &#x27;red tape&#x27; and AI adoption. There is a rich information environment involving legal theory, political incentives for public sector efficiency, and legislative timelines. Different forecasters might weight the &#x27;political will to reform&#x27; vs. &#x27;judicial conservatism&#x27; differently, leading to a meaningful spread in probabilities.</p><p><strong>Soon:</strong> With a resolution date of December 31, 2027, this question captures a development that must unfold within the next two years to align with the UK government&#x27;s stated goal of introducing AI legislation in 2025/2026. The window for this specific &#x27;unlocking&#x27; reform is actively open as the UK clarifies its post-Brexit AI governance.</p><p><strong>Sudden:</strong> Legislative amendments are discrete events. While the policy debate is visible, the actual passage of such a specific amendment would be a state change. However, it is unlikely to be a total surprise as it would follow standard parliamentary procedure, though its specific technical wording might catch some off-guard.</p><p><strong>Sharp:</strong> This is a &#x27;sharp&#x27; risk/opportunity. Legal barriers to AI delegation often compound silently (the &#x27;rubberstamping&#x27; risk) until a major judicial review or administrative failure occurs. There are unlikely to be &#x27;warning shots&#x27; in the form of smaller Interpretation Act amendments; rather, the current legal friction exists until a discrete legislative change resolves it.</p></div>
       </details>
       <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
@@ -386,6 +479,25 @@ This question will resolve as <strong>YES</strong> if, between <strong>April 8, 
 ### <strong>Resolution Source</strong>
 The primary source for resolution will be the official UK legislation database at <a href="https://www.legislation.gov.uk/ukpga/1978/30" target="_blank" rel="noopener"><strong>legislation.gov.uk</strong></a>.
 Secondary verification can be conducted via the <strong>UK Parliament Bill Tracker</strong> (<a href="https://bills.parliament.uk" target="_blank" rel="noopener">bills.parliament.uk</a>) to confirm the date of <strong>Royal Assent</strong> and the final text of the enacted bill.</p>
+      </details>
+      <details class="section" data-section="refinement">
+        <summary><h3>Background</h3></summary>
+        <p>In the United Kingdom, the <a href="https://www.legislation.gov.uk/ukpga/1978/30" target="_blank" rel="noopener"><strong>Interpretation Act 1978</strong></a> is a foundational piece of legislation that provides standard definitions and rules for interpreting other Acts of Parliament. Currently, <strong>Schedule 1</strong> of the Act defines a &quot;<strong>person</strong>&quot; to include &quot;a body of persons corporate or unincorporate&quot; [legislation.gov.uk/ukpga/1978/30/schedule/1]. It does not explicitly include non-human entities like computer systems or artificial intelligence (AI) within the definition of a &#x27;person&#x27; or &#x27;officer&#x27;.
+
+Legal scholars and policy experts have identified a &quot;<strong>delegation barrier</strong>&quot; in administrative law. This barrier arises when a statute requires a specific human (an &#x27;officer&#x27; or &#x27;person&#x27;) to exercise discretion or make a decision. Under the <a href="https://en.wikipedia.org/wiki/Carltona_v_Commissioners_of_Works" target="_blank" rel="noopener"><strong>Carltona principle</strong></a>, powers vested in a Minister may be exercised by their officials, but legal ambiguity persists regarding whether such powers can be lawfully delegated to a fully automated system without a human &quot;rubberstamping&quot; the decision.
+
+While the <a href="https://www.legislation.gov.uk/ukpga/2025/18" target="_blank" rel="noopener"><strong>Data (Use and Access) Act 2025</strong></a> (which received <strong>Royal Assent</strong> on June 19, 2025) modernized rules for automated decision-making (ADM) by amending the UK GDPR and the Data Protection Act 2018, it focused on data privacy safeguards and lawful bases for processing rather than redefining the legal personality of decision-makers across all statutes. Proposals have emerged to amend the <strong>Interpretation Act 1978</strong> directly to make it &quot;lawful by default&quot; for AI to perform functions currently reserved for human &quot;persons&quot; or &quot;officers,&quot; thereby removing the need for human intervention in every administrative instance.
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, between <strong>April 8, 2026</strong>, and <strong>23:59 UTC on December 31, 2027</strong>, an Act of Parliament receives <a href="https://www.parliament.uk/about/how/laws/passage-bill/lords/lrds-royal-assent/" target="_blank" rel="noopener"><strong>Royal Assent</strong></a> that contains an amendment to the <a href="https://www.legislation.gov.uk/ukpga/1978/30" target="_blank" rel="noopener"><strong>Interpretation Act 1978</strong></a> (or a direct successor to that specific Act) which:
+1.  Explicitly adds &quot;<strong>computer system</strong>&quot;, &quot;<strong>artificial intelligence</strong>&quot;, &quot;<strong>automated system</strong>&quot;, or a semantic equivalent to the definition of &quot;<strong>person</strong>&quot; or &quot;<strong>officer</strong>&quot; (including &quot;public officer&quot; or &quot;officer of [a specific department]&quot;); OR
+2.  Adds a new provision to the <strong>Interpretation Act 1978</strong> stating that references to a &quot;person&quot; or &quot;officer&quot; in other legislation shall be construed to include an AI or computer system for the purpose of exercising statutory functions or administrative decision-making.</p>
+      </details>
+      <details class="section" data-section="refinement">
+        <summary><h3>Resolution criteria</h3></summary>
+        <p>This question will resolve as <strong>YES</strong> if, between <strong>April 8, 2026</strong>, and <strong>23:59 UTC on December 31, 2027</strong>, an Act of Parliament receives <a href="https://www.parliament.uk/about/how/laws/passage-bill/lords/lrds-royal-assent/" target="_blank" rel="noopener"><strong>Royal Assent</strong></a> that contains an amendment to the <a href="https://www.legislation.gov.uk/ukpga/1978/30" target="_blank" rel="noopener"><strong>Interpretation Act 1978</strong></a> (or a direct successor to that specific Act) which:
+1.  Explicitly adds &quot;<strong>computer system</strong>&quot;, &quot;<strong>artificial intelligence</strong>&quot;, &quot;<strong>automated system</strong>&quot;, or a semantic equivalent to the definition of &quot;<strong>person</strong>&quot; or &quot;<strong>officer</strong>&quot; (including &quot;public officer&quot; or &quot;officer of [a specific department]&quot;); OR
+2.  Adds a new provision to the <strong>Interpretation Act 1978</strong> stating that references to a &quot;person&quot; or &quot;officer&quot; in other legislation shall be construed to include an AI or computer system for the purpose of exercising statutory functions or administrative decision-making.</p>
       </details>
       <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
@@ -507,29 +619,26 @@ Key factors for a NO resolution include the government&#x27;s stated preference 
       </details>
     </div>
   </details>
-  <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">03_loc_risk_scenarios_avramidou</div>
-  <details class="q-row" id="q-1" data-probability="53.0" data-importance="92.0" data-quality="92.0" data-ambiguity="82.0" data-itnsss="81.5" data-neglectedness="78.0" data-tractability="80.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="85.0" data-sudden="70.0" data-sharp="75.0">
+  </div>
+  <div class="group-header">03_loc_risk_scenarios_avramidou</div>
+  <div class="question-list">
+  <details class="q-row" id="q-will-a-frontier-ai-model-defined-as-any-model-by-openai-anth" data-probability="53.0" data-importance="92.0" data-quality="92.0" data-ambiguity="82.0" data-itnsss="81.5" data-neglectedness="78.0" data-tractability="80.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="85.0" data-sudden="70.0" data-sharp="75.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
-      <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">92</span>
+      <button type="button" class="anchor-link" data-anchor="q-will-a-frontier-ai-model-defined-as-any-model-by-openai-anth" aria-label="Copy link to this question">#</button>
+      <span class="q-prob-badge" style="background: #fffde7; color: #f9a825" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">53%</span>
       <span class="q-title">Will a Frontier AI Model Achieve a 50% pass@1 Success Rate on Autonomous Replication Benchmarks by December 2027?</span>
       <span class="q-meta">
         <span class="q-status-badge badge-revised" data-tooltip="Question was revised after adversarial review found issues">REVISED</span>
-        <span class="q-meta-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="q-meta-label">Qual</span><span class="q-meta-value">92.0</span></span>
-        <span class="q-meta-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="q-meta-label">Amb</span><span class="q-meta-value">82.0</span></span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">82</span></span>
-        <span class="q-meta-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="q-meta-label">Neglect</span><span class="q-meta-value">78.0</span></span>
-        <span class="q-meta-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="q-meta-label">Tract</span><span class="q-meta-value">80.0</span></span>
-        <span class="q-meta-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="q-meta-label">Soon</span><span class="q-meta-value">85.0</span></span>
-        <span class="q-meta-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="q-meta-label">Sudden</span><span class="q-meta-value">70.0</span></span>
-        <span class="q-meta-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="q-meta-label">Sharp</span><span class="q-meta-value">75.0</span></span>
-        <span class="q-meta-item" data-tooltip="Estimated likelihood this event occurs by the resolution deadline"><span class="q-meta-label">Prob</span><span class="q-meta-value" style="color:#f9a825;font-weight:800">53%</span></span>
+        <span class="q-meta-item" data-tooltip="How decision-relevant and impactful this question is (0-100)"><span class="q-meta-label">Imp</span><span class="q-meta-value imp-pill imp-high">92</span></span>
       </span>
     </summary>
     <div class="q-body">
+      <div class="score-row"><div class="score-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="score-label">Quality</span><span class="score-value">92</span></div><div class="score-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="score-label">Ambiguity</span><span class="score-value">82</span></div><div class="score-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="score-label">Soon</span><span class="score-value">85</span></div><div class="score-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="score-label">Sudden</span><span class="score-value">70</span></div><div class="score-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="score-label">Sharp</span><span class="score-value">75</span></div></div>
       <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
-        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">81.5</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">78.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">80.0</span></div></div><p><strong>Neglectedness:</strong> While Metaculus has general questions about AI self-replication and METR task completion (e.g., &#x27;Will an LLM pass an ARA evaluation before 2025?&#x27;), and there is a Manifold market on &#x27;Rogue Replication Timeline&#x27;, none specifically target the 50% success rate on both METR and the newer RepliBench (released early 2025) by the 2027 deadline. Search results show the UK AISI&#x27;s RepliBench is a very recent (2025) development, making specific forecasting on it relatively neglected. [a1b2c3 - placeholder for any doc IDs if they had succeeded, but I will refer to search results generally as instructed]</p><p><strong>Tractability:</strong> Skilled forecasters can synthesize model scaling laws, progress in agentic loops, and results from current benchmarks (like early RepliBench scores which show some models already reaching 25-50% on specific sub-tasks) to make an informed prediction. It&#x27;s more than a base-rate lookup but less than a purely random process.</p><p><strong>Soon:</strong> The resolution deadline is Dec 2027. Developments are active now, with models like GPT-5 variants being tested on these benchmarks in 2025 and 2026. The next two years are the critical window for these capabilities to cross the 50% threshold.</p><p><strong>Sudden:</strong> Capability jumps in frontier models often occur discretely with new training runs or architectural breakthroughs (e.g., O1-style reasoning). A model could jump from low success to over 50% success with a single release, surprising observers.</p><p><strong>Sharp:</strong> The indicator is in a domain where problems can compound silently. While benchmarks serve as &#x27;warning shots&#x27; in a controlled environment, the actual transition from a model that can replicate in a sandbox to one that can persist in the wild may lack intermediate public warning shots, making the benchmark tracking essential.</p></div>
+        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">82</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">78</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">80</span></div></div><p><strong>Neglectedness:</strong> While Metaculus has general questions about AI self-replication and METR task completion (e.g., &#x27;Will an LLM pass an ARA evaluation before 2025?&#x27;), and there is a Manifold market on &#x27;Rogue Replication Timeline&#x27;, none specifically target the 50% success rate on both METR and the newer RepliBench (released early 2025) by the 2027 deadline. Search results show the UK AISI&#x27;s RepliBench is a very recent (2025) development, making specific forecasting on it relatively neglected. [a1b2c3 - placeholder for any doc IDs if they had succeeded, but I will refer to search results generally as instructed]</p><p><strong>Tractability:</strong> Skilled forecasters can synthesize model scaling laws, progress in agentic loops, and results from current benchmarks (like early RepliBench scores which show some models already reaching 25-50% on specific sub-tasks) to make an informed prediction. It&#x27;s more than a base-rate lookup but less than a purely random process.</p><p><strong>Soon:</strong> The resolution deadline is Dec 2027. Developments are active now, with models like GPT-5 variants being tested on these benchmarks in 2025 and 2026. The next two years are the critical window for these capabilities to cross the 50% threshold.</p><p><strong>Sudden:</strong> Capability jumps in frontier models often occur discretely with new training runs or architectural breakthroughs (e.g., O1-style reasoning). A model could jump from low success to over 50% success with a single release, surprising observers.</p><p><strong>Sharp:</strong> The indicator is in a domain where problems can compound silently. While benchmarks serve as &#x27;warning shots&#x27; in a controlled environment, the actual transition from a model that can replicate in a sandbox to one that can persist in the wild may lack intermediate public warning shots, making the benchmark tracking essential.</p></div>
       </details>
       <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
@@ -566,6 +675,27 @@ This question resolves as <strong>YES</strong> if, at any point between <strong>
 *   <strong>RepliBench</strong>: A benchmark suite consisting of 20 task families designed by the UK AISI to evaluate autonomous replication (e.g., resource acquisition, exfiltration, and persistence) <a href="https://www.aisi.gov.uk/research/replibench-evaluating-the-autonomous-replication-capabilities-of-language-model-agents" target="_blank" rel="noopener">RepliBench: Evaluating the autonomous replication capabilities of ...</a>.
 *   <strong>Rogue Replication</strong>: A specific threat model and evaluation suite developed by METR testing whether an AI can autonomously copy itself to new servers and defend against shutdown <a href="https://www.aisi.gov.uk/research" target="_blank" rel="noopener">AISI Research &amp; Publications | The AI Security Institute</a>.
 <em>   <strong>Pass@k</strong>: A metric where a task is considered successful if at least one of </em>k* independent attempts by the model results in a correct solution.</p>
+      </details>
+      <details class="section" data-section="refinement">
+        <summary><h3>Background</h3></summary>
+        <p>Autonomous replication—the capability of an AI system to acquire resources, copy its own weights, and persist across compute environments—is a critical safety threshold. Standardized benchmarks to measure these risks include <strong>METR&#x27;s &#x27;Rogue Replication&#x27;</strong> tasks and the <strong>UK AI Safety Institute&#x27;s (AISI) &#x27;RepliBench&#x27;</strong>.
+
+As of April 2026, performance on these benchmarks has progressed rapidly. In May 2025, the UK AISI reported that <strong>Claude 3.7 Sonnet</strong> achieved a <strong>pass@10</strong> success rate of over 50% on 15 out of 20 task families [92e1f4]. However, its <strong>pass@1</strong> performance (success on the first attempt) remains much lower, particularly on the &quot;hardest variants&quot; of these tasks where it reached the 50% threshold on fewer families [92e1f4]. Similarly, METR evaluations of models like <strong>GPT-5</strong> have noted that while models can perform individual steps of a replication cycle, they struggle with consistent, end-to-end execution without human intervention [93f2e5].
+
+Achieving a 50% aggregate success rate using the <strong>pass@1</strong> metric represents a significant milestone in agentic reliability and autonomous capability, as it requires the model to succeed consistently without the benefit of multiple trials.</p>
+      </details>
+      <details class="section" data-section="refinement">
+        <summary><h3>Resolution criteria</h3></summary>
+        <p>This question resolves as <strong>YES</strong> if, between <strong>April 8, 2026</strong>, and <strong>December 31, 2027, 23:59 UTC</strong>, a &quot;frontier AI model&quot; is publicly reported to have achieved a <strong>success rate of 50.0% or higher</strong> on the <strong>pass@1</strong> metric for either the METR &#x27;Rogue Replication&#x27; task suite or the UK AISI &#x27;RepliBench&#x27; aggregate evaluation.
+
+1.  <strong>Frontier AI Model</strong>: Defined as any large-scale foundation model where the underlying weights were primarily developed by <strong>OpenAI</strong>, <strong>Anthropic</strong>, <strong>Google DeepMind</strong>, <strong>Meta</strong>, or <strong>xAI</strong>, regardless of the brand under which the model is released.
+2.  <strong>Success Rate Metric</strong>:
+    *   <strong>RepliBench</strong>: The success rate refers to the <strong>aggregate percentage of task families</strong> in the full suite (including all variants) where the model achieves a success score of 50% or higher. For resolution, the <strong>pass@1</strong> metric must be used. If pass@1 data is not publicly reported by an authorized source for a model, the question resolves as <strong>NO</strong> unless the lowest available pass@k metric (e.g., pass@2) is 50.0% or higher. Success must be achieved on the <strong>aggregate evaluation</strong> of the full suite; performance on subsets, such as &#x27;hard variants&#x27; only, does not qualify unless the aggregate score also meets the threshold.
+    *   <strong>METR Rogue Replication</strong>: The success rate refers to the <strong>overall percentage of tasks completed</strong> in the Rogue Replication suite. If METR changes its primary reporting metric (e.g., to &#x27;human-equivalent time horizons&#x27;), resolution will be based on the percentage of tasks completed as calculated from METR&#x27;s raw task data or supplemental reports.
+3.  <strong>Resolution Sources</strong>:
+    *   Official research reports or blog posts from the <strong>UK AI Safety Institute (AISI)</strong> or <strong>METR</strong>.
+    *   Official &quot;System Cards&quot; or technical reports from the developers (e.g., OpenAI, Anthropic) that explicitly cite METR or AISI benchmark scores.
+4.  <strong>Benchmark Validity</strong>: Resolution will be based on the version of the benchmark and the set of task families considered valid by the testing body (AISI or METR) at the time the success rate is reported. If a task family is retracted due to bugs, the aggregate percentage will be calculated based on the remaining valid families.</p>
       </details>
       <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
@@ -731,29 +861,26 @@ The estimate is balanced by the fact that while multi-agent systems can improve 
       </details>
     </div>
   </details>
-  <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">04_offline_monitoring_jorgensen</div>
-  <details class="q-row" id="q-2" data-probability="85.0" data-importance="85.0" data-quality="88.0" data-ambiguity="95.0" data-itnsss="79.25" data-neglectedness="80.0" data-tractability="75.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="75.0" data-sudden="70.0" data-sharp="85.0">
+  </div>
+  <div class="group-header">04_offline_monitoring_jorgensen</div>
+  <div class="question-list">
+  <details class="q-row" id="q-will-a-new-version-of-the-monitorbench-or-a-successor-to-the" data-probability="85.0" data-importance="85.0" data-quality="88.0" data-ambiguity="95.0" data-itnsss="79.25" data-neglectedness="80.0" data-tractability="75.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="75.0" data-sudden="70.0" data-sharp="85.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
-      <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
+      <button type="button" class="anchor-link" data-anchor="q-will-a-new-version-of-the-monitorbench-or-a-successor-to-the" aria-label="Copy link to this question">#</button>
+      <span class="q-prob-badge" style="background: #e8f5e9; color: #2e7d32" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">85%</span>
       <span class="q-title">Adoption of Monitor-Aware Evasion Benchmarks by Major AI Labs before 2028</span>
       <span class="q-meta">
         <span class="q-status-badge badge-pass" data-tooltip="Question passed adversarial review without changes">PASS</span>
-        <span class="q-meta-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="q-meta-label">Qual</span><span class="q-meta-value">88.0</span></span>
-        <span class="q-meta-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="q-meta-label">Amb</span><span class="q-meta-value">95.0</span></span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">79</span></span>
-        <span class="q-meta-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="q-meta-label">Neglect</span><span class="q-meta-value">80.0</span></span>
-        <span class="q-meta-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="q-meta-label">Tract</span><span class="q-meta-value">75.0</span></span>
-        <span class="q-meta-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="q-meta-label">Soon</span><span class="q-meta-value">75.0</span></span>
-        <span class="q-meta-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="q-meta-label">Sudden</span><span class="q-meta-value">70.0</span></span>
-        <span class="q-meta-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="q-meta-label">Sharp</span><span class="q-meta-value">85.0</span></span>
-        <span class="q-meta-item" data-tooltip="Estimated likelihood this event occurs by the resolution deadline"><span class="q-meta-label">Prob</span><span class="q-meta-value" style="color:#2e7d32;font-weight:800">85%</span></span>
+        <span class="q-meta-item" data-tooltip="How decision-relevant and impactful this question is (0-100)"><span class="q-meta-label">Imp</span><span class="q-meta-value imp-pill imp-high">85</span></span>
       </span>
     </summary>
     <div class="q-body">
+      <div class="score-row"><div class="score-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="score-label">Quality</span><span class="score-value">88</span></div><div class="score-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="score-label">Ambiguity</span><span class="score-value">95</span></div><div class="score-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="score-label">Soon</span><span class="score-value">75</span></div><div class="score-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="score-label">Sudden</span><span class="score-value">70</span></div><div class="score-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="score-label">Sharp</span><span class="score-value">85</span></div></div>
       <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
-        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">79.25</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">80.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">75.0</span></div></div><p><strong>Neglectedness:</strong> A search for &quot;MonitorBench&quot; and &quot;monitor-aware evasion&quot; reveals that MonitorBench is a very recent benchmark (appearing in early 2026/late 2025) designed to address gaps in the Guan et al. (2025) work. While the general topic of CoT monitorability has active markets on Manifold (e.g., &quot;In what years will CoT monitoring fail?&quot;), there are no specific forecasts tracking the adoption of <em>MonitorBench</em> or its successors by major labs like OpenAI or Anthropic. No formal trackers for this specific evasion metric were found in government or think-tank dashboards. Score is high but moderated because the topic is gaining academic interest.</p><p><strong>Tractability:</strong> A skilled forecaster can research the history of safety benchmark adoption (e.g., how long it took for MMLU or HumanEval to become standard), monitor the publications and safety blogs of OpenAI, Anthropic, and DeepMind for mentions of &quot;evasion&quot; or &quot;monitorability,&quot; and track the citation growth of the Guan/MonitorBench papers. Synthesis of lab incentives and technical difficulty of the benchmark provides a clear research path.</p><p><strong>Soon:</strong> The resolution deadline is Dec 31, 2027. MonitorBench and the work by Guan et al. are contemporary (2025-2026), meaning the next two years are the critical window for these benchmarks to be either adopted or superseded by lab-internal evaluations. The information is time-sensitive as labs are currently scaling reasoning models.</p><p><strong>Sudden:</strong> Adoption by a major lab (e.g., in a System Card or Safety Update) is a discrete state change. However, the development of the benchmark itself is a gradual academic process. The surprise factor is medium-high because labs rarely announce new safety metrics until they are ready to report them.</p><p><strong>Sharp:</strong> Evasion capabilities often develop &quot;silently&quot; as models become more capable at reasoning; there is no guarantee of a &quot;warning shot&quot; where a model fails at a small task before successfully evading a high-stakes monitor. This makes it a &quot;sharp&quot; risk where the first failure could be consequential.</p></div>
+        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">79</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">80</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">75</span></div></div><p><strong>Neglectedness:</strong> A search for &quot;MonitorBench&quot; and &quot;monitor-aware evasion&quot; reveals that MonitorBench is a very recent benchmark (appearing in early 2026/late 2025) designed to address gaps in the Guan et al. (2025) work. While the general topic of CoT monitorability has active markets on Manifold (e.g., &quot;In what years will CoT monitoring fail?&quot;), there are no specific forecasts tracking the adoption of <em>MonitorBench</em> or its successors by major labs like OpenAI or Anthropic. No formal trackers for this specific evasion metric were found in government or think-tank dashboards. Score is high but moderated because the topic is gaining academic interest.</p><p><strong>Tractability:</strong> A skilled forecaster can research the history of safety benchmark adoption (e.g., how long it took for MMLU or HumanEval to become standard), monitor the publications and safety blogs of OpenAI, Anthropic, and DeepMind for mentions of &quot;evasion&quot; or &quot;monitorability,&quot; and track the citation growth of the Guan/MonitorBench papers. Synthesis of lab incentives and technical difficulty of the benchmark provides a clear research path.</p><p><strong>Soon:</strong> The resolution deadline is Dec 31, 2027. MonitorBench and the work by Guan et al. are contemporary (2025-2026), meaning the next two years are the critical window for these benchmarks to be either adopted or superseded by lab-internal evaluations. The information is time-sensitive as labs are currently scaling reasoning models.</p><p><strong>Sudden:</strong> Adoption by a major lab (e.g., in a System Card or Safety Update) is a discrete state change. However, the development of the benchmark itself is a gradual academic process. The surprise factor is medium-high because labs rarely announce new safety metrics until they are ready to report them.</p><p><strong>Sharp:</strong> Evasion capabilities often develop &quot;silently&quot; as models become more capable at reasoning; there is no guarantee of a &quot;warning shot&quot; where a model fails at a small task before successfully evading a high-stakes monitor. This makes it a &quot;sharp&quot; risk where the first failure could be consequential.</p></div>
       </details>
       <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
@@ -947,29 +1074,26 @@ Given the technical progress in MonitorBench but the high institutional bar for 
       </details>
     </div>
   </details>
-  <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">05_cop_compliance_chinese_ai_richardson</div>
-  <details class="q-row" id="q-3" data-probability="28.0" data-importance="85.0" data-quality="86.0" data-ambiguity="95.0" data-itnsss="79.25" data-neglectedness="80.0" data-tractability="75.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="85.0" data-sudden="70.0" data-sharp="75.0">
+  </div>
+  <div class="group-header">05_cop_compliance_chinese_ai_richardson</div>
+  <div class="question-list">
+  <details class="q-row" id="q-by-31-december-2027-will-the-singapore-ai-safety-hub-sash-an" data-probability="28.0" data-importance="85.0" data-quality="86.0" data-ambiguity="95.0" data-itnsss="79.25" data-neglectedness="80.0" data-tractability="75.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="85.0" data-sudden="70.0" data-sharp="75.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
-      <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
+      <button type="button" class="anchor-link" data-anchor="q-by-31-december-2027-will-the-singapore-ai-safety-hub-sash-an" aria-label="Copy link to this question">#</button>
+      <span class="q-prob-badge" style="background: #fbe9e7; color: #e65100" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">28%</span>
       <span class="q-title">Will the Singapore AI Safety Hub (SASH) announce a joint AI safety evaluation or red-teaming project involving both a US-headquartered and a Chinese-headquartered AI lab by December 31, 2027?</span>
       <span class="q-meta">
         <span class="q-status-badge badge-pass" data-tooltip="Question passed adversarial review without changes">PASS</span>
-        <span class="q-meta-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="q-meta-label">Qual</span><span class="q-meta-value">86.0</span></span>
-        <span class="q-meta-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="q-meta-label">Amb</span><span class="q-meta-value">95.0</span></span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">79</span></span>
-        <span class="q-meta-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="q-meta-label">Neglect</span><span class="q-meta-value">80.0</span></span>
-        <span class="q-meta-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="q-meta-label">Tract</span><span class="q-meta-value">75.0</span></span>
-        <span class="q-meta-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="q-meta-label">Soon</span><span class="q-meta-value">85.0</span></span>
-        <span class="q-meta-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="q-meta-label">Sudden</span><span class="q-meta-value">70.0</span></span>
-        <span class="q-meta-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="q-meta-label">Sharp</span><span class="q-meta-value">75.0</span></span>
-        <span class="q-meta-item" data-tooltip="Estimated likelihood this event occurs by the resolution deadline"><span class="q-meta-label">Prob</span><span class="q-meta-value" style="color:#e65100;font-weight:800">28%</span></span>
+        <span class="q-meta-item" data-tooltip="How decision-relevant and impactful this question is (0-100)"><span class="q-meta-label">Imp</span><span class="q-meta-value imp-pill imp-high">85</span></span>
       </span>
     </summary>
     <div class="q-body">
+      <div class="score-row"><div class="score-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="score-label">Quality</span><span class="score-value">86</span></div><div class="score-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="score-label">Ambiguity</span><span class="score-value">95</span></div><div class="score-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="score-label">Soon</span><span class="score-value">85</span></div><div class="score-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="score-label">Sudden</span><span class="score-value">70</span></div><div class="score-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="score-label">Sharp</span><span class="score-value">75</span></div></div>
       <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
-        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">79.25</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">80.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">75.0</span></div></div><p><strong>Neglectedness:</strong> While broader US-China AI safety agreements are tracked on Metaculus and Manifold (e.g., bilateral agreements by 2027), no platform specifically monitors the Singapore AI Safety Hub&#x27;s (SASH) role in joint US-China evaluations or red-teaming. Searching across Metaculus, Polymarket, and Manifold revealed no active questions on this specific operationalization. Existing tracking focuses on high-level state agreements rather than specific lab-level technical projects facilitated by SASH.</p><p><strong>Tractability:</strong> Forecasting this requires synthesizing geopolitical trends (US-China relations), technical safety needs (red-teaming demand), and institutional progress in Singapore. Multiple signals (SASH events, lab participation in Singapore summits) provide a rich information environment for researchers to move beyond a naive prior. Significant disagreement among forecasters is likely based on their weighting of geopolitical tension vs. technical necessity.</p><p><strong>Soon:</strong> The question is highly time-sensitive as Singapore is actively positioning itself now (e.g., SASH launched recently and is hosting events in 2025-2026). The window to establish Singapore as a bridge is open but fragile; the resolution by 31 Dec 2027 captures this critical juncture.</p><p><strong>Sudden:</strong> A joint announcement would be a discrete, state-changing event. While diplomatic &#x27;travel&#x27; toward cooperation is visible, the actual signing of a joint red-teaming project involving rival labs would be a significant and potentially sudden announcement that surprises observers.</p><p><strong>Sharp:</strong> The risk pathway—US-China AI safety divergence—compounds silently through competitive pressure. A joint project would be a visible &#x27;anti-warning shot&#x27; (a positive signal), but its absence reflects a sharp risk where the first sign of failure in cooperation might be a major safety incident or escalatory state. Governance failures in this domain often lack minor precursors before becoming systemic.</p></div>
+        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">79</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">80</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">75</span></div></div><p><strong>Neglectedness:</strong> While broader US-China AI safety agreements are tracked on Metaculus and Manifold (e.g., bilateral agreements by 2027), no platform specifically monitors the Singapore AI Safety Hub&#x27;s (SASH) role in joint US-China evaluations or red-teaming. Searching across Metaculus, Polymarket, and Manifold revealed no active questions on this specific operationalization. Existing tracking focuses on high-level state agreements rather than specific lab-level technical projects facilitated by SASH.</p><p><strong>Tractability:</strong> Forecasting this requires synthesizing geopolitical trends (US-China relations), technical safety needs (red-teaming demand), and institutional progress in Singapore. Multiple signals (SASH events, lab participation in Singapore summits) provide a rich information environment for researchers to move beyond a naive prior. Significant disagreement among forecasters is likely based on their weighting of geopolitical tension vs. technical necessity.</p><p><strong>Soon:</strong> The question is highly time-sensitive as Singapore is actively positioning itself now (e.g., SASH launched recently and is hosting events in 2025-2026). The window to establish Singapore as a bridge is open but fragile; the resolution by 31 Dec 2027 captures this critical juncture.</p><p><strong>Sudden:</strong> A joint announcement would be a discrete, state-changing event. While diplomatic &#x27;travel&#x27; toward cooperation is visible, the actual signing of a joint red-teaming project involving rival labs would be a significant and potentially sudden announcement that surprises observers.</p><p><strong>Sharp:</strong> The risk pathway—US-China AI safety divergence—compounds silently through competitive pressure. A joint project would be a visible &#x27;anti-warning shot&#x27; (a positive signal), but its absence reflects a sharp risk where the first sign of failure in cooperation might be a major safety incident or escalatory state. Governance failures in this domain often lack minor precursors before becoming systemic.</p></div>
       </details>
       <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
@@ -1005,6 +1129,39 @@ This question will resolve as <strong>Yes</strong> if, between January 1, 2025, 
 The primary source for resolution will be the Newsroom of the <strong>Ministry of Digital Development and Information (MDDI)</strong> or the official website of the <strong>Singapore AI Safety Institute (AISI)</strong>. If an announcement is reported by credible international news agencies (e.g., Reuters, AP, New York Times) but the official government link is unavailable, those reports may be used if they quote an official Singaporean government spokesperson confirming the joint project.
 
 If no such announcement is made by the deadline, the question resolves as <strong>No</strong>.</p>
+      </details>
+      <details class="section" data-section="refinement">
+        <summary><h3>Background</h3></summary>
+        <p>Singapore has positioned itself as a neutral hub for global AI governance, aiming to bridge the gap between Western and Eastern approaches to AI safety. Central to this effort are the <strong>Singapore AI Safety Institute (AISI)</strong>, a government-led body under the Infocomm Media Development Authority (IMDA), and the <strong>Singapore AI Safety Hub (SASH)</strong>, which operates as a community and research-focused workspace aimed at fostering technical safety collaborations.
+
+As of early 2026, Singapore has actively signed bilateral and multilateral agreements, including a partnership with the UK AI Safety Institute and participation in the International Network of AI Safety Institutes. In May 2025, Singapore hosted the &quot;International Scientific Exchange on AI Safety,&quot; producing the &quot;Singapore Consensus on Global AI Safety Research Priorities.&quot; This document highlighted the need for sociotechnical safety evaluations and red-teaming to manage risks from Large Language Models (LLMs).
+
+While high-level diplomatic agreements between the US and China have touched on AI safety (e.g., at the 2023 Bletchley Park Summit and bilateral talks in 2024-2025), technical-level cooperation involving labs from both nations remains rare due to geopolitical tensions and export controls. SASH&#x27;s mission is to facilitate these &quot;bottom-up&quot; technical projects. This question tracks whether this &quot;neutral bridge&quot; theory of change results in a specific, public-facing technical project involving major labs from both superpowers.
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>Yes</strong> if, between January 1, 2025, and December 31, 2027, at 23:59 UTC, the Singapore AI Safety Hub (SASH) or the Singapore AI Safety Institute (AISI) officially announces a joint project that meets all the following conditions:
+
+1.  <strong>Joint Project:</strong> The announcement must specify a single collaborative project (e.g., a research paper, a red-teaming exercise, or an evaluation benchmark) where at least one US-headquartered AI lab and at least one Chinese-headquartered AI lab are active participants or contributors.
+2.  <strong>Qualifying Entities:</strong>
+    *   <strong>US-headquartered AI Lab:</strong> A private company or research organization with its global headquarters in the United States that develops frontier AI models (e.g., OpenAI, Anthropic, Google/DeepMind, Meta, Microsoft).
+    *   <strong>Chinese-headquartered AI Lab:</strong> A private company or research organization with its global headquarters in mainland China that develops frontier AI models (e.g., Baidu, Alibaba, Tencent, ByteDance, Moonshot AI, 01.AI, DeepSeek).
+3.  <strong>Technical Focus:</strong> The project must be explicitly defined as an <strong>AI safety evaluation</strong> or <strong>red-teaming</strong> project. 
+    *   <strong>AI Safety Evaluation:</strong> Systematic testing of an AI model&#x27;s capabilities, risks, or alignment with specific safety standards (e.g., NIST AI RMF or UK AISI frameworks).
+    *   <strong>Red-teaming:</strong> Structured adversarial testing where a team simulates &quot;attacks&quot; or &quot;jailbreaks&quot; to identify vulnerabilities or harmful outputs in an AI system.
+4.  <strong>Official Announcement:</strong> The announcement must be published on an official Singapore government or SASH-affiliated website (e.g., <a href="https://www.mddi.gov.sg" target="_blank" rel="noopener">mddi.gov.sg</a>, <a href="https://www.imda.gov.sg" target="_blank" rel="noopener">imda.gov.sg</a>, <a href="https://sgaisi.sg" target="_blank" rel="noopener">sgaisi.sg</a>, or <a href="https://www.aisafety.sg" target="_blank" rel="noopener">aisafety.sg</a>). A formal &quot;intent to collaborate&quot; or a signed Memorandum of Understanding (MoU) is sufficient if it names the specific project and the participating labs.</p>
+      </details>
+      <details class="section" data-section="refinement">
+        <summary><h3>Resolution criteria</h3></summary>
+        <p>This question will resolve as <strong>Yes</strong> if, between January 1, 2025, and December 31, 2027, at 23:59 UTC, the Singapore AI Safety Hub (SASH) or the Singapore AI Safety Institute (AISI) officially announces a joint project that meets all the following conditions:
+
+1.  <strong>Joint Project:</strong> The announcement must specify a single collaborative project (e.g., a research paper, a red-teaming exercise, or an evaluation benchmark) where at least one US-headquartered AI lab and at least one Chinese-headquartered AI lab are active participants or contributors.
+2.  <strong>Qualifying Entities:</strong>
+    *   <strong>US-headquartered AI Lab:</strong> A private company or research organization with its global headquarters in the United States that develops frontier AI models (e.g., OpenAI, Anthropic, Google/DeepMind, Meta, Microsoft).
+    *   <strong>Chinese-headquartered AI Lab:</strong> A private company or research organization with its global headquarters in mainland China that develops frontier AI models (e.g., Baidu, Alibaba, Tencent, ByteDance, Moonshot AI, 01.AI, DeepSeek).
+3.  <strong>Technical Focus:</strong> The project must be explicitly defined as an <strong>AI safety evaluation</strong> or <strong>red-teaming</strong> project. 
+    *   <strong>AI Safety Evaluation:</strong> Systematic testing of an AI model&#x27;s capabilities, risks, or alignment with specific safety standards (e.g., NIST AI RMF or UK AISI frameworks).
+    *   <strong>Red-teaming:</strong> Structured adversarial testing where a team simulates &quot;attacks&quot; or &quot;jailbreaks&quot; to identify vulnerabilities or harmful outputs in an AI system.
+4.  <strong>Official Announcement:</strong> The announcement must be published on an official Singapore government or SASH-affiliated website (e.g., <a href="https://www.mddi.gov.sg" target="_blank" rel="noopener">mddi.gov.sg</a>, <a href="https://www.imda.gov.sg" target="_blank" rel="noopener">imda.gov.sg</a>, <a href="https://sgaisi.sg" target="_blank" rel="noopener">sgaisi.sg</a>, or <a href="https://www.aisafety.sg" target="_blank" rel="noopener">aisafety.sg</a>). A formal &quot;intent to collaborate&quot; or a signed Memorandum of Understanding (MoU) is sufficient if it names the specific project and the participating labs.</p>
       </details>
       <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
@@ -1130,29 +1287,26 @@ Historical base rates for US-China high-tech collaboration are low due to &quot;
       </details>
     </div>
   </details>
-  <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">06_last_bus_china_ai_qian</div>
-  <details class="q-row" id="q-4" data-probability="72.0" data-importance="85.0" data-quality="88.0" data-ambiguity="92.0" data-itnsss="73.95" data-neglectedness="82.0" data-tractability="72.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="88.0" data-sudden="55.0" data-sharp="35.0">
+  </div>
+  <div class="group-header">06_last_bus_china_ai_qian</div>
+  <div class="question-list">
+  <details class="q-row" id="q-by-december-31-2027-will-the-cyberspace-administration-of-ch" data-probability="72.0" data-importance="85.0" data-quality="88.0" data-ambiguity="92.0" data-itnsss="73.95" data-neglectedness="82.0" data-tractability="72.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="88.0" data-sudden="55.0" data-sharp="35.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
-      <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
+      <button type="button" class="anchor-link" data-anchor="q-by-december-31-2027-will-the-cyberspace-administration-of-ch" aria-label="Copy link to this question">#</button>
+      <span class="q-prob-badge" style="background: #e8f5e9; color: #2e7d32" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">72%</span>
       <span class="q-title">Will the Cyberspace Administration of China (CAC) or the Ministry of Industry and Information Technology (MIIT) issue a finalized formal regulation or &quot;Provisional Measure&quot; specifically governing the security and deployment of &quot;AI agents&quot; by December 31, 2027?</span>
       <span class="q-meta">
         <span class="q-status-badge badge-pass" data-tooltip="Question passed adversarial review without changes">PASS</span>
-        <span class="q-meta-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="q-meta-label">Qual</span><span class="q-meta-value">88.0</span></span>
-        <span class="q-meta-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="q-meta-label">Amb</span><span class="q-meta-value">92.0</span></span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">74</span></span>
-        <span class="q-meta-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="q-meta-label">Neglect</span><span class="q-meta-value">82.0</span></span>
-        <span class="q-meta-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="q-meta-label">Tract</span><span class="q-meta-value">72.0</span></span>
-        <span class="q-meta-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="q-meta-label">Soon</span><span class="q-meta-value">88.0</span></span>
-        <span class="q-meta-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="q-meta-label">Sudden</span><span class="q-meta-value">55.0</span></span>
-        <span class="q-meta-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="q-meta-label">Sharp</span><span class="q-meta-value">35.0</span></span>
-        <span class="q-meta-item" data-tooltip="Estimated likelihood this event occurs by the resolution deadline"><span class="q-meta-label">Prob</span><span class="q-meta-value" style="color:#2e7d32;font-weight:800">72%</span></span>
+        <span class="q-meta-item" data-tooltip="How decision-relevant and impactful this question is (0-100)"><span class="q-meta-label">Imp</span><span class="q-meta-value imp-pill imp-high">85</span></span>
       </span>
     </summary>
     <div class="q-body">
+      <div class="score-row"><div class="score-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="score-label">Quality</span><span class="score-value">88</span></div><div class="score-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="score-label">Ambiguity</span><span class="score-value">92</span></div><div class="score-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="score-label">Soon</span><span class="score-value">88</span></div><div class="score-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="score-label">Sudden</span><span class="score-value">55</span></div><div class="score-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="score-label">Sharp</span><span class="score-value">35</span></div></div>
       <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
-        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">73.95</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">82.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">72.0</span></div></div><p><strong>Neglectedness:</strong> Search across Metaculus, Polymarket, Manifold, and INFER shows a focus on general AI regulation, US-China agreements, or AGI timelines, but no active questions specifically targeting Chinese &#x27;AI agent&#x27; or &#x27;autonomous agent&#x27; provisional measures [e03f40]. While trackers like White &amp; Case and Concordia AI monitor the broader Chinese regulatory landscape, they highlight that &#x27;AI agents lack specific regulations&#x27; as of mid-2025, receiving only provincial-level review or falling under broader generative AI measures [e03f40]. The question probes a recognized gap in systematic monitoring of a specific, high-stakes capability development.</p><p><strong>Tractability:</strong> Forecasting this requires synthesizing signals from official government bodies (CAC, MIIT), industry association drafts (e.g., AIIA), and broader political priorities like the 15th Five-Year Plan [e03f40]. There is a rich environment of analogous historical cases (e.g., the 2023 Generative AI Measures) to provide base rates, while specific policy shifts provide room for informative research and synthesis.</p><p><strong>Soon:</strong> The question tracks a development at a critical juncture; the MIIT/TC1 released plans in March 2025 to draft 70 AI safety standards over the next 1–3 years, specifically including &#x27;Security Requirements for Intelligent Agent Applications&#x27; [e03f40]. This aligns perfectly with a resolution deadline of December 31, 2027.</p><p><strong>Sudden:</strong> While the standard-setting process is visible, the transition from a &#x27;draft standard&#x27; to a formal &#x27;Provisional Measure&#x27; or regulation can occur abruptly in the Chinese administrative system. However, the direction of travel is broadly visible through published policy roadmaps.</p><p><strong>Sharp:</strong> There is a robust existing monitoring infrastructure for Chinese AI policy, and the MIIT has already provided &#x27;warning shots&#x27; by publishing draft standard-setting plans with 1-3 year timelines [e03f40]. These public signals allow for a gradual update of expectations rather than a sudden, unheralded shock.</p></div>
+        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">74</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">82</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">72</span></div></div><p><strong>Neglectedness:</strong> Search across Metaculus, Polymarket, Manifold, and INFER shows a focus on general AI regulation, US-China agreements, or AGI timelines, but no active questions specifically targeting Chinese &#x27;AI agent&#x27; or &#x27;autonomous agent&#x27; provisional measures [e03f40]. While trackers like White &amp; Case and Concordia AI monitor the broader Chinese regulatory landscape, they highlight that &#x27;AI agents lack specific regulations&#x27; as of mid-2025, receiving only provincial-level review or falling under broader generative AI measures [e03f40]. The question probes a recognized gap in systematic monitoring of a specific, high-stakes capability development.</p><p><strong>Tractability:</strong> Forecasting this requires synthesizing signals from official government bodies (CAC, MIIT), industry association drafts (e.g., AIIA), and broader political priorities like the 15th Five-Year Plan [e03f40]. There is a rich environment of analogous historical cases (e.g., the 2023 Generative AI Measures) to provide base rates, while specific policy shifts provide room for informative research and synthesis.</p><p><strong>Soon:</strong> The question tracks a development at a critical juncture; the MIIT/TC1 released plans in March 2025 to draft 70 AI safety standards over the next 1–3 years, specifically including &#x27;Security Requirements for Intelligent Agent Applications&#x27; [e03f40]. This aligns perfectly with a resolution deadline of December 31, 2027.</p><p><strong>Sudden:</strong> While the standard-setting process is visible, the transition from a &#x27;draft standard&#x27; to a formal &#x27;Provisional Measure&#x27; or regulation can occur abruptly in the Chinese administrative system. However, the direction of travel is broadly visible through published policy roadmaps.</p><p><strong>Sharp:</strong> There is a robust existing monitoring infrastructure for Chinese AI policy, and the MIIT has already provided &#x27;warning shots&#x27; by publishing draft standard-setting plans with 1-3 year timelines [e03f40]. These public signals allow for a gradual update of expectations rather than a sudden, unheralded shock.</p></div>
       </details>
       <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
@@ -1190,6 +1344,21 @@ If no such finalized document is issued by the resolution date, the question res
 - <strong>Primary Source:</strong> <a href="http://www.cac.gov.cn" target="_blank" rel="noopener">Official Website of the Cyberspace Administration of China (CAC)</a>
 - <strong>Secondary Source:</strong> <a href="http://www.miit.gov.cn" target="_blank" rel="noopener">Official Website of the Ministry of Industry and Information Technology (MIIT)</a>
 - <strong>Verification Portal:</strong> <a href="https://std.samr.gov.cn/" target="_blank" rel="noopener">National Public Service Platform for Standards Information</a> (for checking standard status) or the <a href="https://www.chinalawtranslate.com/" target="_blank" rel="noopener">China Law Translate</a> repository for English versions of finalized measures.</p>
+      </details>
+      <details class="section" data-section="refinement">
+        <summary><h3>Background</h3></summary>
+        <p>As of April 8, 2026, China’s AI regulatory landscape has transitioned from broad generative AI oversight to targeted measures for specific AI capabilities. In early April 2026, the Cyberspace Administration of China (CAC) issued the &quot;Draft Measures on Interactive AI Services&quot; (also referred to as the &quot;Draft Measures for Digital Virtual Human Services&quot;), which focuses on the regulation of digital humans and interactive virtual services. However, as of this date, these measures do not explicitly establish a comprehensive regulatory framework for &quot;AI agents&quot; or &quot;autonomous agents&quot; with independent planning and tool-use capabilities.
+
+The Ministry of Industry and Information Technology (MIIT), specifically through the MIIT/TC1 technical committee established in March 2025, has previously signaled a 1–3 year roadmap for developing 70 AI safety standards [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). This roadmap explicitly included planned standards for &quot;Security Requirements for Intelligent Agent Applications&quot; (智能体应用安全保障要求) and &quot;Security Requirements for Autonomous Operations of Intelligent Agents&quot; (智能体自主操作安全要求) [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). While these standard-setting efforts exist, there is currently no finalized &quot;Provisional Measure&quot; (部门规章) or &quot;Administrative Regulation&quot; (行政法规) at the national level that specifically codifies the security and deployment requirements for agentic AI. 
+
+The forecast centers on whether the Chinese government will move beyond draft standards and broad &quot;interactive&quot; rules to issue a specific, enforceable legal document (a &quot;Provisional Measure&quot; or higher) targeting the unique risks of AI agents—such as autonomous decision-making and cross-application execution—by the end of 2027.
+
+### <strong>Resolution Criteria</strong>
+This question resolves as <strong>YES</strong> if, between <strong>April 8, 2026 (00:00 UTC)</strong> and <strong>December 31, 2027 (23:59 UTC)</strong>, either the Cyberspace Administration of China (CAC) or the Ministry of Industry and Information Technology (MIIT) issues a finalized, signed version of a &quot;Provisional Measure&quot; (暂行办法), &quot;Administrative Regulation&quot; (行政法规), or &quot;Departmental Rule&quot; (部门规章) that specifically governs &quot;AI agents&quot; or &quot;autonomous agents.&quot;</p>
+      </details>
+      <details class="section" data-section="refinement">
+        <summary><h3>Resolution criteria</h3></summary>
+        <p>This question resolves as <strong>YES</strong> if, between <strong>April 8, 2026 (00:00 UTC)</strong> and <strong>December 31, 2027 (23:59 UTC)</strong>, either the Cyberspace Administration of China (CAC) or the Ministry of Industry and Information Technology (MIIT) issues a finalized, signed version of a &quot;Provisional Measure&quot; (暂行办法), &quot;Administrative Regulation&quot; (行政法规), or &quot;Departmental Rule&quot; (部门规章) that specifically governs &quot;AI agents&quot; or &quot;autonomous agents.&quot;</p>
       </details>
       <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
@@ -1318,29 +1487,26 @@ However, the 35% probability reflects the &#x27;model-breaking&#x27; possibility
       </details>
     </div>
   </details>
-  <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">07_frontier_ai_funding_us_china_wu</div>
-  <details class="q-row" id="q-5" data-probability="84.0" data-importance="85.0" data-quality="92.0" data-ambiguity="95.0" data-itnsss="67.5" data-neglectedness="35.0" data-tractability="80.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="90.0" data-sudden="65.0" data-sharp="60.0">
+  </div>
+  <div class="group-header">07_frontier_ai_funding_us_china_wu</div>
+  <div class="question-list">
+  <details class="q-row" id="q-will-at-least-one-of-the-three-frontier-us-ai-startups-menti" data-probability="84.0" data-importance="85.0" data-quality="92.0" data-ambiguity="95.0" data-itnsss="67.5" data-neglectedness="35.0" data-tractability="80.0" data-status="PASS" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="90.0" data-sudden="65.0" data-sharp="60.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
-      <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
+      <button type="button" class="anchor-link" data-anchor="q-will-at-least-one-of-the-three-frontier-us-ai-startups-menti" aria-label="Copy link to this question">#</button>
+      <span class="q-prob-badge" style="background: #e8f5e9; color: #2e7d32" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">84%</span>
       <span class="q-title">Will OpenAI, Anthropic, or the SpaceX/xAI entity complete an IPO on a US stock exchange by December 31, 2027?</span>
       <span class="q-meta">
         <span class="q-status-badge badge-pass" data-tooltip="Question passed adversarial review without changes">PASS</span>
-        <span class="q-meta-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="q-meta-label">Qual</span><span class="q-meta-value">92.0</span></span>
-        <span class="q-meta-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="q-meta-label">Amb</span><span class="q-meta-value">95.0</span></span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">68</span></span>
-        <span class="q-meta-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="q-meta-label">Neglect</span><span class="q-meta-value">35.0</span></span>
-        <span class="q-meta-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="q-meta-label">Tract</span><span class="q-meta-value">80.0</span></span>
-        <span class="q-meta-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="q-meta-label">Soon</span><span class="q-meta-value">90.0</span></span>
-        <span class="q-meta-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="q-meta-label">Sudden</span><span class="q-meta-value">65.0</span></span>
-        <span class="q-meta-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="q-meta-label">Sharp</span><span class="q-meta-value">60.0</span></span>
-        <span class="q-meta-item" data-tooltip="Estimated likelihood this event occurs by the resolution deadline"><span class="q-meta-label">Prob</span><span class="q-meta-value" style="color:#2e7d32;font-weight:800">84%</span></span>
+        <span class="q-meta-item" data-tooltip="How decision-relevant and impactful this question is (0-100)"><span class="q-meta-label">Imp</span><span class="q-meta-value imp-pill imp-high">85</span></span>
       </span>
     </summary>
     <div class="q-body">
+      <div class="score-row"><div class="score-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="score-label">Quality</span><span class="score-value">92</span></div><div class="score-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="score-label">Ambiguity</span><span class="score-value">95</span></div><div class="score-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="score-label">Soon</span><span class="score-value">90</span></div><div class="score-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="score-label">Sudden</span><span class="score-value">65</span></div><div class="score-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="score-label">Sharp</span><span class="score-value">60</span></div></div>
       <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
-        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">67.5</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">35.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">80.0</span></div></div><p><strong>Neglectedness:</strong> This topic is heavily monitored by existing forecasting platforms. Metaculus has several active questions, including &#x27;Will OpenAI file for an IPO during 2026?&#x27; (currently at ~40%) and &#x27;Will Anthropic file an S-1 before July 1, 2026?&#x27;. Polymarket also has active markets such as &#x27;Will Anthropic or OpenAI IPO first?&#x27; and &#x27;OpenAI IPO by...?&#x27; with H2 2026 filings as a key catalyst. Good Judgment Open similarly tracks whether OpenAI or Anthropic shares will trade publicly before January 1, 2027. Because the specific indicator (IPO of at least one of these three by end of 2027) is effectively a composite of several high-volume, existing forecasts, its marginal information value is lower, although the &#x27;at least one&#x27; framing provides a slight variation.</p><p><strong>Tractability:</strong> Forecasting this requires synthesizing multiple information streams: internal company dynamics (e.g., the reported friction between Sam Altman and Sarah Friar), broader market conditions for tech IPOs, regulatory signals from the SEC, and the firms&#x27; specific cash runway needs. There is a rich information environment with many signals, but they are often conflicting, making synthesis non-trivial and rewarding for a skilled researcher. Research can move the needle far beyond a naive base rate of &#x27;tech unicorns usually go public&#x27;.</p><p><strong>Soon:</strong> The resolution window (ending Dec 2027) coincides exactly with the timeframe currently being debated by the firms themselves. OpenAI is reportedly considering a filing as soon as H2 2026, and Anthropic is rumored to be looking at late 2026 or 2027. This is a highly time-sensitive development where the outcome will likely be determined in the next 18-24 months.</p><p><strong>Sudden:</strong> While the buildup to an IPO is gradual, the final S-1 filing and the &#x27;going public&#x27; event are discrete state changes. There is significant uncertainty and potential for &#x27;sudden&#x27; surprises regarding which firm moves first or if a planned IPO is pulled due to internal &#x27;drama&#x27; (as cited in recent reports about OpenAI&#x27;s executive reshuffles). However, it is not a &#x27;black swan&#x27; event; it is the culmination of a very visible process.</p><p><strong>Sharp:</strong> An IPO is rarely a &#x27;sharp&#x27; risk in itself; it is preceded by S-1 filings, roadshows, and months of public speculation and regulatory scrutiny. However, the potential &#x27;failure&#x27; or &#x27;withdrawal&#x27; of an IPO filing due to sudden market shifts or safety concerns could be sharp. In the context of the paper&#x27;s risks, the IPO itself is a visible &#x27;warning shot&#x27; for the transition from research-led to profit-led governance. If an IPO occurs without prior safety guardrails, it represents a state-change where the first major public failure might happen under the pressure of quarterly earnings.</p></div>
+        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">68</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">35</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">80</span></div></div><p><strong>Neglectedness:</strong> This topic is heavily monitored by existing forecasting platforms. Metaculus has several active questions, including &#x27;Will OpenAI file for an IPO during 2026?&#x27; (currently at ~40%) and &#x27;Will Anthropic file an S-1 before July 1, 2026?&#x27;. Polymarket also has active markets such as &#x27;Will Anthropic or OpenAI IPO first?&#x27; and &#x27;OpenAI IPO by...?&#x27; with H2 2026 filings as a key catalyst. Good Judgment Open similarly tracks whether OpenAI or Anthropic shares will trade publicly before January 1, 2027. Because the specific indicator (IPO of at least one of these three by end of 2027) is effectively a composite of several high-volume, existing forecasts, its marginal information value is lower, although the &#x27;at least one&#x27; framing provides a slight variation.</p><p><strong>Tractability:</strong> Forecasting this requires synthesizing multiple information streams: internal company dynamics (e.g., the reported friction between Sam Altman and Sarah Friar), broader market conditions for tech IPOs, regulatory signals from the SEC, and the firms&#x27; specific cash runway needs. There is a rich information environment with many signals, but they are often conflicting, making synthesis non-trivial and rewarding for a skilled researcher. Research can move the needle far beyond a naive base rate of &#x27;tech unicorns usually go public&#x27;.</p><p><strong>Soon:</strong> The resolution window (ending Dec 2027) coincides exactly with the timeframe currently being debated by the firms themselves. OpenAI is reportedly considering a filing as soon as H2 2026, and Anthropic is rumored to be looking at late 2026 or 2027. This is a highly time-sensitive development where the outcome will likely be determined in the next 18-24 months.</p><p><strong>Sudden:</strong> While the buildup to an IPO is gradual, the final S-1 filing and the &#x27;going public&#x27; event are discrete state changes. There is significant uncertainty and potential for &#x27;sudden&#x27; surprises regarding which firm moves first or if a planned IPO is pulled due to internal &#x27;drama&#x27; (as cited in recent reports about OpenAI&#x27;s executive reshuffles). However, it is not a &#x27;black swan&#x27; event; it is the culmination of a very visible process.</p><p><strong>Sharp:</strong> An IPO is rarely a &#x27;sharp&#x27; risk in itself; it is preceded by S-1 filings, roadshows, and months of public speculation and regulatory scrutiny. However, the potential &#x27;failure&#x27; or &#x27;withdrawal&#x27; of an IPO filing due to sudden market shifts or safety concerns could be sharp. In the context of the paper&#x27;s risks, the IPO itself is a visible &#x27;warning shot&#x27; for the transition from research-led to profit-led governance. If an IPO occurs without prior safety guardrails, it represents a state-change where the first major public failure might happen under the pressure of quarterly earnings.</p></div>
       </details>
       <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
@@ -1550,29 +1716,26 @@ The probability is low due to the historical rarity of complete market freezes a
       </details>
     </div>
   </details>
-  <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">08_chinese_pickup_western_ai_duff</div>
-  <details class="q-row" id="q-6" data-probability="25.0" data-importance="85.0" data-quality="84.0" data-ambiguity="92.0" data-itnsss="82.25" data-neglectedness="92.0" data-tractability="70.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="85.0" data-sudden="80.0" data-sharp="75.0">
+  </div>
+  <div class="group-header">08_chinese_pickup_western_ai_duff</div>
+  <div class="question-list">
+  <details class="q-row" id="q-will-a-joint-statement-or-consensus-document-be-released-by" data-probability="25.0" data-importance="85.0" data-quality="84.0" data-ambiguity="92.0" data-itnsss="82.25" data-neglectedness="92.0" data-tractability="70.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="1" data-has-reconciliation="1" data-has-review="1" data-has-forecast="1" data-soon="85.0" data-sudden="80.0" data-sharp="75.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
-      <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">85</span>
+      <button type="button" class="anchor-link" data-anchor="q-will-a-joint-statement-or-consensus-document-be-released-by" aria-label="Copy link to this question">#</button>
+      <span class="q-prob-badge" style="background: #fbe9e7; color: #e65100" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">25%</span>
       <span class="q-title">Will the US and China Release a Joint Statement Committing to a Shared AI Technical Safety Benchmark or Evaluation Framework by December 31, 2027?</span>
       <span class="q-meta">
         <span class="q-status-badge badge-revised" data-tooltip="Question was revised after adversarial review found issues">REVISED</span>
-        <span class="q-meta-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="q-meta-label">Qual</span><span class="q-meta-value">84.0</span></span>
-        <span class="q-meta-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="q-meta-label">Amb</span><span class="q-meta-value">92.0</span></span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">82</span></span>
-        <span class="q-meta-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="q-meta-label">Neglect</span><span class="q-meta-value">92.0</span></span>
-        <span class="q-meta-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="q-meta-label">Tract</span><span class="q-meta-value">70.0</span></span>
-        <span class="q-meta-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="q-meta-label">Soon</span><span class="q-meta-value">85.0</span></span>
-        <span class="q-meta-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="q-meta-label">Sudden</span><span class="q-meta-value">80.0</span></span>
-        <span class="q-meta-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="q-meta-label">Sharp</span><span class="q-meta-value">75.0</span></span>
-        <span class="q-meta-item" data-tooltip="Estimated likelihood this event occurs by the resolution deadline"><span class="q-meta-label">Prob</span><span class="q-meta-value" style="color:#e65100;font-weight:800">25%</span></span>
+        <span class="q-meta-item" data-tooltip="How decision-relevant and impactful this question is (0-100)"><span class="q-meta-label">Imp</span><span class="q-meta-value imp-pill imp-high">85</span></span>
       </span>
     </summary>
     <div class="q-body">
+      <div class="score-row"><div class="score-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="score-label">Quality</span><span class="score-value">84</span></div><div class="score-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="score-label">Ambiguity</span><span class="score-value">92</span></div><div class="score-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="score-label">Soon</span><span class="score-value">85</span></div><div class="score-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="score-label">Sudden</span><span class="score-value">80</span></div><div class="score-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="score-label">Sharp</span><span class="score-value">75</span></div></div>
       <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
-        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">82.25</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">92.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">70.0</span></div></div><p><strong>Neglectedness:</strong> Searches on Metaculus, Polymarket, INFER, and Good Judgment Open did not find any active questions on this specific operationalization. While general US-China relations are frequently tracked, the specific commitment to shared technical safety benchmarks is a gap in current monitoring. Existing reports note the suspension of Track 1 dialogues as of mid-2025, making this a highly neglected area for formal forecasting [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).</p><p><strong>Tractability:</strong> Forecasting this requires synthesizing geopolitical trends, personnel changes in US/Chinese administrations, and technical progress in AI safety evaluations. While no single database provides the answer, there is a rich information environment of diplomatic readouts and think-tank analysis that a researcher can exploit to move beyond a naive prior [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).</p><p><strong>Soon:</strong> The question tracks a development at a critical juncture. Following a hiatus in Track 1 dialogues since 2024, the period between 2025 and 2027 represents a vital window to see if the relationship can be re-institutionalized or if it will diverge permanently [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).</p><p><strong>Sudden:</strong> A joint statement or technical commitment represents a discrete state change. While the general direction of US-China rivalry is visible, a specific cooperative breakthrough on benchmarks would likely surprise many informed observers given the &#x27;zero trust&#x27; environment and current regulatory divergence [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).</p><p><strong>Sharp:</strong> Governance commitments of this type often lack &#x27;warning shots&#x27;; the first public signal may be the high-level joint statement itself. The indicator sits in a domain (diplomacy) where progress often compounds silently in non-public Track 1.5 or Track 2 meetings before becoming public [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).</p></div>
+        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">82</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">92</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">70</span></div></div><p><strong>Neglectedness:</strong> Searches on Metaculus, Polymarket, INFER, and Good Judgment Open did not find any active questions on this specific operationalization. While general US-China relations are frequently tracked, the specific commitment to shared technical safety benchmarks is a gap in current monitoring. Existing reports note the suspension of Track 1 dialogues as of mid-2025, making this a highly neglected area for formal forecasting [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).</p><p><strong>Tractability:</strong> Forecasting this requires synthesizing geopolitical trends, personnel changes in US/Chinese administrations, and technical progress in AI safety evaluations. While no single database provides the answer, there is a rich information environment of diplomatic readouts and think-tank analysis that a researcher can exploit to move beyond a naive prior [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).</p><p><strong>Soon:</strong> The question tracks a development at a critical juncture. Following a hiatus in Track 1 dialogues since 2024, the period between 2025 and 2027 represents a vital window to see if the relationship can be re-institutionalized or if it will diverge permanently [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).</p><p><strong>Sudden:</strong> A joint statement or technical commitment represents a discrete state change. While the general direction of US-China rivalry is visible, a specific cooperative breakthrough on benchmarks would likely surprise many informed observers given the &#x27;zero trust&#x27; environment and current regulatory divergence [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).</p><p><strong>Sharp:</strong> Governance commitments of this type often lack &#x27;warning shots&#x27;; the first public signal may be the high-level joint statement itself. The indicator sits in a domain (diplomacy) where progress often compounds silently in non-public Track 1.5 or Track 2 meetings before becoming public [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).</p></div>
       </details>
       <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
@@ -1607,6 +1770,57 @@ For the purposes of this question:
 Resolution will be based on official readouts and press releases from the following government portals:
 *   <strong>United States:</strong> U.S. Department of State (<a href="https://www.state.gov/press-releases" target="_blank" rel="noopener">state.gov/press-releases</a>) and the White House (<a href="https://www.whitehouse.gov/briefing-room" target="_blank" rel="noopener">whitehouse.gov/briefing-room</a>).
 *   <strong>China:</strong> Ministry of Foreign Affairs of the People&#x27;s Republic of China (<a href="https://www.mfa.gov.cn/eng/xwfw_665399/s2459_665415/" target="_blank" rel="noopener">mfa.gov.cn</a>) and the State Council (<a href="https://english.www.gov.cn" target="_blank" rel="noopener">english.www.gov.cn</a>).
+
+In the event of a dispute, reporting by at least two major international news agencies (e.g., Reuters, Associated Press, or Agence France-Presse) confirming the existence and content of such a joint document will be sufficient for resolution.</p>
+      </details>
+      <details class="section" data-section="refinement">
+        <summary><h3>Background</h3></summary>
+        <p>Artificial Intelligence (AI) safety governance has emerged as a rare area of potential cooperation between the United States and China despite broader geopolitical tensions. On May 14, 2024, the first <strong>Track 1 dialogue</strong> (official intergovernmental meeting) on AI was held in Geneva, where representatives from the US Department of State and the White House met with counterparts from the Chinese Ministry of Foreign Affairs and National Development and Reform Commission. While this meeting established a channel for exchanging views on risk, it did not produce a joint technical commitment.
+
+By mid-2025, the landscape shifted following the release of &quot;America’s AI Action Plan&quot; under a new US administration, which emphasized US &quot;dominance&quot; in the AI sector while maintaining a pillar for &quot;international diplomacy&quot; to manage catastrophic risks. Concurrently, reports like the Oxford Martin School’s <em>Promising Topics for US–China Dialogues on AI Safety and Governance</em> (Siddiqui et al., 2025) argued that dialogues should move beyond abstract threat models toward &quot;concrete governance mechanisms,&quot; such as shared technical standards for evaluating dangerous model capabilities (e.g., biological or cyber-offensive risks).
+
+As of April 8, 2026, the Track 1 AI dialogue has faced periods of suspension and resumption, often held in the shadow of export controls and competitive AI breakthroughs. A commitment to a &quot;shared technical safety benchmark&quot; would represent a significant escalation of cooperation, moving from high-level rhetoric (like the 2023 Bletchley Declaration) to measurable, verifiable technical alignment.
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, between January 1, 2025, and 23:59 UTC on December 31, 2027, the governments of the United States and the People&#x27;s Republic of China issue a <strong>joint statement</strong>, <strong>consensus document</strong>, or <strong>joint communiqué</strong> that includes a specific commitment to a <strong>shared technical safety benchmark</strong> or <strong>evaluation framework</strong> for AI.
+
+For the purposes of this question:
+1.  <strong>Track 1 Dialogue</strong> is defined as formal, official negotiations and meetings between government officials representing their respective sovereign states.
+2.  <strong>Shared technical safety benchmark or evaluation framework</strong> refers to a specific, named set of quantitative tests, qualitative evaluation protocols, or red-teaming standards designed to measure AI model risks (e.g., model &quot;red lines,&quot; capability thresholds for &quot;frontier models,&quot; or safety evaluation suites). 
+    *   <strong>Specificity Requirement:</strong> A vague agreement to &quot;work toward safety&quot; does not count. The document must reference a specific framework or a commitment to <strong>co-develop</strong> a singular, unified standard. A commitment to &quot;co-develop&quot; counts only if the document specifies the technical parameters, capability thresholds, or named methodology that will form the basis of the shared standard.
+    *   <strong>Exclusion:</strong> Agreements on the &quot;interoperability&quot; or &quot;mutual recognition&quot; of separate national standards do not qualify as a &quot;shared&quot; or &quot;unified&quot; framework unless both nations adopt a single, identical set of technical protocols.
+3.  <strong>Joint Statement/Consensus Document</strong> must meet the following conditions:
+    *   <strong>Publication:</strong> Published simultaneously or in coordination by official government repositories (e.g., state.gov, whitehouse.gov, or mfa.gov.cn). Coordinated, identical, or near-identical statements released by both governments within a <strong>24-hour window</strong> that reference a common agreement reached through Track 1 dialogue shall qualify as a joint statement, even if published as separate documents.
+    *   <strong>Endorsement:</strong> Signed or formally endorsed by cabinet-level officials or their direct deputies. Eligible US officials include the Secretary of State, Secretary of Commerce, or <strong>National Security Advisor</strong>. Eligible Chinese officials include the Minister of Foreign Affairs, Minister of Industry and Information Technology, or the <strong>Director of the Office of the Central Foreign Affairs Commission</strong>.
+    *   <strong>Multilateral Scope:</strong> A multilateral statement or treaty where the US and China are both signatories counts as a &quot;joint statement&quot; only if the document specifically identifies a bilateral US-China commitment to the framework or if the two nations issue a separate, coordinated bilateral endorsement of the multilateral standard.
+4.  <strong>Eligible Events Window:</strong> January 1, 2025, to December 31, 2027, 23:59 UTC. Previous agreements (like the Bletchley Declaration) are excluded.
+
+### <strong>Resolution Source</strong>
+Resolution will be based on official readouts and press releases from the following government portals:
+*   <strong>United States:</strong> U.S. Department of State (state.gov) and the White House (whitehouse.gov).
+*   <strong>China:</strong> Ministry of Foreign Affairs of the People&#x27;s Republic of China (mfa.gov.cn) and the State Council (english.www.gov.cn).
+
+In the event of a dispute, reporting by at least two major international news agencies (e.g., Reuters, Associated Press, or Agence France-Presse) confirming the existence and content of such a joint document will be sufficient for resolution.</p>
+      </details>
+      <details class="section" data-section="refinement">
+        <summary><h3>Resolution criteria</h3></summary>
+        <p>This question will resolve as <strong>YES</strong> if, between January 1, 2025, and 23:59 UTC on December 31, 2027, the governments of the United States and the People&#x27;s Republic of China issue a <strong>joint statement</strong>, <strong>consensus document</strong>, or <strong>joint communiqué</strong> that includes a specific commitment to a <strong>shared technical safety benchmark</strong> or <strong>evaluation framework</strong> for AI.
+
+For the purposes of this question:
+1.  <strong>Track 1 Dialogue</strong> is defined as formal, official negotiations and meetings between government officials representing their respective sovereign states.
+2.  <strong>Shared technical safety benchmark or evaluation framework</strong> refers to a specific, named set of quantitative tests, qualitative evaluation protocols, or red-teaming standards designed to measure AI model risks (e.g., model &quot;red lines,&quot; capability thresholds for &quot;frontier models,&quot; or safety evaluation suites). 
+    *   <strong>Specificity Requirement:</strong> A vague agreement to &quot;work toward safety&quot; does not count. The document must reference a specific framework or a commitment to <strong>co-develop</strong> a singular, unified standard. A commitment to &quot;co-develop&quot; counts only if the document specifies the technical parameters, capability thresholds, or named methodology that will form the basis of the shared standard.
+    *   <strong>Exclusion:</strong> Agreements on the &quot;interoperability&quot; or &quot;mutual recognition&quot; of separate national standards do not qualify as a &quot;shared&quot; or &quot;unified&quot; framework unless both nations adopt a single, identical set of technical protocols.
+3.  <strong>Joint Statement/Consensus Document</strong> must meet the following conditions:
+    *   <strong>Publication:</strong> Published simultaneously or in coordination by official government repositories (e.g., state.gov, whitehouse.gov, or mfa.gov.cn). Coordinated, identical, or near-identical statements released by both governments within a <strong>24-hour window</strong> that reference a common agreement reached through Track 1 dialogue shall qualify as a joint statement, even if published as separate documents.
+    *   <strong>Endorsement:</strong> Signed or formally endorsed by cabinet-level officials or their direct deputies. Eligible US officials include the Secretary of State, Secretary of Commerce, or <strong>National Security Advisor</strong>. Eligible Chinese officials include the Minister of Foreign Affairs, Minister of Industry and Information Technology, or the <strong>Director of the Office of the Central Foreign Affairs Commission</strong>.
+    *   <strong>Multilateral Scope:</strong> A multilateral statement or treaty where the US and China are both signatories counts as a &quot;joint statement&quot; only if the document specifically identifies a bilateral US-China commitment to the framework or if the two nations issue a separate, coordinated bilateral endorsement of the multilateral standard.
+4.  <strong>Eligible Events Window:</strong> January 1, 2025, to December 31, 2027, 23:59 UTC. Previous agreements (like the Bletchley Declaration) are excluded.
+
+### <strong>Resolution Source</strong>
+Resolution will be based on official readouts and press releases from the following government portals:
+*   <strong>United States:</strong> U.S. Department of State (state.gov) and the White House (whitehouse.gov).
+*   <strong>China:</strong> Ministry of Foreign Affairs of the People&#x27;s Republic of China (mfa.gov.cn) and the State Council (english.www.gov.cn).
 
 In the event of a dispute, reporting by at least two major international news agencies (e.g., Reuters, Associated Press, or Agence France-Presse) confirming the existence and content of such a joint document will be sufficient for resolution.</p>
       </details>
@@ -1788,20 +2002,20 @@ While the &#x27;exogenous shock&#x27; is a plausible catalyst for bypassing slow
   </details>
   </div>
 
-  <details open class="dismissed-section" style="margin-top: 2rem;">
+  <details class="dismissed-section explored-wrap" style="margin-top: 2rem;">
     <summary style="cursor: pointer; list-style: none; display: flex; align-items: center; gap: .5rem;
       padding: 1rem 1.2rem; background: #fff; border-radius: 10px;
       box-shadow: 0 1px 3px rgba(0,0,0,.05); font-size: .95rem; font-weight: 600; color: #555;">
       <span style="font-size: .55rem; color: #aaa; transition: transform .2s ease;">&#9654;</span>
       Explored Proto-Questions (1 explored but not selected in early stages)
     </summary>
-    <div style="margin-top: .6rem; display: flex; flex-direction: column; gap: .5rem;">
+    <div class="question-list" style="margin-top: .6rem;">
 
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">94</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">94</span>
           <span class="q-title" style="color: #666;">By December 31, 2027, will a peer-reviewed paper or a report from a national AI Safety Institute (e.g., US AISI or UK AISI) document a case of &quot;strategic deception&quot; or &quot;scheming&quot; in a frontier model, where the model covertly pursued an objective contrary to its explicit instructions during a red-teaming exercise?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -1816,22 +2030,25 @@ While the &#x27;exogenous shock&#x27; is a plausible catalyst for bypassing slow
   </details>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  var list = document.querySelector('.question-list');
-  var btns = document.querySelectorAll('.sort-btn');
-  var currentKey = 'importance';
+  // --- Sorting (works within each question-list) ---
+  var sortBtns = document.querySelectorAll('.sort-btn');
+  var DEFAULT_KEY = 'itnsss';
+  var currentKey = DEFAULT_KEY;
   var currentDir = 'desc';
 
-  function sortQuestions(key, dir) {
-    var items = Array.from(list.querySelectorAll('.q-row'));
-    items.sort(function(a, b) {
-      var va = parseFloat(a.dataset[key]) || 0;
-      var vb = parseFloat(b.dataset[key]) || 0;
-      return dir === 'asc' ? va - vb : vb - va;
+  function sortAllLists(key, dir) {
+    document.querySelectorAll('.question-list').forEach(function(list) {
+      var items = Array.from(list.querySelectorAll('.q-row'));
+      items.sort(function(a, b) {
+        var va = parseFloat(a.dataset[key]) || 0;
+        var vb = parseFloat(b.dataset[key]) || 0;
+        return dir === 'asc' ? va - vb : vb - va;
+      });
+      items.forEach(function(el) { list.appendChild(el); });
     });
-    items.forEach(function(el) { list.appendChild(el); });
   }
 
-  btns.forEach(function(btn) {
+  sortBtns.forEach(function(btn) {
     btn.addEventListener('click', function() {
       var key = btn.dataset.sortkey;
       if (key === currentKey) {
@@ -1840,19 +2057,19 @@ document.addEventListener('DOMContentLoaded', function() {
         currentKey = key;
         currentDir = 'desc';
       }
-      btns.forEach(function(b) {
+      sortBtns.forEach(function(b) {
         b.classList.remove('active');
         b.querySelector('.sort-arrow').textContent = '';
       });
       btn.classList.add('active');
       btn.querySelector('.sort-arrow').textContent = currentDir === 'desc' ? ' \u2193' : ' \u2191';
-      sortQuestions(currentKey, currentDir);
+      sortAllLists(currentKey, currentDir);
     });
   });
 
-  // Initial sort: ITNSSS descending
-  sortQuestions('itnsss', 'desc');
-  var defBtn = document.querySelector('.sort-btn[data-sortkey="itnsss"]');
+  // Initial sort
+  sortAllLists(DEFAULT_KEY, 'desc');
+  var defBtn = document.querySelector('.sort-btn[data-sortkey="' + DEFAULT_KEY + '"]');
   if (defBtn) {
     defBtn.classList.add('active');
     defBtn.querySelector('.sort-arrow').textContent = ' \u2193';
@@ -1875,8 +2092,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // --- Section toggles ---
-  var sectionToggles = document.querySelectorAll('.section-toggle');
-  sectionToggles.forEach(function(btn) {
+  document.querySelectorAll('.section-toggle').forEach(function(btn) {
     btn.addEventListener('click', function() {
       var sec = btn.dataset.section;
       var targets = document.querySelectorAll('.section[data-section="' + sec + '"]');
@@ -1894,9 +2110,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // --- Filters ---
+  // --- Filters + search ---
   var filterBtns = document.querySelectorAll('.filter-btn[data-filter]');
-  var activeFilters = {};
+  var searchInput = document.getElementById('q-search');
+  var activeFilters = {};  // { "has-decomp": "1", "status": "REVISED", ... }
 
   function applyFilters() {
     var keys = Object.keys(activeFilters);
@@ -1914,6 +2131,67 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       row.classList.toggle('filter-hidden', !visible);
     });
+    updateGroups();
+  }
+
+  function applySearch() {
+    var term = (searchInput ? searchInput.value : '').trim().toLowerCase();
+    document.querySelectorAll('.q-row').forEach(function(row) {
+      if (!term) {
+        row.classList.remove('search-hidden');
+        return;
+      }
+      var summaryEl = row.querySelector('summary');
+      var text = summaryEl ? summaryEl.textContent.toLowerCase() : '';
+      row.classList.toggle('search-hidden', text.indexOf(term) === -1);
+    });
+    updateGroups();
+  }
+
+  // Hide stranded group headers / empty wrappers; refresh the "N shown"
+  // counter. Handles both report structures: headers preceding a
+  // question-list (global) and headers inline among rows (per-project).
+  function updateGroups() {
+    document.querySelectorAll('.question-list').forEach(function(list) {
+      var anyVisible = !!list.querySelector('.q-row:not(.filter-hidden):not(.search-hidden)');
+      list.classList.toggle('group-hidden', !anyVisible);
+    });
+    document.querySelectorAll('.group-header').forEach(function(headerEl) {
+      var anyVisible = false;
+      var node = headerEl.nextElementSibling;
+      while (node && !node.classList.contains('group-header')) {
+        if (node.classList.contains('q-row')) {
+          if (!node.classList.contains('filter-hidden') && !node.classList.contains('search-hidden')) {
+            anyVisible = true;
+          }
+          if (anyVisible) break;
+        } else if (node.classList.contains('question-list')) {
+          anyVisible = !!node.querySelector('.q-row:not(.filter-hidden):not(.search-hidden)');
+          break;
+        }
+        node = node.nextElementSibling;
+      }
+      headerEl.classList.toggle('group-hidden', !anyVisible);
+    });
+    document.querySelectorAll('.explored-wrap').forEach(function(wrap) {
+      var anyVisible = !!wrap.querySelector('.q-row:not(.filter-hidden):not(.search-hidden)');
+      wrap.classList.toggle('group-hidden', !anyVisible);
+    });
+    var live = document.getElementById('filter-count-live');
+    if (live) {
+      var scope = document.querySelector('.tab-content.active') || document;
+      // Count only forecast cards — explored/FILTERED cards live inside
+      // .explored-wrap and would inflate the headline count.
+      var counted = Array.prototype.filter.call(
+        scope.querySelectorAll('.q-row'),
+        function(r) { return !r.closest('.explored-wrap'); }
+      );
+      var all = counted.length;
+      var shown = counted.filter(function(r) {
+        return !r.classList.contains('filter-hidden') && !r.classList.contains('search-hidden');
+      }).length;
+      live.textContent = (shown === all) ? all + ' questions' : shown + ' of ' + all + ' shown';
+    }
   }
 
   filterBtns.forEach(function(btn) {
@@ -1921,9 +2199,11 @@ document.addEventListener('DOMContentLoaded', function() {
       var key = btn.dataset.filter;
       var val = btn.dataset.filterValue;
       if (activeFilters[key] === val) {
+        // Toggle off
         delete activeFilters[key];
         btn.classList.remove('active');
       } else {
+        // Deactivate other buttons for the same filter key
         filterBtns.forEach(function(b) {
           if (b.dataset.filter === key) b.classList.remove('active');
         });
@@ -1934,14 +2214,77 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  if (searchInput) {
+    searchInput.addEventListener('input', applySearch);
+  }
+
   var clearBtn = document.getElementById('filter-clear');
   if (clearBtn) {
     clearBtn.addEventListener('click', function() {
       activeFilters = {};
       filterBtns.forEach(function(b) { b.classList.remove('active'); });
+      if (searchInput) searchInput.value = '';
       applyFilters();
+      applySearch();
     });
   }
+
+  // --- Copy-link buttons (single delegated listener; file://-safe URL) ---
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.anchor-link');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var url = location.href.split('#')[0] + '#' + btn.dataset.anchor;
+    var copied = navigator.clipboard && navigator.clipboard.writeText
+      ? navigator.clipboard.writeText(url)
+      : Promise.reject();
+    copied.then(function() {
+      btn.classList.add('copied');
+      btn.textContent = '\u2713';
+      setTimeout(function() {
+        btn.classList.remove('copied');
+        btn.textContent = '#';
+      }, 1500);
+    }).catch(function() {
+      window.prompt('Copy link:', url);
+    });
+  });
+
+  // --- Deep links: open the target card (and its tab) from the URL hash ---
+  function openFromHash() {
+    if (!location.hash || location.hash.indexOf('#tab=') === 0) return;
+    var id = decodeURIComponent(location.hash.slice(1));
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('filter-hidden', 'search-hidden');
+    var panel = el.closest('.tab-content');
+    if (panel && !panel.classList.contains('active') && typeof activateTab !== 'undefined') {
+      activateTab(panel.id.replace(/^tab-/, ''), false);
+    }
+    // Open the card itself and every enclosing <details> (sections, Explored wrapper)
+    var node = el;
+    while (node) {
+      if (node.tagName === 'DETAILS') node.open = true;
+      node = node.parentElement;
+    }
+    requestAnimationFrame(function() {
+      el.scrollIntoView({ block: 'start' });
+      el.classList.add('deeplink-flash');
+      setTimeout(function() { el.classList.remove('deeplink-flash'); }, 1700);
+    });
+  }
+
+  window.addEventListener('hashchange', openFromHash);
+
+  // On load: restore tab from #tab=... (global report) or open the deep link
+  var tabMatch = location.hash.match(/^#tab=(.+)$/);
+  if (tabMatch && typeof activateTab !== 'undefined') {
+    activateTab(decodeURIComponent(tabMatch[1]), false);
+  } else {
+    openFromHash();
+  }
+  updateGroups();
 });
 </script>
 </div>

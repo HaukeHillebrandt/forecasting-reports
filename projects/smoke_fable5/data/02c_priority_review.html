@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Priority Scoring &mdash; Diversifying AI Ownership (prompt v2 smoke test)</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f5f5f5; color: #222; line-height: 1.6; padding: 2rem 1rem; }
+  .container { max-width: 56rem; margin: 0 auto; }
+  .page-header { background: #1a1a2e; color: #eee; border-radius: 10px; padding: 1.5rem 2rem; margin-bottom: 1.5rem; }
+  .page-header h1 { font-size: 1.4rem; margin-bottom: .5rem; }
+  .page-header .subtitle { font-size: .9rem; color: #aaa; margin-bottom: .5rem; }
+  .page-header .page-stats { display: flex; flex-wrap: wrap; gap: .75rem; font-size: .85rem; color: #999; }
+  .page-header .page-stats span { background: rgba(255,255,255,.1); padding: .2rem .6rem; border-radius: 4px; }
+  .toc { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .toc h2 { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: .75rem; }
+  .toc-item { display: flex; align-items: baseline; gap: .6rem; padding: .35rem 0; text-decoration: none; color: #222; border-bottom: 1px solid #f0f0f0; }
+  .toc-item:last-child { border-bottom: none; }
+  .toc-item:hover { color: #1a1a2e; }
+  .toc-score { font-size: .85rem; font-weight: 700; min-width: 2.8rem; text-align: center; padding: .15rem .35rem; border-radius: 4px; }
+  .toc-title { font-size: .9rem; font-weight: 500; flex: 1; }
+  .toc-cluster { font-size: .72rem; color: #666; background: #f0f0f0; padding: .1rem .45rem; border-radius: 10px; white-space: nowrap; }
+  .toc-status { font-size: .75rem; min-width: 7rem; text-align: right; }
+  .card { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 1.25rem; }
+  .card-header { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .75rem; }
+  .card h2 { font-size: 1.05rem; line-height: 1.4; }
+  .badge { font-size: .7rem; color: #666; background: #f0f0f0; padding: .1rem .45rem; border-radius: 10px; }
+  .badge-advanced { background: #e8f5e9; color: #2e7d32; font-weight: 600; }
+  .badge-demoted { background: #fff3e0; color: #ef6c00; font-weight: 600; }
+  .badge-low { background: #ffebee; color: #c62828; font-weight: 600; }
+  .score-row { display: flex; flex-wrap: wrap; gap: .75rem; margin: .5rem 0; padding: .6rem 1rem; background: #f8f9fc; border-radius: 6px; font-size: .84rem; }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 5.5rem; }
+  .score-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .03em; color: #888; }
+  .score-value { font-weight: 700; font-size: .95rem; }
+  .composite { font-size: 1.1rem; }
+  .section { margin-top: .5rem; }
+  .section summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: .4rem; padding: .3rem 0; }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before { content: "\25B6"; font-size: .5rem; color: #aaa; transition: transform .15s; }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section > p, .section > .content { margin-top: .3rem; padding-left: .9rem; }
+  .card p { font-size: .9rem; white-space: pre-wrap; word-wrap: break-word; }
+  .card h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin: 0; }
+  a { color: #1565c0; }
+  .cluster-summary { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .cluster-summary h2 { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: .75rem; }
+  .cluster-row { display: flex; align-items: center; gap: .6rem; padding: .3rem 0; border-bottom: 1px solid #f0f0f0; font-size: .85rem; }
+  .cluster-row:last-child { border-bottom: none; }
+  .cluster-name { min-width: 12rem; font-weight: 600; }
+  .cluster-bar { height: .5rem; border-radius: 3px; background: #1565c0; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02c: Priority Scoring (ITN + Soon/Sudden/Sharp)</h1>
+    <div class="subtitle">Diversifying AI Ownership (prompt v2 smoke test)</div>
+    <div class="page-stats">
+      <span>2 scored</span>
+      <span>2 advanced</span>
+      <span>0 diversity-demoted</span>
+      <span>0 low priority</span>
+      <span>Threshold: 60</span>
+      <span>Max/cluster: 3</span>
+      <span>Project: smoke_fable5</span>
+    </div>
+  </div>
+  <div class="cluster-summary"><h2>Topic Clusters</h2>
+    <div class="cluster-row"><span class="cluster-name">agency-pub: commerce-biosecurity-screening</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+    <div class="cluster-row"><span class="cluster-name">incident: ai-zero-day-discovery</span><span style="min-width:2rem;text-align:right">1</span><span class="cluster-bar" style="width:200px"></span></div>
+  </div>
+  <nav class="toc"><h2>All Questions (by priority score)</h2>
+    <a class="toc-item" href="#q-0"><span class="toc-score" style="color:#2e7d32;background:#e8f5e9">81</span><span class="toc-title">Will the United States enact a federal statute or Department of Commerce regulation that mandates biosecurity screening </span><span class="toc-cluster">agency-pub: commerce-biosecurity-screening</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+    <a class="toc-item" href="#q-1"><span class="toc-score" style="color:#ef6c00;background:#fff3e0">78</span><span class="toc-title">Will any AI model or agent be publicly credited by a major cybersecurity firm with autonomously discovering and reportin</span><span class="toc-cluster">incident: ai-zero-day-discovery</span><span class="toc-status"><span class="badge badge-advanced">ADVANCED</span></span></a>
+  </nav>
+  <div class="card" id="q-0">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#2e7d32;background:#e8f5e9">81</span>
+    <div><h2>Will the United States enact a federal statute or Department of Commerce regulation that mandates biosecurity screening for all synthetic nucleic acid orders exceeding 50 base pairs by December 31, 2027?</h2>
+      <span class="toc-cluster">agency-pub: commerce-biosecurity-screening</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#2e7d32">80</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#ef6c00">78</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#2e7d32">90</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#ef6c00">65</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 88</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>The paper highlights the need for &#x27;critical measures&#x27; and &#x27;metrics&#x27; to mitigate &#x27;grave risks&#x27; from AGI sprints. As of June 10, 2026, the US Framework for Nucleic Acid Synthesis Screening is transitioning to a 50 base pair threshold (effective October 2026), but lacks a universal federal mandate for non-federally funded orders. S. 3741 (Biosecurity Modernization and Innovation Act of 2026) is currently under consideration to formalize this. A &#x27;YES&#x27; requires a finalized federal rule or enacted law. Primary source: Federal Register or Congress.gov; Fallback: NTI Biosecurity Policy Tracker.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>&#x27;adversarial dynamics might lead to critical measures to ensure AGI is safe&#x27; and &#x27;reducing home bias... lower a country’s cost of capital&#x27; (pg. 5, 8)</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>High importance as a leading indicator for biosecurity policy. While the 50 bp threshold is part of a 2024 Framework <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>, formalizing it into a universal federal statute for non-federally funded orders would be a major real-world regulatory event that shifts the risk profile of DNA synthesis access. This is a real-world outcome (enacted law/regulation), not a benchmark.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>The general topic of biosecurity screening is tracked, but this specific legislative/regulatory threshold for non-federally funded orders is not currently a major focus on prediction platforms. A Manifold market exists (&quot;Mandatory DNA synthesis screening law in the US by &#x27;27?&quot;) but has low volume. No similar questions found on Metaculus or Polymarket.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>Requires synthesising legislative tracking (S.3741) <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> with regulatory developments from the Department of Commerce and the 2024 Framework. A forecaster can beat a naive prior by analyzing co-sponsorship and the political appetite for biosecurity mandates.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>Highly time-sensitive. S.3741 was introduced in early 2026 (119th Congress) and the existing voluntary framework transition to 50bp is set for 2026. The resolution by 2027 is a critical window.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>Legislative outcomes can be discrete (a bill passing suddenly as an amendment), but the 50bp threshold is a known target. A sudden mandate for the private sector would be a sharp shift from the current voluntary/federal-funding-only regime.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>The first observable signal (enactment of the law or final rule) is the consequential event itself. There are no partial or precursor &#x27;warning shots&#x27; that have the same regulatory force.</p></details>
+  </div>
+  <div class="card" id="q-1">
+  <div class="card-header">
+    <span class="toc-score composite" style="color:#ef6c00;background:#fff3e0">78</span>
+    <div><h2>Will any AI model or agent be publicly credited by a major cybersecurity firm with autonomously discovering and reporting 3 or more previously unknown Zero-Day vulnerabilities (CVEs) in production software by December 31, 2027?</h2>
+      <span class="toc-cluster">incident: ai-zero-day-discovery</span> <span class="badge badge-advanced">ADVANCED</span>
+    </div>
+  </div>
+  <div class="score-row">
+    <div class="score-item"><span class="score-label">Importance (25%)</span><span class="score-value" style="color:#2e7d32">95</span></div>
+    <div class="score-item"><span class="score-label">Neglectedness (25%)</span><span class="score-value" style="color:#2e7d32">85</span></div>
+    <div class="score-item"><span class="score-label">Tractability (20%)</span><span class="score-value" style="color:#c62828">35</span></div>
+    <div class="score-item"><span class="score-label">Soon (10%)</span><span class="score-value" style="color:#2e7d32">95</span></div>
+    <div class="score-item"><span class="score-label">Sudden (10%)</span><span class="score-value" style="color:#ef6c00">70</span></div>
+    <div class="score-item"><span class="score-label">Sharp (10%)</span><span class="score-value" style="color:#2e7d32">90</span></div>
+  </div>
+  <p style="font-size:.82rem;color:#888">Quality (02b): 88</p>
+  <details class="section"><summary><h3>Rationale</h3></summary>
+    <p>Section 3.7 discusses AGI runway and productive application of funds. In 2024, Google&#x27;s &#x27;Big Sleep&#x27; found a zero-day in SQLite [036b92]. &#x27;Autonomous discovery&#x27; of 3+ net-new CVEs provides a clear threshold for agentic capability. Fallback: MITRE CVE database or CISA Known Exploited Vulnerabilities catalog.</p></details>
+  <details class="section"><summary><h3>Paper reference</h3></summary>
+    <p>Section 3.7: Non-GDP Takeoff Metrics</p></details>
+  <details class="section"><summary><h3>Importance notes</h3></summary><p>This question tracks a critical threshold for offensive AI capabilities in cybersecurity. The autonomous discovery of 3+ CVEs in production software by a major firm&#x27;s AI would signal a shift from &#x27;lab curiosities&#x27; to real-world offensive utility, likely triggering significant policy shifts in vulnerability disclosure and national security posture. It is a real-world outcome with documented precursors like Google&#x27;s Big Sleep <a href="https://thehackernews.com/2024/11/googles-ai-tool-big-sleep-finds-zero.html" target="_blank" rel="noopener">Google&#x27;s AI Tool Big Sleep Finds Zero-Day Vulnerability in SQLite ...</a> <a href="https://blog.google/innovation-and-ai/technology/safety-security/cybersecurity-updates-summer-2025/" target="_blank" rel="noopener">A summer of security: empowering cyber defenders with AI</a>.</p></details>
+  <details class="section"><summary><h3>Neglectedness notes</h3></summary><p>While the Swift Centre tracks a single zero-day exploit in a Tier 1 OS <a href="https://policy.swiftcentre.org/?category=cmo79jtf20000mn5rhx88abh0&amp;amp;advice=cmo7j8egt0001qw5r6ulr1dc5" target="_blank" rel="noopener">Forecast Advice Dashboard</a>, and various AI 2027 trackers follow general hacking trends <a href="https://ai2027-tracker.com/predictions/cyberwarfare-capabilities/" target="_blank" rel="noopener">AI reaches near-best-human hacking capability</a>, there is no specific platform question on Metaculus or Manifold tracking this exact &#x27;3 CVE&#x27; volume threshold for agents. Google&#x27;s internal issue tracker is the primary monitoring source <a href="https://blog.google/innovation-and-ai/technology/safety-security/cybersecurity-updates-summer-2025/" target="_blank" rel="noopener">A summer of security: empowering cyber defenders with AI</a>.</p></details>
+  <details class="section"><summary><h3>Tractability notes</h3></summary><p>A skilled forecaster must synthesize reports from major firms (Google, Anthropic, Microsoft) and track the Mitre CVE database <a href="https://ai2027-tracker.com/predictions/cyberwarfare-capabilities/" target="_blank" rel="noopener">AI reaches near-best-human hacking capability</a> <a href="https://blog.google/innovation-and-ai/technology/safety-security/cybersecurity-updates-summer-2025/" target="_blank" rel="noopener">A summer of security: empowering cyber defenders with AI</a>. Recent search results show this threshold may have already been met or is very near (e.g., 21 zero-days found in FFmpeg by an AI agent in June 2026) <a href="https://thehackernews.com/2024/11/googles-ai-tool-big-sleep-finds-zero.html" target="_blank" rel="noopener">Google&#x27;s AI Tool Big Sleep Finds Zero-Day Vulnerability in SQLite ...</a>, which lowers tractability as the answer is becoming a &#x27;single lookup&#x27; of current events.</p></details>
+  <details class="section"><summary><h3>Soon notes</h3></summary><p>This is highly time-sensitive; reports from 2025 and 2026 show agents like Big Sleep and Claude Mythos are already active in this domain <a href="https://ai2027-tracker.com/predictions/cyberwarfare-capabilities/" target="_blank" rel="noopener">AI reaches near-best-human hacking capability</a> <a href="https://blog.google/innovation-and-ai/technology/safety-security/cybersecurity-updates-summer-2025/" target="_blank" rel="noopener">A summer of security: empowering cyber defenders with AI</a>. The outcome is being determined now.</p></details>
+  <details class="section"><summary><h3>Sudden notes</h3></summary><p>While capability is gradual, the move from lab-only discoveries to 3+ production-software CVEs will be a discrete public milestone reported by firms. discovery of 21 zero-days in FFmpeg appeared as a sudden update <a href="https://thehackernews.com/2024/11/googles-ai-tool-big-sleep-finds-zero.html" target="_blank" rel="noopener">Google&#x27;s AI Tool Big Sleep Finds Zero-Day Vulnerability in SQLite ...</a>.</p></details>
+  <details class="section"><summary><h3>Sharp notes</h3></summary><p>The public crediting of 3+ CVEs would be a sharp, singular signal of offensive capability. Smaller precursors (finding 1 CVE) exist, but the 3-CVE threshold is a discrete jump in volume/reliability.</p></details>
+  </div>
+</div></body></html>

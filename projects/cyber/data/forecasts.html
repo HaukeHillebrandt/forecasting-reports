@@ -6,145 +6,199 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Forecasts &mdash; x</title>
 <style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: #f7f8fa; color: #2a2a2a; line-height: 1.65; padding: 2.5rem 1rem;
-    font-size: 15px;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
   }
-  .container { max-width: 100%; margin: 0 auto; padding: 0 2rem; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
   /* Header */
   .page-header {
-    background: #1a1a2e; color: #eee; border-radius: 12px;
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
     padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
   }
-  .page-header h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: .35rem; letter-spacing: -.01em; }
-  .page-header .subtitle { font-size: .88rem; color: #a0a0b8; margin-bottom: .6rem; }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
   .page-header .page-stats {
-    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #8e8ea0;
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
   }
   .page-header .page-stats span {
     background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
   }
 
-  /* Sort bar — mirrors q-row summary layout so buttons align with q-meta badges */
+  /* Sort bar — a labeled button group, mirrors the filter bar */
   .sort-bar {
-    display: flex; align-items: center; gap: .75rem;
-    padding: .35rem 1.2rem; margin-bottom: .2rem;
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
   }
-  .sort-bar .sort-spacer { flex: 1; }
   .sort-bar .sort-label {
-    font-size: .6rem; text-transform: uppercase; letter-spacing: .03em;
-    color: #aaa; font-weight: 600;
-  }
-  .sort-meta {
-    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
   }
   .sort-btn {
-    font-size: .6rem; font-weight: 600; color: #aaa; cursor: pointer;
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
     transition: all .15s ease; user-select: none;
-    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
-    text-align: center; background: none; border: none; padding: 0;
-    text-transform: uppercase; letter-spacing: .03em; line-height: 1;
   }
-  .sort-btn:hover { color: #333; }
-  .sort-btn.active { color: #1a1a2e; }
-  .sort-btn .sort-arrow { font-size: .5rem; opacity: .6; line-height: 1; }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
 
   /* Expand / Collapse controls */
   .expand-bar {
-    display: flex; align-items: center; gap: .5rem; margin-bottom: 1.2rem;
-    padding: .6rem 1rem; background: #fff; border-radius: 10px;
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
   }
   .expand-bar .expand-label {
     font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
-    color: #888; font-weight: 600; margin-right: .25rem;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
   }
   .expand-btn {
     font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
-    border: 1px solid #e0e0e0; background: #fff; color: #555; cursor: pointer;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
     transition: all .15s ease; user-select: none;
   }
   .expand-btn:hover { background: #f0f1f4; color: #333; }
-  .expand-btn.active { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
   .expand-sep {
     width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
   }
 
   /* Filter bar */
   .filter-bar {
-    display: flex; align-items: center; gap: .5rem; margin-bottom: 1.2rem;
-    padding: .6rem 1rem; background: #fff; border-radius: 10px;
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
   }
   .filter-bar .filter-label {
     font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
-    color: #888; font-weight: 600; margin-right: .25rem;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
   }
   .filter-btn {
     font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
-    border: 1px solid #e0e0e0; background: #fff; color: #555; cursor: pointer;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
     transition: all .15s ease; user-select: none;
   }
   .filter-btn:hover { background: #f0f1f4; color: #333; }
-  .filter-btn.active { background: #1a73e8; color: #fff; border-color: #1a73e8; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
   .filter-btn .filter-count {
     font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
-    border-radius: 8px; margin-left: .3rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
   }
   .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
-  .q-row.filter-hidden { display: none; }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
 
   /* Question rows — expandable <details> */
   .question-list { display: flex; flex-direction: column; gap: .6rem; }
 
   .q-row {
-    background: #fff; border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.05);
-    transition: box-shadow .2s ease;
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
   }
   .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
-  .q-row[open] { box-shadow: 0 2px 10px rgba(0,0,0,.1); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
 
   .q-row > summary {
     cursor: pointer; list-style: none;
     display: flex; align-items: center; gap: .75rem;
     padding: .85rem 1.2rem;
     transition: background .15s ease;
+    border-radius: 9px;
   }
   .q-row > summary::-webkit-details-marker { display: none; }
-  .q-row > summary:hover { background: #fafbfc; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
 
   .q-row > summary .expand-icon {
-    font-size: .55rem; color: #aaa; transition: transform .2s ease;
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
     flex-shrink: 0; width: .8rem; text-align: center;
   }
   .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
 
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
   .q-prob-badge {
-    color: #fff; font-weight: 700; font-size: .82rem;
-    min-width: 3rem; height: 1.65rem;
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
     display: flex; align-items: center; justify-content: center;
-    border-radius: 5px; flex-shrink: 0; padding: 0 .4rem;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
   }
   .q-title {
-    flex: 1; font-size: .92rem; font-weight: 500; color: #2a2a2a;
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
     line-height: 1.35;
   }
   .q-meta {
     display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
   }
   .q-meta-item {
-    font-size: .72rem; color: #888; text-align: center;
+    font-size: .72rem; color: var(--text-2); text-align: center;
     display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
   }
   .q-meta-label {
-    font-size: .6rem; text-transform: uppercase; letter-spacing: .03em;
-    color: #aaa; line-height: 1;
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
   }
-  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
 
   .q-status-badge {
     font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
@@ -152,30 +206,25 @@
   .badge-pass { background: #e8f5e9; color: #2e7d32; }
   .badge-revised { background: #fff3e0; color: #e65100; }
   .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
 
   /* Expanded card content */
-  .q-body { padding: 0 1.4rem 1.2rem 1.4rem; }
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
 
   /* Score row inside expanded content */
   .score-row {
-    display: flex; gap: 1.2rem; align-items: center;
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
     margin: .6rem 0 .8rem; padding: .55rem 1rem;
-    background: #f7f8fa; border-radius: 8px; font-size: .84rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
   }
   .score-item {
     display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
   }
   .score-label {
-    font-size: .65rem; text-transform: uppercase; letter-spacing: .03em;
-    color: #999; line-height: 1;
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
   }
-  .score-value { font-weight: 700; font-size: .92rem; }
-
-  .prob-bar-container {
-    flex: 1; min-width: 6rem; display: flex; flex-direction: column; justify-content: center;
-  }
-  .prob-bar { height: 6px; border-radius: 3px; background: #e8e8e8; overflow: hidden; }
-  .prob-bar-fill { height: 100%; border-radius: 3px; transition: width .3s; }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
 
   /* Collapsible inner sections */
   .section { margin-top: .4rem; }
@@ -190,33 +239,34 @@
   .section[open] summary::before { transform: rotate(90deg); }
   .section summary h3 {
     font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
-    color: #888; margin: 0; display: flex; align-items: center; gap: .4rem;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
     font-weight: 600;
   }
   .section > p, .section > .content {
     margin-top: .25rem; padding-left: .9rem;
-    font-size: .88rem; color: #444;
+    font-size: .9rem; color: #444;
   }
   .section p { white-space: pre-wrap; word-wrap: break-word; }
 
   .badge {
-    font-size: .6rem; color: #777; background: #f0f1f4; padding: .1rem .4rem;
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
     border-radius: 10px; font-weight: 500;
   }
-  .badge-status {
-    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
-  }
-
-  /* Meta row */
-  .meta-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .3rem; }
 
   /* Links */
-  a { color: #3b6fc0; text-decoration: none; }
-  a:hover { color: #1a3f7a; text-decoration: underline; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
 
   /* Decomposition */
   .subq-card {
-    background: #f7f8fa; border: 1px solid #eaeaef; border-radius: 8px;
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
     padding: .65rem .9rem; margin: .35rem 0;
   }
   .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
@@ -225,6 +275,15 @@
     display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
   }
   .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
 
   /* --- Tooltips (CSS-only via data-tooltip) --- */
   [data-tooltip] { position: relative; }
@@ -239,7 +298,6 @@
     letter-spacing: normal;
   }
   [data-tooltip]:hover::after { opacity: 1; }
-  /* Downward arrow on tooltip */
   [data-tooltip]::before {
     content: "";
     position: absolute; bottom: calc(100% + 2px); left: 50%;
@@ -249,6 +307,46 @@
     z-index: 100;
   }
   [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+  /* Stage-07 extras: seed passages, status badges, right-aligned tooltips */
+  .badge-status {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .meta-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .3rem; }
+
+  /* Seed passage (stage 06e): verbatim quote + deep link to PDF page */
+  .seed-quote {
+    background: #fffbea; border-left: 3px solid #f1c40f;
+    padding: .55rem .9rem; margin: .35rem 0 .5rem;
+    border-radius: 0 6px 6px 0;
+    font-style: italic; color: #444; font-size: .9rem; line-height: 1.5;
+  }
+  .seed-quote::before { content: "\201C"; color: #c9a100; margin-right: .1rem; }
+  .seed-quote::after  { content: "\201D"; color: #c9a100; margin-left: .1rem; }
+  .seed-quote-meta {
+    display: flex; flex-wrap: wrap; gap: .6rem; align-items: center;
+    margin-top: .15rem; font-size: .8rem; color: #666;
+  }
+  .seed-quote-meta .seed-page-badge {
+    font-size: .7rem; font-weight: 600; padding: .12rem .5rem;
+    background: #fff4c0; color: #7a5a00; border-radius: 10px;
+  }
+  .seed-quote-meta .seed-match-soft {
+    font-size: .65rem; font-weight: 600; padding: .08rem .4rem;
+    background: #f0f0f0; color: #888; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
 
   /* Tooltip on right for items near left edge */
   .tooltip-right[data-tooltip]::after { left: 0; transform: none; }
@@ -312,47 +410,42 @@
     <button class="filter-btn" data-filter="status" data-filter-value="PASS">PASS<span class="filter-count">0</span></button>
     <button class="filter-btn" data-filter="status" data-filter-value="REVISED">REVISED<span class="filter-count">3</span></button>
     <span class="expand-sep"></span>
-    <button class="filter-btn" id="filter-clear" style="color:#c62828;border-color:#ffcdd2;">Clear filters</button>
+    <input id="q-search" class="q-search" type="search" placeholder="Search questions&hellip;" aria-label="Search questions">
+    <button class="filter-btn" id="filter-clear" style="color:#c62828;border-color:#ffcdd2;">Clear</button>
+    <span id="filter-count-live" class="filter-label" aria-live="polite"></span>
   </div>
   <div class="sort-bar">
-    <span class="sort-spacer"><span class="sort-label">Sort&nbsp;by</span></span>
-    <span class="sort-meta">
-      <span style="min-width:2.5rem"></span>
-      <button class="sort-btn" data-sortkey="quality">Qual<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="ambiguity">Amb<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="itnsss">ITNSSS<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="neglectedness">Neglect<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="tractability">Tract<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="soon">Soon<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="sudden">Sudden<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="sharp">Sharp<span class="sort-arrow"></span></button>
-      <button class="sort-btn" data-sortkey="probability">Prob<span class="sort-arrow"></span></button>
-    </span>
+    <span class="sort-label">Sort by</span>
+    <button class="sort-btn" data-sortkey="itnsss">ITNSSS<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="importance">Importance<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="probability">Probability<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="quality">Quality<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="ambiguity">Ambiguity<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="neglectedness">Neglectedness<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="tractability">Tractability<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="soon">Soon<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="sudden">Sudden<span class="sort-arrow"></span></button>
+    <button class="sort-btn" data-sortkey="sharp">Sharp<span class="sort-arrow"></span></button>
   </div>
+  <div class="group-header">Part 7</div>
   <div class="question-list">
-  <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">Part 7</div>
-  <details class="q-row" id="q-0" data-probability="6.0" data-importance="82.0" data-quality="92.0" data-ambiguity="85.0" data-itnsss="72.0" data-neglectedness="72.0" data-tractability="70.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="0" data-has-reconciliation="0" data-has-review="1" data-has-forecast="1" data-soon="70.0" data-sudden="65.0" data-sharp="60.0">
+  <details class="q-row" id="q-will-an-autonomous-ai-agent-or-team-place-in-the-top-3-at-th" data-probability="6.0" data-importance="82.0" data-quality="92.0" data-ambiguity="85.0" data-itnsss="72.0" data-neglectedness="72.0" data-tractability="70.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="0" data-has-reconciliation="0" data-has-review="1" data-has-forecast="1" data-soon="70.0" data-sudden="65.0" data-sharp="60.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
-      <span class="q-prob-badge" style="background: #2e7d32" data-tooltip="How decision-relevant and impactful this question is (0-100)">82</span>
+      <button type="button" class="anchor-link" data-anchor="q-will-an-autonomous-ai-agent-or-team-place-in-the-top-3-at-th" aria-label="Copy link to this question">#</button>
+      <span class="q-prob-badge" style="background: #ffebee; color: #c62828" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">6%</span>
       <span class="q-title">Will an autonomous AI agent or AI-only team finish in the top 3 at the DEF CON Capture the Flag (CTF) main finals between April 8, 2026 (00:00 UTC) and December 31, 2027 (23:59 UTC)?</span>
       <span class="q-meta">
         <span class="q-status-badge badge-revised" data-tooltip="Question was revised after adversarial review found issues">REVISED</span>
-        <span class="q-meta-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="q-meta-label">Qual</span><span class="q-meta-value">92.0</span></span>
-        <span class="q-meta-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="q-meta-label">Amb</span><span class="q-meta-value">85.0</span></span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">72</span></span>
-        <span class="q-meta-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="q-meta-label">Neglect</span><span class="q-meta-value">72.0</span></span>
-        <span class="q-meta-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="q-meta-label">Tract</span><span class="q-meta-value">70.0</span></span>
-        <span class="q-meta-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="q-meta-label">Soon</span><span class="q-meta-value">70.0</span></span>
-        <span class="q-meta-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="q-meta-label">Sudden</span><span class="q-meta-value">65.0</span></span>
-        <span class="q-meta-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="q-meta-label">Sharp</span><span class="q-meta-value">60.0</span></span>
-        <span class="q-meta-item" data-tooltip="Estimated likelihood this event occurs by the resolution deadline"><span class="q-meta-label">Prob</span><span class="q-meta-value" style="color:#c62828;font-weight:800">6%</span></span>
+        <span class="q-meta-item" data-tooltip="How decision-relevant and impactful this question is (0-100)"><span class="q-meta-label">Imp</span><span class="q-meta-value imp-pill imp-high">82</span></span>
       </span>
     </summary>
     <div class="q-body">
+      <div class="score-row"><div class="score-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="score-label">Quality</span><span class="score-value">92</span></div><div class="score-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="score-label">Ambiguity</span><span class="score-value">85</span></div><div class="score-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="score-label">Soon</span><span class="score-value">70</span></div><div class="score-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="score-label">Sudden</span><span class="score-value">65</span></div><div class="score-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="score-label">Sharp</span><span class="score-value">60</span></div></div>
       <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
-        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">72.0</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">72.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">70.0</span></div></div><p><strong>Neglectedness:</strong> Web search found no existing forecasting question on Metaculus, Manifold, Polymarket, or other platforms specifically asking about AI placing top 3 at DEF CON CTF finals. Metaculus has related questions about Cybench scores and AI cybersecurity benchmarks, but not this specific competitive milestone. However, the general topic of AI offensive cyber capability is receiving increasing attention: SRLabs competed with an AI agent at DEF CON 33 CTF finals placing 8th (2025), Tenzai&#x27;s AI achieved top 1% on six CTF platforms (March 2026, per Forbes), and DARPA&#x27;s AIxCC at DEF CON focused on defensive AI. The specific operationalization (top 3 at DEF CON CTF finals) is not being tracked, but the broader domain has growing monitoring. Scored medium-high because no direct forecast exists but adjacent monitoring is increasing.</p><p><strong>Tractability:</strong> Forecasting this well requires synthesizing multiple lines of evidence: current AI CTF performance trajectories (SRLabs placed 8th in 2025, Tenzai top 1% on platforms), rate of improvement in AI coding/reasoning capabilities, the specific challenge format of DEF CON CTF finals (attack-defense format requiring real-time adaptation), and the competitive landscape of top human teams. There&#x27;s meaningful room for inside-view analysis beyond base rates, but the question partly reduces to extrapolating AI capability improvement curves. A skilled forecaster can meaningfully outperform a naive prior by tracking capability benchmarks and competition results.</p><p><strong>Soon:</strong> This is tracking a development at an active inflection point. AI CTF performance is rapidly improving — from no competitive presence to 8th place at DEF CON in 2025 to top 1% on major platforms in early 2026. The resolution deadline of end-2027 gives two more DEF CON CTF cycles (2026 and 2027). The window for this capability threshold is actively being approached, making the forecast time-sensitive.</p><p><strong>Sudden:</strong> A top-3 placement would be a discrete event at a specific competition, but the trajectory toward it is somewhat visible. We can observe incremental improvements (8th place in 2025, etc.). However, capability jumps in AI can be nonlinear — a new model generation or novel agent architecture could produce a sudden leap in competitive performance. The exact timing of crossing the top-3 threshold could surprise observers.</p><p><strong>Sharp:</strong> There are partial warning shots — AI placing 8th at DEF CON 2025, top 1% on online platforms — that signal the trajectory. These warning shots exist but may be underappreciated by the broader policy community. The gap between &quot;top 1% on online platforms&quot; and &quot;top 3 at DEF CON finals&quot; is significant enough that crossing it could still catch many stakeholders off guard, but the cybersecurity community is increasingly aware of AI offensive capability improvement.</p></div>
+        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">72</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">72</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">70</span></div></div><p><strong>Neglectedness:</strong> Web search found no existing forecasting question on Metaculus, Manifold, Polymarket, or other platforms specifically asking about AI placing top 3 at DEF CON CTF finals. Metaculus has related questions about Cybench scores and AI cybersecurity benchmarks, but not this specific competitive milestone. However, the general topic of AI offensive cyber capability is receiving increasing attention: SRLabs competed with an AI agent at DEF CON 33 CTF finals placing 8th (2025), Tenzai&#x27;s AI achieved top 1% on six CTF platforms (March 2026, per Forbes), and DARPA&#x27;s AIxCC at DEF CON focused on defensive AI. The specific operationalization (top 3 at DEF CON CTF finals) is not being tracked, but the broader domain has growing monitoring. Scored medium-high because no direct forecast exists but adjacent monitoring is increasing.</p><p><strong>Tractability:</strong> Forecasting this well requires synthesizing multiple lines of evidence: current AI CTF performance trajectories (SRLabs placed 8th in 2025, Tenzai top 1% on platforms), rate of improvement in AI coding/reasoning capabilities, the specific challenge format of DEF CON CTF finals (attack-defense format requiring real-time adaptation), and the competitive landscape of top human teams. There&#x27;s meaningful room for inside-view analysis beyond base rates, but the question partly reduces to extrapolating AI capability improvement curves. A skilled forecaster can meaningfully outperform a naive prior by tracking capability benchmarks and competition results.</p><p><strong>Soon:</strong> This is tracking a development at an active inflection point. AI CTF performance is rapidly improving — from no competitive presence to 8th place at DEF CON in 2025 to top 1% on major platforms in early 2026. The resolution deadline of end-2027 gives two more DEF CON CTF cycles (2026 and 2027). The window for this capability threshold is actively being approached, making the forecast time-sensitive.</p><p><strong>Sudden:</strong> A top-3 placement would be a discrete event at a specific competition, but the trajectory toward it is somewhat visible. We can observe incremental improvements (8th place in 2025, etc.). However, capability jumps in AI can be nonlinear — a new model generation or novel agent architecture could produce a sudden leap in competitive performance. The exact timing of crossing the top-3 threshold could surprise observers.</p><p><strong>Sharp:</strong> There are partial warning shots — AI placing 8th at DEF CON 2025, top 1% on online platforms — that signal the trajectory. These warning shots exist but may be underappreciated by the broader policy community. The gap between &quot;top 1% on online platforms&quot; and &quot;top 3 at DEF CON finals&quot; is significant enough that crossing it could still catch many stakeholders off guard, but the cybersecurity community is increasingly aware of AI offensive capability improvement.</p></div>
       </details>
       <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
@@ -431,7 +524,33 @@ The question resolves <strong>No</strong> if no autonomous AI agent or AI-only t
       </details>
       <details class="section" data-section="refinement">
         <summary><h3>Resolution criteria</h3></summary>
-        <p>This question resolves <strong>Yes</strong> if, between April 8, 2026 (00:00 UTC) and December 31, 2027 (23:59 UTC), an autonomous AI agent or AI-only team finishes in <strong>3rd place or higher</strong> (i.e., 1st, 2nd, or 3rd) in the <strong>unified overall final standings</strong> of the main DEF CON Capture the Flag (CTF) finals competition.</p>
+        <p>This question resolves <strong>Yes</strong> if, between April 8, 2026 (00:00 UTC) and December 31, 2027 (23:59 UTC), an autonomous AI agent or AI-only team finishes in <strong>3rd place or higher</strong> (i.e., 1st, 2nd, or 3rd) in the <strong>unified overall final standings</strong> of the main DEF CON Capture the Flag (CTF) finals competition.
+
+### Key Definitions and Clarifications:
+
+1. <strong>DEF CON CTF finals:</strong> The flagship CTF competition held at the annual DEF CON hacking conference in Las Vegas, as listed on the <a href="https://defcon.org/html/links/dc-ctf.html" target="_blank" rel="noopener">DEF CON CTF Archive page</a> and tracked on <a href="https://ctftime.org/ctf/2/" target="_blank" rel="noopener">CTFtime</a>. This refers specifically to the main DEF CON CTF, not satellite events, side CTFs, or separate competitions co-located at DEF CON (such as DARPA&#x27;s AIxCC, Red Alert ICS CTF, or other contest-track events).
+
+2. <strong>&quot;Autonomous AI agent or AI-only team&quot;:</strong> A competing entity where <strong>all challenge-solving and strategic decision-making during the live finals competition is performed by AI systems without real-time human cognitive assistance.</strong> Specifically:
+   - Humans may set up, configure, deploy, and monitor the AI system(s) before and during the competition.
+   - <strong>Pre-competition configuration, training, and programming of the AI system is permitted regardless of how specific the encoded heuristics or decision trees are.</strong> Autonomy is evaluated only based on whether humans provide real-time cognitive input during the live competition period.
+   - Humans may perform purely <strong>operational</strong> tasks such as maintaining infrastructure, rebooting systems, or managing network connectivity.
+   - <strong>Human interventions solely to prevent rule violations or self-destructive behavior (e.g., attacking own infrastructure) are considered operational maintenance and do not disqualify a team</strong>, provided the humans do not redirect the AI toward specific targets or solutions.
+   - <strong>Selective manual activation or deactivation of specific AI problem-solving modules in response to competition developments constitutes strategic input and disqualifies the team.</strong> Human operators may restart or reboot AI systems generally, but must not selectively enable or disable specific AI subsystems targeting particular challenges.
+   - Humans must <strong>not</strong> solve challenges, write exploits, make strategic decisions about which targets to attack/defend, or provide hints or guidance to the AI during the live competition.
+   - A <strong>hybrid human-AI team where humans handle some categories of tasks (e.g., offense) and AI handles others (e.g., defense) does not qualify.</strong> The entire team&#x27;s competition effort — both offensive and defensive — must be performed by AI systems without human cognitive assistance for the team to be considered an &quot;AI-only team.&quot;
+   - If there is ambiguity about whether a team qualifies, authoritative determination will be based on (a) the team&#x27;s own public statements or published write-ups about their approach, and (b) reporting from credible cybersecurity outlets (e.g., Wired, The Record, Dark Reading, or equivalent). <strong>In disputed cases, the team&#x27;s public statements and write-ups shall be taken at face value unless contradicted by official organizer statements or credible investigative reporting.</strong>
+
+3. <strong>&quot;Top 3 finish&quot;:</strong> The team must be ranked 1st, 2nd, or 3rd in the <strong>unified overall final standings that include all competing teams.</strong> A top-3 finish in a separate AI-only division, sub-bracket, or special category does not qualify unless it also corresponds to a top-3 position in the main combined leaderboard. If the organizers use a multi-component scoring system (e.g., combining attack-defense scores with LiveCTF scores), the relevant ranking is the <strong>overall/composite final ranking</strong> as published in the official results. In the event of an exact tie for 3rd place or higher, all tied teams are considered to have achieved a top-3 finish.
+
+4. <strong>Public identification requirement:</strong> For this question to resolve Yes, the team must be <strong>publicly identified as an autonomous AI agent or AI-only team</strong> — through organizer designation, team self-identification, or credible media reporting — <strong>within 60 days of the conclusion of the relevant DEF CON CTF finals.</strong> If no team is publicly identified as autonomous AI within this window, the question resolves No for that year&#x27;s competition.
+
+5. <strong>Resolution sources:</strong> The primary resolution source is the official DEF CON contest results page (e.g., <a href="https://defcon.org/html/defcon-33/dc-33-contest-results.html" target="_blank" rel="noopener">https://defcon.org/html/defcon-33/dc-33-contest-results.html</a> for 2025; analogous pages for subsequent years), the CTF organizer&#x27;s official website, or the <a href="https://ctftime.org/ctf/2/" target="_blank" rel="noopener">CTFtime event page for DEF CON CTF</a>. Secondary sources include credible cybersecurity media coverage and the competing team&#x27;s own published write-ups or blog posts.
+
+6. <strong>Evaluation period:</strong> The question covers DEF CON CTF finals held during DEF CON 34 (expected August 2026) and DEF CON 35 (expected August 2027). If either competition is cancelled, postponed beyond the resolution date, or no longer held, the question resolves based on whichever competition(s) do take place within the window. If no DEF CON CTF finals are held between April 8, 2026 and December 31, 2027, the question resolves <strong>No</strong>.
+
+7. <strong>Format changes:</strong> The format of the DEF CON CTF finals is determined solely by the organizers. A top-3 finish in the official final standings qualifies regardless of the competition format used that year.
+
+The question resolves <strong>No</strong> if no autonomous AI agent or AI-only team (as defined above) finishes in the top 3 at any DEF CON CTF finals held within the evaluation period.</p>
       </details>
       <details class="section" data-section="review">
         <summary><h3>Verification scores <span class="badge" data-tooltip="Automated scoring for quality and ambiguity">Stage 3</span></h3></summary>
@@ -1010,29 +1129,26 @@ The competitive landscape for autonomous AI CTF agents has expanded significantl
       </details>
     </div>
   </details>
-  <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">Part 10</div>
-  <details class="q-row" id="q-1" data-probability="10.0" data-importance="75.0" data-quality="92.0" data-ambiguity="95.0" data-itnsss="64.95" data-neglectedness="62.0" data-tractability="70.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="0" data-has-reconciliation="0" data-has-review="1" data-has-forecast="1" data-soon="82.0" data-sudden="50.0" data-sharp="35.0">
+  </div>
+  <div class="group-header">Part 10</div>
+  <div class="question-list">
+  <details class="q-row" id="q-will-the-november-2026-ccw-review-conference-adopt-a-mandate" data-probability="10.0" data-importance="75.0" data-quality="92.0" data-ambiguity="95.0" data-itnsss="64.95" data-neglectedness="62.0" data-tractability="70.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="0" data-has-reconciliation="0" data-has-review="1" data-has-forecast="1" data-soon="82.0" data-sudden="50.0" data-sharp="35.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
-      <span class="q-prob-badge" style="background: #f57f17" data-tooltip="How decision-relevant and impactful this question is (0-100)">75</span>
+      <button type="button" class="anchor-link" data-anchor="q-will-the-november-2026-ccw-review-conference-adopt-a-mandate" aria-label="Copy link to this question">#</button>
+      <span class="q-prob-badge" style="background: #ffebee; color: #c62828" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">10%</span>
       <span class="q-title">Title:** Will the November 2026 CCW Seventh Review Conference adopt any decision on autonomous weapons systems (LAWS) that goes beyond merely extending or renewing the Group of Governmental Experts</span>
       <span class="q-meta">
         <span class="q-status-badge badge-revised" data-tooltip="Question was revised after adversarial review found issues">REVISED</span>
-        <span class="q-meta-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="q-meta-label">Qual</span><span class="q-meta-value">92.0</span></span>
-        <span class="q-meta-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="q-meta-label">Amb</span><span class="q-meta-value">95.0</span></span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">65</span></span>
-        <span class="q-meta-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="q-meta-label">Neglect</span><span class="q-meta-value">62.0</span></span>
-        <span class="q-meta-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="q-meta-label">Tract</span><span class="q-meta-value">70.0</span></span>
-        <span class="q-meta-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="q-meta-label">Soon</span><span class="q-meta-value">82.0</span></span>
-        <span class="q-meta-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="q-meta-label">Sudden</span><span class="q-meta-value">50.0</span></span>
-        <span class="q-meta-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="q-meta-label">Sharp</span><span class="q-meta-value">35.0</span></span>
-        <span class="q-meta-item" data-tooltip="Estimated likelihood this event occurs by the resolution deadline"><span class="q-meta-label">Prob</span><span class="q-meta-value" style="color:#c62828;font-weight:800">10%</span></span>
+        <span class="q-meta-item" data-tooltip="How decision-relevant and impactful this question is (0-100)"><span class="q-meta-label">Imp</span><span class="q-meta-value imp-pill imp-med">75</span></span>
       </span>
     </summary>
     <div class="q-body">
+      <div class="score-row"><div class="score-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="score-label">Quality</span><span class="score-value">92</span></div><div class="score-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="score-label">Ambiguity</span><span class="score-value">95</span></div><div class="score-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="score-label">Soon</span><span class="score-value">82</span></div><div class="score-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="score-label">Sudden</span><span class="score-value">50</span></div><div class="score-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="score-label">Sharp</span><span class="score-value">35</span></div></div>
       <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
-        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">64.95</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">62.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">70.0</span></div></div><p><strong>Neglectedness:</strong> Web search findings: Metaculus has a related but distinct question (&quot;US Sign Killer Robot Ban by 2031&quot;) which focuses on US signing rather than the CCW adopting a negotiation mandate. No direct market found on Polymarket (search returned only Anthropic/Pentagon-related results). No relevant question found on Manifold Markets, Good Judgment Open, or INFER. However, the topic is extensively monitored by civil society organizations (Stop Killer Robots, ICRC, Reaching Critical Will tracks CCW proceedings in detail), Reuters covered the March 2026 GGE session, and the UN itself publishes GGE working papers. The specific operationalization — whether the Review Conference adopts a formal negotiation mandate — is not being forecast on any platform found, but the broader topic area has substantial indirect monitoring.</p><p><strong>Tractability:</strong> Rich information environment: GGE deliberations and working papers are publicly available, state positions are documented through UNGA votes and statements, historical CCW precedents (e.g., how Protocol V on explosive remnants of war was negotiated) provide reference classes. Forecasting requires synthesizing geopolitical dynamics (US, Russia, China positions), institutional dynamics (consensus vs. majority requirements), civil society pressure, and technical developments. Reasonable forecasters could diverge meaningfully based on how they weight these factors.</p><p><strong>Soon:</strong> The CCW Review Conference is scheduled for November 16-20, 2026, well within the resolution window. GGE sessions are actively underway in 2026, and the outcome will be determined at a specific, imminent event. Reuters reported in March 2026 that the Review Conference &#x27;could decide to launch negotiations for a binding protocol.&#x27; This is a time-critical juncture where the window for influence is closing.</p><p><strong>Sudden:</strong> The outcome represents a discrete state change (mandate adopted or not), but the direction of travel is partially visible through GGE proceedings, state statements, and UNGA votes. However, the CCW operates by consensus, meaning a single state&#x27;s blocking action could determine the outcome in ways that are hard to predict. The exact outcome could still surprise given the gap between broad support (156 states) and key holdouts among military powers.</p><p><strong>Sharp:</strong> This domain has had extensive &#x27;warning shots&#x27; — decades of GGE debate, failed prior attempts to advance binding instruments, the 2021 CCW Review Conference stalemate, and multiple UNGA resolutions. The gradual escalation of the issue through these forums means there is substantial institutional awareness. Failure at the 2026 Review Conference would not be unprecedented and would likely lead to continued efforts through alternative venues (e.g., standalone treaty process outside CCW).</p></div>
+        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">65</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">62</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">70</span></div></div><p><strong>Neglectedness:</strong> Web search findings: Metaculus has a related but distinct question (&quot;US Sign Killer Robot Ban by 2031&quot;) which focuses on US signing rather than the CCW adopting a negotiation mandate. No direct market found on Polymarket (search returned only Anthropic/Pentagon-related results). No relevant question found on Manifold Markets, Good Judgment Open, or INFER. However, the topic is extensively monitored by civil society organizations (Stop Killer Robots, ICRC, Reaching Critical Will tracks CCW proceedings in detail), Reuters covered the March 2026 GGE session, and the UN itself publishes GGE working papers. The specific operationalization — whether the Review Conference adopts a formal negotiation mandate — is not being forecast on any platform found, but the broader topic area has substantial indirect monitoring.</p><p><strong>Tractability:</strong> Rich information environment: GGE deliberations and working papers are publicly available, state positions are documented through UNGA votes and statements, historical CCW precedents (e.g., how Protocol V on explosive remnants of war was negotiated) provide reference classes. Forecasting requires synthesizing geopolitical dynamics (US, Russia, China positions), institutional dynamics (consensus vs. majority requirements), civil society pressure, and technical developments. Reasonable forecasters could diverge meaningfully based on how they weight these factors.</p><p><strong>Soon:</strong> The CCW Review Conference is scheduled for November 16-20, 2026, well within the resolution window. GGE sessions are actively underway in 2026, and the outcome will be determined at a specific, imminent event. Reuters reported in March 2026 that the Review Conference &#x27;could decide to launch negotiations for a binding protocol.&#x27; This is a time-critical juncture where the window for influence is closing.</p><p><strong>Sudden:</strong> The outcome represents a discrete state change (mandate adopted or not), but the direction of travel is partially visible through GGE proceedings, state statements, and UNGA votes. However, the CCW operates by consensus, meaning a single state&#x27;s blocking action could determine the outcome in ways that are hard to predict. The exact outcome could still surprise given the gap between broad support (156 states) and key holdouts among military powers.</p><p><strong>Sharp:</strong> This domain has had extensive &#x27;warning shots&#x27; — decades of GGE debate, failed prior attempts to advance binding instruments, the 2021 CCW Review Conference stalemate, and multiple UNGA resolutions. The gradual escalation of the issue through these forums means there is substantial institutional awareness. Failure at the 2026 Review Conference would not be unprecedented and would likely lead to continued efforts through alternative venues (e.g., standalone treaty process outside CCW).</p></div>
       </details>
       <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
@@ -1641,29 +1757,26 @@ The discourse has been more binary than the question&#x27;s framing suggests—s
       </details>
     </div>
   </details>
-  <div style="margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600; color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6; border-radius: 0 6px 6px 0;">Part 15</div>
-  <details class="q-row" id="q-2" data-probability="80.0" data-importance="78.0" data-quality="92.0" data-ambiguity="95.0" data-itnsss="74.3" data-neglectedness="82.0" data-tractability="68.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="0" data-has-reconciliation="0" data-has-review="1" data-has-forecast="1" data-soon="72.0" data-sudden="65.0" data-sharp="70.0">
+  </div>
+  <div class="group-header">Part 15</div>
+  <div class="question-list">
+  <details class="q-row" id="q-will-any-ai-agent-exploit-at-least-25-of-the-vulnerabilities" data-probability="80.0" data-importance="78.0" data-quality="92.0" data-ambiguity="95.0" data-itnsss="74.3" data-neglectedness="82.0" data-tractability="68.0" data-status="REVISED" data-has-decomp="1" data-has-probdecomp="0" data-has-reconciliation="0" data-has-review="1" data-has-forecast="1" data-soon="72.0" data-sudden="65.0" data-sharp="70.0">
     <summary>
       <span class="expand-icon">&#9654;</span>
-      <span class="q-prob-badge" style="background: #f57f17" data-tooltip="How decision-relevant and impactful this question is (0-100)">78</span>
+      <button type="button" class="anchor-link" data-anchor="q-will-any-ai-agent-exploit-at-least-25-of-the-vulnerabilities" aria-label="Copy link to this question">#</button>
+      <span class="q-prob-badge" style="background: #e8f5e9; color: #2e7d32" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">80%</span>
       <span class="q-title">Will any AI agent achieve a success rate of at least 50% on CVE-Bench by December 31, 2027?</span>
       <span class="q-meta">
         <span class="q-status-badge badge-revised" data-tooltip="Question was revised after adversarial review found issues">REVISED</span>
-        <span class="q-meta-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="q-meta-label">Qual</span><span class="q-meta-value">92.0</span></span>
-        <span class="q-meta-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="q-meta-label">Amb</span><span class="q-meta-value">95.0</span></span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">74</span></span>
-        <span class="q-meta-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="q-meta-label">Neglect</span><span class="q-meta-value">82.0</span></span>
-        <span class="q-meta-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="q-meta-label">Tract</span><span class="q-meta-value">68.0</span></span>
-        <span class="q-meta-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="q-meta-label">Soon</span><span class="q-meta-value">72.0</span></span>
-        <span class="q-meta-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="q-meta-label">Sudden</span><span class="q-meta-value">65.0</span></span>
-        <span class="q-meta-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="q-meta-label">Sharp</span><span class="q-meta-value">70.0</span></span>
-        <span class="q-meta-item" data-tooltip="Estimated likelihood this event occurs by the resolution deadline"><span class="q-meta-label">Prob</span><span class="q-meta-value" style="color:#2e7d32;font-weight:800">80%</span></span>
+        <span class="q-meta-item" data-tooltip="How decision-relevant and impactful this question is (0-100)"><span class="q-meta-label">Imp</span><span class="q-meta-value imp-pill imp-med">78</span></span>
       </span>
     </summary>
     <div class="q-body">
+      <div class="score-row"><div class="score-item" data-tooltip="How well-specified and answerable the question is (0-100)"><span class="score-label">Quality</span><span class="score-value">92</span></div><div class="score-item" data-tooltip="Risk of unclear resolution criteria (lower is better, 0-100)"><span class="score-label">Ambiguity</span><span class="score-value">95</span></div><div class="score-item" data-tooltip="Temporal urgency — how time-sensitive is this question? (Toby Ord)"><span class="score-label">Soon</span><span class="score-value">72</span></div><div class="score-item" data-tooltip="Would this be a discrete, sudden event or a gradual trend? (Toby Ord)"><span class="score-label">Sudden</span><span class="score-value">65</span></div><div class="score-item" data-tooltip="Absence of warning shots — would there be precursors? (Toby Ord)"><span class="score-label">Sharp</span><span class="score-value">70</span></div></div>
       <details class="section" data-section="priority">
         <summary><h3>Priority scores (ITN + Soon/Sudden/Sharp) <span class="badge">Stage 2c</span></h3></summary>
-        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">74.3</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">82.0</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">68.0</span></div></div><p><strong>Neglectedness:</strong> Web search found no existing forecasting questions on CVE-Bench performance specifically on Metaculus, Polymarket, Manifold, INFER, or Good Judgment Open. Metaculus has related but distinct questions: one on AI unauthorized access before 2033, and one on OpenAI cybersecurity risk levels. These are broader and don&#x27;t track this specific benchmark metric. The CVE-Bench leaderboard exists but is a tracking tool, not a forecast. Anthropic has published on AI cyber range performance but doesn&#x27;t forecast specific benchmark thresholds. This specific operationalization — 25% on CVE-Bench by end of 2027 — is not being tracked anywhere as a forecasting question.</p><p><strong>Tractability:</strong> A skilled forecaster can synthesize multiple evidence streams: AI capability scaling trends, model architecture improvements, CVE-Bench leaderboard updates (v2.0 already released), Anthropic&#x27;s cyber range evaluations, and frontier model release cadences. However, the question partly reduces to tracking a single benchmark&#x27;s progress, and performance jumps on benchmarks can be lumpy and hard to predict. There&#x27;s meaningful room for inside-view analysis (e.g., whether new agent frameworks or tool-use improvements will matter more than raw model capability), but less room than for multi-factor geopolitical questions.</p><p><strong>Soon:</strong> AI cyber offense capabilities are at an active inflection point. CVE-Bench was published in March 2025, received ICML Spotlight, and v2.0 is already out. Frontier AI labs are actively evaluating and publishing on cyber capabilities (e.g., Anthropic&#x27;s January 2026 cyber ranges update). The resolution window (end 2027) aligns with a period of rapid AI agent capability development. This is genuinely time-sensitive — the answer would be much more valuable now than in 3 years.</p><p><strong>Sudden:</strong> Benchmark performance can jump suddenly with new model releases or agent framework innovations — a new frontier model could double exploit rates overnight. However, the general trajectory of AI capability improvement is visible and gradual. The 25% threshold could be crossed abruptly with a single major model release, but the direction of travel is broadly predictable.</p><p><strong>Sharp:</strong> AI cyber offense capabilities may not produce clear warning shots before becoming dangerous. Unlike physical attacks where smaller incidents serve as warnings, AI exploit capability could scale rapidly from benchmark performance to real-world deployment without intermediate observable incidents. However, the benchmark itself and publications from safety teams (like Anthropic&#x27;s) do provide some early signals, making this not fully &quot;sharp&quot; in Ord&#x27;s sense.</p></div>
+        <div class="content"><div class="score-row"><div class="score-item"><span class="score-label">Priority</span><span class="score-value">74</span></div><div class="score-item" data-tooltip="How under-forecasted is this question on prediction markets? (ITN)"><span class="score-label">Neglectedness</span><span class="score-value">82</span></div><div class="score-item" data-tooltip="How much can good forecasting improve decisions here? (ITN)"><span class="score-label">Tractability</span><span class="score-value">68</span></div></div><p><strong>Neglectedness:</strong> Web search found no existing forecasting questions on CVE-Bench performance specifically on Metaculus, Polymarket, Manifold, INFER, or Good Judgment Open. Metaculus has related but distinct questions: one on AI unauthorized access before 2033, and one on OpenAI cybersecurity risk levels. These are broader and don&#x27;t track this specific benchmark metric. The CVE-Bench leaderboard exists but is a tracking tool, not a forecast. Anthropic has published on AI cyber range performance but doesn&#x27;t forecast specific benchmark thresholds. This specific operationalization — 25% on CVE-Bench by end of 2027 — is not being tracked anywhere as a forecasting question.</p><p><strong>Tractability:</strong> A skilled forecaster can synthesize multiple evidence streams: AI capability scaling trends, model architecture improvements, CVE-Bench leaderboard updates (v2.0 already released), Anthropic&#x27;s cyber range evaluations, and frontier model release cadences. However, the question partly reduces to tracking a single benchmark&#x27;s progress, and performance jumps on benchmarks can be lumpy and hard to predict. There&#x27;s meaningful room for inside-view analysis (e.g., whether new agent frameworks or tool-use improvements will matter more than raw model capability), but less room than for multi-factor geopolitical questions.</p><p><strong>Soon:</strong> AI cyber offense capabilities are at an active inflection point. CVE-Bench was published in March 2025, received ICML Spotlight, and v2.0 is already out. Frontier AI labs are actively evaluating and publishing on cyber capabilities (e.g., Anthropic&#x27;s January 2026 cyber ranges update). The resolution window (end 2027) aligns with a period of rapid AI agent capability development. This is genuinely time-sensitive — the answer would be much more valuable now than in 3 years.</p><p><strong>Sudden:</strong> Benchmark performance can jump suddenly with new model releases or agent framework innovations — a new frontier model could double exploit rates overnight. However, the general trajectory of AI capability improvement is visible and gradual. The 25% threshold could be crossed abruptly with a single major model release, but the direction of travel is broadly predictable.</p><p><strong>Sharp:</strong> AI cyber offense capabilities may not produce clear warning shots before becoming dangerous. Unlike physical attacks where smaller incidents serve as warnings, AI exploit capability could scale rapidly from benchmark performance to real-world deployment without intermediate observable incidents. However, the benchmark itself and publications from safety teams (like Anthropic&#x27;s) do provide some early signals, making this not fully &quot;sharp&quot; in Ord&#x27;s sense.</p></div>
       </details>
       <details class="section" data-section="proto">
         <summary><h3>Proto-question <span class="badge" data-tooltip="Initial question generation from seed paper">Stage 1</span></h3></summary>
@@ -2328,20 +2441,20 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
   </details>
   </div>
 
-  <details open class="dismissed-section" style="margin-top: 2rem;">
+  <details class="dismissed-section explored-wrap" style="margin-top: 2rem;">
     <summary style="cursor: pointer; list-style: none; display: flex; align-items: center; gap: .5rem;
       padding: 1rem 1.2rem; background: #fff; border-radius: 10px;
       box-shadow: 0 1px 3px rgba(0,0,0,.05); font-size: .95rem; font-weight: 600; color: #555;">
       <span style="font-size: .55rem; color: #aaa; transition: transform .2s ease;">&#9654;</span>
       Explored Proto-Questions (72 explored but not selected in early stages)
     </summary>
-    <div style="margin-top: .6rem; display: flex; flex-direction: column; gap: .5rem;">
+    <div class="question-list" style="margin-top: .6rem;">
 
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will the U.S. Chip Security Act (H.R. 3447) be signed into law by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2356,8 +2469,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will METR report a public frontier AI model achieving a task-completion time horizon of 100 hours or more (at 50% success rate) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2372,8 +2485,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will at least three of the five leading frontier AI model API providers (OpenAI, Anthropic, Google, Meta, Mistral) require government-issued ID verification for organizational access to their most capable models by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2388,8 +2501,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will an open-weight AI model (with publicly available weights) demonstrate autonomous capability to solve at least 80% of challenges on a recognized cybersecurity CTF benchmark, as reported in a peer-reviewed or major industry publication, by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2404,8 +2517,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will NIST publish a final (non-draft) version of the Cybersecurity Framework Profile for Artificial Intelligence (NIST IR 8596, the &#x27;Cyber AI Profile&#x27;) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2420,8 +2533,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will any AI system achieve first place overall in a major international Capture-the-Flag (CTF) cybersecurity competition (e.g., DEF CON CTF, PlaidCTF, or Google CTF) against human teams by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2436,8 +2549,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will an autonomous AI agent achieve a top-3 finish in a major international Capture-the-Flag (CTF) cybersecurity competition (e.g., DEF CON CTF, PlaidCTF, or HITCON CTF) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2452,8 +2565,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will the capability gap between the best open-weight language model and the best closed-weight frontier model narrow to less than 1 month, as measured by the Epoch AI Capabilities Index (ECI), at any point before December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2468,8 +2581,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will the November 2026 CCW Review Conference adopt a mandate to begin formal negotiations on a legally binding instrument governing autonomous weapons systems?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2484,8 +2597,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will the application date for the EU AI Act&#x27;s rules on high-risk AI systems listed in Annex III be officially postponed beyond August 2, 2026?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2500,8 +2613,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will a peer-reviewed research paper demonstrating a deployed AI-agent-specific honeypot system that successfully distinguishes autonomous AI agents from human attackers in a real-world (non-simulated) environment be published by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2516,8 +2629,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will NIST publish a final (non-draft) version of the Cybersecurity Framework Profile for Artificial Intelligence (NIST IR 8596) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2532,8 +2645,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will the US government issue a regulation, executive order, or binding directive that requires cloud compute providers to implement identity verification (KYC-type) requirements specifically addressing AI agent customers or workloads by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2548,8 +2661,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will the EU AI Act&#x27;s rules for high-risk AI systems (originally scheduled for August 2026) begin formal enforcement by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2564,8 +2677,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will NIST publish a final (non-draft) standard, guideline, or special publication specifically addressing security requirements for autonomous AI agents by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2580,8 +2693,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">92</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">92</span>
           <span class="q-title" style="color: #666;">Will the NIST AI Agent Standards Initiative publish at least one formal guidance document or standard specifically addressing security requirements for autonomous AI agents by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2596,8 +2709,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">90</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">90</span>
           <span class="q-title" style="color: #666;">Will at least one of the three major cloud providers (AWS, Microsoft Azure, or Google Cloud) implement identity verification requirements beyond payment verification specifically for high-compute AI workloads by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2612,8 +2725,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">90</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">90</span>
           <span class="q-title" style="color: #666;">Will METR report a 50%-reliability task-time horizon exceeding 48 hours for any frontier AI model on software engineering tasks by 31 December 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2628,8 +2741,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will any frontier AI model achieve an overall success rate above 50% on the RepliBench autonomous replication evaluation suite by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2644,8 +2757,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will a peer-reviewed paper demonstrate successful application of mechanistic interpretability techniques (e.g., circuit analysis, sparse autoencoders) to identify and modify specific behavioral features in a language model with over 100 billion parameters by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2660,8 +2773,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will the DHS AI Information Sharing and Analysis Center (AI-ISAC) be formally operational and accepting membership by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2676,8 +2789,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will at least one major US government agency (e.g., CISA, NSA, or DOD) publish a formal policy or directive establishing specific incident reporting requirements for cybersecurity incidents involving autonomous AI systems by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2692,8 +2805,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will NIST publish a final (non-draft) guidance document or standard specifically addressing AI agent security by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2708,8 +2821,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will a U.S. federal agency (e.g., CISA, NSA, or DoD) publish an official advisory or technical guidance document specifically addressing the threat of autonomous AI agents in cyber operations by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2724,8 +2837,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will at least three distinct publicly reported incidents of AI-orchestrated or AI-automated cyberattack campaigns (beyond AI-assisted phishing/social engineering) be documented by credible cybersecurity firms or government agencies by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2740,8 +2853,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will any frontier AI model achieve an overall score above 50% on the RepliBench autonomous replication benchmark (as published by the UK AI Safety Institute / AISI) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2756,8 +2869,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will the EU AI Act&#x27;s high-risk AI system obligations under Annex III formally take effect before August 2, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2772,8 +2885,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will Google DeepMind publicly report that a frontier model has reached Critical Capability Level 1 (CCL-1) or higher for cybersecurity under its Frontier Safety Framework by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2788,8 +2901,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will the Frontier Model Forum publish at least three additional technical reports or guidelines specifically addressing AI-enabled cyber threats (beyond its February 2026 report on &#x27;Managing Advanced Cyber Risks in Frontier AI Frameworks&#x27;) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2804,8 +2917,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will any AI coding agent score at or above 65% on SWE-bench Pro by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2820,8 +2933,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will NIST publish the final version of NIST IR 8596 (Cybersecurity Framework Profile for Artificial Intelligence) by December 31, 2026?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2836,8 +2949,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will any publicly evaluated frontier AI model pass a majority (more than 50%) of tasks in the SOCK self-replication benchmark by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2852,8 +2965,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will NIST publish a final (non-draft) standard, guideline, or special publication specifically addressing AI agent security by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2868,8 +2981,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will there be a publicly reported case of unauthorized exfiltration or theft of frontier AI model weights (from a top-10 AI lab by compute spending) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2884,8 +2997,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will the EU issue its first formal enforcement action or penalty under the AI Act&#x27;s cybersecurity and robustness requirements (Article 15) against any provider by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2900,8 +3013,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will the U.S. Department of Defense deploy at least one frontier AI model (from OpenAI, Anthropic, Google, or xAI) on a Top Secret/SCI classified network by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2916,8 +3029,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will the median time horizon for frontier AI models on METR&#x27;s task-completion benchmark exceed 48 hours of equivalent human expert time by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2932,8 +3045,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will an autonomous AI agent or team place in the top 3 at the DEF CON Capture the Flag (CTF) finals by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2948,8 +3061,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will at least three additional publicly documented cases of AI agents autonomously executing substantial portions (&gt;50% of tactical operations) of cyber campaigns be reported by credible cybersecurity organizations by 31 December 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2964,8 +3077,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will any publicly evaluated AI model achieve a 50%-reliability task-completion time horizon of at least 100 hours on METR&#x27;s time-horizon benchmark by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2980,8 +3093,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will any frontier AI model achieve a score above 50% on the full RepliBench benchmark by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -2996,8 +3109,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will AI-based tools be credited with the autonomous discovery of more than 50 previously unknown vulnerabilities (assigned CVE IDs) across all software projects in calendar year 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3012,8 +3125,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">88</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">88</span>
           <span class="q-title" style="color: #666;">Will an AI agent or system achieve a greater than 90% success rate on the CAIBench multi-stage cyber range attack evaluation category (or equivalent standardized multi-host network penetration benchmark) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3028,8 +3141,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #1b5e20; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">86</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">86</span>
           <span class="q-title" style="color: #666;">Will at least 3 additional publicly documented cases of AI-orchestrated or AI-autonomous cyber intrusion campaigns (beyond the Anthropic November 2025 report) be reported by credible cybersecurity organizations or government agencies by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3044,8 +3157,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">85</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">85</span>
           <span class="q-title" style="color: #666;">Will the United Nations Convention against Cybercrime receive at least 10 ratifications (not just signatures) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3060,8 +3173,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">85</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">85</span>
           <span class="q-title" style="color: #666;">Will at least three major AI labs (out of OpenAI, Anthropic, Google DeepMind, Meta, and xAI) publicly commit to conducting and publishing results of pre-deployment offensive cyber capability evaluations for their frontier models by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3076,8 +3189,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">85</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">85</span>
           <span class="q-title" style="color: #666;">Will NIST publish a final (non-draft, non-preliminary) version of the Cybersecurity Framework Profile for Artificial Intelligence (NIST IR 8596) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3092,8 +3205,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">85</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">85</span>
           <span class="q-title" style="color: #666;">Will the open-source cyber reasoning systems (CRSs) released from the DARPA AIxCC competition be integrated into or formally adopted by at least one major open-source software project or Linux distribution&#x27;s security toolchain by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3108,8 +3221,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">85</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">85</span>
           <span class="q-title" style="color: #666;">Will a frontier AI model achieve a greater than 80% success rate on an expert-level offensive cybersecurity Capture-the-Flag (CTF) benchmark by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3124,8 +3237,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">85</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">85</span>
           <span class="q-title" style="color: #666;">Will any frontier AI lab (OpenAI, Anthropic, Google DeepMind, or Meta) publicly claim or receive independent verification of meeting Security Level 4 (SL4) or higher standards for protecting AI model weights by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3140,8 +3253,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">85</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">85</span>
           <span class="q-title" style="color: #666;">Will NIST publish a final (non-draft) version of the Cybersecurity Framework Profile for Artificial Intelligence (IR 8596) by December 31, 2026?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3156,8 +3269,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">85</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">85</span>
           <span class="q-title" style="color: #666;">Will at least three of the four Frontier Model Forum member companies (Google DeepMind, OpenAI, Anthropic, Microsoft) publish dedicated cyber capability evaluations as part of their model release processes for all new frontier models released after July 1, 2026?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3172,8 +3285,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">84</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">84</span>
           <span class="q-title" style="color: #666;">Will NIST publish a final (non-draft) version of the Cybersecurity Framework Profile for Artificial Intelligence (NIST IR 8596) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3188,8 +3301,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">84</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">84</span>
           <span class="q-title" style="color: #666;">Will NIST publish a formal standard, guideline, or special publication specifically addressing AI agent identity and authorization by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3204,8 +3317,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">82</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">82</span>
           <span class="q-title" style="color: #666;">Will NIST publish a formal standard or guidelines document (not just a concept paper or RFI) under its AI Agent Standards Initiative specifically addressing security of autonomous AI agents by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3220,8 +3333,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">82</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">82</span>
           <span class="q-title" style="color: #666;">Will any country or multilateral body (e.g., EU, G7, UN) adopt a binding regulation or treaty provision that specifically restricts or mandates oversight of autonomous AI agents used in offensive cyber operations by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3236,8 +3349,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">82</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">82</span>
           <span class="q-title" style="color: #666;">Will a major cloud provider (AWS, Microsoft Azure, or Google Cloud) announce a dedicated policy or product feature specifically designed to detect and prevent unauthorized AI agent workloads (such as LLMjacking or autonomous agent compute theft) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3252,8 +3365,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">82</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">82</span>
           <span class="q-title" style="color: #666;">Will the Hack The Box AI Range (or a comparable standardized AI cyber-agent evaluation platform) be formally adopted as part of pre-deployment safety evaluations by at least two frontier AI labs by 31 December 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3268,8 +3381,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">82</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">82</span>
           <span class="q-title" style="color: #666;">Will XBOW&#x27;s autonomous penetration testing platform achieve a contract or formal deployment agreement with a US federal government agency by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3284,8 +3397,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">82</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">82</span>
           <span class="q-title" style="color: #666;">Will the UN Global Mechanism on ICT Security (the permanent successor to the OEWG) produce a formal output document that explicitly addresses risks from autonomous AI systems in cyberspace by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3300,8 +3413,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">82</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">82</span>
           <span class="q-title" style="color: #666;">Will the percentage of organizations reporting air-gapped OT/ICS safety systems exceed 25% in the SANS Institute&#x27;s next State of ICS/OT Cybersecurity survey published after January 1, 2026?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3316,8 +3429,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">78</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">78</span>
           <span class="q-title" style="color: #666;">Will at least one frontier AI developer implement a formal differential access program that provides privileged AI-powered cybersecurity capabilities to vetted critical infrastructure defenders by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3332,8 +3445,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">78</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">78</span>
           <span class="q-title" style="color: #666;">Will NIST publish a finalized (non-draft) version of its Cybersecurity Framework Profile for Artificial Intelligence (NIST IR 8596) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3348,8 +3461,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">78</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">78</span>
           <span class="q-title" style="color: #666;">Will NIST publish a finalized (non-draft) guideline or standard specifically addressing AI agent security by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3364,8 +3477,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">78</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">78</span>
           <span class="q-title" style="color: #666;">Will any AI agent framework achieve a success rate of 40% or higher on the CVE-Bench benchmark (on its original 40-CVE test set) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3380,8 +3493,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #2e7d32; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">74</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">74</span>
           <span class="q-title" style="color: #666;">Will Google&#x27;s CodeMender AI agent have contributed at least 250 accepted security fixes to open-source projects by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3396,8 +3509,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #558b2f; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">68</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">68</span>
           <span class="q-title" style="color: #666;">Will the top score on the SWE-bench Verified leaderboard exceed 90% by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3412,8 +3525,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #558b2f; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">68</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">68</span>
           <span class="q-title" style="color: #666;">Will a publicly available frontier AI model achieve a success rate above 60% on the CVE-Bench leaderboard (exploiting real-world critical web vulnerabilities) by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3428,8 +3541,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #558b2f; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">65</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">65</span>
           <span class="q-title" style="color: #666;">Will any frontier AI model achieve a score above 50% (passing more than half of all tasks) on the UK AISI&#x27;s RepliBench evaluation suite by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3444,8 +3557,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #f9a825; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">55</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">55</span>
           <span class="q-title" style="color: #666;">Will any AI agent exploit at least 25% of the vulnerabilities in CVE-Bench by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3460,8 +3573,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #f9a825; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">55</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">55</span>
           <span class="q-title" style="color: #666;">Will any frontier AI lab (OpenAI, Anthropic, Google DeepMind, Meta, xAI, or Mistral) publicly report triggering a &#x27;critical&#x27; or highest-tier risk threshold in their safety framework evaluations specifically for autonomous cyber capabilities or self-replication/shutdown-evasion behaviors by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3476,8 +3589,8 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
       <details class="q-row" style="opacity: .8;">
         <summary>
           <span style="font-size: .55rem; color: #aaa;">&#9654;</span>
-          <span class="q-prob-badge" style="background: #ef6c00; font-size: .72rem; min-width: 2.3rem; height: 1.4rem;"
-            data-tooltip="Quality score">45</span>
+          <span class="q-prob-badge" style="background: #f3f4f6; color: #4b5563; font-size: .78rem; min-width: 2.6rem; height: 1.5rem;"
+            data-tooltip="Quality score (not a probability)">45</span>
           <span class="q-title" style="color: #666;">Will the x402 Foundation have more than 20 formally listed member organizations by December 31, 2027?</span>
           <span style="font-size: .68rem; font-weight: 600; padding: .15rem .5rem; border-radius: 10px;
             background: #f0f0f0; color: #999; text-transform: uppercase; letter-spacing: .03em;">FILTERED</span>
@@ -3492,22 +3605,25 @@ Policy restrictions create a meaningful but not insurmountable barrier for CVE-B
   </details>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  var list = document.querySelector('.question-list');
-  var btns = document.querySelectorAll('.sort-btn');
-  var currentKey = 'importance';
+  // --- Sorting (works within each question-list) ---
+  var sortBtns = document.querySelectorAll('.sort-btn');
+  var DEFAULT_KEY = 'itnsss';
+  var currentKey = DEFAULT_KEY;
   var currentDir = 'desc';
 
-  function sortQuestions(key, dir) {
-    var items = Array.from(list.querySelectorAll('.q-row'));
-    items.sort(function(a, b) {
-      var va = parseFloat(a.dataset[key]) || 0;
-      var vb = parseFloat(b.dataset[key]) || 0;
-      return dir === 'asc' ? va - vb : vb - va;
+  function sortAllLists(key, dir) {
+    document.querySelectorAll('.question-list').forEach(function(list) {
+      var items = Array.from(list.querySelectorAll('.q-row'));
+      items.sort(function(a, b) {
+        var va = parseFloat(a.dataset[key]) || 0;
+        var vb = parseFloat(b.dataset[key]) || 0;
+        return dir === 'asc' ? va - vb : vb - va;
+      });
+      items.forEach(function(el) { list.appendChild(el); });
     });
-    items.forEach(function(el) { list.appendChild(el); });
   }
 
-  btns.forEach(function(btn) {
+  sortBtns.forEach(function(btn) {
     btn.addEventListener('click', function() {
       var key = btn.dataset.sortkey;
       if (key === currentKey) {
@@ -3516,19 +3632,19 @@ document.addEventListener('DOMContentLoaded', function() {
         currentKey = key;
         currentDir = 'desc';
       }
-      btns.forEach(function(b) {
+      sortBtns.forEach(function(b) {
         b.classList.remove('active');
         b.querySelector('.sort-arrow').textContent = '';
       });
       btn.classList.add('active');
       btn.querySelector('.sort-arrow').textContent = currentDir === 'desc' ? ' \u2193' : ' \u2191';
-      sortQuestions(currentKey, currentDir);
+      sortAllLists(currentKey, currentDir);
     });
   });
 
-  // Initial sort: ITNSSS descending
-  sortQuestions('itnsss', 'desc');
-  var defBtn = document.querySelector('.sort-btn[data-sortkey="itnsss"]');
+  // Initial sort
+  sortAllLists(DEFAULT_KEY, 'desc');
+  var defBtn = document.querySelector('.sort-btn[data-sortkey="' + DEFAULT_KEY + '"]');
   if (defBtn) {
     defBtn.classList.add('active');
     defBtn.querySelector('.sort-arrow').textContent = ' \u2193';
@@ -3551,8 +3667,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // --- Section toggles ---
-  var sectionToggles = document.querySelectorAll('.section-toggle');
-  sectionToggles.forEach(function(btn) {
+  document.querySelectorAll('.section-toggle').forEach(function(btn) {
     btn.addEventListener('click', function() {
       var sec = btn.dataset.section;
       var targets = document.querySelectorAll('.section[data-section="' + sec + '"]');
@@ -3570,9 +3685,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // --- Filters ---
+  // --- Filters + search ---
   var filterBtns = document.querySelectorAll('.filter-btn[data-filter]');
-  var activeFilters = {};
+  var searchInput = document.getElementById('q-search');
+  var activeFilters = {};  // { "has-decomp": "1", "status": "REVISED", ... }
 
   function applyFilters() {
     var keys = Object.keys(activeFilters);
@@ -3590,6 +3706,67 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       row.classList.toggle('filter-hidden', !visible);
     });
+    updateGroups();
+  }
+
+  function applySearch() {
+    var term = (searchInput ? searchInput.value : '').trim().toLowerCase();
+    document.querySelectorAll('.q-row').forEach(function(row) {
+      if (!term) {
+        row.classList.remove('search-hidden');
+        return;
+      }
+      var summaryEl = row.querySelector('summary');
+      var text = summaryEl ? summaryEl.textContent.toLowerCase() : '';
+      row.classList.toggle('search-hidden', text.indexOf(term) === -1);
+    });
+    updateGroups();
+  }
+
+  // Hide stranded group headers / empty wrappers; refresh the "N shown"
+  // counter. Handles both report structures: headers preceding a
+  // question-list (global) and headers inline among rows (per-project).
+  function updateGroups() {
+    document.querySelectorAll('.question-list').forEach(function(list) {
+      var anyVisible = !!list.querySelector('.q-row:not(.filter-hidden):not(.search-hidden)');
+      list.classList.toggle('group-hidden', !anyVisible);
+    });
+    document.querySelectorAll('.group-header').forEach(function(headerEl) {
+      var anyVisible = false;
+      var node = headerEl.nextElementSibling;
+      while (node && !node.classList.contains('group-header')) {
+        if (node.classList.contains('q-row')) {
+          if (!node.classList.contains('filter-hidden') && !node.classList.contains('search-hidden')) {
+            anyVisible = true;
+          }
+          if (anyVisible) break;
+        } else if (node.classList.contains('question-list')) {
+          anyVisible = !!node.querySelector('.q-row:not(.filter-hidden):not(.search-hidden)');
+          break;
+        }
+        node = node.nextElementSibling;
+      }
+      headerEl.classList.toggle('group-hidden', !anyVisible);
+    });
+    document.querySelectorAll('.explored-wrap').forEach(function(wrap) {
+      var anyVisible = !!wrap.querySelector('.q-row:not(.filter-hidden):not(.search-hidden)');
+      wrap.classList.toggle('group-hidden', !anyVisible);
+    });
+    var live = document.getElementById('filter-count-live');
+    if (live) {
+      var scope = document.querySelector('.tab-content.active') || document;
+      // Count only forecast cards — explored/FILTERED cards live inside
+      // .explored-wrap and would inflate the headline count.
+      var counted = Array.prototype.filter.call(
+        scope.querySelectorAll('.q-row'),
+        function(r) { return !r.closest('.explored-wrap'); }
+      );
+      var all = counted.length;
+      var shown = counted.filter(function(r) {
+        return !r.classList.contains('filter-hidden') && !r.classList.contains('search-hidden');
+      }).length;
+      live.textContent = (shown === all) ? all + ' questions' : shown + ' of ' + all + ' shown';
+    }
   }
 
   filterBtns.forEach(function(btn) {
@@ -3597,9 +3774,11 @@ document.addEventListener('DOMContentLoaded', function() {
       var key = btn.dataset.filter;
       var val = btn.dataset.filterValue;
       if (activeFilters[key] === val) {
+        // Toggle off
         delete activeFilters[key];
         btn.classList.remove('active');
       } else {
+        // Deactivate other buttons for the same filter key
         filterBtns.forEach(function(b) {
           if (b.dataset.filter === key) b.classList.remove('active');
         });
@@ -3610,14 +3789,77 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  if (searchInput) {
+    searchInput.addEventListener('input', applySearch);
+  }
+
   var clearBtn = document.getElementById('filter-clear');
   if (clearBtn) {
     clearBtn.addEventListener('click', function() {
       activeFilters = {};
       filterBtns.forEach(function(b) { b.classList.remove('active'); });
+      if (searchInput) searchInput.value = '';
       applyFilters();
+      applySearch();
     });
   }
+
+  // --- Copy-link buttons (single delegated listener; file://-safe URL) ---
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.anchor-link');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var url = location.href.split('#')[0] + '#' + btn.dataset.anchor;
+    var copied = navigator.clipboard && navigator.clipboard.writeText
+      ? navigator.clipboard.writeText(url)
+      : Promise.reject();
+    copied.then(function() {
+      btn.classList.add('copied');
+      btn.textContent = '\u2713';
+      setTimeout(function() {
+        btn.classList.remove('copied');
+        btn.textContent = '#';
+      }, 1500);
+    }).catch(function() {
+      window.prompt('Copy link:', url);
+    });
+  });
+
+  // --- Deep links: open the target card (and its tab) from the URL hash ---
+  function openFromHash() {
+    if (!location.hash || location.hash.indexOf('#tab=') === 0) return;
+    var id = decodeURIComponent(location.hash.slice(1));
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('filter-hidden', 'search-hidden');
+    var panel = el.closest('.tab-content');
+    if (panel && !panel.classList.contains('active') && typeof activateTab !== 'undefined') {
+      activateTab(panel.id.replace(/^tab-/, ''), false);
+    }
+    // Open the card itself and every enclosing <details> (sections, Explored wrapper)
+    var node = el;
+    while (node) {
+      if (node.tagName === 'DETAILS') node.open = true;
+      node = node.parentElement;
+    }
+    requestAnimationFrame(function() {
+      el.scrollIntoView({ block: 'start' });
+      el.classList.add('deeplink-flash');
+      setTimeout(function() { el.classList.remove('deeplink-flash'); }, 1700);
+    });
+  }
+
+  window.addEventListener('hashchange', openFromHash);
+
+  // On load: restore tab from #tab=... (global report) or open the deep link
+  var tabMatch = location.hash.match(/^#tab=(.+)$/);
+  if (tabMatch && typeof activateTab !== 'undefined') {
+    activateTab(decodeURIComponent(tabMatch[1]), false);
+  } else {
+    openFromHash();
+  }
+  updateGroups();
 });
 </script>
 </div>
