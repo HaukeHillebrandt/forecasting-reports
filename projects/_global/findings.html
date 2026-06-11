@@ -44,29 +44,30 @@
   <div class="page-header">
     <h1>Forecasting Pipeline — what we learned</h1>
     <p>Two days of work on the paper-to-forecast pipeline: a v2 prompt rewrite, a 16-bug fix sweep, a report redesign, a blind quality experiment, an architecture audit, and a Gemini deep-research trial. The verdicts below are evidence-backed; caveats are stated, not hidden.</p>
+    <p style="margin-top:.6rem;background:rgba(255,255,255,.07);border-left:3px solid #6b6bd6;padding:.5rem .8rem;border-radius:0 7px 7px 0;font-size:.88rem;color:#cfcfe4"><strong>The goal is better forecasting <em>questions</em>, not better forecasts.</strong> Probability accuracy is a commodity led by specialists (Mantic, frontier labs) and is not what this pipeline competes on. The headline results below are about question <em>quality</em>; the deep-research forecast result is a kept-but-secondary first pass.</p>
     <span class="when">2026-06-09 → 2026-06-11</span>
   </div>
 
   <div class="cards">
-    <div class="stat">
+    <div class="stat" style="border-color:#c7cdf7">
+      <div class="big">80.0 <span class="arrow" style="font-size:1rem">vs</span> 60.6</div>
+      <div class="lbl">Question quality (pipeline vs one-shot)</div>
+      <div class="sub">The headline result. 3 blinded judges; pipeline question ranked #1 by all; 18/18 correct source guesses</div>
+    </div>
+    <div class="stat" style="border-color:#c7cdf7">
       <div class="big"><span class="bad">22%</span> <span class="arrow">→</span> <span class="good">0%</span></div>
       <div class="lbl">Benchmark over-indexing</div>
-      <div class="sub">v1 prompts vs v2 prompts (share of generated questions that resolve via an AI benchmark score)</div>
-    </div>
-    <div class="stat">
-      <div class="big good">+10pp</div>
-      <div class="lbl">Deep-research effect</div>
-      <div class="sub">Forecast shift (29% → 39%), variance-controlled — non-overlapping ranges, not noise</div>
-    </div>
-    <div class="stat">
-      <div class="big">80.0 <span class="arrow" style="font-size:1rem">vs</span> 60.6</div>
-      <div class="lbl">Blind quality (pipeline vs one-shot)</div>
-      <div class="sub">3 blinded judges, pipeline question ranked #1 by all; 18/18 correct source guesses</div>
+      <div class="sub">v1 vs v2 prompts — share of generated questions that resolve via a benchmark score instead of a real-world outcome</div>
     </div>
     <div class="stat">
       <div class="big bad">$15.62</div>
       <div class="lbl">Cost of stage 06b alone</div>
       <div class="sub">63% of a ~$25 low-effort paper — the deep-research re-forecast stage</div>
+    </div>
+    <div class="stat">
+      <div class="big good" style="opacity:.85">+10pp</div>
+      <div class="lbl">Deep-research effect <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-2)">(secondary)</span></div>
+      <div class="sub">A first pass at forecast augmentation — variance-controlled, but forecast accuracy is <em>not</em> the project's goal</div>
     </div>
   </div>
 
@@ -83,18 +84,6 @@
   </section>
 
   <section class="finding">
-    <h2><span class="tag">Experiment</span> Deep research materially improves forecasts (not noise)</h2>
-    <p>We fed a Gemini <code>deep-research-max</code> report into the Fable second-opinion stage and measured the forecast against the claude-CLI's own sampling spread. On the US-federal-equity question, 3 runs each way:</p>
-    <table>
-      <tr><th>Arm</th><th>Runs</th><th>Mean</th><th>Range</th></tr>
-      <tr><td>No deep research</td><td>25, 32, 30</td><td class="num">29.0</td><td>25–32</td></tr>
-      <tr><td>With deep research</td><td>42, 37, 37</td><td class="num good">38.7</td><td>37–42</td></tr>
-    </table>
-    <p>The ranges <strong>do not overlap</strong> (DR min 37 &gt; no-DR max 32), so the ~+10pp lift is a real effect, beyond the ~7pp sampling band. Consistent with the blind experiment: research-backed questions beat memory-only ones. The reports were substantive — the cyber one surfaced Anthropic's "Project Glasswing"; the equity one built a federal-precedent ladder (Intel 9.9% → mining → quantum → AI).</p>
-    <div class="caveat">Caveats: one cleanly-controlled question (n=1); 3 deep-research-max calls cost ~$12–21 (5.6M tokens, 0 cached); the report itself can be wrong (no ground truth here).</div>
-  </section>
-
-  <section class="finding">
     <h2><span class="tag">Experiment</span> Blinded: the pipeline beats a one-shot model</h2>
     <p>The high-effort pipeline produced one final question; Fable 5 wrote five in a single pass with no web access (locked before the pipeline output existed). Three blinded judges scored all six, shuffled.</p>
     <table>
@@ -104,6 +93,19 @@
     </table>
     <p>The pipeline question won every judge's #1 slot and beat even the best one-shot (74.3). The mechanism is web research: two one-shot questions failed on factual currency (one already-determined, one mooted by a Dec-2025 act) — exactly the class the pipeline's research stages catch. <strong>Judges went 18/18 guessing the source</strong> — pipeline output is stylistically unmistakable.</p>
     <div class="caveat">Caveats: n=1 pipeline question; the one-shot had no web access by design; generator/judges are all Claude-family (possible taste correlation).</div>
+  </section>
+
+  <section class="finding" style="opacity:.92">
+    <h2><span class="tag" style="background:#eef0f6;color:#4b5563">Secondary</span> Deep research moves the forecast (a kept first pass)</h2>
+    <div class="caveat" style="background:#eef2ff;border-left-color:#6b6bd6;color:#3a3a6a">This is <strong>not</strong> the project's aim. Forecast accuracy is led by specialists (Mantic, frontier labs); we're not competing there. We keep this as a rough first pass showing the <em>plumbing</em> works — a research report can be wired into a second opinion and does shift it — but the value of the pipeline is the questions, not the probability.</div>
+    <p>We fed a Gemini <code>deep-research-max</code> report into the Fable second-opinion stage and measured the forecast against the claude-CLI's own sampling spread. On the US-federal-equity question, 3 runs each way:</p>
+    <table>
+      <tr><th>Arm</th><th>Runs</th><th>Mean</th><th>Range</th></tr>
+      <tr><td>No deep research</td><td>25, 32, 30</td><td class="num">29.0</td><td>25–32</td></tr>
+      <tr><td>With deep research</td><td>42, 37, 37</td><td class="num good">38.7</td><td>37–42</td></tr>
+    </table>
+    <p>The ranges <strong>do not overlap</strong> (DR min 37 &gt; no-DR max 32), so the ~+10pp lift is a real effect, beyond the ~7pp sampling band. Consistent with the blind experiment: research-backed questions beat memory-only ones. The reports were substantive — the cyber one surfaced Anthropic's "Project Glasswing"; the equity one built a federal-precedent ladder (Intel 9.9% → mining → quantum → AI).</p>
+    <div class="caveat">Caveats: one cleanly-controlled question (n=1); 3 deep-research-max calls cost ~$12–21 (5.6M tokens, 0 cached); the report itself can be wrong (no ground truth here).</div>
   </section>
 
   <section class="finding">
