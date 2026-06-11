@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>As of December 31, 2027, will there be a total of at least 20 General-Purpose AI</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#f1f8e9;color:#558b2f">65%</span><h1 style="margin:0;font-size:1.25rem;">As of December 31, 2027, will there be a total of at least 20 General-Purpose AI (GPAI) models officially designated as &quot;presenting systemic risk&quot; under Article 51 of the EU AI Act?</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Gemini 3 Flash (minimal)</span><span>low (Gemini Flash) effort</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#revised">Revised question</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#fable">Fable 5 second opinion</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#558b2f">65%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">92</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">74</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">75</span></div></div><p><strong>Review status:</strong> REVISED</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>Will the European Commission designate at least 5 General-Purpose AI (GPAI) models as presenting &#x27;systemic risk&#x27; under Article 51 of the EU AI Act?</p><p><strong>Why this question?</strong> The paper evaluates several frontier models (e.g., GPT-5, Opus 4) that push the boundaries of capability [c37152]. As of June 10, 2026, the EU AI Act&#x27;s obligations for GPAI models are in effect, but zero (0) models have been officially designated as &#x27;systemic risk&#x27; under the Article 51 criteria (typically &gt;10^25 FLOPs) [4ecef5]. Primary source: The EU AI Office (official model registry). Fallback: The Official Journal of the European Union.</p><p><strong>Paper reference:</strong> Section 6: Models / Frontier releases</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p><strong>Question Title:</strong> European Commission designation of at least 5 General-Purpose AI (GPAI) models as presenting systemic risk under Article 51 of the EU AI Act between June 10, 2026 and 31st December 2027
+
+<strong>Question:</strong> Will the European Commission designate at least 5 General-Purpose AI (GPAI) models as presenting systemic risk under Article 51 of the EU AI Act between June 10, 2026 and 31st December 2027?
+
+<strong>Background:</strong>
+The EU AI Act (Regulation (EU) 2024/1689) provides a regulatory framework for General-Purpose AI (GPAI) models, including specific obligations for those that pose systemic risk <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a>. These obligations, which include mandatory risk assessments, adversarial testing, and incident reporting, apply once a model is officially classified by the European Commission <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a>. As of June 10, 2026, the European Commission has designated 0 General-Purpose AI (GPAI) models as presenting systemic risk under Article 51 of the EU AI Act <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng" target="_blank" rel="noopener">Regulation - EU - 2024/1689 - EN - EUR-Lex - European Union</a>. Classification is typically triggered when a model&#x27;s training compute exceeds 10^25 floating-point operations (FLOPs), although the Commission may also designate models based on equivalent high-impact capabilities <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a>. While several industry models are estimated to have exceeded this compute threshold, formal designation is an administrative act recorded in a public registry <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a> <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng" target="_blank" rel="noopener">Regulation - EU - 2024/1689 - EN - EUR-Lex - European Union</a>. The European AI Office is tasked with maintaining this registry and overseeing compliance <a href="https://digital-strategy.ec.europa.eu/en/policies/ai-office" target="_blank" rel="noopener">European AI Office | Shaping Europe&#x27;s digital future</a>.
+
+<strong>Resolution Criteria:</strong>
+This question resolves to YES if, between June 10, 2026 and 31st December 2027 (UTC), the European Commission officially designates at least 5 General-Purpose AI (GPAI) models as presenting systemic risk under Article 51 of the EU AI Act.
+The term systemic risk is defined by Article 51 of the EU AI Act (<a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">https://artificialintelligenceact.eu/article/51/</a>) as models possessing high-impact capabilities or those determined by the Commission to have equivalent impact.
+Designations must be verified by the official registry of General-Purpose AI (GPAI) models with systemic risk maintained by the European AI Office (<a href="https://digital-strategy.ec.europa.eu/en/policies/ai-office" target="_blank" rel="noopener">https://digital-strategy.ec.europa.eu/en/policies/ai-office</a>) or by publication in the Official Journal of the European Union.
+The count of 5 General-Purpose AI (GPAI) models includes any model designated via the 10^25 FLOPs compute presumption (Article 51(2)) or via a Commission decision (Article 51(1)).
+Models that are designated and subsequently removed from the registry or de-classified before 31st December 2027 still count toward the total of 5.
+If fewer than 5 General-Purpose AI (GPAI) models are designated by 11:59 PM UTC on 31st December 2027, the question resolves to NO.</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>The EU AI Act (Regulation (EU) 2024/1689) provides a regulatory framework for General-Purpose AI (GPAI) models, including specific obligations for those that pose systemic risk. Article 51 defines these as models with &quot;high-impact capabilities&quot;—presumed when training compute exceeds 10^25 FLOPs—or those otherwise designated by the Commission based on qualitative criteria. While several models are estimated to have exceeded the 10^25 FLOPs threshold already, formal designation is an administrative act recorded in a public registry maintained by the European AI Office. 
+
+For models already on the market before August 2, 2025, providers have a 24-month grace period (until August 2, 2027) to comply with the rules, which may lead to a cluster of designations around that deadline. This question asks about the total count of models that will have been officially classified as presenting systemic risk by the end of 2027.</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question resolves to <strong>YES</strong> if, as of 11:59 PM UTC on December 31, 2027, there are a total of at least 20 General-Purpose AI (GPAI) models officially designated as &quot;presenting systemic risk&quot; (or &quot;with systemic risk&quot;) under Article 51 of the EU AI Act.
+
+- <strong>Official Sources:</strong> Designations must be verified by the official registry of GPAI models with systemic risk maintained by the European AI Office or by publication in the Official Journal of the European Union. A designation is considered official if it appears in either source by the deadline.
+- <strong>Count Calculation:</strong> 
+    - The count refers to the total number of models listed in the registry or Official Journal as of the deadline, including all models designated up to that point.
+    - Each unique entry or record in the official registry or Official Journal counts as one distinct model. 
+    - Distinct entries for different parameter sizes (e.g., separate records for 70B and 400B variants of the same model family) count as separate models.
+    - Versioned updates (e.g., v2.0 and v2.1) count as separate models if they have distinct designation records. The count is based strictly on individual designation records, not on how models are marketed.
+- <strong>Exclusions:</strong> 
+    - Only models specifically classified as &quot;presenting systemic risk&quot; are included. 
+    - Models that meet the 10^25 FLOPs compute threshold but successfully rebut the presumption under Article 51(3) and are NOT classified as presenting systemic risk are excluded.
+- <strong>De-classification:</strong> Models must be listed as &quot;presenting systemic risk&quot; as of the deadline. Models that were designated but subsequently removed from the registry or de-classified before December 31, 2027, do not count toward the total.
+
+If the total count of such models is 19 or fewer at the deadline, the question resolves to <strong>NO</strong>.</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> Real-world. The question tracks a clear regulatory milestone under Article 51 of the EU AI Act. As of June 10, 2026, zero (0) models have been officially designated as presenting systemic risk <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a>. However, at least 30 models (including Llama 3.1 405B, GPT-4, and Claude 3 Opus) are estimated to have been trained with compute exceeding the 10^25 FLOP presumption threshold <a href="https://epoch.ai/data-insights/models-over-1e25-flop" target="_blank" rel="noopener">Over 30 AI models have been trained at the scale of GPT-4 - Epoch AI</a>. The designation of 5 models is a non-trivial but plausible administrative outcome, making it high entropy. Resolvable via the EU AI Office&#x27;s model registry <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a>.</p><p><strong>Ambiguity notes:</strong> The question is well-structured and uses precise legal definitions from the EU AI Act. It correctly identifies the administrative act (designation) and the authoritative sources (Registry/Official Journal). 
+1. Terms: Key terms &#x27;General-Purpose AI model&#x27; and &#x27;systemic risk&#x27; are operationalized through direct reference to Article 51 of the EU AI Act.
+2. Dates: Start and end dates are explicit, including a timezone (UTC).
+3. Consistency: Title, stem, and criteria match perfectly on the threshold (5 models) and dates.
+4. Source: The Official Journal and the Commission Registry are robust sources.
+5. Hedges: Includes a necessary hedge for de-classified models.
+Main risk: The word &#x27;between&#x27; for the start date (June 10, 2026) can be interpreted as inclusive or exclusive; given the background states the count is 0 on that date, a designation on that day could be disputed. 
+Important fix: Use &#x27;on or after June 10, 2026&#x27; to ensure inclusivity at the start of the window.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge-case risk:</strong> MEDIUM</p><p>ASSESSMENT: NEEDS_REVISION
+
+REVIEW: The question suffers from a significant &#x27;substantive&#x27; issue related to the EU AI Act&#x27;s implementation timeline and the deterministic nature of its compute thresholds.
+
+1. <strong>Deterministic Outcome (10^25 FLOPs):</strong> Article 51(2) establishes a legal presumption of systemic risk for models trained with more than 10^25 FLOPs <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a>. Current industry data indicates that several models (including GPT-4, Gemini Ultra, and Llama 3 405B) already exceed this threshold <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a>. Consequently, their designation is an administrative mandate rather than a point of regulatory uncertainty. Barring a major policy shift or a &#x27;Delegated Act&#x27; to raise the threshold (permitted under Article 51(3) <a href="https://artificialintelligenceact.eu/article/113/" target="_blank" rel="noopener">https://artificialintelligenceact.eu/article/113/</a>), the Commission <em>must</em> designate these models.
+
+2. <strong>Timeline Discrepancy:</strong> The GPAI provisions (Chapter V, including Article 51) apply starting <strong>August 2, 2025</strong> <a href="https://artificialintelligenceact.eu/article/113/" target="_blank" rel="noopener">https://artificialintelligenceact.eu/article/113/</a>. However, Article 111(3) provides a 24-month grace period (until <strong>August 2, 2027</strong>) for GPAI models already on the market before August 2025 to comply with their obligations <a href="https://artificialintelligenceact.eu/article/113/" target="_blank" rel="noopener">https://artificialintelligenceact.eu/article/113/</a>. This suggests a high likelihood that the Commission will populate the registry in a single &#x27;catch-up&#x27; batch in August 2027. The question window (June 2026–Dec 2027) captures this deadline, but the &#x27;at least 5&#x27; threshold is likely to be exceeded immediately once the 2027 deadline hits, making the question a binary bet on whether the EU meets its own 2027 implementation deadline.
+
+3. <strong>Window Ambiguity:</strong> The resolution criteria state the Commission must &#x27;officially designate&#x27; models <em>between</em> June 10, 2026, and December 31, 2027. If the Commission designates models immediately upon the law&#x27;s application in August 2025 (as they must for new models released after that date), those models would not count toward the &#x27;at least 5&#x27; in this window. The background premise that &#x27;0 models have been designated&#x27; as of June 2026 is a strong assumption of administrative delay that may not hold if the Commission acts on frontier models released in late 2025 (e.g., GPT-5).
+
+4. <strong>Registry Viability:</strong> While the &#x27;official registry&#x27; is mandated by Article 51(6) and will be maintained by the AI Office <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a>, its public accessibility and the speed of its updates are administrative variables that might interfere with precise &#x27;official journal&#x27; verification.
+
+EVIDENCE: <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">https://artificialintelligenceact.eu/article/51/</a>
+<a href="https://artificialintelligenceact.eu/article/113/" target="_blank" rel="noopener">https://artificialintelligenceact.eu/article/113/</a>
+<a href="https://artificialintelligenceact.eu/article/111/" target="_blank" rel="noopener">https://artificialintelligenceact.eu/article/111/</a>
+<a href="https://epoch.ai/data-insights/models-over-1e25-flop" target="_blank" rel="noopener">https://epoch.ai/data-insights/models-over-1e25-flop</a>
+
+SUGGESTION: 1. <strong>Clarify &#x27;Designation&#x27;</strong>: Change the criteria to refer to the total number of models <em>listed</em> in the registry as of December 31, 2027, rather than those newly designated <em>within</em> the window. This avoids the problem of models designated in 2025 not counting.
+2. <strong>Focus on Qualitative Uncertainty</strong>: Instead of relying on the 10^25 FLOPs &#x27;presumption&#x27; (which is deterministic), ask how many models will be designated under Article 51(1)(b) (&#x27;equivalent impact&#x27; based on qualitative criteria). This captures true regulatory uncertainty.
+3. <strong>Increase the Count</strong>: Given the number of models already at the 10^25 threshold, &#x27;at least 5&#x27; is a low bar. Increasing this to &#x27;at least 15&#x27; or &#x27;at least 20&#x27; would better reflect the expected population of the registry by 2027.
+4. <strong>Align with the 2027 Deadline</strong>: Since August 2, 2027, is a hard legal deadline for existing models, the question could be more pointedly framed around that specific date.</p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: MEDIUM
+
+
+- SCENARIO: A provider releases a model in multiple parameter sizes (e.g., 70B and 400B variants), and the Commission creates separate registry entries for each to account for their distinct risk profiles <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a> <a href="https://digital-strategy.ec.europa.eu/en/faqs/general-purpose-ai-models-ai-act-questions-answers" target="_blank" rel="noopener">General-Purpose AI Models in the AI Act – Questions &amp; Answers</a>.
+- SEVERITY: HIGH
+- FIX: Define that each unique entry or record in the European AI Office registry or the Official Journal of the European Union counts as one distinct model, regardless of whether they share a brand name or architecture.
+
+- SCENARIO: A model is designated as having systemic risk, but the provider later releases a &quot;distilled&quot; or &quot;optimized&quot; version (e.g., v2.1) that receives a separate designation under Article 51 <a href="https://artificialintelligenceact.eu/article/3/" target="_blank" rel="noopener">Article 3: Definitions | EU Artificial Intelligence Act</a> <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a>.
+- SEVERITY: MEDIUM
+- FIX: Specify that every official administrative act of designation recorded in the specified sources counts toward the total of 5, even if the model is a versioned update of a previously designated model.
+
+- SCENARIO: A model is officially listed in the European AI Office registry as systemic on December 30, 2027, but the formal publication in the Official Journal of the European Union does not occur until January 2028 <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a>.
+- SEVERITY: MEDIUM
+- FIX: Clarify that the designation is considered official if it appears in <em>either</em> the European AI Office registry or the Official Journal by 11:59 PM UTC on December 31, 2027.
+
+- SCENARIO: A model family is designated as a single unit (e.g., &quot;Company X Model Series&quot;) in the registry, but the provider publicly markets them as five distinct models with different capabilities <a href="https://digital-strategy.ec.europa.eu/en/faqs/general-purpose-ai-models-ai-act-questions-answers" target="_blank" rel="noopener">General-Purpose AI Models in the AI Act – Questions &amp; Answers</a>.
+- SEVERITY: MEDIUM
+- FIX: State that the count of 5 models refers strictly to the number of individual designation records/entries in the official registry or Official Journal, not to how the models are marketed by the provider.
+
+- SCENARIO: A model meets the 10^25 FLOPs compute threshold, but the provider successfully rebuts the presumption of systemic risk under Article 51(3), yet the model remains listed in the registry for transparency with a &quot;non-systemic&quot; status <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a>.
+- SEVERITY: LOW
+- FIX: Explicitly require that the model must be classified specifically as a &quot;general-purpose AI model with systemic risk&quot; within the registry or Official Journal to be included in the count.
+</p></div></section>
+<section class="qsection" id="revised"><h2>Revised question</h2><p><strong>Question Title:</strong> Total of at least 20 General-Purpose AI (GPAI) models designated as presenting systemic risk by December 31, 2027
+
+<strong>Question:</strong> As of December 31, 2027, will there be a total of at least 20 General-Purpose AI (GPAI) models officially designated as &quot;presenting systemic risk&quot; under Article 51 of the EU AI Act?
+
+<strong>Background:</strong>
+The EU AI Act (Regulation (EU) 2024/1689) provides a regulatory framework for General-Purpose AI (GPAI) models, including specific obligations for those that pose systemic risk. Article 51 defines these as models with &quot;high-impact capabilities&quot;—presumed when training compute exceeds 10^25 FLOPs—or those otherwise designated by the Commission based on qualitative criteria. While several models are estimated to have exceeded the 10^25 FLOPs threshold already, formal designation is an administrative act recorded in a public registry maintained by the European AI Office. 
+
+For models already on the market before August 2, 2025, providers have a 24-month grace period (until August 2, 2027) to comply with the rules, which may lead to a cluster of designations around that deadline. This question asks about the total count of models that will have been officially classified as presenting systemic risk by the end of 2027.
+
+<strong>Resolution Criteria:</strong>
+This question resolves to <strong>YES</strong> if, as of 11:59 PM UTC on December 31, 2027, there are a total of at least 20 General-Purpose AI (GPAI) models officially designated as &quot;presenting systemic risk&quot; (or &quot;with systemic risk&quot;) under Article 51 of the EU AI Act.
+
+- <strong>Official Sources:</strong> Designations must be verified by the official registry of GPAI models with systemic risk maintained by the European AI Office or by publication in the Official Journal of the European Union. A designation is considered official if it appears in either source by the deadline.
+- <strong>Count Calculation:</strong> 
+    - The count refers to the total number of models listed in the registry or Official Journal as of the deadline, including all models designated up to that point.
+    - Each unique entry or record in the official registry or Official Journal counts as one distinct model. 
+    - Distinct entries for different parameter sizes (e.g., separate records for 70B and 400B variants of the same model family) count as separate models.
+    - Versioned updates (e.g., v2.0 and v2.1) count as separate models if they have distinct designation records. The count is based strictly on individual designation records, not on how models are marketed.
+- <strong>Exclusions:</strong> 
+    - Only models specifically classified as &quot;presenting systemic risk&quot; are included. 
+    - Models that meet the 10^25 FLOPs compute threshold but successfully rebut the presumption under Article 51(3) and are NOT classified as presenting systemic risk are excluded.
+- <strong>De-classification:</strong> Models must be listed as &quot;presenting systemic risk&quot; as of the deadline. Models that were designated but subsequently removed from the registry or de-classified before December 31, 2027, do not count toward the total.
+
+If the total count of such models is 19 or fewer at the deadline, the question resolves to <strong>NO</strong>.</p></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>Summary
+The technical pipeline of General-Purpose AI (GPAI) models already exceeds the threshold of 20 officially designated systemic risk models, driven by the rapid pace of frontier AI development. Under Article 51 of the EU AI Act, models with training compute exceeding 10^25 FLOPs are presumed to have high-impact capabilities and present systemic risk <a href="https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-51" target="_blank" rel="noopener">AI Act Service Desk - Article 51: Classification of general-purpose AI ...</a> <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a> [[PDF] Article 51 Classification of general-purpose AI models as general ...](<a href="https://cambridge-commentary.ai/wp-content/uploads/2026/03/Article-51.pdf" target="_blank" rel="noopener">https://cambridge-commentary.ai/wp-content/uploads/2026/03/Article-51.pdf</a>). Providers are legally required to self-notify the European Commission <a href="https://digital-strategy.ec.europa.eu/en/faqs/general-purpose-ai-models-ai-act-questions-answers" target="_blank" rel="noopener">General-Purpose AI Models in the AI Act – Questions &amp; Answers</a> <a href="https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-52" target="_blank" rel="noopener">AI Act Service Desk - Article 52: Procedure - European Union</a> <a href="https://artificialintelligenceact.eu/article/52/" target="_blank" rel="noopener">Article 52: Procedure | EU Artificial Intelligence Act</a>. As of mid-2025, an estimated 33 publicly disclosed models from developers like OpenAI, Google, Anthropic, Meta, and Mistral had already crossed this threshold <a href="https://epoch.ai/data-insights/models-over-1e25-flop" target="_blank" rel="noopener">Over 30 AI models have been trained at the scale of GPT-4 - Epoch AI</a> <a href="https://epoch.ai/data-insights/models-over-1e25-flop" target="_blank" rel="noopener">Over 30 AI models have been trained at the scale of GPT-4 - Epoch AI</a> <a href="https://epoch.ai/data-insights/models-over-1e25-flop" target="_blank" rel="noopener">Over 30 AI models have been trained at the scale of GPT-4 - Epoch AI</a>. Projections indicate this number could grow significantly by the end of 2027 [[PDF] Trends in Frontier AI Model Count: A Forecast to 2028 - arXiv](<a href="https://arxiv.org/pdf/2504.16138" target="_blank" rel="noopener">https://arxiv.org/pdf/2504.16138</a>) <a href="https://arxiv.org/html/2504.16138v1" target="_blank" rel="noopener">Trends in Frontier AI Model Count: A Forecast to 2028 - arXiv</a>. Furthermore, compliance deadlines strongly favor a critical mass of designations well before the final December 31, 2027 cutoff. Models placed on the market before August 2, 2025, face a 24-month grace period ending August 2, 2027 <a href="https://digital-strategy.ec.europa.eu/en/policies/guidelines-gpai-providers" target="_blank" rel="noopener">Guidelines for providers of general-purpose AI models</a> <a href="https://www.quinnemanuel.com/the-firm/publications/client-alert-eu-ai-act-obligations-on-general-purpose-ai-model-providers/" target="_blank" rel="noopener">Client Alert: EU AI Act: Obligations on General-Purpose AI Model ...</a>, which is expected to force a cluster of formal notifications. Ultimately, the high probability of this outcome is anchored in the massive volume of qualifying models and the strict compliance mandates for operators in the EU market, balanced against the possibility of administrative delays or regulatory leniency in how versions are listed.
+
+Strongest Arguments for Yes
+- Massive technical pipeline: There are already well over 30 publicly disclosed models exceeding the 10^25 FLOPs compute threshold as of mid-2025 <a href="https://epoch.ai/data-insights/models-over-1e25-flop" target="_blank" rel="noopener">Over 30 AI models have been trained at the scale of GPT-4 - Epoch AI</a> <a href="https://techjacksolutions.com/ai-brief/epoch-ai-may-2026-frontier-compute-grew-44x-annually-as-mode/" target="_blank" rel="noopener">Epoch AI May 2026: Frontier Compute Grew 44x Annually as ...</a>. Just the top three Western developers accounted for approximately 19 models by that time <a href="https://epoch.ai/data-insights/models-over-1e25-flop" target="_blank" rel="noopener">Over 30 AI models have been trained at the scale of GPT-4 - Epoch AI</a>.
+- Strict regulatory compliance: Under the EU AI Act, classification is virtually automatic once a model exceeds the compute threshold [[PDF] Article 51 Classification of general-purpose AI models as general ...](<a href="https://cambridge-commentary.ai/wp-content/uploads/2026/03/Article-51.pdf" target="_blank" rel="noopener">https://cambridge-commentary.ai/wp-content/uploads/2026/03/Article-51.pdf</a>). Providers face severe penalties, including fines up to 3% of global turnover, which strongly incentivizes self-notification and compliance.
+- Favorable counting logic: Different parameter sizes (e.g., 70B versus 400B variants) and versioned updates (e.g., v2.0 versus v2.1) qualify as distinct models as long as they are logged individually in the official registry <a href="https://epoch.ai/data-insights/models-over-1e25-flop" target="_blank" rel="noopener">Over 30 AI models have been trained at the scale of GPT-4 - Epoch AI</a>.
+- Fixed compliance deadlines: The August 2, 2027 grace period deadline for older models forces a definitive timeline for compliance <a href="https://digital-strategy.ec.europa.eu/en/policies/guidelines-gpai-providers" target="_blank" rel="noopener">Guidelines for providers of general-purpose AI models</a> <a href="https://www.quinnemanuel.com/the-firm/publications/client-alert-eu-ai-act-obligations-on-general-purpose-ai-model-providers/" target="_blank" rel="noopener">Client Alert: EU AI Act: Obligations on General-Purpose AI Model ...</a>, providing roughly five months for these models to be formally reflected in the public registry before the end of 2027.
+
+Strongest Arguments for No
+- Coarse registry granularity: Regulatory bodies might choose to list model families (e.g., &quot;GPT-4&quot; or &quot;Claude 3&quot;) rather than cataloging every distinct parameter size or version update. This aggregation could easily suppress the official count below 20.
+- Administrative bottlenecks: The newly established European AI Office is widely considered under-resourced and may struggle to process notifications and maintain the registry quickly <a href="https://www.lawfaremedia.org/article/how-much-power-does-the-eu-ai-office-actually-have" target="_blank" rel="noopener">How Much Power Does the EU AI Office Actually Have? - Lawfare</a>. Bureaucratic delays could prevent the registry from being fully populated by the deadline.
+- Successful rebuttals: Providers have the legal right to rebut the presumption of systemic risk under Article 51(3) [[PDF] Article 51 Classification of general-purpose AI models as general ...](<a href="https://cambridge-commentary.ai/wp-content/uploads/2026/03/Article-51.pdf" target="_blank" rel="noopener">https://cambridge-commentary.ai/wp-content/uploads/2026/03/Article-51.pdf</a>) <a href="https://digital-strategy.ec.europa.eu/en/faqs/general-purpose-ai-models-ai-act-questions-answers" target="_blank" rel="noopener">General-Purpose AI Models in the AI Act – Questions &amp; Answers</a> <a href="https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-52" target="_blank" rel="noopener">AI Act Service Desk - Article 52: Procedure - European Union</a>. If developers successfully demonstrate their models do not pose systemic risks, those models will be excluded from the final count.
+- Potential threshold revisions: Evidence suggests that the 10^25 FLOPs systemic-risk threshold is currently under review <a href="https://digital-strategy.ec.europa.eu/en/factpages/general-purpose-ai-obligations-under-ai-act" target="_blank" rel="noopener">General-purpose AI obligations under the AI Act</a>. A substantial upward revision would shrink the pool of qualifying models.
+
+Key Uncertainties
+- Administrative listing practices: How granularly the AI Office officially records models is the single biggest uncertainty. If the office lists individual parameter sizes and sub-versions, the count will easily exceed 20. If it aggregates models into overarching families, reaching 20 will be difficult.
+- Institutional speed and capacity: The pace at which the AI Office operates will dictate the outcome. If the under-resourced unit is unable to process filings efficiently, a backlog could defer official registry entries until 2028.
+- Rebuttal and exemption rates: The frequency with which companies successfully utilize the Article 51(3) rebuttal process to bypass the systemic risk label will impact the total. High success rates could deplete the number of officially recognized high-risk systems.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>Designation as a &#x27;systemic risk&#x27; GPAI model is a pivotal regulatory event that triggers substantial, legally enforceable obligations under Article 55 of the EU AI Act, including mandatory risk mitigation, adversarial testing, and incident reporting <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a> <a href="https://digital-strategy.ec.europa.eu/en/faqs/general-purpose-ai-models-ai-act-questions-answers" target="_blank" rel="noopener">General-Purpose AI Models in the AI Act – Questions &amp; Answers</a>. This is a leading indicator of the compliance burden on frontier AI labs. although it utilizes a compute threshold as a presumption, the designation is a real-world legal status with significant enforcement consequences, justifying a score above the benchmark cap <a href="https://digital-strategy.ec.europa.eu/en/faqs/general-purpose-ai-models-ai-act-questions-answers" target="_blank" rel="noopener">General-Purpose AI Models in the AI Act – Questions &amp; Answers</a>.</p></section>
+<section class="qsection" id="fable"><h2>Fable 5 second opinion <span class="badge">Stage 6f</span></h2><p><strong>Pipeline:</strong> <span style="color:#558b2f;font-weight:700">65%</span> &rarr; <strong>Fable 5:</strong> <span style="color:#f9a825;font-weight:700">55%</span> &nbsp;<span class="badge">AGREE</span></p><p>The question is well-specified — it sensibly defers to the official registry/Official Journal and defines per-entry counting. The pipeline&#x27;s core logic is right: 30+ models already exceed 10^25 FLOPs, providers must self-notify, and classification via the compute presumption is automatic, so the underlying population easily exceeds 20 by end-2027. However, 65% slightly underweights resolution-mechanism risk: the Article 52(6) public list had not been published in usable, per-model form well after the August 2025 applicability date; the Commission has discretion to aggregate model families or withhold entries citing confidentiality; the Digital Omnibus push to simplify/delay AI Act enforcement adds political risk; and providers may notify only flagship models actually placed on the EU market while rebutting or geofencing others. The question resolves NO if the registry is sparse or never properly published, even if 50+ models technically qualify — administrative output, not model count, is the binding constraint. I&#x27;d put it modestly lower, around 55%, which is within a reasonable band of the pipeline&#x27;s estimate, so I agree rather than flag a material disagreement.</p></section>
+</div></body></html>

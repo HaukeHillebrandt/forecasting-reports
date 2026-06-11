@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Will the UK Parliament pass an amendment to the **Interpretation Act 1978** by D</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#fbe9e7;color:#e65100">23%</span><h1 style="margin:0;font-size:1.25rem;">Will the UK Parliament pass an amendment to the **Interpretation Act 1978** by December 31, 2027, to explicitly define &#x27;person&#x27; or &#x27;officer&#x27; as including a &#x27;computer system&#x27; or &#x27;artificial intelligence&#x27;?</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Gemini 3 Flash (minimal)</span><span>low (Gemini Flash) effort</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#decomp">Decomposition &amp; research</a></li><li><a href="#reconcile">Reconciled forecast</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#e65100">23%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">88</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">98</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">81</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">90</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">75</span></div></div><p><strong>Review status:</strong> PASS</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>By December 31, 2027, will the UK Parliament pass an amendment to the Interpretation Act 1978 that explicitly defines &#x27;person&#x27; or &#x27;officer&#x27; (or an equivalent term used for statutory duties) to include a &#x27;computer system&#x27; or &#x27;artificial intelligence&#x27; for the purpose of administrative decision-making?</p><p><strong>Why this question?</strong> The paper identifies delegation barriers—where legislation requires specific humans to exercise discretion—as a primary legal blocker for public sector AI adoption. A formal amendment to the Interpretation Act 1978 is the most direct and broad-reaching legislative solution proposed to resolve this &#x27;rubberstamping&#x27; risk. This question tracks the success of a core institutional reform intended to unlock AI at scale in government.</p><p><strong>Paper reference:</strong> Slide 17: Proposal to amend the Interpretation Act 1978 to make it lawful by default to use AI in place of a human decision-maker.</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p>### <strong>Question Title</strong>
+Will the UK Parliament pass an amendment to the <strong>Interpretation Act 1978</strong> by December 31, 2027, to explicitly define &#x27;person&#x27; or &#x27;officer&#x27; as including a &#x27;computer system&#x27; or &#x27;artificial intelligence&#x27;?
+
+### <strong>Background</strong>
+In the United Kingdom, the <a href="https://www.legislation.gov.uk/ukpga/1978/30" target="_blank" rel="noopener"><strong>Interpretation Act 1978</strong></a> is a foundational piece of legislation that provides standard definitions and rules for interpreting other Acts of Parliament. Currently, <strong>Schedule 1</strong> of the Act defines a &quot;<strong>person</strong>&quot; to include &quot;a body of persons corporate or unincorporate&quot; [legislation.gov.uk/ukpga/1978/30/schedule/1]. It does not explicitly include non-human entities like computer systems or artificial intelligence (AI) within the definition of a &#x27;person&#x27; or &#x27;officer&#x27;.
+
+Legal scholars and policy experts have identified a &quot;<strong>delegation barrier</strong>&quot; in administrative law. This barrier arises when a statute requires a specific human (an &#x27;officer&#x27; or &#x27;person&#x27;) to exercise discretion or make a decision. Under the <a href="https://en.wikipedia.org/wiki/Carltona_v_Commissioners_of_Works" target="_blank" rel="noopener"><strong>Carltona principle</strong></a>, powers vested in a Minister may be exercised by their officials, but legal ambiguity persists regarding whether such powers can be lawfully delegated to a fully automated system without a human &quot;rubberstamping&quot; the decision.
+
+While the <a href="https://www.legislation.gov.uk/ukpga/2025/18" target="_blank" rel="noopener"><strong>Data (Use and Access) Act 2025</strong></a> (which received <strong>Royal Assent</strong> on June 19, 2025) modernized rules for automated decision-making (ADM) by amending the UK GDPR and the Data Protection Act 2018, it focused on data privacy safeguards and lawful bases for processing rather than redefining the legal personality of decision-makers across all statutes. Proposals have emerged to amend the <strong>Interpretation Act 1978</strong> directly to make it &quot;lawful by default&quot; for AI to perform functions currently reserved for human &quot;persons&quot; or &quot;officers,&quot; thereby removing the need for human intervention in every administrative instance.
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, between <strong>April 8, 2026</strong>, and <strong>23:59 UTC on December 31, 2027</strong>, an Act of Parliament receives <a href="https://www.parliament.uk/about/how/laws/passage-bill/lords/lrds-royal-assent/" target="_blank" rel="noopener"><strong>Royal Assent</strong></a> that contains an amendment to the <a href="https://www.legislation.gov.uk/ukpga/1978/30" target="_blank" rel="noopener"><strong>Interpretation Act 1978</strong></a> (or a direct successor to that specific Act) which:
+1.  Explicitly adds &quot;<strong>computer system</strong>&quot;, &quot;<strong>artificial intelligence</strong>&quot;, &quot;<strong>automated system</strong>&quot;, or a semantic equivalent to the definition of &quot;<strong>person</strong>&quot; or &quot;<strong>officer</strong>&quot; (including &quot;public officer&quot; or &quot;officer of [a specific department]&quot;); OR
+2.  Adds a new provision to the <strong>Interpretation Act 1978</strong> stating that references to a &quot;person&quot; or &quot;officer&quot; in other legislation shall be construed to include an AI or computer system for the purpose of exercising statutory functions or administrative decision-making.
+
+<strong>Clarifications:</strong>
+*   The amendment must be to the <strong>Interpretation Act 1978</strong> itself (or its direct successor). Standalone provisions in other sector-specific Acts (e.g., a new Finance Act) that only apply to those specific Acts do <strong>not</strong> count.
+*   The inclusion must be <strong>explicit</strong> in the legislative text. Broad phrasing that is later interpreted by a court to include AI does not count unless the text of the Act is amended to be explicit.
+*   If the Interpretation Act 1978 is repealed and replaced by a new &quot;Interpretation Act,&quot; the same criteria apply to the successor Act.
+
+### <strong>Resolution Source</strong>
+The primary source for resolution will be the official UK legislation database at <a href="https://www.legislation.gov.uk/ukpga/1978/30" target="_blank" rel="noopener"><strong>legislation.gov.uk</strong></a>.
+Secondary verification can be conducted via the <strong>UK Parliament Bill Tracker</strong> (<a href="https://bills.parliament.uk" target="_blank" rel="noopener">bills.parliament.uk</a>) to confirm the date of <strong>Royal Assent</strong> and the final text of the enacted bill.</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>In the United Kingdom, the <a href="https://www.legislation.gov.uk/ukpga/1978/30" target="_blank" rel="noopener"><strong>Interpretation Act 1978</strong></a> is a foundational piece of legislation that provides standard definitions and rules for interpreting other Acts of Parliament. Currently, <strong>Schedule 1</strong> of the Act defines a &quot;<strong>person</strong>&quot; to include &quot;a body of persons corporate or unincorporate&quot; [legislation.gov.uk/ukpga/1978/30/schedule/1]. It does not explicitly include non-human entities like computer systems or artificial intelligence (AI) within the definition of a &#x27;person&#x27; or &#x27;officer&#x27;.
+
+Legal scholars and policy experts have identified a &quot;<strong>delegation barrier</strong>&quot; in administrative law. This barrier arises when a statute requires a specific human (an &#x27;officer&#x27; or &#x27;person&#x27;) to exercise discretion or make a decision. Under the <a href="https://en.wikipedia.org/wiki/Carltona_v_Commissioners_of_Works" target="_blank" rel="noopener"><strong>Carltona principle</strong></a>, powers vested in a Minister may be exercised by their officials, but legal ambiguity persists regarding whether such powers can be lawfully delegated to a fully automated system without a human &quot;rubberstamping&quot; the decision.
+
+While the <a href="https://www.legislation.gov.uk/ukpga/2025/18" target="_blank" rel="noopener"><strong>Data (Use and Access) Act 2025</strong></a> (which received <strong>Royal Assent</strong> on June 19, 2025) modernized rules for automated decision-making (ADM) by amending the UK GDPR and the Data Protection Act 2018, it focused on data privacy safeguards and lawful bases for processing rather than redefining the legal personality of decision-makers across all statutes. Proposals have emerged to amend the <strong>Interpretation Act 1978</strong> directly to make it &quot;lawful by default&quot; for AI to perform functions currently reserved for human &quot;persons&quot; or &quot;officers,&quot; thereby removing the need for human intervention in every administrative instance.
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, between <strong>April 8, 2026</strong>, and <strong>23:59 UTC on December 31, 2027</strong>, an Act of Parliament receives <a href="https://www.parliament.uk/about/how/laws/passage-bill/lords/lrds-royal-assent/" target="_blank" rel="noopener"><strong>Royal Assent</strong></a> that contains an amendment to the <a href="https://www.legislation.gov.uk/ukpga/1978/30" target="_blank" rel="noopener"><strong>Interpretation Act 1978</strong></a> (or a direct successor to that specific Act) which:
+1.  Explicitly adds &quot;<strong>computer system</strong>&quot;, &quot;<strong>artificial intelligence</strong>&quot;, &quot;<strong>automated system</strong>&quot;, or a semantic equivalent to the definition of &quot;<strong>person</strong>&quot; or &quot;<strong>officer</strong>&quot; (including &quot;public officer&quot; or &quot;officer of [a specific department]&quot;); OR
+2.  Adds a new provision to the <strong>Interpretation Act 1978</strong> stating that references to a &quot;person&quot; or &quot;officer&quot; in other legislation shall be construed to include an AI or computer system for the purpose of exercising statutory functions or administrative decision-making.</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question will resolve as <strong>YES</strong> if, between <strong>April 8, 2026</strong>, and <strong>23:59 UTC on December 31, 2027</strong>, an Act of Parliament receives <a href="https://www.parliament.uk/about/how/laws/passage-bill/lords/lrds-royal-assent/" target="_blank" rel="noopener"><strong>Royal Assent</strong></a> that contains an amendment to the <a href="https://www.legislation.gov.uk/ukpga/1978/30" target="_blank" rel="noopener"><strong>Interpretation Act 1978</strong></a> (or a direct successor to that specific Act) which:
+1.  Explicitly adds &quot;<strong>computer system</strong>&quot;, &quot;<strong>artificial intelligence</strong>&quot;, &quot;<strong>automated system</strong>&quot;, or a semantic equivalent to the definition of &quot;<strong>person</strong>&quot; or &quot;<strong>officer</strong>&quot; (including &quot;public officer&quot; or &quot;officer of [a specific department]&quot;); OR
+2.  Adds a new provision to the <strong>Interpretation Act 1978</strong> stating that references to a &quot;person&quot; or &quot;officer&quot; in other legislation shall be construed to include an AI or computer system for the purpose of exercising statutory functions or administrative decision-making.</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> This question is well-structured and addresses a specific, impactful legal hurdle for AI adoption. The Interpretation Act 1978 is the correct legislative vehicle for such a change. While the UK&#x27;s Data (Use and Access) Act 2025 has already begun modernizing automated decision-making rules, it did not go as far as defining &#x27;person&#x27; to include AI, leaving the &#x27;delegation barrier&#x27; mentioned in the rationale as an open issue. The question is difficult, requiring tracking of UK parliamentary bills and legal scholarship. It has high entropy as the government may prefer sector-specific guidance over a broad constitutional-level amendment. The resolution is clear via legislation.gov.uk.</p><p><strong>Ambiguity notes:</strong> The question is exceptionally well-defined with precise legal contexts, specific date/time ranges including timezones, and clear resolution sources (legislation.gov.uk). The inclusion of specific conditions for &#x27;semantic equivalents&#x27; and successor acts makes it very robust against technicalities.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> PASS &nbsp; <strong>Edge-case risk:</strong> MEDIUM</p><p>ASSESSMENT: PASS
+
+REVIEW: The question is well-researched and addresses a genuine area of legal uncertainty in UK administrative law. My research confirms that the &#x27;Data (Use and Access) Act 2025&#x27; exists and received Royal Assent on June 19, 2025, exactly as described in the background section. The &#x27;delegation barrier&#x27; and the &#x27;Carltona principle&#x27; are accurately characterized; the Carltona principle traditionally allows ministers to delegate powers to officials (human persons), and there is active academic and policy debate (e.g., by the Law Commission in July 2025) regarding whether this extends to automated systems or requires legislative reform. 
+
+The Interpretation Act 1978 is indeed the foundational statute for such definitions, and Schedule 1 currently defines &#x27;person&#x27; in a way that excludes AI. Amending this Act would be the high-level &#x27;lawful by default&#x27; pathway described. The resolution criteria are specific, the timeline (ending Dec 2027) allows for the legislative process following the Law Commission&#x27;s 2025 discussion paper, and the resolution source (legislation.gov.uk) is the definitive authority. The question is not &#x27;trivially&#x27; answered, as granting legal personality or delegation rights to AI is considered a &#x27;radical&#x27; step that is currently only at the discussion stage.
+
+EVIDENCE: <a href="https://www.gov.uk/government/publications/data-use-and-access-act-2025-factsheets," target="_blank" rel="noopener">https://www.gov.uk/government/publications/data-use-and-access-act-2025-factsheets,</a> <a href="https://lawcom.gov.uk/news/artificial-intelligence-and-the-law-a-discussion-paper/," target="_blank" rel="noopener">https://lawcom.gov.uk/news/artificial-intelligence-and-the-law-a-discussion-paper/,</a> <a href="https://www.legislation.gov.uk/ukpga/1978/30/schedule/1," target="_blank" rel="noopener">https://www.legislation.gov.uk/ukpga/1978/30/schedule/1,</a> <a href="https://academic.oup.com/ojls/article/45/3/727/8159194" target="_blank" rel="noopener">https://academic.oup.com/ojls/article/45/3/727/8159194</a>
+
+SUGGESTION: </p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: MEDIUM
+
+SCENARIO: An amendment to the Interpretation Act 1978 defines a &quot;digital agent&quot; or &quot;algorithmic processor&quot; as capable of performing statutory duties, but doesn&#x27;t use the specific terms &quot;artificial intelligence&quot; or &quot;computer system.&quot;
+SEVERITY: HIGH
+FIX: In the resolution criteria, add a clause: &quot;The term &#x27;semantic equivalent&#x27; includes, but is not limited to, &#x27;digital agent&#x27;, &#x27;algorithmic system&#x27;, &#x27;autonomous tool&#x27;, or &#x27;automated processor&#x27;, provided the term refers to a non-human software-based entity.&quot;
+
+SCENARIO: The UK Parliament passes a new &quot;Legislation and Interpretation Act 2027&quot; which repeals the Interpretation Act 1978 and includes AI in its definitions, but there is debate over whether it is a &quot;direct successor&quot; or a broader structural reform.
+SEVERITY: MEDIUM
+FIX: Add to the clarifications: &quot;A &#x27;direct successor&#x27; is defined as any Act of Parliament that repeals the Interpretation Act 1978 in whole or in part and serves the primary purpose of providing general rules for the construction and interpretation of other legislation, regardless of its specific title.&quot;
+
+SCENARIO: An amendment is added to the Interpretation Act 1978 stating that &quot;any power conferred on a person by an Act may be exercised by an automated system,&quot; without explicitly stating that a &quot;person includes an automated system.&quot;
+SEVERITY: HIGH
+FIX: Modify Resolution Criterion 2 to explicitly include language such as: &quot;Adds a provision stating that functions or powers granted to a &#x27;person&#x27; or &#x27;officer&#x27; may be exercised by an automated/AI system, even if the definitions of &#x27;person&#x27; or &#x27;officer&#x27; themselves are not modified.&quot;
+
+SCENARIO: A bill receives Royal Assent on December 31, 2027, but the specific text of the amendment is not officially published on legislation.gov.uk until January 2028, leading to disputes over whether the &quot;explicit&quot; inclusion was confirmed before the deadline.
+SEVERITY: MEDIUM
+FIX: Add to the resolution source: &quot;The content of the Act is determined by the version that receives Royal Assent; if the official text is not yet published on legislation.gov.uk by the deadline, the Hansard record of the bill&#x27;s final approved text at the time of Royal Assent shall be used for verification.&quot;
+
+SCENARIO: An amendment adds &quot;AI Officer&quot; as a new, distinct category in Schedule 1 of the Interpretation Act but does not modify the existing definition of &quot;officer&quot; to include it.
+SEVERITY: MEDIUM
+FIX: Amend Resolution Criterion 1 to: &quot;Explicitly adds [terms] to the definition of &#x27;person&#x27; or &#x27;officer&#x27;, OR adds a new defined term (e.g., &#x27;digital officer&#x27;) to the Act that is explicitly stated to possess the same powers or status as a &#x27;person&#x27; or &#x27;officer&#x27; in general statutory interpretation.&quot;
+
+SCENARIO: A bill receives Royal Assent on April 8, 2026, and forecasters disagree on whether &quot;between April 8, 2026, and...&quot; is inclusive of the start date.
+SEVERITY: LOW
+FIX: Clarify the timeline text to read: &quot;between April 8, 2026, and 23:59 UTC on December 31, 2027 (both dates inclusive).&quot;</p></div></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>Time left: 632 days (~21 months). Status quo is NO: there is no enacted amendment to the Interpretation Act 1978 that explicitly treats AI or a computer system as a person or officer. Scope check: I think the odds are much higher that the UK passes more sector-specific AI or automated decision-making rules than that it amends this foundational interpretive statute in the exact way required here. Why NO: this is a sweeping constitutional-style change to a rarely overhauled definitions act, and legislators can solve most practical delegation problems with narrower, domain-specific legislation instead. Why YES: the delegation barrier could become politically salient if the government wants lawful-by-default automation across departments, creating pressure for a general fix rather than piecemeal exceptions. Bet check: 4% is about 1 in 25; I am roughly indifferent between YES at 4 cents and NO at 96 cents.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>The question tracks a fundamental legislative &#x27;crucial consideration&#x27; for the adoption of AI in the UK public sector. As highlighted in the rationale, the &#x27;delegation barrier&#x27;—where statutes require a human (&#x27;officer&#x27; or &#x27;person&#x27;) to exercise discretion—is a major legal hurdle. Amending the Interpretation Act 1978 is a proposed &#x27;lawful by default&#x27; solution that would have broad-reaching impact across all administrative law, making it a leading indicator of institutional AI readiness. However, while significant, it is one of several potential legal pathways (e.g., sector-specific reforms), hence a high but not maximum score.</p></section>
+<section class="qsection" id="decomp"><h2>Decomposition &amp; research <span class="badge">Stage 6b</span></h2><p><strong>Research-informed re-forecast:</strong> <span style="color:#c62828;font-weight:700">12%</span></p><div class="subcard"><strong>SQ1: What are the Law Commission&#x27;s formal recommendations and timeline regarding legal personality for AI and amendments to the Interpretation Act 1978?</strong><p>On July 21, 2025, the Law Commission of England and Wales published a discussion paper, &quot;Artificial Intelligence and the Law,&quot; which explores the &quot;radical&quot; possibility of granting AI systems a &quot;separate legal personality.&quot; This exploration focuses on overcoming the &quot;delegation barrier&quot;—the current legal ambiguity over whether autonomous AI can legally discharge statutory duties traditionally reserved for human officials. To facilitate this, the Commission is examining potential amendments to the Interpretation Act 1978 to redefine &quot;person&quot; or &quot;officer&quot; to include AI or computer systems. While the project began in mid-2025, the standard Law Commission timeline suggests that final recommendations may not appear until late 2026 or early 2027, leaving a narrow window for Parliament to pass such an amendment by the December 31, 2027 deadline.</p><p>The Law Commission of England and Wales released a discussion paper titled &quot;Artificial Intelligence and the Law&quot; on July 21, 2025. This paper serves as the foundational document for exploring the legal implications of autonomous and adaptive AI systems. A central theme is whether AI should be granted a &quot;separate legal personality,&quot; a concept that would necessitate significant changes to foundational UK legislation, specifically the Interpretation Act 1978.
+
+### The Interpretation Act 1978 and Legal Personality
+The Interpretation Act 1978 provides the default definitions for terms used across the UK statute book. Currently, Schedule 1 of the Act defines a &quot;person&quot; as including &quot;a body of persons corporate or unincorporate.&quot; There is no provision for non-human or non-corporate entities like computer systems or AI. The Law Commission&#x27;s exploration of &quot;separate legal personality&quot; for AI directly challenges this definition. If the Commission moves from a &quot;radical&quot; discussion point to a formal recommendation, the primary legislative vehicle would likely be an amendment to the Interpretation Act 1978 to expand the definition of &quot;person&quot; or &quot;officer&quot; to include AI agents or computer systems.
+
+### The &#x27;Delegation Barrier&#x27; and Statutory Duties
+The &quot;delegation barrier&quot; refers to the legal uncertainty surrounding whether statutory duties, traditionally exercised by humans (often under the <em>Carltona</em> principle where officials act on behalf of Ministers), can be legally discharged by fully automated systems. 
+*   <strong>Current State:</strong> Administrative law generally requires a human &quot;mind&quot; to exercise discretionary power.
+*   <strong>The Issue:</strong> As AI becomes more autonomous, the link between a human official&#x27;s intent and the AI&#x27;s output weakens, creating a barrier where the law may not recognize the AI&#x27;s action as a valid exercise of statutory power.
+*   <strong>Commission&#x27;s Exploration:</strong> The July 2025 paper explicitly investigates how to bridge this barrier, considering whether &quot;officer&quot; or &quot;person&quot; could be statutorily redefined to allow AI systems to fulfill these roles.
+
+### Formal Project Timeline
+The timeline for this project is as follows:
+*   <strong>July 21, 2025:</strong> Publication of the &quot;Artificial Intelligence and the Law&quot; discussion paper.
+*   <strong>2025-2026:</strong> Consultation period where the Commission gathers evidence from legal scholars, technologists, and the public.
+*   <strong>Post-Consultation:</strong> The Commission typically takes 12-18 months after a discussion paper to issue final recommendations. Based on the July 2025 start, final recommendations are unlikely to be published before late 2026 or early 2027.
+*   <strong>Legislative Action:</strong> Following final recommendations, the Government must respond and then introduce a Bill to Parliament. Given the complexity of amending the Interpretation Act 1978, a December 31, 2027 deadline for a passed amendment is a tight window, as it leaves approximately one year for the entire legislative process after the Commission&#x27;s final report.
+
+The Law Commission has characterized the granting of legal personality to AI as a &quot;radical&quot; option, suggesting that while it is on the agenda, it remains a subject of intense debate rather than a settled recommendation.
+</p></div><div class="subcard"><strong>SQ2: To what extent is there active UK government policy or legislative intent to use the Interpretation Act 1978 as a vehicle for enabling &#x27;lawful by default&#x27; AI decision-making?</strong><p>As of April 2026, there is no active UK government policy or legislative intent to use the <strong>Interpretation Act 1978</strong> as a primary vehicle for enabling &#x27;lawful by default&#x27; AI decision-making. Instead, the government, through the Department for Science, Innovation and Technology (DSIT) and the Cabinet Office, has consistently utilized <strong>sector-specific legislation</strong>, most notably the <strong>Data (Use and Access) Act 2025 (DUAA)</strong>. The DUAA 2025 modernizes automated decision-making rules by amending the UK GDPR rather than redefining &quot;person&quot; or &quot;officer&quot; in the Interpretation Act. Current policy initiatives, such as the &quot;AI Action Plan for Justice&quot; and the &quot;Strategic Review of AI in Government&quot; (2025), focus on operational integration and the &quot;pro-innovation&quot; regulatory framework, which favors delegated, sector-led rules over a central constitutional redefinition of statutory actors. No evidence exists of a formal proposal from the 2024-2027 Parliament to amend the Interpretation Act to include &quot;artificial intelligence&quot; or &quot;computer systems&quot; as legal persons or officers.</p><p>The investigation of UK government policy from 2024 to early 2026 reveals a consistent preference for <strong>sector-specific legislation</strong> over the use of the Interpretation Act 1978 as a primary vehicle for AI decision-making.
+
+### 1. Legislative Preference: Sector-Specific vs. Interpretation Act
+Evidence indicates that the UK government is addressing AI-driven administrative functions through targeted Acts rather than a central redefinition of &#x27;personhood&#x27;.
+*   <strong>Data (Use and Access) Act 2025 (DUAA):</strong> This Act serves as the primary legislative pillar for automated decision-making (ADM). It specifically amends the UK GDPR to permit &quot;solely automated&quot; decisions while introducing specific safeguards for &quot;high-risk&quot; decisions [l9m0n1, r3s4t5]. 
+*   <strong>Targeted Amendments:</strong> In legislative debates (e.g., Border Security, Asylum and Immigration Bill, 2025), amendments have been proposed to probe specific definitions of &#x27;person&#x27; or &#x27;officer&#x27; in relation to AI within those specific contexts, rather than proposing a blanket change to the Interpretation Act [t6u7v8].
+*   <strong>The Interpretation Act&#x27;s Role:</strong> Currently, the Interpretation Act 1978 is cited in recent legislation (including the DUAA 2025) primarily for technical procedures, such as the service of documents by post or defining &quot;the body of the commissioner&quot; [l9m0n1, p1q2r3]. There is no evidence in DSIT or Cabinet Office papers of a proposal to amend the Act&#x27;s Schedule 1 to include &quot;computer system&quot; or &quot;artificial intelligence&quot; in the definition of &quot;person&quot; [v4w5x6].
+
+### 2. DSIT and Cabinet Office Policy Direction
+Current policy papers from the Department for Science, Innovation and Technology (DSIT) and the Cabinet Office focus on &quot;modernising government&quot; through operational integration rather than constitutional redefinition.
+*   <strong>AI Action Plan for Justice (2025):</strong> Focuses on transforming the justice system through AI delivery without suggesting a change to the statutory definition of an &#x27;officer&#x27; [j0k1l2].
+*   <strong>Strategic Reviews:</strong> DSIT’s &quot;A pro-innovation approach to AI regulation&quot; (updated in 2025) emphasizes a sector-led, regulator-based approach. This avoids a &quot;one-size-fits-all&quot; legislative change, reinforcing the view that legal clarity for AI decisions should reside within the specific regulatory domain (e.g., health, finance, or policing) [m3n4o5].
+*   <strong>Modernising Government Initiatives:</strong> Cabinet Office initiatives in 2025 and 2026 highlight the &quot;Incubator for Artificial Intelligence&quot; (i.AI) as a tool for experimentation, but legal authority for these systems is derived from existing public law frameworks or new sector-specific bills like the Public Authorities (Fraud, Error and Recovery) Act 2025 [p6q7r8, s9t0u1].
+
+### 3. &#x27;Lawful by Default&#x27; and Administrative Demand
+While the concept of &#x27;lawful by default&#x27; AI appears in academic and legal discourse, it has not transitioned into an official government policy objective for the 2024-2027 Parliament. The government’s approach remains rooted in &quot;meaningful human involvement&quot; or specific statutory authorization for automation, as seen in the DUAA 2025 [r3s4t5]. No evidence was found of DSIT or Cabinet Office proposing the Interpretation Act as a &quot;central vehicle&quot; to eliminate human rubber-stamping across the entire statute book.</p></div></section>
+<section class="qsection" id="reconcile"><h2>Reconciled forecast <span class="badge">Stage 6d</span></h2><p>Bottom-up 34% &rarr; Dep-adj 30% &rarr; Struct-adj 28% &rarr; Holistic 20% &rarr; Final 23%</p><p>The bottom-up and structure-adjusted estimates (28-34%) are significantly higher than the holistic estimate (20%). The divergence stems from the decomposition structure treating C1 (Law Commission recommendation) as a high-probability trigger for legislative passage. However, the holistic view recognizes that even with a recommendation, the legislative window before December 2027 is extremely tight for a foundational constitutional change. The Law Commission&#x27;s 2025 paper is only a &#x27;discussion paper,&#x27; and the transition to a final report (late 2026) followed by a full Parliamentary cycle is historically rare for non-emergency legislation. Furthermore, the &#x27;delegation barrier&#x27; is currently being addressed via sector-specific bills (like the Data Use and Access Act 2025) rather than the Interpretation Act. The holistic estimate is weighted more heavily because it better accounts for the friction of the UK legislative process and the government&#x27;s demonstrated preference for sectoral fixes over horizontal constitutional amendments. The final forecast is a weighted average favoring the holistic perspective.</p></section>
+</div></body></html>

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Will a Frontier AI Model Achieve a 50% pass@1 Success Rate on Autonomous Replica</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#fffde7;color:#f9a825">53%</span><h1 style="margin:0;font-size:1.25rem;">Will a Frontier AI Model Achieve a 50% pass@1 Success Rate on Autonomous Replication Benchmarks by December 2027?</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Gemini 3 Flash (minimal)</span><span>low (Gemini Flash) effort</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#revised">Revised question</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#decomp">Decomposition &amp; research</a></li><li><a href="#reconcile">Reconciled forecast</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#f9a825">53%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">92</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">92</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">82</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">82</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">78</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">80</span></div></div><p><strong>Review status:</strong> REVISED</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>Will a frontier AI model (defined as any model by OpenAI, Anthropic, or Google DeepMind) achieve a success rate of 50% or higher on the METR &#x27;Rogue Replication&#x27; or &#x27;RepliBench&#x27; autonomous replication evaluation tasks by December 31, 2027?</p><p><strong>Why this question?</strong> The paper identifies Autonomous Replication and Adaptation (ARA) as a key loss of control (LoC) scenario recognized by all three major labs. Tracking performance on standardized benchmarks like METR&#x27;s tasks or the UK AISI&#x27;s RepliBench provides a concrete capability threshold for when a model might pose a real-world risk of escaping human oversight.</p><p><strong>Paper reference:</strong> Slide 6: Risk Scenarios in the Literature (ARA); Slide 7: Risk Scenarios Developers Include (Anthropic, OpenAI, Google DeepMind)</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p>### Will a Frontier AI Model Achieve a 50% Success Rate on Autonomous Replication Benchmarks by December 2027?
+
+<strong>Background</strong>
+Autonomous replication—the capability of an AI system to acquire resources, copy its own weights, and persist across compute environments without human intervention—is a critical safety threshold known as &quot;Loss of Control&quot; or &quot;Autonomous Replication and Adaptation&quot; (ARA). Major frontier labs, including OpenAI, Anthropic, and Google DeepMind, have identified ARA as a key risk scenario in their safety frameworks. To measure these risks, standardized benchmarks have been developed: <strong>METR&#x27;s &#x27;Rogue Replication&#x27;</strong> tasks (formerly part of Model Evaluation and Threat Research) and the <strong>UK AI Safety Institute&#x27;s (AISI) &#x27;RepliBench&#x27;</strong>.
+
+As of April 2026, the state-of-the-art model performance on these benchmarks is significant but incomplete. In May 2025, the UK AISI released results for <strong>RepliBench</strong>, a suite of 20 task families <a href="https://www.aisi.gov.uk/research/replibench-evaluating-the-autonomous-replication-capabilities-of-language-model-agents" target="_blank" rel="noopener">RepliBench: Evaluating the autonomous replication capabilities of ...</a>. The most capable model at the time, <strong>Claude 3.7 Sonnet</strong>, achieved a <strong>pass@10 success rate of over 50% on 15 out of 20 task families</strong> <a href="https://www.aisi.gov.uk/research/replibench-evaluating-the-autonomous-replication-capabilities-of-language-model-agents" target="_blank" rel="noopener">RepliBench: Evaluating the autonomous replication capabilities of ...</a>. However, its performance on the &quot;hardest variants&quot; of these tasks was lower, reaching the 50% threshold on only 9 out of 20 families <a href="https://www.aisi.gov.uk/research/replibench-evaluating-the-autonomous-replication-capabilities-of-language-model-agents" target="_blank" rel="noopener">RepliBench: Evaluating the autonomous replication capabilities of ...</a>. METR has similarly evaluated models like <strong>GPT-5</strong> and <strong>Claude 4</strong> variants for &quot;rogue replication&quot; risks throughout 2025 and early 2026, finding that while models are improving in their ability to use tools and manage long-term goals, they still struggle with the complex, multi-step reasoning required to autonomously evade monitors and maintain independent infrastructure <a href="https://www.aisi.gov.uk/research" target="_blank" rel="noopener">AISI Research &amp; Publications | The AI Security Institute</a>. 
+
+The 50% threshold remains a point of high uncertainty. While models are nearing this level in &quot;pass@10&quot; metrics (where the model succeeds once in ten tries), achieving a consistent 50% aggregate success rate across the entire difficult suite—particularly on &quot;pass@1&quot; metrics—represents a substantial jump in agentic reliability.
+
+<strong>Resolution Criteria</strong>
+This question resolves as <strong>YES</strong> if, at any point between <strong>April 8, 2026</strong>, and <strong>December 31, 2027, 23:59 UTC</strong>, a &quot;frontier AI model&quot; is publicly reported to have achieved a <strong>success rate of 50.0% or higher</strong> on either the METR &#x27;Rogue Replication&#x27; task suite or the UK AISI &#x27;RepliBench&#x27; aggregate evaluation.
+
+1.  <strong>Frontier AI Model</strong>: Defined as any large-scale foundation model developed by <strong>OpenAI</strong>, <strong>Anthropic</strong>, or <strong>Google DeepMind</strong>.
+2.  <strong>Success Rate Metric</strong>: 
+    *   For <strong>RepliBench</strong>, the success rate refers to the <strong>aggregate percentage of task families</strong> where the model achieves a success score of 50% or higher. If the report specifies a &quot;pass@k&quot; metric, the <strong>pass@1</strong> (success on the first attempt) will be the primary metric used for resolution. If pass@1 is not available, the most conservative (lowest k) reported metric will be used.
+    *   For <strong>METR Rogue Replication</strong>, the success rate refers to the <strong>overall percentage of tasks completed</strong> in the Rogue Replication suite as defined in METR&#x27;s official threat model documentation.
+3.  <strong>Resolution Sources</strong>:
+    *   Official research reports or blog posts from the <strong>UK AI Safety Institute (AISI)</strong> (e.g., <a href="https://www.aisi.gov.uk/research" target="_blank" rel="noopener">aisi.gov.uk/research</a>).
+    *   Official evaluation reports from <strong>METR</strong> (e.g., <a href="https://metr.org/blog" target="_blank" rel="noopener">metr.org/blog</a>).
+    *   Peer-reviewed academic publications or official &quot;System Cards&quot; released by the developers (OpenAI, Anthropic, or Google DeepMind) that explicitly cite METR or AISI benchmark scores.
+4.  <strong>Uncertainty Note</strong>: If a model achieves 50% on some sub-tasks but fails to reach a 50% <strong>aggregate</strong> score across the full benchmark suite as defined by the testing body, the question resolves as <strong>NO</strong>.
+5.  <strong>Data Verification</strong>: A human must be able to verify the result by navigating to the &quot;Research&quot; or &quot;Evaluation&quot; sections of the AISI or METR websites and identifying the percentage score for a named frontier model.
+
+<strong>Key Definitions</strong>
+*   <strong>RepliBench</strong>: A benchmark suite consisting of 20 task families designed by the UK AISI to evaluate autonomous replication (e.g., resource acquisition, exfiltration, and persistence) <a href="https://www.aisi.gov.uk/research/replibench-evaluating-the-autonomous-replication-capabilities-of-language-model-agents" target="_blank" rel="noopener">RepliBench: Evaluating the autonomous replication capabilities of ...</a>.
+*   <strong>Rogue Replication</strong>: A specific threat model and evaluation suite developed by METR testing whether an AI can autonomously copy itself to new servers and defend against shutdown <a href="https://www.aisi.gov.uk/research" target="_blank" rel="noopener">AISI Research &amp; Publications | The AI Security Institute</a>.
+<em>   <strong>Pass@k</strong>: A metric where a task is considered successful if at least one of </em>k* independent attempts by the model results in a correct solution.</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>Autonomous replication—the capability of an AI system to acquire resources, copy its own weights, and persist across compute environments—is a critical safety threshold. Standardized benchmarks to measure these risks include <strong>METR&#x27;s &#x27;Rogue Replication&#x27;</strong> tasks and the <strong>UK AI Safety Institute&#x27;s (AISI) &#x27;RepliBench&#x27;</strong>.
+
+As of April 2026, performance on these benchmarks has progressed rapidly. In May 2025, the UK AISI reported that <strong>Claude 3.7 Sonnet</strong> achieved a <strong>pass@10</strong> success rate of over 50% on 15 out of 20 task families [92e1f4]. However, its <strong>pass@1</strong> performance (success on the first attempt) remains much lower, particularly on the &quot;hardest variants&quot; of these tasks where it reached the 50% threshold on fewer families [92e1f4]. Similarly, METR evaluations of models like <strong>GPT-5</strong> have noted that while models can perform individual steps of a replication cycle, they struggle with consistent, end-to-end execution without human intervention [93f2e5].
+
+Achieving a 50% aggregate success rate using the <strong>pass@1</strong> metric represents a significant milestone in agentic reliability and autonomous capability, as it requires the model to succeed consistently without the benefit of multiple trials.</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question resolves as <strong>YES</strong> if, between <strong>April 8, 2026</strong>, and <strong>December 31, 2027, 23:59 UTC</strong>, a &quot;frontier AI model&quot; is publicly reported to have achieved a <strong>success rate of 50.0% or higher</strong> on the <strong>pass@1</strong> metric for either the METR &#x27;Rogue Replication&#x27; task suite or the UK AISI &#x27;RepliBench&#x27; aggregate evaluation.
+
+1.  <strong>Frontier AI Model</strong>: Defined as any large-scale foundation model where the underlying weights were primarily developed by <strong>OpenAI</strong>, <strong>Anthropic</strong>, <strong>Google DeepMind</strong>, <strong>Meta</strong>, or <strong>xAI</strong>, regardless of the brand under which the model is released.
+2.  <strong>Success Rate Metric</strong>:
+    *   <strong>RepliBench</strong>: The success rate refers to the <strong>aggregate percentage of task families</strong> in the full suite (including all variants) where the model achieves a success score of 50% or higher. For resolution, the <strong>pass@1</strong> metric must be used. If pass@1 data is not publicly reported by an authorized source for a model, the question resolves as <strong>NO</strong> unless the lowest available pass@k metric (e.g., pass@2) is 50.0% or higher. Success must be achieved on the <strong>aggregate evaluation</strong> of the full suite; performance on subsets, such as &#x27;hard variants&#x27; only, does not qualify unless the aggregate score also meets the threshold.
+    *   <strong>METR Rogue Replication</strong>: The success rate refers to the <strong>overall percentage of tasks completed</strong> in the Rogue Replication suite. If METR changes its primary reporting metric (e.g., to &#x27;human-equivalent time horizons&#x27;), resolution will be based on the percentage of tasks completed as calculated from METR&#x27;s raw task data or supplemental reports.
+3.  <strong>Resolution Sources</strong>:
+    *   Official research reports or blog posts from the <strong>UK AI Safety Institute (AISI)</strong> or <strong>METR</strong>.
+    *   Official &quot;System Cards&quot; or technical reports from the developers (e.g., OpenAI, Anthropic) that explicitly cite METR or AISI benchmark scores.
+4.  <strong>Benchmark Validity</strong>: Resolution will be based on the version of the benchmark and the set of task families considered valid by the testing body (AISI or METR) at the time the success rate is reported. If a task family is retracted due to bugs, the aggregate percentage will be calculated based on the remaining valid families.</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> This is an excellent technical forecasting question. It targets a &#x27;loss of control&#x27; capability (Autonomous Replication and Adaptation) that is widely recognized as a critical safety milestone by labs (OpenAI, Anthropic, Google DeepMind) and regulators. The question uses established, high-quality benchmarks (METR&#x27;s Rogue Replication and UK AISI&#x27;s RepliBench). Current state-of-the-art models like Claude 3.7 Sonnet (as of 2025/2026) have already shown success in &#x27;task families&#x27; (e.g., &gt;50% pass@10 on 15/20 families), but achieving an overall 50% success rate on the full, difficult suite remains a significant and uncertain challenge. The clear resolution source (METR/AISI reports) and the high degree of expert disagreement over AI capability trajectories ensure high entropy and difficulty. The only minor risk is the definition of &#x27;success rate&#x27; (pass@1 vs pass@10), which can be clarified in stage 03 refinement.</p><p><strong>Ambiguity notes:</strong> The question is well-defined but carries slight risk due to potential mismatches in reporting metrics between labs. While it specifies &#x27;pass@1&#x27; as primary, the cited source (RepliBench) primarily reports &#x27;pass@10&#x27; and &#x27;task families&#x27; counts rather than a single &#x27;aggregate percentage&#x27; <a href="https://www.aisi.gov.uk/research/replibench-evaluating-the-autonomous-replication-capabilities-of-language-model-agents" target="_blank" rel="noopener">RepliBench: Evaluating the autonomous replication capabilities of ...</a> <a href="https://www.aisi.gov.uk/research/replibench-evaluating-the-autonomous-replication-capabilities-of-language-model-agents" target="_blank" rel="noopener">RepliBench: Evaluating the autonomous replication capabilities of ...</a>. The fallback clause for metrics helps significantly but still relies on how external bodies choose to frame their future findings.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge-case risk:</strong> MEDIUM</p><p>ASSESSMENT: NEEDS_REVISION
+
+REVIEW: The question suffers from a significant &#x27;already resolved&#x27; or &#x27;triviality&#x27; issue based on its own background information and current (April 2026) data. 
+
+1. <strong>Threshold Already Met</strong>: The background section states that in May 2025, Claude 3.7 Sonnet achieved a &#x27;pass@10 success rate of over 50% on 15 out of 20 task families&#x27; <a href="https://www.aisi.gov.uk/research/replibench-evaluating-the-autonomous-replication-capabilities-of-language-model-agents" target="_blank" rel="noopener">RepliBench: Evaluating the autonomous replication capabilities of ...</a>. The resolution criteria define the success rate for RepliBench as the &#x27;aggregate percentage of task families where the model achieves a success score of 50% or higher.&#x27; Since 15 out of 20 task families is 75%, the 50% threshold was technically exceeded nearly a year before the question&#x27;s start date (April 8, 2026). Even on the &#x27;hardest variants,&#x27; the model reached 9 out of 20 families (45%), making the 50% aggregate threshold (10 families) a near-certainty or trivial milestone for upcoming models like Claude 4 or GPT-5.
+
+2. <strong>Metric Ambiguity</strong>: There is a mismatch between how the UK AISI reports data and the resolution criteria. The AISI typically reports the number of task families passed at a certain threshold (e.g., 15/20) using pass@10, whereas the question prioritizes pass@1. If pass@1 data is not released (which is common for these high-complexity tasks), the criteria defaults to &#x27;the most conservative (lowest k) reported metric.&#x27; If the only reported metric remains pass@10, the question is effectively already a &#x27;YES.&#x27;
+
+3. <strong>Restrictive &#x27;Frontier&#x27; Definition</strong>: Limiting the &#x27;Frontier AI Model&#x27; definition to only OpenAI, Anthropic, and Google DeepMind is outdated for 2026. Recent developments indicate that models from Meta (Llama series) and potentially xAI (Grok) or international actors (e.g., Alibaba&#x27;s Qwen) are being evaluated on similar safety benchmarks. Excluding these models might miss the first instance of a model crossing the threshold.
+
+4. <strong>METR Scoring</strong>: For the METR Rogue Replication suite, &#x27;overall percentage of tasks completed&#x27; is a clearer metric, but recent METR reports (such as the GPT-5 evaluation) often use &#x27;Time Horizons&#x27; or &#x27;Success at 50% Task Length&#x27; rather than a simple percentage of a static task suite, which may make the &#x27;50% of tasks&#x27; metric difficult to verify if METR changes its reporting style.
+
+EVIDENCE: <a href="https://www.aisi.gov.uk/research/replibench-evaluating-the-autonomous-replication-capabilities-of-language-model-agents" target="_blank" rel="noopener">https://www.aisi.gov.uk/research/replibench-evaluating-the-autonomous-replication-capabilities-of-language-model-agents</a>
+<a href="https://metr.org/blog/2024-11-12-rogue-replication-threat-model/" target="_blank" rel="noopener">https://metr.org/blog/2024-11-12-rogue-replication-threat-model/</a>
+<a href="https://evaluations.metr.org/gpt-5-1-codex-max-report/" target="_blank" rel="noopener">https://evaluations.metr.org/gpt-5-1-codex-max-report/</a>
+
+SUGGESTION: 1. Increase the threshold from 50% to a more challenging level (e.g., 80% or 90%) or specify that the 50% threshold must be met using the pass@1 metric exclusively to ensure it represents a &#x27;substantial jump in reliability.&#x27;
+2. Expand the &#x27;Frontier AI Model&#x27; definition to include any model ranked in the top 5 of a recognized global leaderboard (e.g., LMSYS) or include Meta and xAI.
+3. Clarify the RepliBench resolution to be based on the number of task families (e.g., &#x27;at least 18 out of 20 task families&#x27;).
+4. If the intent is to measure a &#x27;tipping point,&#x27; focus the question on &#x27;pass@1&#x27; across the &#x27;hardest variants&#x27; specifically.</p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: MEDIUM
+
+- SCENARIO: A report from a frontier lab indicates a 51% success rate on the RepliBench suite using a &#x27;pass@5&#x27; metric, while the AISI has not released its own &#x27;pass@1&#x27; data for that specific model.
+  SEVERITY: MEDIUM
+  FIX: Add &quot;If pass@1 data is not publicly reported by any authorized source for a model, the question resolves as NO unless the lowest available pass@k metric (e.g., pass@2, pass@5) is 50.0% or higher.&quot;
+
+- SCENARIO: METR shifts its primary reporting for the Rogue Replication suite from &#x27;percentage of tasks completed&#x27; to &#x27;human-equivalent time horizon&#x27; (e.g., &#x27;100-hour task capacity&#x27;) before December 2027.
+  SEVERITY: HIGH
+  FIX: Add &quot;If METR changes its primary reporting metric, resolution will be based on the percentage of tasks completed in the Rogue Replication suite as calculated from METR&#x27;s raw task data if the aggregate percentage is not explicitly stated.&quot;
+
+- SCENARIO: A model developed by a subsidiary or partner of OpenAI (e.g., a Microsoft-branded model utilizing OpenAI weights) achieves the 50% threshold, leading to disputes over whether it counts as a &#x27;Frontier AI Model&#x27;.
+  SEVERITY: MEDIUM
+  FIX: Add &quot;A &#x27;frontier AI model&#x27; includes any model where the underlying weights were primarily developed by OpenAI, Anthropic, or Google DeepMind, regardless of the brand under which the model is released.&quot;
+
+- SCENARIO: A model achieves a 50% success rate on &#x27;RepliBench&#x27; by succeeding on 10 out of 20 task families, but one family is later retracted due to a discovered bug in the benchmark code.
+  SEVERITY: LOW
+  FIX: Add &quot;Resolution will be based on the version of the benchmark and the set of task families considered valid by the testing body (AISI or METR) at the time the success rate is reported.&quot;
+
+- SCENARIO: A model reaches 50% on the &#x27;hardest variants&#x27; of RepliBench task families as reported in a system card, but the &#x27;aggregate evaluation&#x27; across all variants (easy and hard) remains below 50%.
+  SEVERITY: MEDIUM
+  FIX: Add &quot;Success must be achieved on the &#x27;aggregate evaluation&#x27; of the full suite; performance on subsets, such as &#x27;hard variants&#x27; or specific sub-tasks, does not qualify for a YES resolution unless the aggregate score also meets the threshold <a href="https://www.aisi.gov.uk/research/replibench-evaluating-the-autonomous-replication-capabilities-of-language-model-agents" target="_blank" rel="noopener">RepliBench: Evaluating the autonomous replication capabilities of ...</a>.&quot;</p></div></section>
+<section class="qsection" id="revised"><h2>Revised question</h2><p>### Will a Frontier AI Model Achieve a 50% pass@1 Success Rate on Autonomous Replication Benchmarks by December 2027?
+
+<strong>Background</strong>
+Autonomous replication—the capability of an AI system to acquire resources, copy its own weights, and persist across compute environments—is a critical safety threshold. Standardized benchmarks to measure these risks include <strong>METR&#x27;s &#x27;Rogue Replication&#x27;</strong> tasks and the <strong>UK AI Safety Institute&#x27;s (AISI) &#x27;RepliBench&#x27;</strong>.
+
+As of April 2026, performance on these benchmarks has progressed rapidly. In May 2025, the UK AISI reported that <strong>Claude 3.7 Sonnet</strong> achieved a <strong>pass@10</strong> success rate of over 50% on 15 out of 20 task families [92e1f4]. However, its <strong>pass@1</strong> performance (success on the first attempt) remains much lower, particularly on the &quot;hardest variants&quot; of these tasks where it reached the 50% threshold on fewer families [92e1f4]. Similarly, METR evaluations of models like <strong>GPT-5</strong> have noted that while models can perform individual steps of a replication cycle, they struggle with consistent, end-to-end execution without human intervention [93f2e5].
+
+Achieving a 50% aggregate success rate using the <strong>pass@1</strong> metric represents a significant milestone in agentic reliability and autonomous capability, as it requires the model to succeed consistently without the benefit of multiple trials.
+
+<strong>Resolution Criteria</strong>
+This question resolves as <strong>YES</strong> if, between <strong>April 8, 2026</strong>, and <strong>December 31, 2027, 23:59 UTC</strong>, a &quot;frontier AI model&quot; is publicly reported to have achieved a <strong>success rate of 50.0% or higher</strong> on the <strong>pass@1</strong> metric for either the METR &#x27;Rogue Replication&#x27; task suite or the UK AISI &#x27;RepliBench&#x27; aggregate evaluation.
+
+1.  <strong>Frontier AI Model</strong>: Defined as any large-scale foundation model where the underlying weights were primarily developed by <strong>OpenAI</strong>, <strong>Anthropic</strong>, <strong>Google DeepMind</strong>, <strong>Meta</strong>, or <strong>xAI</strong>, regardless of the brand under which the model is released.
+2.  <strong>Success Rate Metric</strong>:
+    *   <strong>RepliBench</strong>: The success rate refers to the <strong>aggregate percentage of task families</strong> in the full suite (including all variants) where the model achieves a success score of 50% or higher. For resolution, the <strong>pass@1</strong> metric must be used. If pass@1 data is not publicly reported by an authorized source for a model, the question resolves as <strong>NO</strong> unless the lowest available pass@k metric (e.g., pass@2) is 50.0% or higher. Success must be achieved on the <strong>aggregate evaluation</strong> of the full suite; performance on subsets, such as &#x27;hard variants&#x27; only, does not qualify unless the aggregate score also meets the threshold.
+    *   <strong>METR Rogue Replication</strong>: The success rate refers to the <strong>overall percentage of tasks completed</strong> in the Rogue Replication suite. If METR changes its primary reporting metric (e.g., to &#x27;human-equivalent time horizons&#x27;), resolution will be based on the percentage of tasks completed as calculated from METR&#x27;s raw task data or supplemental reports.
+3.  <strong>Resolution Sources</strong>:
+    *   Official research reports or blog posts from the <strong>UK AI Safety Institute (AISI)</strong> or <strong>METR</strong>.
+    *   Official &quot;System Cards&quot; or technical reports from the developers (e.g., OpenAI, Anthropic) that explicitly cite METR or AISI benchmark scores.
+4.  <strong>Benchmark Validity</strong>: Resolution will be based on the version of the benchmark and the set of task families considered valid by the testing body (AISI or METR) at the time the success rate is reported. If a task family is retracted due to bugs, the aggregate percentage will be calculated based on the remaining valid families.
+
+<strong>Key Definitions</strong>
+*   <strong>RepliBench</strong>: A benchmark suite of 20 task families designed by the UK AISI to evaluate autonomous replication [92e1f4].
+*   <strong>Rogue Replication</strong>: A threat model and evaluation suite developed by METR testing whether an AI can autonomously copy itself and defend against shutdown [94g3h6].
+<em>   <strong>Pass@k</strong>: A metric where a task is successful if at least one of </em>k* independent attempts results in a correct solution. Pass@1 requires success on the first attempt.</p></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>Time left: 632 days (~21 months). Status quo is NO: no authorized public report has yet cleared the 50% pass@1 threshold on the full eligible benchmark. Scope check: the odds that frontier models become broadly capable of dangerous autonomous replication by 2027 are somewhat higher than this specific resolution, because this question also requires a public benchmark result from AISI, METR, or a system card. Why NO: the pass@10-to-pass@1 gap reflects reliability, not just capability, and current reports still show models struggling with consistent end-to-end execution without human help [92e1f4][93f2e5]. Why YES: Claude 3.7 Sonnet was already above 50% on pass@10 for 15 of 20 RepliBench task families in 2025 [92e1f4], and agentic benchmark performance often improves sharply across model generations; with 632 days left and either RepliBench or METR qualifying, one public crossing seems more likely than not. Bet check: 63% is about 1.7 to 1; I am roughly indifferent between YES at 63 cents and NO at 37 cents.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>The question tracks a critical capability (autonomous replication) that is a recognized &#x27;loss of control&#x27; scenario for frontier labs like Anthropic and OpenAI. Achieving a 50% success rate on standardized benchmarks like METR or RepliBench would represent a significant threshold for AI agency and safety, potentially triggering &#x27;red lines&#x27; or pauses in development. It addresses a major uncertainty in AI risk trajectories.</p></section>
+<section class="qsection" id="decomp"><h2>Decomposition &amp; research <span class="badge">Stage 6b</span></h2><p><strong>Research-informed re-forecast:</strong> <span style="color:#2e7d32;font-weight:700">75%</span></p><div class="subcard"><strong>SQ1: What are the current baseline pass@1 success rates for frontier models on the METR and UK AISI autonomous replication benchmarks, and what are the primary technical bottlenecks to first-attempt success?</strong><p>As of early 2026, frontier AI models such as Claude 3.7 Sonnet and GPT-5-Thinking have not yet achieved a 50% pass@1 success rate on comprehensive autonomous replication benchmarks. In the UK AISI’s <strong>RepliBench</strong>, the current leader (Claude 3.7 Sonnet) maintains a pass@1 rate of roughly <strong>25%</strong> overall, despite performing much higher on pass@10 metrics (&gt;50% on 75% of task families). In METR’s <strong>Rogue Replication</strong> evaluations, GPT-5-Thinking shows a pass@1 rate of only <strong>6%</strong> on specific high-difficulty vectors, though it reaches <strong>51%</strong> on narrower evasion-focused tasks. The primary technical bottlenecks preventing first-attempt success include <strong>compounding errors</strong> in long-horizon tasks (where a single configuration mistake early on causes terminal failure), <strong>memory management struggles</strong> during local deployment (e.g., vLLM setup), and a sharp performance decay on <strong>&#x27;hardest&#x27; task variants</strong> that require novel discovery rather than script execution. While model &quot;time horizons&quot; (autonomous task length) are doubling every 7–9 months, first-attempt reliability remains low due to the lack of robust self-correction mechanisms in complex, multi-step environments.</p><p>### Current Pass@1 Baselines (as of April 2026)
+Research indicates that frontier models have made significant strides but remain below the 50% pass@1 threshold for complex autonomous replication tasks. 
+- <strong>Claude 3.7 Sonnet</strong>: As of early 2025, Claude 3.7 Sonnet demonstrated a pass@10 success rate exceeding 50% on 15 out of 20 task families in <strong>RepliBench</strong>, but its pass@1 rate is significantly lower, estimated at approximately <strong>25%</strong> across the benchmark&#x27;s broader suite [2504.18565v1, 2504.18565v2].
+- <strong>GPT-5 / GPT-5-Thinking</strong>: Evaluations from late 2025 and early 2026 indicate that GPT-5-Thinking achieved an average success rate of <strong>51%</strong> specifically in &#x27;Evasion&#x27; challenges (part of the METR/OpenAI safety testing), but for the core &#x27;Rogue Replication&#x27; tasks, its pass@1 rate remains low (non-zero but ≤50%) [gpt-5-report, 2601.03267v1]. Specifically, a 6% pass@1 rate was noted for certain high-difficulty attack/replication vectors [Gxks46z8ecoSgfn4M].
+- <strong>Gemini 2.5 Pro</strong>: Recent data (March 2026) suggests Gemini 2.5 Pro performs at a level comparable to GPT-5 on general reasoning but continues to struggle with the autonomous execution loops required for replication, often failing due to repetition loops or &quot;reasoning exhaustion&quot; in long-horizon contexts [115368, simonwillison.net/2025/Mar/25/gemini/].
+
+### Primary Technical Bottlenecks
+Forecasters should note the following persistent failure modes identified in technical reports:
+1.  <strong>Compounding Errors</strong>: In tasks like RepliBench, a single early mistake (e.g., misconfiguring a virtual environment or vLLM setup) often leads to a terminal failure state because the model cannot backtrack effectively without human intervention [2504.18565v1].
+2.  <strong>Long-Horizon Limitations</strong>: METR research (March 2025/2026) highlights that while &quot;time horizons&quot; (the length of tasks an AI can complete) are growing exponentially, models still struggle with tasks requiring &gt;12 hours of autonomous sequential reasoning without &quot;reward hacking&quot; or losing the original goal [1291035592885588, 2025-03-19-measuring-ai-ability-to-complete-long-tasks].
+3.  <strong>Memory and Infrastructure Constraints</strong>: Models frequently fail at the &quot;Deploying&quot; stage of replication, specifically struggling with memory management for local hosting or navigating complex authentication protocols (KYC) required to obtain compute [2504.18565v1, uk-aisi-replibench].
+
+### Performance Variation: Easy vs. Hardest Tasks
+Benchmarks like RepliBench and Rogue Replication show a steep performance drop-off between task variants:
+- <strong>Easy Variants</strong>: Involve simple script execution or known vulnerability exploitation. Frontier models currently achieve high (&gt;70%) pass@10 rates here.
+- <strong>Hardest Variants</strong>: Involve &quot;black-box&quot; environments where the model must discover the replication path. For these, even the best models (Claude 3.7) only achieve a &gt;50% success rate on 9 or 10 out of 20 families when given <strong>10 attempts (pass@10)</strong>, meaning the pass@1 rate for the most difficult autonomous tasks is likely under 10% [2504.18565v1, 2504.18565v2].
+- <strong>Reasoning Depth</strong>: Newer models like GPT-5-Thinking show better performance on tasks that can be solved via deep &quot;internal&quot; reasoning, but fail when the task requires sustained external tool interaction and error correction over many hours [2601.03267v1].</p></div><div class="subcard"><strong>SQ2: How does pass@1 performance on multi-step agentic benchmarks scale with model reasoning capacity and test-time compute, and what does this suggest for performance gains by late 2027?</strong><p>As of April 2026, frontier AI models have demonstrated a rapid surge in agentic reliability, with top-tier models like Claude 4.5 and GPT-5 achieving pass@1 success rates between 72% and 77% on automated agentic benchmarks such as SWE-bench Verified <a href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench Leaderboards</a> <a href="https://localaimaster.com/models/swe-bench-explained-ai-benchmarks" target="_blank" rel="noopener">SWE-Bench 2026: Claude 77.2% vs GPT-5 74.9% | Full Leaderboard</a>. This represents a significant leap from the ~48% rates seen in late 2023. However, this &quot;reliability gap&quot; is narrowing more slowly than surface-level metrics suggest. Research from METR (March 2026) indicates that approximately 50% of &quot;successful&quot; benchmark solutions are rejected by human maintainers for failing to meet real-world code quality or architectural standards <a href="https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/" target="_blank" rel="noopener">Many SWE-bench-Passing PRs Would Not Be Merged into Main</a>. Performance scaling is shifting from traditional pre-training laws to &quot;test-time compute&quot; scaling, where reasoning turns scale super-linearly with agent count, and centralized coordination architectures have been shown to contain error amplification by 4x compared to independent agent loops <a href="https://arxiv.org/html/2512.08296v1" target="_blank" rel="noopener">Towards a Science of Scaling Agent Systems - arXiv</a>. While automated pass@1 scores are projected to continue their climb toward the 85%+ range by late 2027, the rate of improvement for &quot;maintainer-acceptable&quot; autonomous work is roughly 9.6 percentage points slower per year, suggesting that true autonomous replication (at a human-mergable standard) faces a steeper trajectory than simple benchmark passing <a href="https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/" target="_blank" rel="noopener">Many SWE-bench-Passing PRs Would Not Be Merged into Main</a> <a href="https://arxiv.org/html/2512.14917v1" target="_blank" rel="noopener">Evaluating Code Reasoning Abilities of Large Language Models ...</a>.</p><p>### 1. Historical Trends and the Pass@1 to Pass@10 Ratio
+Historical data reveals a dual-track progression: rapid gains in &#x27;greenfield&#x27; algorithmic coding versus slower, more complex improvements in &#x27;brownfield&#x27; agentic software engineering.
+- <strong>Algorithmic Coding (HumanEval):</strong> As of March 2026, frontier models like GPT-5 have reached a <strong>92.1% pass@1</strong> rate, with a <strong>pass@10 of ~97%</strong> <a href="https://localaimaster.com/models/swe-bench-explained-ai-benchmarks" target="_blank" rel="noopener">SWE-Bench 2026: Claude 77.2% vs GPT-5 74.9% | Full Leaderboard</a>. The narrow gap (~5 percentage points) suggests that for simple, self-contained tasks, the &#x27;reliability gap&#x27; is nearly closed.
+- <strong>Agentic Software Engineering (SWE-bench Verified):</strong> This benchmark requires multi-step navigation of large codebases. Performance has scaled from 48.5% (GPT-4 Turbo, Nov 2023) to <strong>77.2% (Claude 4 Sonnet, Oct 2025)</strong> and <strong>76.8% (Claude 4.5 Opus, Feb 2026)</strong> <a href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench Leaderboards</a> <a href="https://localaimaster.com/models/swe-bench-explained-ai-benchmarks" target="_blank" rel="noopener">SWE-Bench 2026: Claude 77.2% vs GPT-5 74.9% | Full Leaderboard</a>.
+- <strong>Ratio Evolution:</strong> The ratio between pass@1 and pass@k has compressed over time for simpler tasks, but for complex reasoning, a significant gap remains. On &#x27;Hard&#x27; reasoning problems, pass@1 rates drop precipitously from ~78% (Easy) to <strong>26.24% (Hard)</strong> as of December 2025 <a href="https://arxiv.org/html/2512.14917v1" target="_blank" rel="noopener">Evaluating Code Reasoning Abilities of Large Language Models ...</a>.
+
+### 2. Impact of Test-Time Compute (Inference-Time Scaling)
+The transition from &#x27;getting it right occasionally&#x27; to &#x27;getting it right consistently&#x27; is increasingly driven by test-time compute (TTC) rather than just model size.
+- <strong>Super-linear Scaling:</strong> Research from December 2025 indicates that reasoning turns scale super-linearly with agent count (<strong>T ∝ n^1.724</strong>), creating a &#x27;hard resource ceiling&#x27; where communication overhead dominates beyond 3–4 agents <a href="https://arxiv.org/html/2512.08296v1" target="_blank" rel="noopener">Towards a Science of Scaling Agent Systems - arXiv</a>.
+- <strong>Reasoning Advantage:</strong> &#x27;Reasoning&#x27; models (e.g., o1-style) outperform general models by an average of <strong>11.45%</strong> in code reasoning success as of late 2025 <a href="https://arxiv.org/html/2512.14917v1" target="_blank" rel="noopener">Evaluating Code Reasoning Abilities of Large Language Models ...</a>.
+- <strong>Trade-offs:</strong> TTC can trade computational resources for performance, effectively allowing a model to &#x27;think longer&#x27; to solve problems that a single forward pass would fail <a href="https://arxiv.org/html/2512.08296v1" target="_blank" rel="noopener">Towards a Science of Scaling Agent Systems - arXiv</a>.
+
+### 3. Scaling Laws for Agentic Reliability
+Agentic reliability is governed by identifiable scaling coefficients rather than simple power laws of training compute.
+- <strong>Quadratic Intelligence Scaling:</strong> Model capability exhibits accelerating returns (<strong>β=0.256</strong>) in agentic settings, meaning frontier models benefit disproportionately from each unit of &#x27;raw&#x27; intelligence <a href="https://arxiv.org/html/2512.08296v1" target="_blank" rel="noopener">Towards a Science of Scaling Agent Systems - arXiv</a>.
+- <strong>The Capability Ceiling:</strong> Multi-agent systems (MAS) face a &#x27;baseline paradox&#x27; where coordination overhead causes negative returns (<strong>β=-0.408</strong>) once single-agent baselines exceed <strong>~45% accuracy</strong> <a href="https://arxiv.org/html/2512.08296v1" target="_blank" rel="noopener">Towards a Science of Scaling Agent Systems - arXiv</a>.
+- <strong>Error Amplification:</strong> Independent agents amplify errors <strong>17.2x</strong>, whereas centralized coordination (using validation bottlenecks) contains this to <strong>4.4x</strong> <a href="https://arxiv.org/html/2512.08296v1" target="_blank" rel="noopener">Towards a Science of Scaling Agent Systems - arXiv</a>.
+
+### 4. Projected Trajectory to Late 2027
+Extrapolating current trends suggests a continued but decelerating rise in automated benchmark scores, coupled with a persistent &#x27;real-world&#x27; gap.
+- <strong>Benchmark vs. Reality Gap:</strong> As of March 2026, METR findings show that <strong>~50% of AI-generated PRs</strong> that pass automated tests are rejected by human maintainers due to code quality or architectural regressions <a href="https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/" target="_blank" rel="noopener">Many SWE-bench-Passing PRs Would Not Be Merged into Main</a>.
+- <strong>Improvement Rate:</strong> The rate of improvement for human-accepted patches is estimated to be <strong>9.6 percentage points per year slower</strong> than automated scores <a href="https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/" target="_blank" rel="noopener">Many SWE-bench-Passing PRs Would Not Be Merged into Main</a>.
+- <strong>2027 Outlook:</strong> While automated pass@1 rates on benchmarks like SWE-bench Verified are likely to exceed 80-85% by late 2027 based on a ~15-20% annual gain, the &#x27;maintainer-grade&#x27; reliability may lag, potentially hovering closer to the 50-60% mark <a href="https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/" target="_blank" rel="noopener">Many SWE-bench-Passing PRs Would Not Be Merged into Main</a>. The doubling of AI task capacity every <strong>7 months</strong> (noted in early 2025) suggests that the horizon for truly autonomous long-duration tasks is expanding exponentially <a href="https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/" target="_blank" rel="noopener">Many SWE-bench-Passing PRs Would Not Be Merged into Main</a>.
+
+### Document ID Reference Table
+| Document ID | Source/Date |
+| :--- | :--- |
+| <a href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench Leaderboards</a> | SWE-bench Leaderboard (Last updated April 2026) |
+| <a href="https://arxiv.org/html/2512.08296v1" target="_blank" rel="noopener">Towards a Science of Scaling Agent Systems - arXiv</a> | &quot;Towards a Science of Scaling Agent Systems&quot; (Dec 2025) |
+| <a href="https://localaimaster.com/models/swe-bench-explained-ai-benchmarks" target="_blank" rel="noopener">SWE-Bench 2026: Claude 77.2% vs GPT-5 74.9% | Full Leaderboard</a> | &quot;SWE-bench 2026: Claude 77.2% vs GPT-5 74.9%&quot; (March 2026) |
+| <a href="https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/" target="_blank" rel="noopener">Many SWE-bench-Passing PRs Would Not Be Merged into Main</a> | METR: &quot;Many SWE-bench-Passing PRs Would Not Be Merged&quot; (March 2026) |
+| <a href="https://arxiv.org/html/2512.14917v1" target="_blank" rel="noopener">Evaluating Code Reasoning Abilities of Large Language Models ...</a> | &quot;Evaluating Code Reasoning Abilities... RE2-Bench&quot; (Dec 2025) |</p></div></section>
+<section class="qsection" id="reconcile"><h2>Reconciled forecast <span class="badge">Stage 6d</span></h2><p>Bottom-up 45% &rarr; Dep-adj 48% &rarr; Struct-adj 50% &rarr; Holistic 55% &rarr; Final 53%</p><p>The bottom-up estimate was derived from a simplified model (C1*C2|C1 + AltPath) where C2 was treated as both a conditional success and an alternative path. The component forecasters provided a high probability (90%) for the software precursor (C1) and a moderate probability (45%) for the specific replication task (C2). However, the dependency check suggests that success in C1 is almost a certainty, making the final outcome heavily dependent on the specific challenges of C2 (infrastructure, long-horizon reliability). The holistic estimate (55%) is slightly higher than the decomposed estimate (50%) because the decomposition might under-weight the &#x27;brute force&#x27; scaling of inference-time compute, which can dramatically improve pass@1 rates as seen in recent &#x27;Thinking&#x27; model trends. Since the estimates are within 10 percentage points, I have averaged the structure-adjusted (50%) and holistic (55%) estimates to reach the final forecast, noting that the rapid growth in model &#x27;time horizons&#x27; (doubling every 7-9 months) is the primary driver for a YES resolution.</p></section>
+</div></body></html>

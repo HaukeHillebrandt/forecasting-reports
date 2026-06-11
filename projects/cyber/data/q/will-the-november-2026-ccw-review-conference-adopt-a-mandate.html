@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Title:** Will the November 2026 CCW Seventh Review Conference adopt any decision</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#ffebee;color:#c62828">10%</span><h1 style="margin:0;font-size:1.25rem;">Title:** Will the November 2026 CCW Seventh Review Conference adopt any decision on autonomous weapons systems (LAWS) that goes beyond merely extending or renewing the Group of Governmental Experts</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Claude 4.6 Opus (max)</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#revised">Revised question</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#decomp">Decomposition &amp; research</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#c62828">10%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">75</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">92</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">95</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">65</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">62</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">70</span></div></div><p><strong>Review status:</strong> REVISED</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>Will the November 2026 CCW Review Conference adopt a mandate to begin formal negotiations on a legally binding instrument governing autonomous weapons systems?</p><p><strong>Why this question?</strong> The paper draws a direct parallel between HACCA proliferation and the proliferation of lethal autonomous weapons systems (LAWS), noting that states have &#x27;failed to ban LAWS despite the decades-long debate at the United Nations Group of Governmental Experts.&#x27; The November 2026 CCW Review Conference is the culminating event of the GGE&#x27;s three-year mandate, where states will decide next steps. A UNGA resolution in November 2025 saw 156 states support urgent action, but key military powers remain resistant. Whether states agree to formally negotiate binding rules on autonomous weapons is a strong upstream indicator of the international community&#x27;s capacity to govern autonomous offensive systems—including future HACCAs.</p><p><strong>Paper reference:</strong> Section 6 (&#x27;Guardrails for HACCA Development and Deployment&#x27;) argues that a blanket prohibition on HACCAs is unlikely to succeed, drawing a parallel: &#x27;States will be reluctant to agree to any international agreement or convention that bans HACCAs outright, just as they have failed to ban LAWS despite the decades-long debate at the United Nations Group of Governmental Experts and elsewhere.&#x27;</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p>
+<strong>Title:</strong> Will the November 2026 CCW Seventh Review Conference adopt a mandate to begin formal negotiations on a legally binding instrument governing autonomous weapons systems (LAWS)?
+
+<strong>Background:</strong>
+
+Since 2014, the Convention on Certain Conventional Weapons (CCW) has been the primary international forum for deliberations on lethal autonomous weapons systems (LAWS). The CCW&#x27;s Group of Governmental Experts (GGE) on LAWS has been meeting under a three-year mandate (2024–2026), with a mandate to develop elements of a possible normative and operational framework on autonomous weapons systems and submit a final report to the Seventh Review Conference of the CCW.
+
+The GGE held its first 2026 session from 2–6 March 2026 in Geneva, with a second session scheduled for 31 August–4 September 2026. The Seventh Review Conference of the CCW is scheduled for 16–20 November 2026 in Geneva. This Review Conference is the culminating decision point where states parties will decide whether to launch formal negotiations on a legally binding instrument—such as a new Protocol to the CCW—on autonomous weapons systems.
+
+International support for action has been growing. In November 2025, the UN General Assembly First Committee voted 156 in favor, 5 against, and 8 abstentions on Resolution L.41, calling on the CCW to complete the elements of an instrument on autonomous weapons systems with a view to future negotiations. The subsequent UNGA plenary vote in December 2025 (Resolution A/RES/80/56) saw 161 states vote in favor, 3 against, and 13 abstentions. In March 2026, the GGE Chair stated that progress on rules for lethal autonomous weapons was &quot;urgently needed&quot; and that the November Review Conference &quot;could decide to launch negotiations for a binding protocol.&quot;
+
+However, a critical structural factor constrains outcomes: the CCW operates by consensus-based decision-making (see <a href="https://www.armscontrol.org/act/2025-01/features/geopolitics-and-regulation-autonomous-weapons-systems" target="_blank" rel="noopener">Arms Control Association analysis</a>; <a href="https://www.hrw.org/report/2022/11/10/agenda-action/alternative-processes-negotiating-killer-robots-treaty" target="_blank" rel="noopener">Human Rights Watch analysis</a>), meaning that any single state party can block a decision. Key military powers—including Russia, the United States, and India—have historically resisted binding legal instruments on autonomous weapons. The <a href="https://www.stopkillerrobots.org/wp-content/uploads/2025/05/WEB-Policy-Brief_Autonomous-Weapons-Systems_Key-issues-and-path-to-a-treaty_Stop-Killer-Robots.pdf" target="_blank" rel="noopener">Stop Killer Robots coalition has noted</a> that &quot;because the CCW operates by consensus, it is unlikely states parties will be able to agree a mandate to negotiate an additional [protocol].&quot; This creates a fundamental tension between the overwhelming majority support (156+ states) and the ability of a small number of holdout states to block progress.
+
+The Sixth Review Conference in December 2021 (Final Document: <a href="https://meetings.unoda.org/ccw-revcon/convention-certain-conventional-weapons-sixth-review-conference-2021" target="_blank" rel="noopener">CCW/CONF.VI/11</a>) failed to establish a negotiating mandate on LAWS, instead extending the GGE process. Whether the Seventh Review Conference breaks this pattern is a key indicator of the international community&#x27;s capacity to govern autonomous offensive weapons systems.
+
+<strong>Resolution Criteria:</strong>
+
+This question resolves <strong>Yes</strong> if, between 1 January 2026 (00:00 UTC) and 31 December 2027 (23:59 UTC), the Seventh Review Conference of the Convention on Certain Conventional Weapons (CCW), scheduled for 16–20 November 2026, adopts a decision to establish a formal mandate to negotiate a <strong>legally binding instrument</strong> (such as a new Protocol to the CCW) specifically governing <strong>autonomous weapons systems</strong> (also referred to as lethal autonomous weapons systems, or LAWS).
+
+This question resolves <strong>No</strong> if the Review Conference:
+- fails to adopt any decision on LAWS;
+- adopts a decision that merely continues, extends, or renews exploratory, informal, or preliminary discussions (such as a further GGE mandate, informal consultations, or a mandate to develop &quot;recommendations&quot; without a commitment to negotiate a binding instrument); or
+- is postponed beyond 31 December 2027 without having taken the above decision.
+
+<strong>Key term definitions:</strong>
+
+- <strong>Autonomous weapons systems (AWS) / Lethal autonomous weapons systems (LAWS):</strong> Weapons systems that can select and engage targets without human intervention, as discussed in the <a href="https://meetings.unoda.org/ccw-/convention-on-certain-conventional-weapons-group-of-governmental-experts-on-lethal-autonomous-weapons-systems-2026" target="_blank" rel="noopener">CCW GGE framework</a> and described by the <a href="https://www.icrc.org/en/document/icrc-position-autonomous-weapon-systems" target="_blank" rel="noopener">ICRC</a> and <a href="https://en.wikipedia.org/wiki/Lethal_autonomous_weapon" target="_blank" rel="noopener">Wikipedia</a>.
+
+- <strong>Legally binding instrument:</strong> An international legal instrument (such as a treaty, convention, or protocol) that creates binding obligations under international law for its states parties. This is distinct from non-binding political declarations, guidelines, or best practices. See <a href="https://en.wikipedia.org/wiki/Treaty" target="_blank" rel="noopener">Wikipedia: Treaty</a>.
+
+- <strong>Mandate to begin formal negotiations:</strong> A decision adopted by the Review Conference that explicitly establishes a process to negotiate (not merely discuss, explore, or develop recommendations for) a legally binding instrument. The decision must use language indicating the commencement of negotiations (e.g., &quot;negotiate,&quot; &quot;negotiating mandate,&quot; &quot;open negotiations&quot;) rather than language limited to continued deliberation or development of non-binding outputs.
+
+<strong>Resolution source:</strong> The Final Document of the Seventh Review Conference, expected to be published under document number CCW/CONF.VII/[X] on the <a href="https://meetings.unoda.org/" target="_blank" rel="noopener">UNODA documents library</a> and/or the <a href="https://docs-library.unoda.org/" target="_blank" rel="noopener">UNODA documents search portal</a>. The decisions of the Review Conference will also be reported by <a href="https://reachingcriticalwill.org/disarmament-fora/ccw/2026/revcon" target="_blank" rel="noopener">Reaching Critical Will</a>, Reuters, and other credible outlets. If the Review Conference is postponed, resolution will be based on whether the conference is held and takes the specified decision before 31 December 2027.
+</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>Since 2014, the Convention on Certain Conventional Weapons (CCW) has been the primary international forum for deliberations on lethal autonomous weapons systems (LAWS). The CCW&#x27;s Group of Governmental Experts (GGE) on LAWS has been meeting under a three-year mandate (2024–2026), with a mandate to develop elements of a possible normative and operational framework on autonomous weapons systems and submit a final report to the Seventh Review Conference of the CCW.
+
+The GGE held its first 2026 session from 2–6 March 2026 in Geneva, with a second session scheduled for 31 August–4 September 2026. The Seventh Review Conference of the CCW is scheduled for 16–20 November 2026 in Geneva. This Review Conference is the culminating decision point where states parties will decide what action to take on autonomous weapons systems — options range from launching formal negotiations on a legally binding instrument, to establishing a new subsidiary body (such as an open-ended working group), to mandating development of a political declaration, to merely extending the GGE process.
+
+International support for action has been growing. In November 2025, the UN General Assembly First Committee voted 156 in favor, 5 against, and 8 abstentions on Resolution L.41, calling on the CCW to complete the elements of an instrument on autonomous weapons systems with a view to future negotiations. The subsequent UNGA plenary vote in December 2025 (Resolution A/RES/80/56) saw 161 states vote in favor, 3 against, and 13 abstentions. In March 2026, the GGE Chair stated that progress on rules for lethal autonomous weapons was &quot;urgently needed&quot; and that the November Review Conference &quot;could decide to launch negotiations for a binding protocol.&quot;
+
+However, a critical structural factor constrains outcomes: the CCW operates by consensus-based decision-making, meaning that any single state party can block a decision. Key military powers—including Russia, the United States, and India—have historically resisted binding legal instruments on autonomous weapons. The Stop Killer Robots coalition has noted that &quot;because the CCW operates by consensus, it is unlikely states parties will be able to agree a mandate to negotiate an additional [protocol].&quot;
+
+The Sixth Review Conference in December 2021 (Final Document: CCW/CONF.VI/11) failed to establish a negotiating mandate on LAWS, instead extending the GGE process. Whether the Seventh Review Conference breaks this pattern by adopting any substantively new decision — even if short of a full negotiating mandate — is a key indicator of the international community&#x27;s capacity to advance governance of autonomous weapons systems through the CCW.</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question resolves <strong>Yes</strong> if, between 1 January 2026 (00:00 UTC) and 31 December 2027 (23:59 UTC), the Seventh Review Conference of the Convention on Certain Conventional Weapons (CCW), scheduled for 16–20 November 2026, adopts a decision on autonomous weapons systems (also referred to as lethal autonomous weapons systems, or LAWS) that constitutes a substantive advance beyond merely extending, renewing, or continuing the Group of Governmental Experts (GGE) mandate or similar exploratory/deliberative process.
+
+Examples of decisions that would resolve <strong>Yes</strong> include (but are not limited to):
+- A mandate to negotiate a legally binding instrument (such as a new Protocol to the CCW) on LAWS;
+- Establishment of a new subsidiary body (e.g., an open-ended working group) with a mandate to develop or negotiate a specific normative instrument on LAWS;
+- A mandate to develop a political declaration with specific commitments and a built-in review or escalation mechanism;
+- Any other decision that establishes a qualitatively new process or outcome beyond the GGE&#x27;s existing exploratory/deliberative format.
+
+This question resolves <strong>No</strong> if the Review Conference:
+- fails to adopt any decision on LAWS;
+- adopts a decision that merely continues, extends, or renews the GGE mandate or an equivalent exploratory/deliberative body without a qualitatively new mandate or outcome;
+- is postponed beyond 31 December 2027 without having taken the above decision.</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> This is an excellent forecasting question. It targets a major, scheduled geopolitical event (the November 2026 CCW Review Conference) that serves as a &#x27;culminating event&#x27; for years of international debate. The question has very high entropy due to the sharp divide between the 150+ states supporting a mandate and the resistant major military powers. The resolution is well-defined (the adoption of a formal mandate for negotiations), and the resolution source (UN/CCW records) is authoritative and expected to exist. Research into the 2026 GGE session outcomes (which occurred in March 2026) would significantly inform and potentially shift a forecaster&#x27;s position.</p><p><strong>Ambiguity notes:</strong> The question is exceptionally well-structured for a diplomatic/international law topic. It clearly defines the specific language required for a &#x27;Yes&#x27; resolution (&#x27;negotiate&#x27; vs. &#x27;discuss&#x27;), which is the most common pitfall in CCW forecasting. Dates, timezones, and resolution sources are precise. The inclusion of a postponement clause and a specific time-bound window (ending Dec 2027) ensures resolvability even if the Review Conference schedule shifts slightly. The distinction between binding instruments and non-binding outputs is clearly addressed.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge-case risk:</strong> HIGH</p><p>ASSESSMENT: NEEDS_REVISION
+
+REVIEW: The question is well-constructed with clear resolution criteria and accurate background information. However, it has a significant substantive problem: the outcome is near-predetermined as &quot;No&quot; to anyone familiar with the CCW process, making it of limited forecasting value.
+
+The critical issue is the CCW&#x27;s consensus-based decision-making combined with the publicly stated opposition of major military powers. Reuters reported on March 3, 2026 that &quot;Russia and the United States, among others, oppose new legally binding instruments, arguing existing laws suffice.&quot; The question&#x27;s own background acknowledges that Stop Killer Robots has stated &quot;because the CCW operates by consensus, it is unlikely states parties will be able to agree a mandate to negotiate an additional [protocol].&quot; HRW has similarly documented how the consensus model allows minority states like Russia and the US to block the majority&#x27;s proposals.
+
+The historical precedent reinforces this: the Sixth Review Conference in 2021 failed to establish a negotiating mandate under essentially the same structural conditions, and instead merely extended the GGE process. There is no credible reporting suggesting Russia or the US have shifted their positions since then — if anything, the current geopolitical environment (post-Ukraine invasion, deteriorating US-Russia relations, New START expiration in February 2026) makes such a shift even less likely.
+
+While the question correctly identifies the tension between overwhelming UNGA majority support (156-161 states) and the consensus veto, this tension does not create meaningful uncertainty about the outcome — it simply highlights the structural dysfunction of the CCW on this issue. The probability of YES resolution is likely in the low single digits (perhaps 2-5%), which means the question will almost certainly resolve No, offering little discriminatory value among forecasters.
+
+Additionally, the resolution source (the Final Document of the Seventh Review Conference) is appropriate and should be accessible, as the CCW publishes these documents through UNODA. This aspect is fine.
+
+The background information is accurate and up-to-date as of April 2026.
+
+EVIDENCE: <a href="https://www.reuters.com/world/progress-rules-lethal-autonomous-weapons-urgently-needed-says-chair-geneva-talks-2026-03-03/" target="_blank" rel="noopener">https://www.reuters.com/world/progress-rules-lethal-autonomous-weapons-urgently-needed-says-chair-geneva-talks-2026-03-03/</a>
+<a href="https://reachingcriticalwill.org/disarmament-fora/ccw/2026/revcon" target="_blank" rel="noopener">https://reachingcriticalwill.org/disarmament-fora/ccw/2026/revcon</a>
+<a href="https://www.stopkillerrobots.org/news/156-states-support-unga-resolution/" target="_blank" rel="noopener">https://www.stopkillerrobots.org/news/156-states-support-unga-resolution/</a>
+<a href="https://www.hrw.org/report/2022/11/10/agenda-action/alternative-processes-negotiating-killer-robots-treaty" target="_blank" rel="noopener">https://www.hrw.org/report/2022/11/10/agenda-action/alternative-processes-negotiating-killer-robots-treaty</a>
+<a href="https://reachingcriticalwill.org/disarmament-fora/ccw/2025/laws/ccwreport/17475" target="_blank" rel="noopener">https://reachingcriticalwill.org/disarmament-fora/ccw/2025/laws/ccwreport/17475</a>
+<a href="https://meetings.unoda.org/ccw-revcon/convention-on-certain-conventional-weapons-seventh-review-conference-2026" target="_blank" rel="noopener">https://meetings.unoda.org/ccw-revcon/convention-on-certain-conventional-weapons-seventh-review-conference-2026</a>
+
+SUGGESTION: Consider revising the question to capture more genuine uncertainty. Options include:
+
+1. Broaden the resolution criteria to include any forward-looking outcome beyond status quo: &quot;Will the Seventh Review Conference adopt any decision that goes beyond merely extending the GGE mandate on LAWS?&quot; This captures whether states agree to even an intermediate step (e.g., an open-ended working group, a mandate to develop a non-binding political declaration with review mechanism, etc.).
+
+2. Shift the forum: &quot;Will states launch negotiations on a legally binding instrument on autonomous weapons in any international forum (CCW, UNGA, standalone diplomatic conference) by end of 2027?&quot; This captures the real uncertainty — whether the LAWS treaty process moves outside the CCW, as HRW and others have advocated.
+
+3. Keep the question but frame it as part of a set: pair it with a question about whether alternative processes (e.g., a UNGA-mandated negotiation process outside the CCW) are initiated, which is where the real action and uncertainty lie.</p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: HIGH
+
+SCENARIO 1: The Review Conference adopts a mandate to &quot;develop a normative and operational framework&quot; on autonomous weapons systems, with language stating this framework &quot;could take the form of a legally binding instrument&quot; but without explicitly committing to negotiate one. Proponents argue the framework language implicitly encompasses binding negotiations; opponents argue it deliberately leaves the legal status ambiguous.
+SEVERITY: HIGH
+FIX: Add explicit language stating: &quot;The decision must unambiguously commit to negotiating a legally binding instrument. Decisions that mandate the &#x27;development of a framework&#x27; where the binding or non-binding nature of that framework is left to be determined later, or is described using conditional language such as &#x27;could,&#x27; &#x27;may,&#x27; or &#x27;with a view to,&#x27; do not qualify as YES.&quot;
+
+SCENARIO 2: The Review Conference adopts a mandate that includes both binding and non-binding components — e.g., a mandate to negotiate a protocol containing legally binding prohibitions on certain fully autonomous systems AND non-binding guidelines or best practices on human-machine interaction — without clearly separating the two tracks. Some argue this constitutes a mandate for a legally binding instrument; others argue the blended nature means it is not a clear negotiating mandate for a binding instrument.
+SEVERITY: MEDIUM
+FIX: Add language stating: &quot;If the adopted mandate includes both binding and non-binding elements, the question resolves YES provided the decision explicitly establishes a process to negotiate at least one legally binding component (such as a protocol) specifically governing autonomous weapons systems, regardless of whether non-binding elements are also included.&quot;
+
+SCENARIO 3: The Review Conference adopts a decision that establishes a mandate to negotiate, but includes significant preconditions or triggers — e.g., &quot;negotiations shall commence upon completion of a technical review by a newly established expert body&quot; or &quot;negotiations shall begin no earlier than 2028 pending agreement on definitions.&quot; One side argues this is a formal mandate to negotiate; the other argues the conditions make it effectively an exploratory mandate with no guaranteed start to negotiations.
+SEVERITY: MEDIUM
+FIX: Add language stating: &quot;A decision that establishes a mandate to negotiate but makes the commencement of negotiations contingent on conditions or triggers that have not yet been met at the time of the decision still resolves YES, provided the decision explicitly uses the term &#x27;negotiate&#x27; (or equivalent) and establishes a legally binding instrument as the intended outcome. However, a decision that merely mandates further work &#x27;with a view to&#x27; possible future negotiations does not qualify.&quot;
+
+SCENARIO 4: Consensus is not achieved at the Review Conference, but a large majority of states parties adopt a &quot;decision&quot; or &quot;declaration&quot; calling for the start of negotiations, over the objections of a small number of holdout states (e.g., Russia, India). The majority claims this constitutes a valid Review Conference decision; the minority argues it is procedurally invalid under the CCW&#x27;s consensus rules and therefore not an adopted mandate.
+SEVERITY: HIGH
+FIX: Add language stating: &quot;The decision must be formally adopted by the Review Conference in accordance with the CCW&#x27;s established rules of procedure. A majority declaration or decision that is disputed as procedurally invalid by one or more states parties under the CCW&#x27;s consensus requirement does not count as an adopted mandate for the purposes of this question. In cases of procedural dispute, resolution will be based on whether the decision is reflected in the official Final Document of the Review Conference as an adopted decision.&quot;
+
+SCENARIO 5: The Review Conference fails to reach consensus on a negotiating mandate, but a group of like-minded states announce at the conference that they will begin negotiations on a legally binding instrument outside the CCW framework (similar to the Ottawa Process for landmines). Some argue this effectively constitutes the Review Conference &quot;adopting&quot; a mandate; others argue it is an entirely separate process.
+SEVERITY: MEDIUM
+FIX: Add language stating: &quot;Only decisions formally adopted by the CCW Review Conference itself count. Announcements by subsets of states to pursue negotiations outside the CCW framework, even if made during or at the margins of the Review Conference, do not satisfy the resolution criteria.&quot;
+
+SCENARIO 6: The Review Conference adopts a mandate to negotiate an instrument that addresses &quot;autonomous weapons systems&quot; but defines the scope so narrowly (e.g., only fully autonomous systems with zero human involvement) or so broadly (e.g., all AI-enabled military systems) that there is disagreement about whether it &quot;specifically governs autonomous weapons systems&quot; as commonly understood.
+SEVERITY: LOW
+FIX: Add language stating: &quot;The instrument need not adopt any particular definition of autonomous weapons systems, but the mandate must explicitly reference autonomous weapons systems, lethal autonomous weapons systems, or equivalent terminology as a primary subject of the negotiations.&quot;
+
+SCENARIO 7: The Review Conference is held on schedule in November 2026 but suspends without adopting a final document, with a continuation session scheduled for early 2027. The continuation session then adopts a negotiating mandate. Some argue the question resolves YES (within the time window); others argue the mandate was not adopted at the &quot;Seventh Review Conference&quot; as originally scheduled.
+SEVERITY: MEDIUM
+FIX: Add language stating: &quot;If the Seventh Review Conference suspends and reconvenes at a later date (but before 31 December 2027), decisions adopted at the continuation session count as decisions of the Seventh Review Conference for resolution purposes.&quot;</p></div></section>
+<section class="qsection" id="revised"><h2>Revised question</h2><p>
+<strong>Title:</strong> Will the November 2026 CCW Seventh Review Conference adopt any decision on autonomous weapons systems (LAWS) that goes beyond merely extending or renewing the Group of Governmental Experts mandate?
+
+<strong>Background:</strong>
+
+Since 2014, the Convention on Certain Conventional Weapons (CCW) has been the primary international forum for deliberations on lethal autonomous weapons systems (LAWS). The CCW&#x27;s Group of Governmental Experts (GGE) on LAWS has been meeting under a three-year mandate (2024–2026), with a mandate to develop elements of a possible normative and operational framework on autonomous weapons systems and submit a final report to the Seventh Review Conference of the CCW.
+
+The GGE held its first 2026 session from 2–6 March 2026 in Geneva, with a second session scheduled for 31 August–4 September 2026. The Seventh Review Conference of the CCW is scheduled for 16–20 November 2026 in Geneva. This Review Conference is the culminating decision point where states parties will decide what action to take on autonomous weapons systems — options range from launching formal negotiations on a legally binding instrument, to establishing a new subsidiary body (such as an open-ended working group), to mandating development of a political declaration, to merely extending the GGE process.
+
+International support for action has been growing. In November 2025, the UN General Assembly First Committee voted 156 in favor, 5 against, and 8 abstentions on Resolution L.41, calling on the CCW to complete the elements of an instrument on autonomous weapons systems with a view to future negotiations. The subsequent UNGA plenary vote in December 2025 (Resolution A/RES/80/56) saw 161 states vote in favor, 3 against, and 13 abstentions. In March 2026, the GGE Chair stated that progress on rules for lethal autonomous weapons was &quot;urgently needed&quot; and that the November Review Conference &quot;could decide to launch negotiations for a binding protocol.&quot;
+
+However, a critical structural factor constrains outcomes: the CCW operates by consensus-based decision-making, meaning that any single state party can block a decision. Key military powers—including Russia, the United States, and India—have historically resisted binding legal instruments on autonomous weapons. The Stop Killer Robots coalition has noted that &quot;because the CCW operates by consensus, it is unlikely states parties will be able to agree a mandate to negotiate an additional [protocol].&quot;
+
+The Sixth Review Conference in December 2021 (Final Document: CCW/CONF.VI/11) failed to establish a negotiating mandate on LAWS, instead extending the GGE process. Whether the Seventh Review Conference breaks this pattern by adopting any substantively new decision — even if short of a full negotiating mandate — is a key indicator of the international community&#x27;s capacity to advance governance of autonomous weapons systems through the CCW.
+
+<strong>Resolution Criteria:</strong>
+
+This question resolves <strong>Yes</strong> if, between 1 January 2026 (00:00 UTC) and 31 December 2027 (23:59 UTC), the Seventh Review Conference of the Convention on Certain Conventional Weapons (CCW), scheduled for 16–20 November 2026, adopts a decision on autonomous weapons systems (also referred to as lethal autonomous weapons systems, or LAWS) that constitutes a substantive advance beyond merely extending, renewing, or continuing the Group of Governmental Experts (GGE) mandate or similar exploratory/deliberative process.
+
+Examples of decisions that would resolve <strong>Yes</strong> include (but are not limited to):
+- A mandate to negotiate a legally binding instrument (such as a new Protocol to the CCW) on LAWS;
+- Establishment of a new subsidiary body (e.g., an open-ended working group) with a mandate to develop or negotiate a specific normative instrument on LAWS;
+- A mandate to develop a political declaration with specific commitments and a built-in review or escalation mechanism;
+- Any other decision that establishes a qualitatively new process or outcome beyond the GGE&#x27;s existing exploratory/deliberative format.
+
+This question resolves <strong>No</strong> if the Review Conference:
+- fails to adopt any decision on LAWS;
+- adopts a decision that merely continues, extends, or renews the GGE mandate or an equivalent exploratory/deliberative body without a qualitatively new mandate or outcome;
+- is postponed beyond 31 December 2027 without having taken the above decision.
+
+<strong>Additional resolution clarifications:</strong>
+
+- <strong>Ambiguous or conditional mandates:</strong> A decision that mandates the &quot;development of a framework&quot; where the binding or non-binding nature of that framework is left to be determined later, or is described using conditional language such as &quot;could,&quot; &quot;may,&quot; or &quot;with a view to,&quot; does <strong>not</strong> qualify as a Yes resolution <strong>unless</strong> it also establishes a qualitatively new institutional process (e.g., an open-ended working group) that goes beyond the existing GGE format.
+
+- <strong>Procedural disputes and consensus:</strong> The decision must be reflected in the official Final Document of the Seventh Review Conference as a formally adopted decision. A majority declaration or decision that is disputed as procedurally invalid under the CCW&#x27;s consensus requirement, and that is not reflected in the Final Document, does not count as an adopted decision for the purposes of this question.
+
+- <strong>Negotiations outside the CCW:</strong> Only decisions formally adopted by the CCW Review Conference itself count toward resolution. Announcements by subsets of states to pursue negotiations outside the CCW framework, even if made during or at the margins of the Review Conference, do not satisfy the resolution criteria.
+
+- <strong>Continuation sessions:</strong> If the Seventh Review Conference suspends and reconvenes at a continuation session before 31 December 2027, decisions adopted at the continuation session count as decisions of the Seventh Review Conference for resolution purposes.
+
+<strong>Key term definitions:</strong>
+
+- <strong>Autonomous weapons systems (AWS) / Lethal autonomous weapons systems (LAWS):</strong> Weapons systems that can select and engage targets without human intervention, as discussed in the CCW GGE framework and described by the ICRC and other authoritative sources.
+
+- <strong>Group of Governmental Experts (GGE):</strong> The CCW subsidiary body that has been conducting deliberations on LAWS since 2017, with a mandate to develop elements of a possible normative and operational framework.
+
+<strong>Resolution source:</strong> The Final Document of the Seventh Review Conference, expected to be published under document number CCW/CONF.VII/[X] on the UNODA documents library (<a href="https://meetings.unoda.org/" target="_blank" rel="noopener">https://meetings.unoda.org/</a>) and/or the UNODA documents search portal (<a href="https://docs-library.unoda.org/" target="_blank" rel="noopener">https://docs-library.unoda.org/</a>). The decisions of the Review Conference will also be reported by Reaching Critical Will, Reuters, and other credible outlets. If the Review Conference is postponed, resolution will be based on whether the conference is held and takes the specified decision before 31 December 2027.
+</p></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>(a) Time left: The 7th RevCon takes place in November 2026, roughly 7 months away. (b) Status quo: Major powers (US, Russia, India) continue to resist legally binding instruments on LAWS, and the CCW operates strictly by consensus. (c) Scope: The conference must adopt a decision that constitutes a substantive advance beyond merely extending the GGE mandate (e.g., an OEWG or formal treaty mandate). (d) Reason for No: The consensus requirement means that any single state can veto substantive advances. Historically, when deadlocked, the CCW&#x27;s path of least resistance is to simply renew or extend the GGE mandate to prevent the forum from collapsing. (e) Reason for Yes: Immense pressure from the UNGA (with 161 states voting for an instrument) could force major powers to compromise on a non-binding political declaration with a formal review mechanism or an upgrade to an OEWG just to maintain the CCW&#x27;s relevance. (f) Betting perspective: Geopolitical consensus mechanisms are inherently biased toward the status quo. I am confident it will be deadlocked and would be indifferent paying 14 cents on Yes.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>This question tracks a leading indicator for the international community&#x27;s capacity to govern autonomous offensive systems. The November 2026 CCW Review Conference is the culminating decision point after years of GGE work. Resolution would meaningfully update beliefs about feasibility of binding international governance of autonomous weapons (and by extension HACCAs). The UNGA vote (156+ states in favor) and ICRC advocacy show strong momentum, but key military powers&#x27; resistance creates genuine uncertainty about the outcome, making this a critical upstream indicator for resource allocation decisions in arms control governance.</p></section>
+<section class="qsection" id="decomp"><h2>Decomposition &amp; research <span class="badge">Stage 6b</span></h2><p><strong>Research-informed re-forecast:</strong> <span style="color:#c62828;font-weight:700">10%</span></p><div class="subcard"><strong>SQ1: What are the current official positions of Russia, the United States, and India on legally binding instruments or new negotiating mandates for autonomous weapons systems (LAWS) within the CCW, as expressed in 2025–2026 statements?</strong><p>As of early 2026, Russia, the United States, and India maintain positions that collectively make it very difficult for the CCW to adopt any substantive decision on LAWS beyond extending the GGE process. At the November 6, 2025 UNGA First Committee vote on Resolution L.41 (adopted 156-5-8), Russia voted against, while India notably shifted to voting in favor (having voted against in 2023 and 2024). The United States likely abstained, consistent with its prior pattern.
+
+Russia&#x27;s position, articulated on October 24, 2025 by its delegation at the UNGA First Committee, explicitly identifies the GGE on LAWS as the &quot;best suited platform&quot; and opposes moving discussions to other forums or pursuing new legally binding instruments, characterizing such moves as &quot;counterproductive.&quot; Russia expects the GGE to produce consensus-based conclusions for the Seventh Review Conference that account for all parties&#x27; approaches—a signal it will block any outcome it opposes.
+
+The United States, at the March 2–6, 2026 GGE session, opposed the inclusion of &quot;human control&quot; language in the rolling draft text, proposing instead &quot;good faith human judgement and care&quot;—a formulation rejected by many other delegations as insufficient. The US has consistently favored non-binding approaches and existing IHL frameworks over new legally binding instruments. At the UNGA First Committee in November 2025, the US provided an explanation of vote on L.41 from its Geneva mission.
+
+India shifted its UNGA voting position in 2025, voting in favor of Resolution L.41 (and the corresponding GA Resolution 80/57 in December 2025), after voting against in 2023 and 2024. India&#x27;s March 2026 GGE statement (delivered by Ambassador Anupam Ray) continued to emphasize the CCW framework&#x27;s importance, though India&#x27;s support for the UNGA resolution signals some willingness to engage on regulation. However, India has historically insisted that any framework account for national security interests and not impose premature binding obligations.
+
+At the March 2026 GGE session, more than 70 states expressed support for moving toward negotiations on a legally binding instrument based on the rolling draft text, while a minority of delegations—including the US and Russia—continued to resist specific language on human control and binding mandates. The GGE&#x27;s final session before the November 2026 Review Conference is scheduled for August 31–September 4, 2026.</p><p><strong>2025 UNGA First Committee Resolution L.41 (Vote: November 6, 2025)</strong>
+
+The resolution on autonomous weapons systems (L.41) was tabled by Austria and 30 co-sponsors at the 80th session of the UNGA First Committee. It was adopted with 156 votes in favor, 5 against, and 8 abstentions. The resolution stressed the urgent need for the CCW to address challenges posed by autonomous weapons, including a call to complete elements of an instrument, with a view to future negotiations. The resolution also noted the Secretary-General&#x27;s calls to commence negotiations on a legally binding instrument.
+
+<strong>Russia&#x27;s vote on L.41 (November 6, 2025):</strong> Russia voted AGAINST. This is consistent with Russia voting against in both 2023 (L.56) and 2024 (L.77). Russia&#x27;s October 24, 2025 statement at the UNGA First Committee Cluster IV debate <a href="https://russiaun.ru/en/news/241020251" target="_blank" rel="noopener">Permanent Mission of the Russian Federation to the United Nations</a> confirmed its opposition to moving LAWS discussions outside the CCW GGE and its view that the GGE is the &quot;best suited platform.&quot; Russia explicitly opposes duplication of efforts in other forums and emphasizes consensus-based outcomes.
+
+<strong>India&#x27;s vote on L.41 (November 6, 2025):</strong> India voted IN FAVOR. This represents a significant shift—India voted against the comparable resolution in 2023 (L.56: 164-5-8, India among the 5 against) and 2024 (L.77: 161-3-5 or similar, India among opponents). India&#x27;s explanation of vote, per a PDF from the Permanent Mission of India, states: &quot;India has voted in favor of the resolution L.41&quot; (80 UNGA First Committee, November 2025). India also voted in favor of GA Resolution 80/57 (the plenary adoption) in December 2025. However, India&#x27;s support appears conditional: the medianama.com report notes India &quot;abstained on a 2024 resolution calling for stronger human control norms&quot; and historically insists that regulation must be &quot;tailored to its national interests&quot; (per the MP-IDSA issue brief from May 2025).
+
+<strong>US vote on L.41 (November 6, 2025):</strong> The US most likely abstained (or possibly voted in favor with reservations), consistent with its prior pattern on the 2024 resolution where it abstained. The US Mission in Geneva posted an explanation of vote on L.41 on November 4, 2025. The US has historically been cautious about endorsing language that points toward legally binding instruments or new negotiating mandates for LAWS.
+
+<strong>March 2–6, 2026 GGE Session</strong>
+
+The first 2026 session of the GGE on LAWS took place March 2–6 in Geneva, focusing on the &quot;rolling draft text&quot; for a potential instrument.
+
+<strong>United States at March 2026 GGE:</strong> Per the WILPF CCW Report Vol. 14, No. 2 (published March 11, 2026) <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>, the US delegation explicitly opposed the inclusion of the term &quot;human control&quot; during debate on &quot;Modified Box III&quot; of the rolling text. The US proposed the alternative phrase &quot;good faith human judgement and care,&quot; which many other delegations rejected as insufficient for civilian protection or upholding international law. This reflects the US distinction between supporting non-binding guidelines for human judgment in weapons use versus accepting a legally binding &quot;human control&quot; requirement.
+
+<strong>Russia at March 2026 GGE:</strong> The WILPF report <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a> does not specifically name Russia, but notes that &quot;a minority of delegations continue to resist concepts related to human control, arguing that such concepts are not part of existing IHL.&quot; Russia is widely understood to be among this minority. A Google snippet from the Russian UN Mission (russiaun.ru/en/news/427102025) confirms Russia continues to view the GGE on LAWS as the primary forum, consistent with its October 2025 statement.
+
+<strong>India at March 2026 GGE:</strong> India&#x27;s Ambassador Anupam Ray delivered a statement at the March 2026 GGE session (per pmindiaun.gov.in). While I could not retrieve the full text of India&#x27;s March 2026 statement, India has historically emphasized that the CCW and its protocols are important instruments upholding IHL, and that any regulation should not prejudge outcomes or impose premature binding obligations.
+
+<strong>On &#x27;legally binding instruments&#x27; vs. &#x27;new negotiating mandates&#x27; specifically:</strong>
+
+- <strong>Russia</strong> opposes both. Russia wants the GGE to continue deliberations and produce consensus recommendations—not a mandate to negotiate a new protocol. Russia&#x27;s October 2025 statement <a href="https://russiaun.ru/en/news/241020251" target="_blank" rel="noopener">Permanent Mission of the Russian Federation to the United Nations</a> frames its position as wanting &quot;conclusions and recommendations that take into account the approaches of all High Contracting Parties,&quot; effectively a veto on any binding outcome.
+
+- <strong>United States</strong> has not endorsed legally binding instruments on LAWS. At the March 2026 GGE <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>, the US resisted even the concept of &quot;human control&quot; in the rolling text, preferring softer formulations. The US approach favors voluntary best practices and existing IHL compliance rather than new treaty negotiations.
+
+- <strong>India</strong> has shown a partial shift by voting for L.41 in 2025, which itself calls for completing elements of an instrument and references the Secretary-General&#x27;s call for a legally binding instrument. However, India&#x27;s historical position emphasizes caution on binding obligations, and its shift may reflect support for continued discussion rather than endorsement of immediate negotiations.
+
+<strong>Context for November 2026 Review Conference:</strong>
+Over 70 states support moving to formal negotiations on a legally binding instrument <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>. However, the CCW operates by consensus, meaning any single state party can block a decision. Russia and the US remain the principal obstacles to a new negotiating mandate. India&#x27;s shift to supporting the UNGA resolution is notable but has not translated into explicit support for a legally binding CCW protocol.
+
+The GGE has one more session (August 31–September 4, 2026) before the November 2026 Seventh Review Conference.</p></div><div class="subcard"><strong>SQ2: What is the historical track record of the CCW in transitioning from exploratory Groups of Governmental Experts (GGEs) to formal negotiating mandates for new protocols, and how long have such transitions typically taken?</strong><p>The CCW has produced five protocols since 1980, with varying timelines from exploratory discussions to formal adoption. The two most relevant post-adoption cases are Protocol IV on Blinding Laser Weapons (1995) and Protocol V on Explosive Remnants of War (2003). Protocol IV was adopted after approximately 5–6 years of advocacy (ICRC began campaigning ~1989–1991) and roughly 2 years of formal preparatory work (four preparatory sessions between February 1994 and January 1995), culminating in adoption at the First Review Conference on October 13, 1995. Protocol V was negotiated after the Second Review Conference (December 2001) established an open-ended GGE with a mandate to address explosive remnants of war; the GGE negotiated in 2002–2003, and Protocol V was adopted on November 28, 2003—roughly 2 years from mandate to adoption <a href="https://disarmament.unoda.org/en/our-work/conventional-arms/convention-certain-conventional-weapons/ccw-protocol-v-explosive-remnants-war" target="_blank" rel="noopener">https://disarmament.unoda.org/en/our-work/conventional-arms/convention-certain-conventional-weapons/ccw-protocol-v-explosive-remnants-war</a>. In contrast, the CCW has two major failure cases: (1) cluster munitions, where years of GGE discussions from the mid-2000s through the 2011 Fourth Review Conference failed to produce a protocol due to the consensus rule, leading frustrated states to negotiate the separate Convention on Cluster Munitions via the Oslo Process (adopted 2008); and (2) LAWS/autonomous weapons, where informal expert meetings began in 2014, a formal GGE was established at the 2016 Fifth Review Conference and first met in 2017, 11 guiding principles were adopted in 2019, but the 2021 Sixth Review Conference failed to establish a negotiating mandate—resulting in 12+ years of discussions and 9+ years of GGE work without a formal negotiating mandate as of 2026 <a href="https://autonomousweapons.org/global-legal-framework-milestones/" target="_blank" rel="noopener">Milestones in the Global Legal Framework for Autonomous Weapons</a>. Key enabling factors for successful transitions include: broad consensus among major military powers, relatively low economic/strategic stakes, ICRC and civil society leadership, and the absence of strong opposition from key states. Blocking factors include the CCW&#x27;s consensus rule, which allows a small number of states to veto progress.</p><p>## Historical Track Record of CCW Transitions from Exploratory Bodies to Negotiating Mandates
+
+### 1. Original Protocols I–III (1980)
+The CCW was adopted on October 10, 1980, along with its first three protocols: Protocol I (Non-Detectable Fragments), Protocol II (Mines, Booby-Traps and Other Devices), and Protocol III (Incendiary Weapons). These were negotiated as part of the original convention during UN conferences from 1978–1980 and did not involve a GGE-to-mandate transition, as they were part of the founding negotiation.
+
+### 2. Protocol IV on Blinding Laser Weapons (1995)
+<strong>Timeline:</strong>
+- <strong>Late 1980s–early 1990s:</strong> The ICRC and Sweden began raising concerns about the development of blinding laser weapons. The ICRC held expert meetings on this topic, including a meeting in 1991.
+- <strong>February 1994–January 1995:</strong> Four sessions of preparatory meetings (functioning as a Group of Governmental Experts) were held to prepare for the First CCW Review Conference. Blinding lasers were a major topic of these preparatory sessions.
+- <strong>September 25–October 13, 1995:</strong> The First Review Conference was held in Vienna. A &quot;Committee III&quot; (Laser Working Group) was established to negotiate a protocol on blinding lasers.
+- <strong>October 13, 1995:</strong> Protocol IV was adopted, prohibiting the use and transfer of laser weapons specifically designed to cause permanent blindness.
+
+<strong>Duration:</strong> From initial ICRC advocacy (~1989–1991) to adoption: approximately 4–6 years. From formal preparatory work (Feb 1994) to adoption (Oct 1995): approximately 20 months. This was notably a pre-emptive ban—the weapons had not yet been widely deployed.
+
+<strong>Enabling factors:</strong> Strong ICRC leadership and advocacy; Sweden&#x27;s championing of the issue; the fact that no state had made a major military investment in blinding lasers as a primary weapon system; broad consensus that deliberate blinding was inhumane; the availability of the Review Conference as a vehicle for adoption.
+
+### 3. Amended Protocol II on Mines, Booby-Traps and Other Devices (1996)
+<strong>Timeline:</strong>
+- The original Protocol II (1980) was widely seen as inadequate in addressing the global landmine crisis.
+- Negotiated at the same First Review Conference that produced Protocol IV, continuing through a second phase from January–May 1996.
+- <strong>May 3, 1996:</strong> Amended Protocol II was adopted, extending the original protocol&#x27;s scope and restrictions.
+
+<strong>Duration:</strong> The amendment process was part of the broader First Review Conference (1995–1996). Preparatory work began in 1994. However, many states and NGOs found the amended protocol inadequate, which ultimately led to the separate Ottawa Process and the 1997 Mine Ban Treaty outside the CCW framework.
+
+### 4. Protocol V on Explosive Remnants of War (2003)
+<strong>Timeline:</strong>
+- <strong>December 11–21, 2001:</strong> The Second Review Conference was held in Geneva. It decided to establish an open-ended Group of Governmental Experts with a mandate to address explosive remnants of war (ERW) <a href="https://disarmament.unoda.org/en/our-work/conventional-arms/convention-certain-conventional-weapons/ccw-protocol-v-explosive-remnants-war" target="_blank" rel="noopener">https://disarmament.unoda.org/en/our-work/conventional-arms/convention-certain-conventional-weapons/ccw-protocol-v-explosive-remnants-war</a>.
+- <strong>2002–2003:</strong> The GGE negotiated the protocol across multiple sessions in 2002 and 2003 <a href="https://disarmament.unoda.org/en/our-work/conventional-arms/convention-certain-conventional-weapons/ccw-protocol-v-explosive-remnants-war" target="_blank" rel="noopener">https://disarmament.unoda.org/en/our-work/conventional-arms/convention-certain-conventional-weapons/ccw-protocol-v-explosive-remnants-war</a>.
+- <strong>December 2002:</strong> States parties agreed at their annual meeting to begin formal negotiations on ERW in 2003.
+- <strong>November 28, 2003:</strong> Protocol V was adopted by the Meeting of the States Parties to the CCW <a href="https://disarmament.unoda.org/en/our-work/conventional-arms/convention-certain-conventional-weapons/ccw-protocol-v-explosive-remnants-war" target="_blank" rel="noopener">https://disarmament.unoda.org/en/our-work/conventional-arms/convention-certain-conventional-weapons/ccw-protocol-v-explosive-remnants-war</a>.
+
+<strong>Duration:</strong> Approximately 2 years from the establishment of the GGE mandate (December 2001) to protocol adoption (November 2003). The issue of ERW had been discussed informally before the Review Conference, but the formal mandate-to-adoption process was relatively swift.
+
+<strong>Enabling factors:</strong> The issue was relatively uncontroversial—most states agreed that post-conflict clearance of explosive remnants was a humanitarian necessity. No major military power saw the protocol as constraining core military capabilities. The protocol focused on post-conflict remedial measures rather than restricting use of specific weapons.
+
+### 5. Failed Case: Cluster Munitions (2001–2011)
+<strong>Timeline:</strong>
+- <strong>2001:</strong> ERW discussions at the Second Review Conference included cluster munitions, but states did not agree to a specific mandate on cluster munitions.
+- <strong>2003–2006:</strong> Continued discussions on cluster munitions within the CCW framework, including at the Third Review Conference (November 2006).
+- <strong>November 2006:</strong> The Third Review Conference failed to agree on a mandate to negotiate on cluster munitions. Norway, frustrated with the CCW process, launched the &quot;Oslo Process&quot; outside the CCW.
+- <strong>May 2008:</strong> The Convention on Cluster Munitions was adopted in Dublin through the Oslo Process, without the participation of major military powers (US, Russia, China).
+- <strong>2007–2011:</strong> Parallel GGE discussions on cluster munitions continued within the CCW, led in part by the US, which was not party to the Oslo treaty.
+- <strong>November 2011:</strong> The Fourth Review Conference failed to reach consensus on a CCW protocol on cluster munitions. A proposed &quot;Protocol VI&quot; on cluster munitions was blocked.
+
+<strong>Duration:</strong> Approximately 10 years of discussions (2001–2011) without producing a CCW protocol. The consensus rule allowed a minority of states to block progress.
+
+<strong>Key lesson:</strong> The CCW&#x27;s consensus requirement means that even when a large majority supports action, a small number of states with strategic interests in the weapons in question can prevent adoption of new protocols. This led states to pursue alternative negotiating processes outside the CCW (the Oslo Process).
+
+### 6. Failed/Ongoing Case: Lethal Autonomous Weapons Systems (LAWS) (2013–present)
+<strong>Timeline:</strong>
+- <strong>May 2013:</strong> UN Special Rapporteur Christof Heyns published a report calling for a moratorium on autonomous weapons <a href="https://autonomousweapons.org/global-legal-framework-milestones/" target="_blank" rel="noopener">Milestones in the Global Legal Framework for Autonomous Weapons</a>.
+- <strong>November 2013:</strong> CCW states parties agreed to hold informal meetings of experts on LAWS, based on a mandate proposed by France <a href="https://autonomousweapons.org/global-legal-framework-milestones/" target="_blank" rel="noopener">Milestones in the Global Legal Framework for Autonomous Weapons</a>.
+- <strong>2014–2016:</strong> Three annual informal meetings of experts on LAWS were held <a href="https://autonomousweapons.org/global-legal-framework-milestones/" target="_blank" rel="noopener">Milestones in the Global Legal Framework for Autonomous Weapons</a>.
+- <strong>December 2016:</strong> The Fifth Review Conference established a formal open-ended GGE on emerging technologies in the area of LAWS.
+- <strong>November 2017:</strong> The GGE on LAWS held its first formal meeting <a href="https://autonomousweapons.org/global-legal-framework-milestones/" target="_blank" rel="noopener">Milestones in the Global Legal Framework for Autonomous Weapons</a>.
+- <strong>2019:</strong> The GGE adopted 11 guiding principles as a consensus framework <a href="https://autonomousweapons.org/global-legal-framework-milestones/" target="_blank" rel="noopener">Milestones in the Global Legal Framework for Autonomous Weapons</a>.
+- <strong>December 2021:</strong> The Sixth Review Conference failed to establish a negotiating mandate for a legally binding instrument on LAWS. The consensus rule was the primary barrier, with a small number of states (notably Russia, India, and others) blocking stronger action <a href="https://autonomousweapons.org/global-legal-framework-milestones/" target="_blank" rel="noopener">Milestones in the Global Legal Framework for Autonomous Weapons</a>.
+- <strong>2022–2023:</strong> Draft &quot;Protocol VI&quot; proposals on LAWS were submitted by groups of states within the GGE, but no consensus emerged.
+- <strong>December 2023:</strong> The GGE mandate was renewed for 2024–2026, running until the Seventh Review Conference scheduled for November 2026.
+- <strong>March 2026:</strong> The GGE met for its first 2026 session (March 2–6, 2026). A second session is scheduled for August 31–September 4, 2026.
+
+<strong>Duration as of 2026:</strong> 12+ years since initial discussions (2013); 9+ years since the formal GGE was established (2017); no formal negotiating mandate has been achieved. This is by far the longest exploratory process in CCW history without producing a protocol.
+
+### Comparative Summary
+
+| Protocol/Issue | Exploratory Start | Formal Mandate | Adoption | Years: Mandate → Adoption | Outcome |
+|---|---|---|---|---|---|
+| Protocol IV (Blinding Lasers) | ~1989–1991 | 1994 (PrepCom) | Oct 13, 1995 | ~1.5 years | Success |
+| Amended Protocol II (Mines) | Early 1990s | 1994 (PrepCom) | May 3, 1996 | ~2 years | Partial (deemed inadequate) |
+| Protocol V (ERW) | Late 1990s | Dec 2001 (GGE) | Nov 28, 2003 | ~2 years | Success |
+| Cluster Munitions | ~2001 | Never achieved in CCW | Failed (Nov 2011) | N/A | Failure (led to Oslo Process) |
+| LAWS | 2013 | Not achieved as of 2026 | Pending | N/A (9+ years of GGE) | Ongoing/Stalled |
+
+### Key Findings for Forecasting:
+1. <strong>When the CCW succeeds, it moves quickly:</strong> Protocol IV took ~1.5 years from formal preparatory work to adoption; Protocol V took ~2 years from GGE mandate to adoption.
+2. <strong>The CCW&#x27;s consensus rule is a decisive blocking factor:</strong> Both cluster munitions and LAWS demonstrate that a small number of states with strategic interests can prevent progress indefinitely.
+3. <strong>Extended GGE processes without a negotiating mandate are a strong signal of failure:</strong> The LAWS GGE has been running since 2017 (9+ years) without a negotiating mandate—far longer than the 2-year GGE-to-protocol timelines of successful cases.
+4. <strong>Failed CCW processes lead to alternative negotiations:</strong> The cluster munitions precedent shows that when the CCW fails, states may pursue treaties outside the CCW framework (as the UNGA resolutions on autonomous weapons in 2023 and 2024 suggest may be happening with LAWS).
+5. <strong>Successful protocols involved issues with low strategic stakes for major powers:</strong> Both Protocol IV and Protocol V addressed issues where major military powers did not see significant constraints on their core capabilities. LAWS, by contrast, involves technologies central to the military strategies of the US, Russia, China, and others.</p></div><div class="subcard"><strong>SQ3: What were the substantive outcomes and state of the &#x27;rolling text&#x27; or draft normative framework from the CCW GGE on LAWS sessions in 2024–2026, and how close are delegations to agreement on key elements?</strong><p>The March 2–6, 2026, GGE session on LAWS was the penultimate session of the three-year mandate (2024–2026), with one final session remaining (August 31–September 4, 2026) before the November 2026 Seventh Review Conference. The session focused on the Chair&#x27;s &quot;rolling text&quot; (version dated December 18, 2025), which is organized into five &quot;boxes&quot; covering definitions/characterization, prohibitions and restrictions, human control/oversight requirements, and other normative elements. Delegations completed a first reading of the entire text and the Chair issued a revised version on March 4, 2026, with changes to Boxes I, II, and III.
+
+Key findings on consensus and disagreement:
+
+<strong>Definitions:</strong> The rolling text contains a working characterization of LAWS as &quot;an integrated combination of one or more&quot; elements (per the Chair&#x27;s second 2025 summary), but delegations remain divided over the precise scope and terminology. There is no finalized consensus definition.
+
+<strong>Prohibitions and restrictions:</strong> The text includes elements on prohibitions and regulations (Box III), but deep divisions persist. Some states (e.g., Sri Lanka) advocate explicit prohibitions on LAWS inconsistent with IHL or used without human control, while others resist strong prohibitory language.
+
+<strong>Human control/oversight:</strong> This remains the most contentious issue. The United States explicitly rejected the term &quot;human control,&quot; proposing instead &quot;good faith human judgement and care.&quot; Many delegations and civil society organizations rejected this alternative as insufficient. Some delegations argue &quot;human control&quot; is not a concept found in existing IHL texts, while others (including China, which advocates &quot;Meaningful Human Control&quot;) insist it is essential. This fundamental disagreement on terminology and substance remains unresolved.
+
+<strong>Momentum toward negotiations:</strong> Despite these disagreements, support for moving from discussion to formal negotiations grew significantly during the session—from over 40 states at the start to over 70 by the end of the week, including a bloc of African states. However, the CCW&#x27;s consensus rule means that even a few dissenting states can block progress.
+
+<strong>Status of the rolling text as of March 2026:</strong> The rolling text remains a working document under the Chair&#x27;s authority, not a consensus document. While it has been progressively refined through four sessions in 2024–2025 and the March 2026 session, it still contains significant bracketed or contested language on core issues. The Chair released a revised version on March 4, 2026, but fundamental splits—particularly on human control terminology and the scope of prohibitions—persist. The text serves as a basis for further work but is far from a finalized agreement. The GGE must submit a report to the Seventh Review Conference, and whether it can produce a consensus recommendation for a substantive outcome beyond merely renewing the GGE mandate remains highly uncertain given the depth of remaining disagreements.</p><p>## Detailed Breakdown of Evidence
+
+### 1. Procedural Context and Mandate
+
+The GGE on LAWS operates under a three-year mandate (2024–2026) to &quot;develop elements of a possible normative and operational framework on autonomous weapons systems.&quot; The March 2–6, 2026, session was the first of two sessions in 2026, with the final session scheduled for August 31–September 4, 2026 <a href="https://dig.watch/event/gge-on-laws-in-march-2026" target="_blank" rel="noopener">GGE on LAWS in March 2026</a>. The GGE&#x27;s work product is to be submitted to the Seventh Review Conference in November 2026.
+
+### 2. The Rolling Text
+
+The Chair has maintained a &quot;rolling text&quot; that has been progressively updated through sessions in 2024 and 2025. Key versions include:
+- <strong>November 8, 2024 version</strong> (referenced in ASIL Insights)
+- <strong>May 12, 2025 version</strong> (referenced by ICT4Peace)
+- <strong>December 18, 2025 version</strong> — the version circulated ahead of the March 2026 session (available at UNODA docs library)
+- <strong>March 4, 2026 revised version</strong> — issued during the session with changes to Boxes I, II, and III <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>
+
+The rolling text is organized into five &quot;boxes&quot; covering different elements of a possible normative framework. The Chair&#x27;s summary from the second 2025 session (CCW/GGE.1/2025/WP.9) proposed characterization elements, including that &quot;within the scope of the application of the CCW, a lethal autonomous weapon system can be characterized as an integrated combination of one or more&quot; elements (per Google snippet from the Chair&#x27;s summary PDF).
+
+### 3. March 2–6, 2026 Session: Key Dynamics
+
+Based primarily on the WILPF CCW Report, Vol. 14, No. 2 (published March 11, 2026) <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>:
+
+<strong>First reading completed:</strong> Delegations conducted a first reading of the entire draft text from March 2–4, 2026. On the night of March 4, the Chair released revised text for Boxes I, II, and III, which were discussed March 5–6.
+
+<strong>Human control/oversight — the central divide:</strong>
+- The United States explicitly refused to accept the term &quot;human control,&quot; proposing &quot;good faith human judgement and care&quot; as an alternative.
+- Many delegations and civil society organizations (e.g., Stop Killer Robots) rejected this alternative as insufficient to protect civilians or uphold IHL.
+- Some delegations argue that &quot;human control&quot; is not explicitly present in existing IHL texts.
+- Pakistan argued the GGE should focus on 21st-century challenges rather than strictly adhering to existing terminology.
+- China has consistently advocated for &quot;Meaningful Human Control&quot; (MHC) as a central requirement (per Lieber Institute analysis).
+
+<strong>Prohibitions and restrictions:</strong>
+- Sri Lanka proposed inclusion of explicit reference to &quot;prohibit&quot; LAWS inconsistent with IHL and used without human control (per Google snippet from Sri Lanka mission statement).
+- Italy delivered a statement specifically on &quot;Section III – Prohibitions and Regulations&quot; (per Google snippet from Italian delegation document).
+- Deep divisions remain between states favoring strong prohibitory language and those preferring softer regulatory approaches.
+
+<strong>Growing support for negotiations:</strong>
+- Over 40 states supported moving to formal negotiations at the start of the week; this grew to over 70 by the end, including a bloc of African states <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>.
+- However, the CCW operates by consensus, meaning even a small number of dissenting states can block adoption of binding outcomes.
+
+<strong>&quot;Consensus spree&quot; risk:</strong> Belgium and others expressed concern that the pursuit of consensus might lead to deleting controversial paragraphs, weakening the text rather than producing an instrument with &quot;real added value&quot; <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>.
+
+### 4. Chair&#x27;s Summary — First 2026 Session (CCW/GGE.1/2026/WP.2)
+
+The Chair&#x27;s summary of the first 2026 session (WP.2) was issued as a working paper. Based on Google snippets from this document:
+- &quot;Several delegations again emphasized that the notion of context-appropriate human control and judgement constitutes a central concept&quot;
+- One delegation suggested that &quot;the rolling text could imply a necessary permanent human control over lethal autonomous weapon systems&quot; and proposed adding language to address this concern
+- The summary was issued under the Chair&#x27;s sole authority
+
+### 5. Prior Sessions&#x27; Chair Summaries
+
+<strong>First 2025 session</strong> (CCW/GGE.1/2025/WP.1): Covered discussions from the March/April 2025 session.
+
+<strong>Second 2025 session</strong> (CCW/GGE.1/2025/WP.9): The Chair&#x27;s summary noted characterization of LAWS and captured the state of discussions as of September 2025. The Lieber Institute analysis noted that &quot;the 2025 sessions in March and September did manage to refine a rolling text on possible normative elements, but deep splits remain.&quot;
+
+### 6. Overall Assessment
+
+The rolling text as of March 2026 remains a Chair&#x27;s document—not a consensus text. While it has been progressively refined, fundamental disagreements persist on:
+1. <strong>Definitions:</strong> No agreed definition; working characterization exists but scope remains contested
+2. <strong>Prohibitions and restrictions:</strong> States are split between those wanting explicit prohibitions (on LAWS that cannot comply with IHL or operate without human control) and those preferring softer regulatory language
+3. <strong>Human control/oversight:</strong> The most divisive issue, with the US explicitly opposing the term &quot;human control&quot; and proposing weaker alternatives that most other delegations reject
+
+The growing number of states (70+) supporting negotiations is notable but insufficient under CCW consensus rules. The Arms Control Association noted in January 2025 the tension between &quot;human control&quot; and &quot;appropriate human judgement&quot; language as a key fault line. The final GGE session in August–September 2026 will be the last opportunity to bridge these divides before the Review Conference.</p></div><div class="subcard"><strong>SQ4: What is the current momentum and status of efforts to negotiate a treaty on autonomous weapons systems outside the CCW framework, such as through a standalone UN General Assembly process or other alternative forums?</strong><p>As of early April 2026, there is significant and growing momentum toward establishing a treaty on autonomous weapons systems (AWS/LAWS), with parallel tracks developing both within and outside the CCW framework. The key developments are:
+
+<strong>UNGA Resolutions (December 2025):</strong> The UN General Assembly adopted two resolutions on autonomous weapons on 1 December 2025. Resolution A/RES/80/56 was adopted with 161 votes in favor (per the background context) and called for a formal meeting in early 2026 at UN Headquarters in New York, with conference services and the participation of states, civil society, and scientists. It also established a Coordinator to support inclusive outreach. Resolution A/RES/80/57 ensured the item &quot;Lethal autonomous weapons systems&quot; would remain on the UNGA&#x27;s agenda for its 81st session. These resolutions represent a significant escalation of UNGA engagement on autonomous weapons, building on prior resolutions (78/241 in 2023 and 79/62 in 2024). The UN Office for Disarmament Affairs (UNODA) has been actively implementing resolution 80/56, with the Coordinator facilitating outreach and a formal meeting being organized at UN Headquarters in New York.
+
+<strong>Stop Killer Robots Coalition Position:</strong> The Campaign to Stop Killer Robots (a coalition of 190+ NGOs in 65+ countries) has adopted a pragmatic, forum-agnostic position. In their November 2025 statement on the CCW Meeting of High Contracting Parties, they explicitly stated that &quot;the goal of achieving a legally binding instrument that rejects the automation of killing and keeps meaningful human control over the use of force is ultimately more important than the forum in which negotiations are mandated&quot; <a href="https://www.stopkillerrobots.org/news/november-2025-ccw-mhcp/" target="_blank" rel="noopener">November 2025 CCW MHCP – Stop Killer Robots</a>. They urge states to &quot;consider all their options for continuing their work by starting negotiations&quot; in 2026, implying openness to alternative processes if the CCW remains deadlocked <a href="https://www.stopkillerrobots.org/news/november-2025-ccw-mhcp/" target="_blank" rel="noopener">November 2025 CCW MHCP – Stop Killer Robots</a>. In a 2022 strategy document, Stop Killer Robots outlined two specific alternative pathways: (1) an independent/standalone process led by a state or group of states (modeled on the Mine Ban Treaty and Convention on Cluster Munitions), and (2) a UNGA-initiated process via the First Committee (modeled on the Arms Trade Treaty and Treaty on the Prohibition of Nuclear Weapons) [[PDF] The Way Forward. - Stop Killer Robots](<a href="https://www.stopkillerrobots.org/wp-content/uploads/2022/06/Stop-Killer-Robots-Negotiating-a-Treaty-on-Autonomous-Weapons-Systems-The-Way-Forward.pdf" target="_blank" rel="noopener">https://www.stopkillerrobots.org/wp-content/uploads/2022/06/Stop-Killer-Robots-Negotiating-a-Treaty-on-Autonomous-Weapons-Systems-The-Way-Forward.pdf</a>).
+
+<strong>Growing State Support for Negotiations:</strong> By November 2025, 46 countries had signed onto a position (formalized in working paper CCW-MSP-2025-WP.5 tabled by Brazil) declaring that the existing &quot;rolling text&quot; from the GGE provides a sufficient basis for formal negotiations <a href="https://www.stopkillerrobots.org/news/november-2025-ccw-mhcp/" target="_blank" rel="noopener">November 2025 CCW MHCP – Stop Killer Robots</a>. By March 2026, over 70 states supported moving to negotiations based on the GGE&#x27;s rolling draft text <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>. A cross-regional group of 42 states (including France, Germany, and 12 other NATO states, led by Brazil) issued a joint statement on 5 September 2025 explicitly calling for formal negotiations <a href="https://article36.org/updates/uk-stays-mute-as-france-germany-and-40-more-states-agree-that-draft-rules-on-killer-robots-are-ready-to-negotiate/" target="_blank" rel="noopener">UK stays mute as France, Germany and 40 more states ...</a>.
+
+<strong>CCW Dysfunction as Catalyst:</strong> The November 2025 CCW Meeting of High Contracting Parties was reduced to a 30-minute administrative session after states could not agree on a Chair, reflecting what Stop Killer Robots calls a &quot;concerted effort to progressively undermine the functioning of the CCW&quot; <a href="https://www.stopkillerrobots.org/news/november-2025-ccw-mhcp/" target="_blank" rel="noopener">November 2025 CCW MHCP – Stop Killer Robots</a>. This dysfunction strengthens the case for alternative forums. The UK has resisted alternative processes, leading a joint statement in May 2025 at the UN in New York specifically aimed at foreclosing discussion of autonomous weapons outside the CCW/Geneva framework <a href="https://article36.org/updates/uk-stays-mute-as-france-germany-and-40-more-states-agree-that-draft-rules-on-killer-robots-are-ready-to-negotiate/" target="_blank" rel="noopener">UK stays mute as France, Germany and 40 more states ...</a>.
+
+<strong>Current Status (March 2026):</strong> The CCW GGE held its first 2026 session from 2-6 March 2026, with a second session planned for 31 August-4 September 2026. While the GGE process continues, the WILPF/Reaching Critical Will report characterizes UNGA Resolution 80/56 as an important signal of overwhelming international consensus, even though most states currently view it as a political pressure tool on the CCW rather than an independent treaty-making mechanism <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>. The UNGA formal meeting mandated by resolution 80/56 is being organized for 2026 in New York, which represents a concrete institutional step outside the CCW framework. The CCW Seventh Review Conference is scheduled for November 2026, and this deadline is concentrating diplomatic efforts.
+
+<strong>Overall Assessment for Forecasters:</strong> While the primary diplomatic thrust remains focused on pushing for a binding protocol at the November 2026 CCW Review Conference, the UNGA track is developing as a credible parallel/fallback pathway. The combination of (a) two successive UNGA resolutions with overwhelming majorities, (b) a formal UNGA meeting in New York in 2026, (c) a growing coalition of 70+ states favoring negotiations, (d) persistent CCW dysfunction, and (e) Stop Killer Robots&#x27; explicit openness to alternative forums creates meaningful momentum for an outside-CCW process. However, as of April 2026, no formal standalone treaty negotiation process has been launched outside the CCW. The UNGA process remains in the &quot;building political pressure&quot; phase rather than constituting an active alternative negotiating track.</p><p>## Detailed Evidence and Analysis
+
+### 1. UNGA Resolution A/RES/80/56 (Adopted 1 December 2025)
+
+Resolution A/RES/80/56 was adopted by the UNGA on 1 December 2025 with overwhelming support. Based on Google search results from the UN General Assembly Resolutions Tables and the UN Office for Disarmament Affairs, the resolution:
+- Decided that a <strong>formal meeting</strong> would be held in early 2026 at UN Headquarters in New York, with conference services and participation of states, civil society, and scientists
+- Established a <strong>Coordinator</strong> to &quot;support inclusive outreach&quot; and facilitate CSO engagement
+- Was classified under agenda item 99jj of the 80th session
+
+The resolution represents a significant institutional step because it creates a concrete UNGA-mandated process on autonomous weapons outside the Geneva-based CCW framework. UNODA Instagram posts confirm implementation is underway, with the Coordinator being appointed and outreach activities beginning.
+
+<strong>Resolution A/RES/80/57</strong> (also adopted 1 December 2025) decided to include &quot;Lethal autonomous weapons systems&quot; in the provisional agenda of the 81st UNGA session, ensuring continuity of the UNGA track.
+
+### 2. Historical Context of UNGA Engagement
+
+The UNGA&#x27;s engagement on autonomous weapons has escalated progressively:
+- <strong>Resolution 78/241</strong> (December 2023): First UNGA resolution on LAWS, added agenda item
+- <strong>Resolution 79/62</strong> (December 2024): Adopted with overwhelming support, continued engagement
+- <strong>Resolution 80/56</strong> (December 2025): 161 votes in favor, established formal meeting and Coordinator
+- <strong>Resolution 80/57</strong> (December 2025): Ensured continued agenda inclusion
+
+This escalation pattern shows the UNGA building institutional infrastructure around the autonomous weapons issue.
+
+### 3. Stop Killer Robots Coalition Activities and Positions
+
+<strong>November 2025 CCW MHCP Statement <a href="https://www.stopkillerrobots.org/news/november-2025-ccw-mhcp/" target="_blank" rel="noopener">November 2025 CCW MHCP – Stop Killer Robots</a>:</strong>
+Stop Killer Robots explicitly stated that &quot;the goal of achieving a legally binding instrument that rejects the automation of killing and keeps meaningful human control over the use of force is ultimately more important than the forum in which negotiations are mandated.&quot; They urged states to &quot;consider all their options for continuing their work by starting negotiations&quot; in 2026. The Campaign characterized the CCW&#x27;s administrative dysfunction as part of a &quot;concerted effort to progressively undermine the functioning of the CCW in recent years.&quot;
+
+<strong>2022 Strategy Document &quot;The Way Forward&quot; [[PDF] The Way Forward. - Stop Killer Robots](<a href="https://www.stopkillerrobots.org/wp-content/uploads/2022/06/Stop-Killer-Robots-Negotiating-a-Treaty-on-Autonomous-Weapons-Systems-The-Way-Forward.pdf" target="_blank" rel="noopener">https://www.stopkillerrobots.org/wp-content/uploads/2022/06/Stop-Killer-Robots-Negotiating-a-Treaty-on-Autonomous-Weapons-Systems-The-Way-Forward.pdf</a>):</strong>
+Stop Killer Robots outlined two specific alternative pathways:
+1. <strong>Independent/standalone mechanism</strong>: A state or group of states could host an international conference to declare common intention to negotiate, followed by meetings to develop a framework (modeled on Mine Ban Treaty and Convention on Cluster Munitions)
+2. <strong>UNGA process</strong>: States could initiate a resolution through the UNGA First Committee to secure a negotiating mandate (modeled on Arms Trade Treaty and Treaty on the Prohibition of Nuclear Weapons)
+
+<strong>May 2025 Policy Brief:</strong>
+Stop Killer Robots encouraged all states to attend the New York informal consultations on autonomous weapons systems, explicitly framing the UNGA process as a global governance mechanism complementary to the CCW.
+
+### 4. State Positions and Coalition Building
+
+<strong>September 5, 2025 <a href="https://article36.org/updates/uk-stays-mute-as-france-germany-and-40-more-states-agree-that-draft-rules-on-killer-robots-are-ready-to-negotiate/" target="_blank" rel="noopener">UK stays mute as France, Germany and 40 more states ...</a>:</strong> A cross-regional group of 42 states issued a joint statement at the CCW GGE declaring that the draft &quot;elements&quot; developed over a decade are ready for formal negotiations. This included France, Germany, and 12 other NATO states, as well as a broad coalition led by Brazil. The states named include: Austria, Belgium, Brazil, Bulgaria, Chile, Colombia, Costa Rica, Denmark, Dominican Republic, Ecuador, El Salvador, Finland, France, Germany, Guatemala, Iceland, Ireland, Italy, Kazakhstan, Lesotho, Luxembourg, Malawi, Mexico, Montenegro, Nauru, New Zealand, North Macedonia, Norway, Pakistan, Palestine, Panama, Peru, Portugal, Sierra Leone, Slovenia, Spain, Sweden, Switzerland, Uruguay, and CCW observer states Kiribati, Samoa, and Thailand.
+
+<strong>November 2025 <a href="https://www.stopkillerrobots.org/news/november-2025-ccw-mhcp/" target="_blank" rel="noopener">November 2025 CCW MHCP – Stop Killer Robots</a>:</strong> By the November 2025 CCW MHCP, 46 countries had signed a working paper (CCW-MSP-2025-WP.5, tabled by Brazil) supporting negotiations based on the rolling text, with four new additions: Angola, Hungary, Mozambique, and Nigeria.
+
+<strong>March 2026 <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>:</strong> Over 70 states support moving to negotiations based on the GGE&#x27;s rolling draft text.
+
+### 5. Opposition to Alternative Processes
+
+<strong>UK Position <a href="https://article36.org/updates/uk-stays-mute-as-france-germany-and-40-more-states-agree-that-draft-rules-on-killer-robots-are-ready-to-negotiate/" target="_blank" rel="noopener">UK stays mute as France, Germany and 40 more states ...</a>:</strong> The UK has consistently maintained that the CCW is the preferred and &quot;best&quot; forum. In May 2025, the UK led a joint statement at the UN in New York specifically intended to foreclose the possibility of discussing the issue outside of Geneva.
+
+<strong>Other opponents:</strong> States like the US and Russia are seen as potential vetoes against the transition to formal negotiations within the CCW, which paradoxically could strengthen the case for alternative processes.
+
+### 6. CCW Dysfunction (November 2025) <a href="https://www.stopkillerrobots.org/news/november-2025-ccw-mhcp/" target="_blank" rel="noopener">November 2025 CCW MHCP – Stop Killer Robots</a>
+
+The November 2025 CCW Meeting of High Contracting Parties was reduced to a 30-minute administrative session because states could not agree on a Chair and declined to run a full three-day agenda. This dysfunction serves as evidence supporting the case for alternative forums.
+
+### 7. Current GGE Status (March 2026) <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>
+
+The first 2026 GGE session was held March 2-6, 2026. The GGE is in the &quot;final stretch&quot; of its three-year mandate. The WILPF/Reaching Critical Will report (published March 11, 2026) frames UNGA Resolution 80/56 as an expression of political will rather than the initiation of a separate treaty-making process. The primary strategy of most states remains to leverage the GGE&#x27;s output to force a breakthrough at the November 2026 CCW Review Conference.
+
+### 8. Impact Assessment
+
+The UNGA process serves a <strong>dual function</strong>:
+1. <strong>Political pressure</strong>: Overwhelming UNGA majorities (161 votes for resolution 80/56) signal to CCW holdout states that the international community is ready for a treaty
+2. <strong>Institutional infrastructure</strong>: The formal meeting in New York and the Coordinator role create the procedural foundations that could be escalated into a full negotiating mandate if the CCW fails
+
+As of April 2026, no formal standalone treaty negotiation has been launched outside the CCW. The UNGA track remains in a preparatory/pressure-building phase. However, the combination of growing state coalitions, escalating UNGA resolutions, civil society advocacy, and CCW dysfunction creates credible momentum for an alternative process if the November 2026 Review Conference fails to deliver.</p></div><div class="subcard"><strong>SQ5: What intermediate outcome options exist between merely extending the GGE and launching full treaty negotiations at the CCW Seventh Review Conference on LAWS, and which of these options have states or the GGE Chair proposed?</strong><p>Between merely extending the GGE and launching full treaty negotiations on LAWS at the November 2026 CCW Seventh Review Conference, several intermediate outcome options have been discussed in 2025–2026 proceedings, though formal proposals have primarily clustered around either continuing the GGE&#x27;s work or launching negotiations on a legally binding instrument.
+
+<strong>GGE Chair&#x27;s Rolling Text Approach (2024–2026):</strong> GGE Chair Ambassador Robert in den Bosch (Netherlands) introduced a &quot;rolling text&quot; of elements for a possible instrument in July 2024, revised it in May 2025 and again in December 2025 and March 2026. This text is designed to build common understanding on normative elements (definitions, prohibitions, human control requirements, accountability) that could serve as either a basis for immediate negotiations or as a standalone substantive outcome short of a full negotiating mandate <a href="https://rsis.edu.sg/rsis-publication/idss/ip25095-international-regulation-of-lethal-autonomous-weapon-systems-a-long-road-ahead/" target="_blank" rel="noopener">IP25095 | International Regulation of Lethal Autonomous Weapon ...</a> <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>.
+
+<strong>Key intermediate options identified in 2025–2026 proceedings include:</strong>
+
+1. <strong>GGE report with elements but no negotiating mandate:</strong> The GGE could include the rolling text elements in its final report to the Review Conference, either with consensus or with caveats noting areas of disagreement, without explicitly recommending negotiations. This would represent substantive progress beyond a simple GGE extension by establishing agreed normative content <a href="https://rsis.edu.sg/rsis-publication/idss/ip25095-international-regulation-of-lethal-autonomous-weapon-systems-a-long-road-ahead/" target="_blank" rel="noopener">IP25095 | International Regulation of Lethal Autonomous Weapon ...</a>.
+
+2. <strong>Alternative processes outside the CCW:</strong> If the CCW fails to reach consensus, states have been directed to consider &quot;alternative processes&quot; for negotiation—referenced explicitly in a 2022 Human Rights Watch report (&quot;Agenda for Action: Alternative Processes for Negotiating a Killer Robots Treaty&quot;) that was cited at the November 2025 Meeting of High Contracting Parties <a href="https://www.stopkillerrobots.org/news/november-2025-ccw-mhcp/" target="_blank" rel="noopener">November 2025 CCW MHCP – Stop Killer Robots</a>. This could include UNGA-mandated negotiations outside the CCW framework.
+
+3. <strong>Coalition-led initiatives:</strong> A group of 46 states (including Angola, Hungary, Mozambique, Nigeria, and led by Brazil) formally asserted at the November 2025 MHCP that the revised rolling text provides a sufficient basis to negotiate an instrument, tabling working paper CCW-MSP-2025-WP.5 <a href="https://www.stopkillerrobots.org/news/november-2025-ccw-mhcp/" target="_blank" rel="noopener">November 2025 CCW MHCP – Stop Killer Robots</a>. By March 2026, over 70 states supported moving to negotiations <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>.
+
+4. <strong>UNGA Resolution pathway:</strong> On 6 November 2025, 156 states supported a UNGA resolution calling on the CCW to &quot;complete elements of an instrument on AWS, with a view to future negotiations.&quot; A second UNGA resolution in December 2025 garnered 161 votes. These resolutions create external pressure and could serve as the basis for a UNGA-mandated process if the CCW fails to act.
+
+5. <strong>Political Declaration on Responsible Military Use of AI and Autonomy:</strong> The US-sponsored Political Declaration (launched November 2023) represents a non-binding political commitment approach. However, this is increasingly seen as insufficient by the majority of states advocating for legally binding measures.
+
+<strong>Notably absent from formal 2025–2026 CCW/GGE records</strong> are explicit proposals for: (a) an Open-Ended Working Group (OEWG) with a specific mandate within the CCW; (b) a new CCW subsidiary body with a stronger mandate than the GGE; or (c) a decision creating specific timelines or benchmarks for future negotiations. The discourse has largely been binary—either launch negotiations or continue discussions—rather than focused on intermediate procedural mechanisms.
+
+The CCW Preparatory Committee is scheduled for 7–9 September 2026, which will be a critical venue for crystallizing proposals ahead of the November 2026 Review Conference. The final GGE session (31 August–4 September 2026) must finalize its report for the Review Conference.</p><p><strong>Background and Context:</strong>
+
+The CCW&#x27;s Group of Governmental Experts (GGE) on LAWS has been meeting since 2017. Its current three-year mandate (2024–2026) was established at the 2023 Meeting of High Contracting Parties, tasking the GGE with considering &quot;possible measures, including taking into account the example of existing protocols within the Convention.&quot; The mandate expires at the Seventh Review Conference (16–20 November 2026 in Geneva).
+
+<strong>The GGE Chair&#x27;s Rolling Text (Key Intermediate Tool):</strong>
+
+GGE Chair Ambassador Robert in den Bosch of the Netherlands has pursued a strategy centered on building common understanding through a &quot;rolling text&quot; of elements for a possible instrument. This text was introduced in July 2024, revised in May 2025 (the &quot;Revised rolling text as of 12 May 2025&quot;), updated again on 18 December 2025, and further revised on 4 March 2026 <a href="https://rsis.edu.sg/rsis-publication/idss/ip25095-international-regulation-of-lethal-autonomous-weapon-systems-a-long-road-ahead/" target="_blank" rel="noopener">IP25095 | International Regulation of Lethal Autonomous Weapon ...</a> <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>. The rolling text covers definitions, prohibitions, human control requirements, and accountability measures. The Chair&#x27;s approach represents an intermediate strategy: rather than pushing directly for a negotiating mandate, he has sought to build substantive agreement on normative content that could then be packaged in various ways for the Review Conference.
+
+<strong>Three Scenarios for the GGE Report (per RSIS analysis, October 2025):</strong>
+
+An RSIS analysis (IP25095, published 1 October 2025) identified three pathways for the GGE&#x27;s report to the Review Conference <a href="https://rsis.edu.sg/rsis-publication/idss/ip25095-international-regulation-of-lethal-autonomous-weapon-systems-a-long-road-ahead/" target="_blank" rel="noopener">IP25095 | International Regulation of Lethal Autonomous Weapon ...</a>:
+1. <strong>Consensus on elements + recommendation to negotiate:</strong> If the GGE reaches consensus on the rolling text elements, it could recommend commencement of negotiations.
+2. <strong>Elements included with caveats:</strong> If consensus is elusive, the GGE could include elements in its report while noting they are not fully agreed upon—keeping them available for future consideration.
+3. <strong>Failure to include elements:</strong> If the GGE fails to reach consensus, a delegation could submit a working paper for a vote, though this is unlikely to be adopted given the CCW&#x27;s consensus-based decision-making.
+
+The second scenario (elements with caveats) represents the most clearly defined intermediate option—substantive progress without a full negotiating mandate.
+
+<strong>State Positions and Coalition Dynamics:</strong>
+
+- <strong>Pro-negotiations coalition:</strong> 46 states signed a joint statement (first presented September 2025 GGE, then tabled as CCW-MSP-2025-WP.5 by Brazil at the November 2025 MHCP) asserting the rolling text provides a sufficient basis for negotiations <a href="https://www.stopkillerrobots.org/news/november-2025-ccw-mhcp/" target="_blank" rel="noopener">November 2025 CCW MHCP – Stop Killer Robots</a>. By March 2026, over 70 states expressed support for negotiations <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>.
+
+- <strong>US position:</strong> The US has been resistant to legally binding negotiations. At the March 2026 GGE, the US delegation proposed replacing &quot;human control&quot; with &quot;good faith human judgement and care,&quot; which was rejected by many delegations <a href="https://www.wilpf.org/ccw-report-vol-14-no-2-the-final-stretch-before-the-finishing-line/" target="_blank" rel="noopener">CCW Report, Vol. 14, No. 2: The Final Stretch Before the Finishing ...</a>. The US has preferred non-binding approaches such as the Political Declaration on Responsible Military Use of AI and Autonomy.
+
+- <strong>Russia, India, and other skeptics:</strong> These states have traditionally resisted binding instruments and have contributed to the consensus-based deadlock within the CCW.
+
+<strong>UNGA Resolutions as External Pressure:</strong>
+
+Two UNGA resolutions in late 2025 (6 November 2025 with 156 votes; December 2025 with 161 votes) called on the CCW to complete its work on elements of an instrument, with a view to future negotiations. While these resolutions are non-binding, they create significant political pressure and establish a potential alternative pathway: if the CCW fails to act, the UNGA could potentially mandate negotiations in a different forum.
+
+<strong>Alternative Processes:</strong>
+
+The November 2025 MHCP discussion explicitly referenced alternative processes outside the CCW. Stop Killer Robots cited the 2022 Human Rights Watch report &quot;Agenda for Action: Alternative Processes for Negotiating a Killer Robots Treaty&quot; as a resource for exploring these alternatives <a href="https://www.stopkillerrobots.org/news/november-2025-ccw-mhcp/" target="_blank" rel="noopener">November 2025 CCW MHCP – Stop Killer Robots</a>. This suggests that if the CCW Review Conference deadlocks, states may pursue negotiations through a UNGA-mandated process, similar to how the Mine Ban Treaty and Cluster Munitions Convention were negotiated outside the CCW.
+
+<strong>What&#x27;s Missing from the Record:</strong>
+
+Notably, the 2025–2026 CCW/GGE proceedings do not contain explicit proposals for:
+- An Open-Ended Working Group (OEWG) within the CCW with a specific mandate
+- A new CCW subsidiary body with a stronger mandate than the GGE
+- A decision with specific timelines or benchmarks for future negotiations
+- A standalone political declaration as a CCW outcome
+
+The discourse has been more binary than the question&#x27;s framing suggests—states are either pushing for full negotiations or resisting them, with relatively little formal discussion of intermediate procedural mechanisms within the CCW itself.
+
+<strong>Upcoming Key Dates:</strong>
+- GGE final session: 31 August–4 September 2026
+- CCW Preparatory Committee: 7–9 September 2026
+- Seventh Review Conference: 16–20 November 2026</p></div></section>
+</div></body></html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Will any AI model achieve a success rate of 70% or higher on the full &#x27;SWE-bench</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#e8f5e9;color:#2e7d32">77%</span><h1 style="margin:0;font-size:1.25rem;">Will any AI model achieve a success rate of 70% or higher on the full &#x27;SWE-bench Pro&#x27; benchmark by December 31, 2027?</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Gemini 3 Flash (minimal)</span><span>low (Gemini Flash) effort</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#revised">Revised question</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#2e7d32">77%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">88</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">95</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">66</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">55</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">75</span></div></div><p><strong>Review status:</strong> REVISED</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>Will any AI model achieve a success rate of 70% or higher on the &#x27;SWE-bench Pro&#x27; benchmark by December 31, 2027?</p><p><strong>Why this question?</strong> The paper identifies SWE-bench as a key evaluation for AI R&amp;D capabilities [a512a0]. As of March 2026, top-tier models were scoring approximately 56-57% on the more difficult, contamination-resistant &#x27;SWE-bench Pro&#x27; variant. Reaching 70% would represent a significant leap in an agent&#x27;s ability to handle complex, multi-repository software engineering tasks, which is a core upstream indicator of automated R&amp;D progress.</p><p><strong>Paper reference:</strong> Metric #1: AI R&amp;D Evaluations (Chan et al., 2026) [a512a0]</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p>### <strong>Question Title</strong>
+Will any AI model achieve a success rate of 70% or higher on the &#x27;SWE-bench Pro&#x27; benchmark by December 31, 2027?
+
+### <strong>Background</strong>
+The development of AI agents capable of autonomous software engineering is a key milestone in AI research. One of the most rigorous benchmarks for this capability is <strong>SWE-bench Pro</strong>, an evolution of the original SWE-bench designed to evaluate agents on long-horizon, enterprise-level software engineering tasks <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>. While previous benchmarks like &#x27;SWE-bench Verified&#x27; often involve isolated bug fixes, SWE-bench Pro consists of 1,865 complex problems sourced from 41 actively maintained repositories <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>. These tasks often require &quot;hours to days for a professional software engineer to complete&quot; and involve modifications across multiple files and directories <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>.
+
+As of April 1, 2026, the state-of-the-art (SOTA) performance on the official SWE-bench Pro (Public Dataset) leaderboard is <strong>45.89%</strong>, achieved by the model <strong>claude-opus-4-5-20251101</strong> <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. Other high-performing systems, such as Bito&#x27;s AI Architect, have claimed scores as high as 60.8% in independent evaluations, though these are not always reflected on the primary public leaderboard <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. A jump to 70% would indicate that AI agents can reliably solve the majority of complex, real-world engineering issues, signaling a move toward fully autonomous R&amp;D capabilities.
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, at any point between April 1, 2026, and 23:59 UTC on December 31, 2027, any AI model or agentic system is officially recorded as having achieved a <strong>Resolve Rate (Success Rate) of 70.0% or higher</strong> on the SWE-bench Pro (Public Dataset) benchmark.
+
+1.  <strong>Resolution Source:</strong> The primary source for resolution is the official <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-bench Pro (Public Dataset) leaderboard</a> maintained by Scale AI <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. 
+2.  <strong>Fallback Provision:</strong> If the primary leaderboard is discontinued, becomes inaccessible, or stops updating, this question may be resolved based on:
+    *   A peer-reviewed academic publication (e.g., on arXiv or at a major AI conference like NeurIPS/ICLR) that uses the original SWE-bench Pro dataset of 1,865 problems as defined in <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>.
+    *   An official technical report or announcement from a major AI lab (e.g., OpenAI, Anthropic, Google DeepMind, or Scale AI) providing verifiable evidence of the score.
+3.  <strong>Definitions:</strong>
+    *   <strong>AI Model/System:</strong> Any software system, large language model (LLM), or agentic framework (e.g., combining a model with tools, scaffolding, or search).
+    *   <strong>Success Rate / Resolve Rate:</strong> The percentage of the 1,865 tasks in the SWE-bench Pro dataset that the agent successfully resolves <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>. A task is &quot;resolved&quot; if the model&#x27;s patch passes the &quot;fail-to-pass&quot; tests (fixing the issue) and the &quot;pass-to-pass&quot; tests (ensuring no regressions) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>.
+    *   <strong>Public Availability:</strong> The model does <strong>not</strong> need to be publicly available for this question to resolve as YES, provided the score is published in an official capacity (e.g., a technical report or peer-reviewed paper).
+4.  <strong>Threshold:</strong> The score must be 70.0% or higher (rounding to the nearest tenth). For example, 69.95% would resolve as YES, while 69.94% would resolve as NO.
+
+### <strong>Technical Definitions &amp; Reference Links</strong>
+*   <strong>SWE-bench Pro:</strong> Defined by <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">Deng et al. (2025)</a> <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>.
+*   <strong>AI Model:</strong> General term for machine learning systems as described on <a href="https://en.wikipedia.org/wiki/Artificial_intelligence_model" target="_blank" rel="noopener">Wikipedia</a>.
+*   <strong>Success Rate:</strong> In this context, the &quot;Resolve Rate&quot; as defined in the <a href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench documentation</a> <a href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench Leaderboards</a>.</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>The development of AI agents capable of autonomous software engineering is a key milestone in AI research. One of the most rigorous benchmarks for this capability is <strong>SWE-bench Pro</strong>, an evolution of the original SWE-bench designed to evaluate agents on long-horizon, enterprise-level software engineering tasks [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). While previous benchmarks like &#x27;SWE-bench Verified&#x27; often involve isolated bug fixes, SWE-bench Pro consists of 1,865 complex problems sourced from 41 actively maintained repositories [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>. These tasks often require \&quot;hours to days for a professional software engineer to complete\&quot; and involve modifications across multiple files and directories [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).
+
+As of April 1, 2026, the state-of-the-art (SOTA) performance on the official SWE-bench Pro (Public Dataset) leaderboard is <strong>45.89%</strong>, achieved by the model <strong>claude-opus-4-5-20251101</strong> <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>. While some systems, such as Bito&#x27;s AI Architect, have claimed scores as high as 60.8%, these evaluations were conducted on a subset of only 293 tasks from five repositories rather than the full 1,865-problem dataset <a href="https://bito.ai/blog/bitos-ai-architect-tops-swe-bench-pro-evaluation-for-long-horizon-software-tasks/" target="_blank" rel="noopener">Bito&#x27;s AI Architect tops SWE-Bench Pro Evaluation</a>. A jump to 70% on the full benchmark would indicate that AI agents can reliably solve the majority of complex, real-world engineering issues, signaling a move toward fully autonomous R&amp;D capabilities.
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, at any point between April 1, 2026, and 23:59 UTC on December 31, 2027, any AI model or agentic system is officially recorded as having achieved a <strong>Resolve Rate (Success Rate) of 70.0% or higher</strong> on the SWE-bench Pro benchmark.
+
+1.  <strong>Resolution Source:</strong> The primary source for resolution is the official <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-bench Pro (Public Dataset) leaderboard</a> maintained by Scale AI <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>. 
+2.  <strong>Scope of Evaluation:</strong> The 70.0% success rate must be calculated based on the full 1,865-problem dataset (comprising the Public, Private, and Held-out sets) as defined in the original paper [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>), rather than any single subset (such as the 731-instance Public Set).
+3.  <strong>Fallback Provision:</strong> If the primary leaderboard is discontinued, becomes inaccessible, or stops updating, this question may be resolved based on:
+    *   A peer-reviewed academic publication (e.g., on arXiv or at a major AI conference like NeurIPS/ICLR) that uses the original SWE-bench Pro dataset of 1,865 problems.
+    *   An official technical report or announcement from a major AI lab (e.g., OpenAI, Anthropic, Google DeepMind, or Scale AI) providing verifiable evidence of the score on the full dataset.
+4.  <strong>Definitions:</strong>
+    *   <strong>AI Model/System:</strong> Any software system, large language model (LLM), or agentic framework (e.g., combining a model with tools, scaffolding, or search). A &#x27;system&#x27; or &#x27;agentic framework&#x27; may consist of any combination of multiple models, tools, and recursive processes, provided they function as a unified software entity to solve the tasks without external human direction.
+    *   <strong>Success Rate / Resolve Rate:</strong> The percentage of the tasks in the SWE-bench Pro dataset that the agent successfully resolves. A task is \&quot;resolved\&quot; if the model&#x27;s patch passes the \&quot;fail-to-pass\&quot; tests (fixing the issue) and the \&quot;pass-to-pass\&quot; tests (ensuring no regressions) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>.
+    *   <strong>Autonomy:</strong> To qualify, the system must operate autonomously during the evaluation of the problems; systems requiring &#x27;Human-in-the-Loop&#x27; (HITL) intervention, manual task selection, or human-led debugging during the benchmark execution are explicitly excluded.
+5.  <strong>Thresholds and Conflicts:</strong>
+    *   <strong>Rounding:</strong> Calculations for resolution will be performed by dividing the number of successfully resolved tasks by the total number of tasks in the dataset, with the resulting percentage rounded to the nearest tenth (0.05 rounds up). For example, 69.95% would resolve as YES, while 69.94% would resolve as NO.
+    *   <strong>Benchmark Updates:</strong> If the total number of tasks in the official SWE-bench Pro benchmark changes from 1,865 (e.g., due to a &#x27;v2&#x27; update), the success rate will be calculated as the number of resolved tasks divided by the total number of tasks in the then-current version of the benchmark, provided it is still officially titled &#x27;SWE-bench Pro&#x27;.
+    *   <strong>Precedence:</strong> In the event of a conflict between reported scores, the official Scale AI leaderboard takes precedence over technical reports or papers unless the leaderboard is proven to be using a modified version of the dataset.
+
+### <strong>Technical Definitions &amp; Reference Links</strong>
+*   <strong>SWE-bench Pro:</strong> Defined by <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">Deng et al. (2025)</a> [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).
+*   <strong>Success Rate:</strong> In this context, the \&quot;Resolve Rate\&quot; as defined in the <a href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench documentation</a>.</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question will resolve as <strong>YES</strong> if, at any point between April 1, 2026, and 23:59 UTC on December 31, 2027, any AI model or agentic system is officially recorded as having achieved a <strong>Resolve Rate (Success Rate) of 70.0% or higher</strong> on the SWE-bench Pro benchmark.
+
+1.  <strong>Resolution Source:</strong> The primary source for resolution is the official <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-bench Pro (Public Dataset) leaderboard</a> maintained by Scale AI <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>. 
+2.  <strong>Scope of Evaluation:</strong> The 70.0% success rate must be calculated based on the full 1,865-problem dataset (comprising the Public, Private, and Held-out sets) as defined in the original paper [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>), rather than any single subset (such as the 731-instance Public Set).
+3.  <strong>Fallback Provision:</strong> If the primary leaderboard is discontinued, becomes inaccessible, or stops updating, this question may be resolved based on:
+    *   A peer-reviewed academic publication (e.g., on arXiv or at a major AI conference like NeurIPS/ICLR) that uses the original SWE-bench Pro dataset of 1,865 problems.
+    *   An official technical report or announcement from a major AI lab (e.g., OpenAI, Anthropic, Google DeepMind, or Scale AI) providing verifiable evidence of the score on the full dataset.
+4.  <strong>Definitions:</strong>
+    *   <strong>AI Model/System:</strong> Any software system, large language model (LLM), or agentic framework (e.g., combining a model with tools, scaffolding, or search). A &#x27;system&#x27; or &#x27;agentic framework&#x27; may consist of any combination of multiple models, tools, and recursive processes, provided they function as a unified software entity to solve the tasks without external human direction.
+    *   <strong>Success Rate / Resolve Rate:</strong> The percentage of the tasks in the SWE-bench Pro dataset that the agent successfully resolves. A task is \&quot;resolved\&quot; if the model&#x27;s patch passes the \&quot;fail-to-pass\&quot; tests (fixing the issue) and the \&quot;pass-to-pass\&quot; tests (ensuring no regressions) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>.
+    *   <strong>Autonomy:</strong> To qualify, the system must operate autonomously during the evaluation of the problems; systems requiring &#x27;Human-in-the-Loop&#x27; (HITL) intervention, manual task selection, or human-led debugging during the benchmark execution are explicitly excluded.
+5.  <strong>Thresholds and Conflicts:</strong>
+    *   <strong>Rounding:</strong> Calculations for resolution will be performed by dividing the number of successfully resolved tasks by the total number of tasks in the dataset, with the resulting percentage rounded to the nearest tenth (0.05 rounds up). For example, 69.95% would resolve as YES, while 69.94% would resolve as NO.
+    *   <strong>Benchmark Updates:</strong> If the total number of tasks in the official SWE-bench Pro benchmark changes from 1,865 (e.g., due to a &#x27;v2&#x27; update), the success rate will be calculated as the number of resolved tasks divided by the total number of tasks in the then-current version of the benchmark, provided it is still officially titled &#x27;SWE-bench Pro&#x27;.
+    *   <strong>Precedence:</strong> In the event of a conflict between reported scores, the official Scale AI leaderboard takes precedence over technical reports or papers unless the leaderboard is proven to be using a modified version of the dataset.
+
+### <strong>Technical Definitions &amp; Reference Links</strong>
+*   <strong>SWE-bench Pro:</strong> Defined by <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">Deng et al. (2025)</a> [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).
+*   <strong>Success Rate:</strong> In this context, the \&quot;Resolve Rate\&quot; as defined in the <a href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench documentation</a>.</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> This is a high-quality forecasting question. It uses a well-established and objective benchmark (SWE-bench Pro) which is recognized as a rigorous test for AI agents <a href="https://ethanbholland.com/2026/03/07/ai-news-127-week-ending-march-06-2026-with-32-executive-summaries/" target="_blank" rel="noopener">AI News #127: Week Ending March 06, 2026 with 32 Executive ...</a>. The 70% threshold is ambitious but plausible given that current top-tier models like GPT-5.4 are scoring around 57.7% and Bito&#x27;s AI Architect reached 60.8% in early 2026. The question has high entropy as progress could either plateau or accelerate with new agentic architectures. The resolution source (Scale AI/SWE-bench leaderboard) is reliable and publicly accessible. Difficulty is appropriate: forecasters must analyze scaling laws, agentic scaffolding trends, and historical benchmark progress to update their estimates.</p><p><strong>Ambiguity notes:</strong> The question is very well-defined, providing specific benchmark details, a clear 70.0% threshold with rounding rules, and a primary resolution source (Scale AI leaderboard) [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). It also includes robust fallback criteria and precise definitions for &#x27;AI Model&#x27; and &#x27;Success Rate&#x27; [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). The reliance on a numeric leaderboard score makes it highly objective <a href="https://arxiv.org/html/2603.03992v3" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge-case risk:</strong> MEDIUM</p><p>ASSESSMENT: NEEDS_REVISION
+
+REVIEW: The forecasting question is generally well-structured but contains a significant factual error in the background section that could mislead forecasters. 
+
+1. <strong>Misleading SOTA Claim</strong>: The background section mentions that Bito&#x27;s AI Architect has claimed a score of 60.8%. However, research confirms that this score was achieved on a subset of only 293 tasks from five repositories, not the full 1,865-problem dataset <a href="https://bito.ai/blog/bitos-ai-architect-tops-swe-bench-pro-evaluation-for-long-horizon-software-tasks/" target="_blank" rel="noopener">Bito&#x27;s AI Architect tops SWE-Bench Pro Evaluation</a>. Presenting this 60.8% figure alongside the official SOTA of 45.89% (which is based on the full dataset) creates a false impression of current progress toward the 70% threshold.
+
+2. <strong>Benchmark Context</strong>: The SWE-bench Pro benchmark (1,865 problems) is significantly more difficult than the original SWE-bench or SWE-bench Verified [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). While models have exceeded 70% on the older &quot;Verified&quot; benchmark, the jump from 45.89% to 70% on the &quot;Pro&quot; version represents a massive technical leap in autonomous engineering <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>.
+
+3. <strong>Resolution Source Stability</strong>: The Scale Labs leaderboard is a high-quality primary source, and the fallback to peer-reviewed papers or technical reports is appropriate <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>. The total problem count (1,865) and the 41-repository scope are verified [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).
+
+Overall, the question is valid, but the background must be corrected to prevent forecasters from overestimating the current state-of-the-art based on non-standardized subset evaluations.
+
+EVIDENCE: <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public," target="_blank" rel="noopener">https://labs.scale.com/leaderboard/swe_bench_pro_public,</a> <a href="https://bito.ai/blog/bitos-ai-architect-tops-swe-bench-pro-evaluation-for-long-horizon-software-tasks/," target="_blank" rel="noopener">https://bito.ai/blog/bitos-ai-architect-tops-swe-bench-pro-evaluation-for-long-horizon-software-tasks/,</a> <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>
+
+SUGGESTION: Revise the background section to clarify the nature of Bito&#x27;s 60.8% claim. It should explicitly state that this score was achieved on a subset of 293 tasks and is not directly comparable to the official leaderboard score of 45.89% on the full 1,865-task dataset. Alternatively, remove the Bito reference entirely to avoid confusion and focus only on the official Scale AI leaderboard.</p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: MEDIUM
+
+SCENARIO: A model achieves a 70.0% success rate on the &#x27;Public Set&#x27; (731 instances) but does not reach 70.0% on the full 1,865-problem dataset <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">https://labs.scale.com/leaderboard/swe_bench_pro_public</a>.
+SEVERITY: HIGH
+FIX: Add &quot;The 70.0% success rate must be calculated based on the full 1,865-problem dataset (comprising the Public, Private, and Held-out sets) as defined in the original paper [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>), rather than any single subset.&quot;
+
+SCENARIO: The benchmark is updated to a &#x27;v2&#x27; where some of the original 1,865 problems are removed due to errors or replaced, resulting in a total task count different from 1,865.
+SEVERITY: MEDIUM
+FIX: Add &quot;If the total number of tasks in the official SWE-bench Pro benchmark changes from 1,865, the success rate will be calculated as the number of resolved tasks divided by the total number of tasks in the then-current version of the benchmark, provided it is still officially titled &#x27;SWE-bench Pro&#x27;.&quot;
+
+SCENARIO: A system achieves 70% using a &#x27;Human-in-the-Loop&#x27; (HITL) architecture where a human developer selects which agent-proposed patch to apply or provides mid-task guidance.
+SEVERITY: MEDIUM
+FIX: Add &quot;To qualify, the system must operate autonomously during the evaluation of the 1,865 problems; systems requiring human intervention, manual task selection, or human-led debugging during the benchmark execution do not qualify.&quot;
+
+SCENARIO: A model is reported to have achieved 70.1% in a technical report from a major lab, but the official Scale AI leaderboard lists the same model at 69.4% due to different evaluation seeds or scaffolding.
+SEVERITY: MEDIUM
+FIX: Add &quot;In the event of a conflict between the official Scale AI leaderboard and a technical report/paper, the score on the official Scale AI leaderboard shall take precedence unless the leaderboard is proven to be using a modified version of the dataset.&quot;
+
+SCENARIO: A &#x27;multi-agent system&#x27; consisting of five different instances of Claude and GPT-4o working in a coordinated swarm achieves 70%, raising questions about whether it constitutes a &#x27;single&#x27; system.
+SEVERITY: LOW
+FIX: Add &quot;A &#x27;system&#x27; or &#x27;agentic framework&#x27; may consist of any combination of multiple models, tools, and recursive processes, provided they function as a unified software entity to solve the tasks without external human direction.&quot;
+
+SCENARIO: A model achieves exactly 69.945% which rounds to 69.95% (YES) under the 70.0% nearest tenth rule, but a second source reports it as 69.9% due to different rounding conventions.
+SEVERITY: LOW
+FIX: Add &quot;Calculations for resolution will be performed by dividing the number of successfully resolved tasks by the total number of tasks in the dataset, with the resulting percentage rounded to the nearest tenth (0.05 rounds up).&quot;</p></div></section>
+<section class="qsection" id="revised"><h2>Revised question</h2><p>### <strong>Question Title</strong>
+Will any AI model achieve a success rate of 70% or higher on the full &#x27;SWE-bench Pro&#x27; benchmark by December 31, 2027?
+
+### <strong>Background</strong>
+The development of AI agents capable of autonomous software engineering is a key milestone in AI research. One of the most rigorous benchmarks for this capability is <strong>SWE-bench Pro</strong>, an evolution of the original SWE-bench designed to evaluate agents on long-horizon, enterprise-level software engineering tasks [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>). While previous benchmarks like &#x27;SWE-bench Verified&#x27; often involve isolated bug fixes, SWE-bench Pro consists of 1,865 complex problems sourced from 41 actively maintained repositories [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>. These tasks often require \&quot;hours to days for a professional software engineer to complete\&quot; and involve modifications across multiple files and directories [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).
+
+As of April 1, 2026, the state-of-the-art (SOTA) performance on the official SWE-bench Pro (Public Dataset) leaderboard is <strong>45.89%</strong>, achieved by the model <strong>claude-opus-4-5-20251101</strong> <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>. While some systems, such as Bito&#x27;s AI Architect, have claimed scores as high as 60.8%, these evaluations were conducted on a subset of only 293 tasks from five repositories rather than the full 1,865-problem dataset <a href="https://bito.ai/blog/bitos-ai-architect-tops-swe-bench-pro-evaluation-for-long-horizon-software-tasks/" target="_blank" rel="noopener">Bito&#x27;s AI Architect tops SWE-Bench Pro Evaluation</a>. A jump to 70% on the full benchmark would indicate that AI agents can reliably solve the majority of complex, real-world engineering issues, signaling a move toward fully autonomous R&amp;D capabilities.
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, at any point between April 1, 2026, and 23:59 UTC on December 31, 2027, any AI model or agentic system is officially recorded as having achieved a <strong>Resolve Rate (Success Rate) of 70.0% or higher</strong> on the SWE-bench Pro benchmark.
+
+1.  <strong>Resolution Source:</strong> The primary source for resolution is the official <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-bench Pro (Public Dataset) leaderboard</a> maintained by Scale AI <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>. 
+2.  <strong>Scope of Evaluation:</strong> The 70.0% success rate must be calculated based on the full 1,865-problem dataset (comprising the Public, Private, and Held-out sets) as defined in the original paper [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>), rather than any single subset (such as the 731-instance Public Set).
+3.  <strong>Fallback Provision:</strong> If the primary leaderboard is discontinued, becomes inaccessible, or stops updating, this question may be resolved based on:
+    *   A peer-reviewed academic publication (e.g., on arXiv or at a major AI conference like NeurIPS/ICLR) that uses the original SWE-bench Pro dataset of 1,865 problems.
+    *   An official technical report or announcement from a major AI lab (e.g., OpenAI, Anthropic, Google DeepMind, or Scale AI) providing verifiable evidence of the score on the full dataset.
+4.  <strong>Definitions:</strong>
+    *   <strong>AI Model/System:</strong> Any software system, large language model (LLM), or agentic framework (e.g., combining a model with tools, scaffolding, or search). A &#x27;system&#x27; or &#x27;agentic framework&#x27; may consist of any combination of multiple models, tools, and recursive processes, provided they function as a unified software entity to solve the tasks without external human direction.
+    *   <strong>Success Rate / Resolve Rate:</strong> The percentage of the tasks in the SWE-bench Pro dataset that the agent successfully resolves. A task is \&quot;resolved\&quot; if the model&#x27;s patch passes the \&quot;fail-to-pass\&quot; tests (fixing the issue) and the \&quot;pass-to-pass\&quot; tests (ensuring no regressions) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">Scale Labs Leaderboard: SWE-Bench Pro (Public Dataset)</a>.
+    *   <strong>Autonomy:</strong> To qualify, the system must operate autonomously during the evaluation of the problems; systems requiring &#x27;Human-in-the-Loop&#x27; (HITL) intervention, manual task selection, or human-led debugging during the benchmark execution are explicitly excluded.
+5.  <strong>Thresholds and Conflicts:</strong>
+    *   <strong>Rounding:</strong> Calculations for resolution will be performed by dividing the number of successfully resolved tasks by the total number of tasks in the dataset, with the resulting percentage rounded to the nearest tenth (0.05 rounds up). For example, 69.95% would resolve as YES, while 69.94% would resolve as NO.
+    *   <strong>Benchmark Updates:</strong> If the total number of tasks in the official SWE-bench Pro benchmark changes from 1,865 (e.g., due to a &#x27;v2&#x27; update), the success rate will be calculated as the number of resolved tasks divided by the total number of tasks in the then-current version of the benchmark, provided it is still officially titled &#x27;SWE-bench Pro&#x27;.
+    *   <strong>Precedence:</strong> In the event of a conflict between reported scores, the official Scale AI leaderboard takes precedence over technical reports or papers unless the leaderboard is proven to be using a modified version of the dataset.
+
+### <strong>Technical Definitions &amp; Reference Links</strong>
+*   <strong>SWE-bench Pro:</strong> Defined by <a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">Deng et al. (2025)</a> [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).
+*   <strong>Success Rate:</strong> In this context, the \&quot;Resolve Rate\&quot; as defined in the <a href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench documentation</a>.</p></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>Time left: ~21 months (638 days) until the December 31, 2027 resolution. The status quo is a SOTA of 45.89% on the public set of SWE-bench Pro, with internal models using advanced scaffolding reaching ~57-59%. For a YES outcome, performance must hit 70% on the full 1,865-problem dataset. A YES outcome is highly likely because agentic scaffolding and multi-agent coordination are rapidly improving, having already driven a jump from ~23% to 46% in just 7 months. Given the intense industry focus on SWE automation, reaching 70% within the next 21 months follows the historical trajectory of rapid benchmark saturation. A NO outcome could happen if models hit a &#x27;reasoning wall&#x27; on long-horizon multi-file tasks or if the private/held-out subsets of the full benchmark prove significantly harder than the public set, stalling progress in the 60-65% range. I would be indifferent at 77 cents on the dollar for a YES bet.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>The question tracks a critical leading indicator for AI R&amp;D capabilities, a key risk pathway for automated capability acceleration [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. Reaching 70% on the &#x27;Pro&#x27; variant—which requires handling enterprise-grade, long-horizon tasks—would represent a significant leap from current SOTA levels (approx. 41-56% as of early 2026) <a href="https://labs.scale.com/leaderboard/swe_bench_pro_public" target="_blank" rel="noopener">SWE-Bench Pro (Public Dataset) - Scale Labs</a>. This outcome would substantially update beliefs about the proximity of autonomous AI engineers [[2509.16941] SWE-Bench Pro: Can AI Agents Solve Long-Horizon ...](<a href="https://arxiv.org/abs/2509.16941" target="_blank" rel="noopener">https://arxiv.org/abs/2509.16941</a>).</p></section>
+</div></body></html>

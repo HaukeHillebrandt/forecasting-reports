@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Final Publication of Updated U.S. Framework for Nucleic Acid Synthesis Screening</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#f1f8e9;color:#558b2f">60%</span><h1 style="margin:0;font-size:1.25rem;">Final Publication of Updated U.S. Framework for Nucleic Acid Synthesis Screening with Enhanced Enforcement or Technical Standards</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>unknown</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#revised">Revised question</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#decomp">Decomposition &amp; research</a></li><li><a href="#reconcile">Reconciled forecast</a></li><li><a href="#deepresearch">Deep research report</a></li><li><a href="#fable">Fable 5 second opinion</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#558b2f">60%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">88</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">90</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">95</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">78</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">78</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">85</span></div></div><p><strong>Review status:</strong> REVISED</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>By December 31, 2026, will the U.S. Department of Health and Human Services (HHS) or the Office of Science and Technology Policy (OSTP) publish a final, updated &quot;Framework for Nucleic Acid Synthesis Screening&quot; that requires federally funded institutions to only purchase from providers that screen all orders?</p><p><strong>Why this question?</strong> The paper identifies &quot;ordering from DNA synthesis companies who don&#x27;t screen&quot; as a primary fear. A updated framework is currently being revised following a May 2025 Executive Order [9b9597]. This question tracks a critical regulatory milestone that would address the &quot;institutional and coordinative&quot; bottlenecks mentioned in the paper.</p><p><strong>Paper reference:</strong> Conclusion, Page 66-67: &quot;ordering from DNA synthesis companies who don&#x27;t screen&quot; and the need for &quot;comprehensive coverage.&quot;</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p>### Question Title: Final Publication of Updated U.S. Framework for Nucleic Acid Synthesis Screening Requiring Mandatory Provider Compliance by Federally Funded Entities
+
+### Background
+In May 2025, Executive Order 14292, &quot;Improving the Safety and Security of Biological Research,&quot; mandated the revision or replacement of the 2024 &quot;Framework for Nucleic Acid Synthesis Screening&quot; <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx</a>. The 2024 Framework, last revised in September 2024, established that U.S. federal funding agencies would require their &quot;Recipients&quot; to purchase synthetic nucleic acids only from providers that implement screening [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>). However, as of March 31, 2026, the Department of Health and Human Services (HHS) and the Office of Science and Technology Policy (OSTP) indicate that the comprehensive revision process required by the 2025 Executive Order is still ongoing <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx</a>.
+
+A primary biosecurity concern identified in recent literature is the ability of researchers to order from DNA synthesis companies that do not perform &quot;comprehensive screening&quot; [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>). While the 2024 Framework and earlier 2023 HHS Guidance <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx</a> established a baseline, the 2025 Executive Order seeks a more rigorous approach to ensure &quot;federally funded institutions&quot; (technically defined as &quot;Non-Federal entities&quot; or &quot;Recipients&quot; under 2 CFR § 200.1 <a href="https://www.ecfr.gov/current/title-2/subtitle-A/chapter-II/part-200/subpart-A/section-200.1" target="_blank" rel="noopener">https://www.ecfr.gov/current/title-2/subtitle-A/chapter-II/part-200/subpart-A/section-200.1</a>) exclusively use providers that screen all orders against &quot;Sequences of Concern&quot; (SOCs) [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>).
+
+As of today (March 31, 2026), a final version of this updated framework has not yet been released to the public <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx</a>. The current 2024 Framework remains the active guidance until the revised version is formally published <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx</a> [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>).
+
+### Resolution Criteria
+This question resolves as <strong>YES</strong> if, between April 1, 2026, and 23:59 UTC on December 31, 2026, the U.S. Department of Health and Human Services (HHS) or the Office of Science and Technology Policy (OSTP) publishes a final, updated &quot;Framework for Nucleic Acid Synthesis Screening&quot; (or a successor document with a different title but the same regulatory purpose) that contains an explicit requirement that federally funded entities must purchase synthetic nucleic acids <em>only</em> from providers that perform &quot;comprehensive screening&quot; or &quot;screen all orders.&quot;
+
+To resolve as <strong>YES</strong>, the published final framework must meet the following conditions:
+1.  <strong>Federally Funded Entities:</strong> The requirement must apply to <a href="https://www.ecfr.gov/current/title-2/subtitle-A/chapter-II/part-200/subpart-A/section-200.1" target="_blank" rel="noopener">Non-Federal entities</a> (as defined in 2 CFR § 200.1) or &quot;Recipients&quot; of federal research funding <a href="https://www.ecfr.gov/current/title-2/subtitle-A/chapter-II/part-200/subpart-A/section-200.1" target="_blank" rel="noopener">https://www.ecfr.gov/current/title-2/subtitle-A/chapter-II/part-200/subpart-A/section-200.1</a>.
+2.  <strong>Screening Requirement:</strong> The text must explicitly state that these entities are prohibited from purchasing from providers that do not screen, or that they must &quot;only&quot; or &quot;exclusively&quot; purchase from compliant providers.
+3.  <strong>Comprehensive Screening:</strong> The framework must define or reference technical standards for <a href="https://en.wikipedia.org/wiki/DNA_synthesis#Biosecurity_and_screening" target="_blank" rel="noopener">screening</a> <a href="https://en.wikipedia.org/wiki/Artificial_gene_synthesis" target="_blank" rel="noopener">nucleic acid synthesis</a> [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>). For the purpose of this question, &quot;comprehensive screening&quot; or &quot;screening all orders&quot; refers to the requirement that providers screen all double-stranded and single-stranded DNA/RNA orders against a list of &quot;Sequences of Concern&quot; (SOCs) using at least a &quot;Best Match&quot; homology search [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>).
+4.  <strong>Final Version:</strong> The document must be identified as &quot;Final&quot; or a &quot;Revision&quot; that replaces the September 2024 version. A &quot;Draft for Public Comment&quot; does not suffice for a YES resolution.
+
+If no such final framework is published, or if the published framework lacks the explicit requirement for federally funded entities to purchase only from compliant providers, this question resolves as <strong>NO</strong>.
+
+### Resolution Source
+The primary resolution source will be the official <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS/ASPR Synthetic Nucleic Acid Security page</a> or the official <a href="https://www.whitehouse.gov/ostp/" target="_blank" rel="noopener">White House OSTP website</a>. Secondary confirmation can be found via the <a href="https://www.federalregister.gov/" target="_blank" rel="noopener">Federal Register</a>.</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>In May 2025, Executive Order 14292, &quot;Improving the Safety and Security of Biological Research,&quot; mandated the revision or replacement of the September 2024 &quot;Framework for Nucleic Acid Synthesis Screening&quot; [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>). While the 2024 Framework established a baseline for procurement, the 2025 Executive Order explicitly requires the updated framework to incorporate &quot;verifiable&quot; screening mechanisms and specific enforcement terms (as detailed in Section 7 of the Order) into Federal funding agreements <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. As of March 31, 2026, the Department of Health and Human Services (HHS) and the Office of Science and Technology Policy (OSTP) are in the process of finalizing this update.
+
+To be a meaningful forecast, this question targets the <em>new</em> requirements sought by the 2025 Executive Order that go beyond the 2024 baseline. Specifically, it looks for the inclusion of verifiable screening mechanisms, specific enforcement mechanisms, or expanded technical standards.</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question resolves as <strong>YES</strong> if, between April 1, 2026, and 23:59 UTC on December 31, 2026, the U.S. Department of Health and Human Services (HHS) or the Office of Science and Technology Policy (OSTP) publishes a final, updated &quot;Framework for Nucleic Acid Synthesis Screening&quot; (or a successor document) that meets the following conditions:
+
+1.  <strong>Enhanced Requirements:</strong> The framework must include at least one of the following novel elements mandated by Executive Order 14292:
+    *   <strong>Verifiable Screening:</strong> The framework explicitly mandates &quot;verifiable&quot; screening mechanisms (e.g., third-party audits or standardized reporting of screening efficacy) <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>.
+    *   <strong>Enforcement Mechanisms:</strong> The framework explicitly incorporates the enforcement mechanisms described in Section 7 of Executive Order 14292, such as requiring grant recipients to certify compliance and establishing that violations may lead to the revocation of funding or up to a 5-year period of ineligibility for future grants <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>.
+2.  <strong>Comprehensive Screening:</strong> The framework must mandate screening for all three types of nucleic acids: double-stranded DNA, single-stranded DNA, and RNA [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>).
+3.  <strong>Applicability:</strong> The requirement must apply to &quot;Non-Federal entities&quot; (including Recipients or Subrecipients of federal research funding) as defined in 2 CFR § 200.1.
+4.  <strong>Final Version:</strong> The document must be identified as &quot;Final&quot; or a &quot;Revision&quot; that replaces the September 2024 version. An &quot;Interim Final&quot; or &quot;Final&quot; document that establishes a compliance date shall count as &quot;Final&quot; even if it remains open for public comment.
+
+<strong>Clarifications:</strong>
+*   <strong>Publication Rule:</strong> The first appearance of the document on the official HHS/ASPR website, the White House/OSTP website, or the Federal Register within the window constitutes publication.
+*   <strong>Waivers:</strong> The &quot;only&quot; or &quot;exclusively&quot; purchase requirement is satisfied if the framework establishes compliant-provider use as the mandatory default policy, even if it allows for narrow, documented emergency or national security waivers.
+*   <strong>Incorporation by Reference:</strong> The &quot;comprehensive screening&quot; requirement is met if the framework incorporates external technical standards (such as NIST or IGSC) by reference that contain the necessary protocols.
+
+If no such final framework is published, or if the published framework lacks the &quot;verifiable&quot; requirement, the Section 7 enforcement mechanisms, or fails to cover all three nucleic acid types, this question resolves as <strong>NO</strong>.</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> This is an excellent forecasting question. It tracks a specific regulatory milestone mandated by Executive Order 14292 (May 5, 2025), which required OSTP to revise the &#x27;Framework for Nucleic Acid Synthesis Screening&#x27; <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. As of March 2026, the 90-day deadline from the EO has long passed, yet official HHS/ASPR resources indicate the framework is still in the process of being updated <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS &amp; OSTP Screening | Synthetic Nucleic Acid Security &amp; Biorisk ...</a>. This creates a high-entropy situation where the timing of the &#x27;final&#x27; publication is genuinely uncertain. The question is objective, verifiable via government publications, and addresses a critical policy bottleneck identified in the source literature.</p><p><strong>Ambiguity notes:</strong> <strong>checklist</strong>
+
+1. True - Key terms like &#x27;Federally Funded Entities&#x27; and &#x27;Non-Federal entities&#x27; are explicitly defined with links to 2 CFR § 200.1 <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx</a>. &#x27;Comprehensive screening&#x27; and &#x27;Sequences of Concern&#x27; (SOCs) are also defined with technical standards.
+2. True - The resolution time is clearly stated as 23:59 UTC on December 31, 2026.
+3. Does not apply - There are no specific numeric thresholds mentioned; the criteria rely on explicit regulatory language (e.g., &#x27;only&#x27; or &#x27;exclusively&#x27;).
+4. True - The question is robust; it explicitly excludes &#x27;Draft for Public Comment&#x27; versions and defines &#x27;successor documents&#x27; to ensure it captures the final policy action regardless of title changes <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx</a>.
+5. 95 - The resolution source (HHS/ASPR and OSTP official sites) is official and unambiguous. The requirement for &#x27;explicit&#x27; language in the published framework minimizes interpretive subjectivity.
+
+<strong>additional comments</strong>
+The question is exceptionally well-defined. It correctly anticipates the difference between draft and final versions and provides a clear technical baseline for what constitutes &#x27;comprehensive screening.&#x27;
+
+<strong>final_answer_reasoning</strong>
+The question provides precise definitions for all critical terms and uses reliable official government sources. The criteria for a &#x27;YES&#x27; resolution are objective and clearly stated, leaving very little room for disagreement between reasonable observers.
+
+<strong>final_answer</strong>
+great</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge-case risk:</strong> MEDIUM</p><p>ASSESSMENT: NEEDS_REVISION
+
+REVIEW: The forecasting question requires revision because its primary condition—that federally funded entities must purchase only from compliant providers—is already a feature of the existing September 2024 Framework [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>). Section II of the 2024 Framework explicitly states that federal funding agencies will require &#x27;synthetic nucleic acid procurement for federally funded research is conducted through Providers or Manufacturers that adhere to the framework,&#x27; a requirement that took effect on April 26, 2025 [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>). While Executive Order 14292 (issued May 5, 2025) does mandate a revision or replacement of this framework <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>, the specific &#x27;mandatory&#x27; purchasing requirement described in the resolution criteria is already active policy under the 2024 version. Consequently, a &#x27;YES&#x27; resolution could be triggered by a document that merely restates existing requirements rather than introducing the intended &#x27;more rigorous approach&#x27; mentioned in the background. Additionally, the technical definition of &#x27;comprehensive screening&#x27; in the question matches the &#x27;Best Match&#x27; homology search already recommended in the 2023 and 2024 guidance [[PDF] Screening Framework Guidance for Providers and Users of ...](<a href="https://aspr.hhs.gov/S3/Documents/SynNA-Guidance-2023.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/SynNA-Guidance-2023.pdf</a>) [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>). To be a meaningful forecast, the question needs to distinguish the <em>new</em> requirements sought by the 2025 Executive Order (such as &#x27;verifiable&#x27; screening or specific enforcement mechanisms) from the baseline established in 2024.
+
+EVIDENCE: <a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf," target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf,</a> <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/," target="_blank" rel="noopener">https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/,</a> <a href="https://aspr.hhs.gov/S3/Documents/SynNA-Guidance-2023.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/SynNA-Guidance-2023.pdf</a>
+
+SUGGESTION: Revise the resolution criteria to focus on the novel elements mandated by Executive Order 14292 that are not in the 2024 Framework. Specifically, require that the updated framework include &#x27;verifiable&#x27; screening mechanisms or the specific &#x27;enforcement mechanisms&#x27; described in Section 7 of EO 14292. Alternatively, pivot the question to focus on the inclusion of specific new technical standards (e.g., screening against &#x27;functional&#x27; attributes rather than just homology) or the expansion of the &#x27;Sequences of Concern&#x27; list to include specific AI-generated or synthetic threats mentioned in the 2025 Order.</p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: MEDIUM
+
+### Edge Case Analysis
+
+<strong>overall_risk: MEDIUM</strong>
+
+- <strong>SCENARIO:</strong> On October 12, 2026, HHS publishes an &quot;Interim Final Framework&quot; that is effective immediately for all new grants but includes a 60-day window for public comment on implementation details.
+- <strong>SEVERITY:</strong> MEDIUM
+- <strong>FIX:</strong> Clarify that any &quot;Interim Final&quot; or &quot;Final&quot; document that establishes an immediate or future mandatory compliance date for federally funded entities shall count as &quot;Final,&quot; regardless of whether it remains open for administrative comments [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>).
+
+- <strong>SCENARIO:</strong> The updated framework published in November 2026 mandates &quot;comprehensive screening&quot; for all double-stranded DNA orders but only &quot;highly encourages&quot; or lists as &quot;best practice&quot; the screening of single-stranded DNA or RNA.
+- <strong>SEVERITY:</strong> HIGH
+- <strong>FIX:</strong> Explicitly state that the framework must mandate screening for <em>all</em> three types (double-stranded DNA, single-stranded DNA, and RNA) to satisfy the &quot;comprehensive screening&quot; requirement for a YES resolution [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>).
+
+- <strong>SCENARIO:</strong> In August 2026, the OSTP releases a &quot;Final Revision&quot; requiring entities to use providers that &quot;meet the NIST Biosecurity Standards for Synthetic Nucleic Acids,&quot; where those NIST standards contain the &quot;Best Match&quot; requirement, but the Framework itself does not use the term &quot;Best Match.&quot;
+- <strong>SEVERITY:</strong> MEDIUM
+- <strong>FIX:</strong> Amend the criteria to specify that technical requirements for &quot;comprehensive screening&quot; are met if the framework <em>incorporates by reference</em> external technical standards (e.g., NIST, IGSC) that contain the &quot;Best Match&quot; and single-stranded screening protocols [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>).
+
+- <strong>SCENARIO:</strong> The final framework released in December 2026 requires &quot;Recipients&quot; to use compliant providers but does not explicitly use the term &quot;Non-Federal entities,&quot; leading to a dispute over whether entities like local governments or subrecipients (defined under 2 CFR § 200.1) are covered.
+- <strong>SEVERITY:</strong> LOW
+- <strong>FIX:</strong> Specify that the requirement is satisfied if it applies to any major category of &quot;Non-Federal entities&quot; defined in 2 CFR § 200.1, including &quot;Recipients&quot; or &quot;Subrecipients&quot; of federal research funding [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>).
+
+- <strong>SCENARIO:</strong> The framework published on December 20, 2026, states that entities &quot;must exclusively&quot; use compliant providers but includes a clause allowing for &quot;agency-level waivers&quot; for urgent public health research or specific national security needs.
+- <strong>SEVERITY:</strong> MEDIUM
+- <strong>FIX:</strong> Define the &quot;only&quot; or &quot;exclusively&quot; requirement as being satisfied if the framework establishes compliant-provider use as the mandatory default policy, even if it allows for narrow, documented exceptions for emergencies [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>).
+
+- <strong>SCENARIO:</strong> The framework is signed by the Director of OSTP and posted to the White House website on December 31, 2026, but is not officially published in the Federal Register until January 4, 2027.
+- <strong>SEVERITY:</strong> MEDIUM
+- <strong>FIX:</strong> Add a &quot;Publication Rule&quot; stating that the first appearance of the final document on either the official HHS/ASPR website, the White House/OSTP website, or the Federal Register within the window constitutes publication for resolution purposes.</p></div></section>
+<section class="qsection" id="revised"><h2>Revised question</h2><p>### Question Title: Final Publication of Updated U.S. Framework for Nucleic Acid Synthesis Screening with Enhanced Enforcement or Technical Standards
+
+### Background
+In May 2025, Executive Order 14292, &quot;Improving the Safety and Security of Biological Research,&quot; mandated the revision or replacement of the September 2024 &quot;Framework for Nucleic Acid Synthesis Screening&quot; [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>). While the 2024 Framework established a baseline for procurement, the 2025 Executive Order explicitly requires the updated framework to incorporate &quot;verifiable&quot; screening mechanisms and specific enforcement terms (as detailed in Section 7 of the Order) into Federal funding agreements <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. As of March 31, 2026, the Department of Health and Human Services (HHS) and the Office of Science and Technology Policy (OSTP) are in the process of finalizing this update.
+
+To be a meaningful forecast, this question targets the <em>new</em> requirements sought by the 2025 Executive Order that go beyond the 2024 baseline. Specifically, it looks for the inclusion of verifiable screening mechanisms, specific enforcement mechanisms, or expanded technical standards.
+
+### Resolution Criteria
+This question resolves as <strong>YES</strong> if, between April 1, 2026, and 23:59 UTC on December 31, 2026, the U.S. Department of Health and Human Services (HHS) or the Office of Science and Technology Policy (OSTP) publishes a final, updated &quot;Framework for Nucleic Acid Synthesis Screening&quot; (or a successor document) that meets the following conditions:
+
+1.  <strong>Enhanced Requirements:</strong> The framework must include at least one of the following novel elements mandated by Executive Order 14292:
+    *   <strong>Verifiable Screening:</strong> The framework explicitly mandates &quot;verifiable&quot; screening mechanisms (e.g., third-party audits or standardized reporting of screening efficacy) <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>.
+    *   <strong>Enforcement Mechanisms:</strong> The framework explicitly incorporates the enforcement mechanisms described in Section 7 of Executive Order 14292, such as requiring grant recipients to certify compliance and establishing that violations may lead to the revocation of funding or up to a 5-year period of ineligibility for future grants <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>.
+2.  <strong>Comprehensive Screening:</strong> The framework must mandate screening for all three types of nucleic acids: double-stranded DNA, single-stranded DNA, and RNA [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>).
+3.  <strong>Applicability:</strong> The requirement must apply to &quot;Non-Federal entities&quot; (including Recipients or Subrecipients of federal research funding) as defined in 2 CFR § 200.1.
+4.  <strong>Final Version:</strong> The document must be identified as &quot;Final&quot; or a &quot;Revision&quot; that replaces the September 2024 version. An &quot;Interim Final&quot; or &quot;Final&quot; document that establishes a compliance date shall count as &quot;Final&quot; even if it remains open for public comment.
+
+<strong>Clarifications:</strong>
+*   <strong>Publication Rule:</strong> The first appearance of the document on the official HHS/ASPR website, the White House/OSTP website, or the Federal Register within the window constitutes publication.
+*   <strong>Waivers:</strong> The &quot;only&quot; or &quot;exclusively&quot; purchase requirement is satisfied if the framework establishes compliant-provider use as the mandatory default policy, even if it allows for narrow, documented emergency or national security waivers.
+*   <strong>Incorporation by Reference:</strong> The &quot;comprehensive screening&quot; requirement is met if the framework incorporates external technical standards (such as NIST or IGSC) by reference that contain the necessary protocols.
+
+If no such final framework is published, or if the published framework lacks the &quot;verifiable&quot; requirement, the Section 7 enforcement mechanisms, or fails to cover all three nucleic acid types, this question resolves as <strong>NO</strong>.
+
+### Resolution Source
+The primary resolution source will be the official <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS/ASPR Synthetic Nucleic Acid Security page</a> or the official <a href="https://www.whitehouse.gov/ostp/" target="_blank" rel="noopener">White House OSTP website</a>. Secondary confirmation can be found via the <a href="https://www.federalregister.gov/" target="_blank" rel="noopener">Federal Register</a>.</p></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>(a) Time left: There are 275 days left until the end of 2026. (b) Status quo: The 2024 Framework remains the active baseline, with the mandated update still in the drafting phase <a href="https://www.federalregister.gov/documents/2025/05/08/2025-08266/improving-the-safety-and-security-of-biological-research" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. (c) Scope: The executive branch has significant leeway to publish an &#x27;Interim Final&#x27; framework to meet deadlines, even if technical details are still being refined. (d) No reasoning: Bureaucratic delays, incomplete NIST technical standards [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>), and pushback from institutions regarding the severe Section 7 enforcement penalties <a href="https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2025.1689753/full" target="_blank" rel="noopener">Why implementation gaps could undermine synthetic nucleic acid ...</a> could easily push the publication into 2027. Federal agencies routinely miss deadlines <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx</a>. (e) Yes reasoning: Executive Order 14292 explicitly mandates these updates <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. Since the 2024 Framework already established a baseline for dsDNA, ssDNA, and RNA [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Documents/OSTP-Nucleic-Acid-Synthesis-Screening-Framework-Sep2024.pdf</a>), adding verifiable screening and enforcement provisions is a targeted update rather than a ground-up rewrite. (f) Betting: I would be indifferent to taking either side of a bet at a 63% probability. Final probability: 63%</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>The question tracks a critical regulatory milestone for biosecurity identified as a &#x27;primary fear&#x27; in the source paper <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. An updated framework requiring screened orders for federally funded research would represent a major shift in the &#x27;institutional and coordinative&#x27; bottlenecks of DNA synthesis governance <a href="https://genesynthesisscreening.centerforhealthsecurity.org/faqs-1" target="_blank" rel="noopener">FAQs | Gene Synthesis Screening Information Hub</a> <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS &amp; OSTP Screening | Synthetic Nucleic Acid Security &amp; Biorisk ...</a>. Resolution would significantly update beliefs about the effectiveness of US biosecurity oversight <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a> <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a>.</p></section>
+<section class="qsection" id="decomp"><h2>Decomposition &amp; research <span class="badge">Stage 6b</span></h2><p><strong>Research-informed re-forecast:</strong> <span style="color:#2e7d32;font-weight:700">72%</span></p><div class="subcard"><strong>SQ1: What is the current status of the technical standards and &quot;verifiable&quot; screening protocols mandated for the updated U.S. Nucleic Acid Synthesis Screening Framework?</strong><p>As of March 31, 2026, the updated U.S. Framework for Nucleic Acid Synthesis Screening mandated by Executive Order 14292 (May 5, 2025) has not been finalized, following the expiration of the 90-day revision deadline in August 2025 <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a> <a href="https://www.armscontrol.org/blog/2025-11-24/regulatory-gaps-benchtop-nucleic-acid-synthesis-create-biosecurity-vulnerabilities" target="_blank" rel="noopener">Regulatory Gaps in Benchtop Nucleic Acid Synthesis Create ...</a>. Consequently, there are currently no binding, government-mandated &quot;verifiable&quot; screening mechanisms, such as third-party audits, in effect for the general industry <a href="https://www.armscontrol.org/blog/2025-11-24/regulatory-gaps-benchtop-nucleic-acid-synthesis-create-biosecurity-vulnerabilities" target="_blank" rel="noopener">Regulatory Gaps in Benchtop Nucleic Acid Synthesis Create ...</a>. However, the National Institute of Standards and Technology (NIST) has made significant progress on the technical foundation for these standards, including the development of a &quot;fit-for-purpose&quot; benchmark dataset to test screening tools and a draft standard guide to harmonize provider protocols <a href="https://www.nist.gov/programs-projects/biosecurity-synthetic-nucleic-acid-sequences" target="_blank" rel="noopener">Biosecurity for Synthetic Nucleic Acid Sequences | NIST</a>. Key technical standards scheduled for implementation by October 13, 2026, include narrowing the screening window to 50 nucleotides, expanding the definition of &quot;Sequences of Concern&quot; to focus on functional pathogenicity, and implementing protocols to detect the assembly of shorter sequences into harmful agents [[PDF] Strengthening a Safe and Secure Nucleic Acid Synthesis Ecosystem](<a href="https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf" target="_blank" rel="noopener">https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf</a>). While the NIH and other federal agencies have moved to adopt the 2024 Framework&#x27;s baseline, the broader transition to a &quot;verifiable&quot; enforcement model remains in a period of regulatory development.</p><p>The status of the updated U.S. Framework for Nucleic Acid Synthesis Screening is currently characterized by a gap between executive mandates and administrative implementation. 
+
+<strong>1. Regulatory Status and Delays:</strong>
+Executive Order 14292, signed on May 5, 2025, mandated that the OSTP and HHS revise the 2024 Framework within 90 days to include &quot;comprehensive, scalable, and verifiable&quot; screening mechanisms <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. However, this August 3, 2025, deadline passed without the release of a new framework <a href="https://www.armscontrol.org/blog/2025-11-24/regulatory-gaps-benchtop-nucleic-acid-synthesis-create-biosecurity-vulnerabilities" target="_blank" rel="noopener">Regulatory Gaps in Benchtop Nucleic Acid Synthesis Create ...</a>. As of early 2026, the 2024 Framework remains the primary reference, though its implementation is inconsistent: the NIH has announced adherence to the 2024 version, while other institutions (e.g., Pennsylvania State University) have paused implementation pending the mandated update <a href="https://www.armscontrol.org/blog/2025-11-24/regulatory-gaps-benchtop-nucleic-acid-synthesis-create-biosecurity-vulnerabilities" target="_blank" rel="noopener">Regulatory Gaps in Benchtop Nucleic Acid Synthesis Create ...</a>.
+
+<strong>2. Development of &quot;Verifiable&quot; Mechanisms:</strong>
+&quot;Verifiable&quot; mechanisms in this context refer to standards that allow the government or third parties to confirm compliance <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. 
+*   <strong>Third-Party Audits:</strong> As of March 2026, there are no government-mandated third-party audit requirements in force for the broader nucleic acid synthesis industry <a href="https://www.armscontrol.org/blog/2025-11-24/regulatory-gaps-benchtop-nucleic-acid-synthesis-create-biosecurity-vulnerabilities" target="_blank" rel="noopener">Regulatory Gaps in Benchtop Nucleic Acid Synthesis Create ...</a>. The industry continues to rely on voluntary, industry-led standards from the International Gene Synthesis Consortium (IGSC), which lacks universal coverage and independent enforcement <a href="https://www.armscontrol.org/blog/2025-11-24/regulatory-gaps-benchtop-nucleic-acid-synthesis-create-biosecurity-vulnerabilities" target="_blank" rel="noopener">Regulatory Gaps in Benchtop Nucleic Acid Synthesis Create ...</a>.
+*   <strong>NIST Technical Standards:</strong> NIST is the primary agency developing the technical foundation for verification. Key progress as of March 2026 includes:
+    *   <strong>Benchmark Datasets:</strong> NIST developed a &quot;fit-for-purpose&quot; benchmark dataset (validated May 2025) to test the baseline screening capabilities of providers, providing a standardized metric for performance <a href="https://www.nist.gov/programs-projects/biosecurity-synthetic-nucleic-acid-sequences" target="_blank" rel="noopener">Biosecurity for Synthetic Nucleic Acid Sequences | NIST</a>.
+    *   <strong>Standard Guide:</strong> NIST completed a &quot;Draft Standard Guide for Nucleic Acid Providers&quot; to harmonize screening approaches and enable data interoperability <a href="https://www.nist.gov/programs-projects/biosecurity-synthetic-nucleic-acid-sequences" target="_blank" rel="noopener">Biosecurity for Synthetic Nucleic Acid Sequences | NIST</a>.
+    *   <strong>AI Risk Mitigation:</strong> NIST has conducted experimental validations (May 2025) of AI-generated protein sequences to identify screening gaps created by AI biodesign tools <a href="https://www.nist.gov/programs-projects/biosecurity-synthetic-nucleic-acid-sequences" target="_blank" rel="noopener">Biosecurity for Synthetic Nucleic Acid Sequences | NIST</a>.
+
+<strong>3. Upcoming Technical Requirements (October 2026):</strong>
+The 2024 Framework established a deadline of October 13, 2026, for several significant technical upgrades that are expected to be incorporated into any final updated framework:
+*   <strong>Screening Window:</strong> Reduction of the screening window from 200 nucleotides/66 amino acids to 50 nucleotides [[PDF] Strengthening a Safe and Secure Nucleic Acid Synthesis Ecosystem](<a href="https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf" target="_blank" rel="noopener">https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf</a>).
+*   <strong>SOC Definition Expansion:</strong> The definition of a &quot;Sequence of Concern&quot; (SOC) will expand beyond regulated agent lists to include any sequence known to contribute to pathogenicity or toxicity [[PDF] Strengthening a Safe and Secure Nucleic Acid Synthesis Ecosystem](<a href="https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf" target="_blank" rel="noopener">https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf</a>).
+*   <strong>Assembly Detection:</strong> Requirements for providers to detect &quot;split orders&quot; where multiple short sequences could be assembled into a larger SOC [[PDF] Strengthening a Safe and Secure Nucleic Acid Synthesis Ecosystem](<a href="https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf" target="_blank" rel="noopener">https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf</a>).</p></div><div class="subcard"><strong>SQ2: How are the &quot;Section 7&quot; enforcement mechanisms and grant-compliance certifications being integrated into the revised Nucleic Acid Synthesis Screening Framework and associated federal funding regulations?</strong><p>Executive Order 14292, issued on May 5, 2025, mandates that &#x27;Section 7&#x27; enforcement mechanisms be integrated into all federal life-science research funding. These mechanisms transform biosecurity compliance into a &#x27;material condition for federal payment&#x27; by invoking the False Claims Act, making non-compliance a basis for legal prosecution <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a> <a href="https://www.jdsupra.com/legalnews/improving-the-safety-and-security-of-6872454/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research (Trump EO ...</a>. Grant recipients must now provide formal certifications that they do not participate in or fund &#x27;dangerous gain-of-function&#x27; research or high-risk foreign research <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. Enforcement is bolstered by severe penalties, including the immediate revocation of current funding and a potential 5-year period of ineligibility for future federal life-sciences grants, a penalty that can apply to entire institutions for the actions of individual recipients [[PDF] May 2025 Update Final - COGR](<a href="https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf" target="_blank" rel="noopener">https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf</a>) <a href="https://www.jdsupra.com/legalnews/improving-the-safety-and-security-of-6872454/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research (Trump EO ...</a>. Regulatory bodies such as the NIH must update the NIH Grants Policy Statement to reflect these terms, following a timeline that required the OSTP to replace existing screening frameworks by August 2025 [[PDF] May 2025 Update Final - COGR](<a href="https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf" target="_blank" rel="noopener">https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf</a>). Stakeholders like the Engineering Biology Research Consortium (EBRC) and the Council on Governmental Relations (COGR) have focused their feedback on the need for &#x27;reasonable&#x27; screening strategies and have noted the significant administrative hurdles posed by institutional liability and the threat of long-term debarment <a href="https://ebrc.org/nucleic-acid-synthesis-screening-elements-of-eo-14292-improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Nucleic Acid Synthesis Screening elements of EO 14292: Improving ...</a> [[PDF] May 2025 Update Final - COGR](<a href="https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf" target="_blank" rel="noopener">https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf</a>).</p><p>Executive Order 14292, issued on May 5, 2025, introduced a rigorous new enforcement regime for federal life-sciences funding, specifically targeting &#x27;dangerous gain-of-function&#x27; research and nucleic acid synthesis screening <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. Section 7 of the Order mandates the integration of four specific terms into every federal life-science research contract or grant award, transforming biosecurity compliance from a recommendation into a &#x27;material condition for federal payment&#x27; <a href="https://www.jdsupra.com/legalnews/improving-the-safety-and-security-of-6872454/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research (Trump EO ...</a>.
+
+### 1. Implementation of &#x27;Material Condition for Federal Payment&#x27;
+Under Section 7(a), recipients must agree that compliance with the Order and applicable agency regulations is a &#x27;material condition&#x27; for the Government&#x27;s payment decisions <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. This specifically invokes 31 U.S.C. 3729(b)(4), aligning these requirements with the False Claims Act. This legal integration means that any misrepresentation of compliance could be prosecuted as a false claim, significantly increasing the legal and financial liability for research institutions <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>.
+
+### 2. Grant-Compliance Certifications
+Section 7(b) requires recipients to provide formal certifications <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. These must attest that the recipient:
+*   Does not operate, participate in, or fund &#x27;dangerous gain-of-function&#x27; research (as defined in Section 8) <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>.
+*   Does not engage in high-risk life-science research in foreign countries that could cause significant societal consequences or national security risks <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>.
+*   Adheres to all policies established by the Order and the updated screening frameworks <a href="https://www.jdsupra.com/legalnews/improving-the-safety-and-security-of-6872454/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research (Trump EO ...</a>.
+
+### 3. Enforcement Mechanisms: 5-Year Ineligibility
+Section 7(d) establishes severe penalties for non-compliance, which can be attributed to the researcher&#x27;s employer or institution <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. These include:
+*   <strong>Immediate Revocation:</strong> The instant termination of ongoing federal funding [[PDF] May 2025 Update Final - COGR](<a href="https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf" target="_blank" rel="noopener">https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf</a>).
+*   <strong>5-Year Ineligibility:</strong> A period of up to 5 years during which the recipient and their institution are ineligible for federal life-sciences grant funds offered by HHS or other relevant agencies [[PDF] May 2025 Update Final - COGR](<a href="https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf" target="_blank" rel="noopener">https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf</a>) <a href="https://www.jdsupra.com/legalnews/improving-the-safety-and-security-of-6872454/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research (Trump EO ...</a>.
+
+### 4. Progress of Regulatory Updates (NIH Grants Policy Statement)
+The Executive Order required the Office of Science and Technology Policy (OSTP) to replace the 2024 Framework for Nucleic Acid Synthesis Screening within 90 days (by early August 2025) and the DURC/PEPP policy within 120 days (by early September 2025) [[PDF] May 2025 Update Final - COGR](<a href="https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf" target="_blank" rel="noopener">https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf</a>). As of May 2025, organizations like the Council on Governmental Relations (COGR) noted that these requirements would necessitate significant updates to agency-wide regulations, including the NIH Grants Policy Statement, to make the &#x27;Section 7&#x27; terms legally binding for non-federal entities [[PDF] May 2025 Update Final - COGR](<a href="https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf" target="_blank" rel="noopener">https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf</a>) <a href="https://www.jdsupra.com/legalnews/improving-the-safety-and-security-of-6872454/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research (Trump EO ...</a>. By February 2025 (pre-dating the EO), supplemental guidance to the NIH Grants Policy Statement regarding indirect cost rates had already been issued, indicating an active cycle of policy revisions that would likely be used to incorporate the May 2025 EO requirements.
+
+### 5. Stakeholder Feedback (EBRC and Academic Institutions)
+*   <strong>EBRC:</strong> In June 2025, the Engineering Biology Research Consortium (EBRC) published a response to EO 14292 <a href="https://ebrc.org/nucleic-acid-synthesis-screening-elements-of-eo-14292-improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Nucleic Acid Synthesis Screening elements of EO 14292: Improving ...</a>. Their feedback focused on &#x27;reasonable strategies for screening assessments&#x27; and the necessity for regular updates to screening standards <a href="https://ebrc.org/nucleic-acid-synthesis-screening-elements-of-eo-14292-improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Nucleic Acid Synthesis Screening elements of EO 14292: Improving ...</a>.
+*   <strong>COGR:</strong> Representing academic institutions, COGR highlighted the administrative burden of the &#x27;immediate funding pause&#x27; on covered research and the broad implications of the 5-year ineligibility penalty [[PDF] May 2025 Update Final - COGR](<a href="https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf" target="_blank" rel="noopener">https://www.cogr.edu/sites/default/files/May%202025%20Update%20Final.pdf</a>). Institutions expressed concern over the attribution of individual violations to the entire institution <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a> <a href="https://www.jdsupra.com/legalnews/improving-the-safety-and-security-of-6872454/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research (Trump EO ...</a>.</p></div></section>
+<section class="qsection" id="reconcile"><h2>Reconciled forecast <span class="badge">Stage 6d</span></h2><p>Bottom-up 51% &rarr; Dep-adj 55% &rarr; Struct-adj 58% &rarr; Holistic 62% &rarr; Final 60%</p><p>The bottom-up mechanical combination (0.80 <em> 0.95 </em> 0.90 * 0.75) yields a 51% probability. However, this underestimates the strong positive correlation between the components: if the administration publishes a framework (C1), it is almost certainly doing so specifically to implement the EO 14292 mandates (C2, C3, and C4), meaning these variables move together. The holistic estimate (62%) recognizes the powerful &#x27;forcing function&#x27; of the October 13, 2026, technical deadline (NIST/SOC expansion), which makes the publication of some &#x27;Final&#x27; or &#x27;Interim Final&#x27; document highly probable to avoid regulatory chaos. The divergence between the structural estimate (58%) and holistic estimate (62%) is small (4 points), so the final forecast is a simple average. The higher holistic view is weighted by the fact that even an &#x27;Interim Final&#x27; rule satisfies the criteria, which is a common and efficient path for the US government to meet such deadlines.</p></section>
+<section class="qsection" id="deepresearch"><h2>Deep research report <span class="badge">Stage 6g</span></h2><p>Given that the 2024 framework successfully encompassed all three categories, and that Executive Order 14292 seeks to <em>strengthen</em> rather than weaken these rules, it is highly improbable that the updated framework would regress to excluding RNA or ssDNA <sup class="cite">[4]</sup>.</p>
+<p><strong>Applicability to Non-Federal Entities</strong> The applicability of the framework is intrinsically tied to the mechanisms of federal funding. The stated policy goal is to manage risks associated with federally funded life sciences research by imposing conditions on grant recipients <sup class="cite">[4, 11]</sup>. Under Title 2 of the Code of Federal Regulations governing federal grants (2 CFR § 200.1), &quot;Non-Federal entities&quot; encompass state governments, local governments, Indian Tribes, universities (Institutions of Higher Education), and nonprofit organizations carrying out a Federal award <sup class="cite">[14, 15]</sup>. The primary enforcement lever of the framework is to restrict these Non-Federal entities from using federal funds to procure nucleic acids from unverified, non-compliant providers <sup class="cite">[7, 11]</sup>. Therefore, the framework&#x27;s core operational mechanism inherently satisfies the applicability criterion.</p>
+<h6 class="md-h">The &quot;Privately Funded&quot; Loophole</h6>
+<p>While the framework will fulfill the applicability criteria regarding Non-Federal entities, a critical gap in current biosecurity governance is that corporate labs, privately funded pharmaceutical companies, or independent rogue actors who do not receive federal grants are entirely exempt from the HHS/OSTP framework&#x27;s requirements <sup class="cite">[16, 17]</sup>. Because they do not rely on federal funding strings, these actors can simply bypass the system by purchasing synthetic nucleic acids from non-compliant providers. This loophole fundamentally undermines the centralized screening chokepoint and is a primary driver behind current bipartisan legislative efforts to move beyond the executive branch framework and mandate screening industry-wide <sup class="cite">[18, 19]</sup>.</p>
+<h5 class="md-h">Catalysts for Action: Legislative Pressure and Industry Consensus in 2026</h5>
+<p>While bureaucratic inertia is a strong base-rate factor explaining the delay since the August 2025 deadline, the landscape in early-to-mid 2026 has fundamentally shifted. A convergence of bipartisan legislative action and unprecedented lobbying from the commercial tech sector has created an environment where further delays by the OSTP and HHS are politically untenable.</p>
+<h6 class="md-h">The Biosecurity Modernization and Innovation Act (S. 3741)</h6>
+<p>In early 2026, Senators Tom Cotton (R-AR) and Amy Klobuchar (D-MN) introduced the Biosecurity Modernization and Innovation Act of 2026 (S. 3741) <sup class="cite">[20, 21]</sup>. This bipartisan legislation serves as a massive catalyst for executive action.</p>
+<p><strong>Provisions of S. 3741</strong> The legislation essentially codifies the goals of the paused OSTP framework and Executive Order 14292 into federal law, pushing the boundaries of biosecurity requirements:</p>
+<ol><li><strong>Mandatory Screening and Verification:</strong> It requires gene synthesis providers to screen orders and verify the identity and legitimacy of customers <sup class="cite">[20, 22]</sup>.</li><li><strong>Conformity Assessments:</strong> It establishes a conformity assessment system, shifting the industry away from self-attestation toward rigorous, verifiable compliance checks that can result in the revocation of a provider&#x27;s approved status <sup class="cite">[20]</sup>.</li><li><strong>Addressing the &quot;Split Order&quot; Vulnerability:</strong> It specifically addresses technical loopholes, such as bad actors splitting dangerous sequences across multiple orders or providers (e.g., ordering a viral capsid sequence from Provider A and the viral polymerase sequence from Provider B to bypass individual screening algorithms) <sup class="cite">[7, 23]</sup>. Offline or air-gapped benchtop synthesis devices are also highly vulnerable to these split-order evasion tactics <sup class="cite">[24, 25]</sup>. S. 3741 addresses this by requiring cross-provider screening protocols and centralized databases <sup class="cite">[25, 26]</sup>.</li><li><strong>Biotechnology Governance Sandbox:</strong> The bill establishes a sandbox at the National Institute of Standards and Technology (NIST) to test biosecurity tools and advance technical standards <sup class="cite">[20, 22]</sup>.</li></ol>
+<p>The introduction of S. 3741 places significant pressure on the OSTP and HHS. The Executive Branch traditionally prefers to establish regulatory frameworks through executive agencies rather than having its hand forced by rigid congressional statutes. The presence of S. 3741 accelerates the OSTP&#x27;s timeline, as publishing a robust, finalized framework can preempt or guide the implementation of the pending legislation.</p>
+<h6 class="md-h">The AI Industry&#x27;s June 2026 Open Letter</h6>
+<p>Perhaps the most compelling evidence for a late-2026 publication is the sudden, unified involvement of the artificial intelligence industry. In early June 2026, an open letter organized by the Foundation for American Innovation (FAI) was released, featuring signatures from the most powerful executives in the technology sector <sup class="cite">[27, 28, 29]</sup>.</p>
+<p>Signatories included OpenAI CEO Sam Altman, Anthropic CEO Dario Amodei, Google DeepMind CEO Demis Hassabis, and Microsoft AI CEO Mustafa Suleyman <sup class="cite">[27, 28, 30]</sup>. These executives, who are fierce commercial rivals, united to explicitly urge Congress and the federal government to mandate synthetic DNA and RNA screening <sup class="cite">[28, 31]</sup>.</p>
+<p><strong>The Rationale of the AI Sector</strong> The AI leaders argued that generative AI models are rapidly eroding the &quot;knowledge barriers&quot; that historically prevented unsophisticated bad actors from designing and deploying biological weapons <sup class="cite">[30, 32]</sup>. AI systems can now outperform PhD-level virologists in answering highly technical biological questions and can generate thousands of hazardous protein variants capable of bypassing rudimentary screening systems <sup class="cite">[31, 33]</sup>.</p>
+<p>By publicly supporting mandatory screening, record-keeping, and the verification of customer legitimacy, the tech industry effectively removed one of the primary obstacles to regulation: corporate pushback over compliance costs. Opponents of mandatory screening traditionally argued that the burden of compliance would harm small businesses <sup class="cite">[28]</sup>. However, with the largest tech entities and synthetic biology companies (such as those in the International Gene Synthesis Consortium) publicly demanding verifiable regulation, the OSTP has a clear political mandate and an open runway to finalize the framework <sup class="cite">[29, 31]</sup>.</p>
+<h6 class="md-h">The October 2026 Technical Standards Deadline</h6>
+<p>Another critical timeline factor is the impending shift in technical screening standards. Under the original guidelines, providers were required to screen DNA and RNA sequences using a 200-nucleotide window <sup class="cite">[4, 6]</sup>. However, advances in synthetic biology mean that dangerous pathogens can be assembled from much shorter fragments.</p>
+<p>The baseline documentation explicitly notes that starting October 13, 2026, the screening window must decrease from 200 nucleotides to 50 nucleotides <sup class="cite">[6]</sup>. The biological necessity of this shift lies in the fact that bad actors can synthesize complete sequences of concern (SOCs) by ordering shorter fragments that preserve important functional elements and assembling them later <sup class="cite">[34, 35]</sup>. Furthermore, by this October 2026 deadline, the definition of an SOC will expand beyond federally regulated lists to include any sequence known to contribute to pathogenicity or toxicity <sup class="cite">[6]</sup>. The approach of this highly specific, pre-scheduled October 2026 technical transition heavily incentivizes the OSTP to publish the finalized, updated framework well in advance of the deadline to ensure that academic institutions and synthesis providers have adequate time to update their bioinformatic software and screening infrastructure <sup class="cite">[6, 36]</sup>.</p>
+<h5 class="md-h">Forecasting Analysis: Resolving YES vs. NO</h5>
+<p>Forecasting the outcome of this query requires weighing the overwhelming political and industry momentum against the base rates of bureaucratic stagnation and the technical complexities of implementing verifiable biosecurity.</p>
+<h6 class="md-h">The Case for a YES Resolution</h6>
+<p>The strongest evidence for a <strong>YES</strong> resolution by December 31, 2026, relies on a confluence of explicit executive text, vanishing industry resistance, and scheduled technical deadlines.</p>
+<ol><li><strong>Explicit Executive Mandate:</strong> The resolution criteria demand the inclusion of verifiable screening or Section 7 enforcement terms. Executive Order 14292 explicitly, verbatim, commands the inclusion of both <sup class="cite">[9, 11]</sup>. There is virtually no scenario in which the OSTP publishes a &quot;Final&quot; framework that openly disobeys the text of the governing executive order.</li><li><strong>The &quot;Safe&quot; Regulatory Target:</strong> As noted by industry analysts, regulating the physical synthesis of DNA is a highly tractable policy intervention. Compared to the highly contentious debates over regulating open-source AI weights or algorithmic liability, screening physical DNA orders addresses a known, established chokepoint <sup class="cite">[29]</sup>. Policymakers seeking a &quot;win&quot; in AI safety and biosecurity will view the framework as low-hanging fruit.</li><li><strong>The October 2026 Forcing Function:</strong> The scheduled drop in the screening window to 50 nucleotides on October 13, 2026, acts as a hard forcing function <sup class="cite">[6]</sup>. The federal government cannot reasonably enforce this new technical standard without a finalized framework in place to govern it.</li><li><strong>Bipartisan and Industry Support:</strong> The June 2026 open letter from Altman, Amodei, Hassabis, and Suleyman, combined with the bipartisan S. 3741 bill, eliminates standard partisan gridlock <sup class="cite">[27, 30]</sup>. The cross-industry consensus ensures that the OSTP will face minimal lobbying resistance upon publication.</li></ol>
+<h6 class="md-h">The Case for a NO Resolution</h6>
+<p>While a YES resolution is highly probable, forecasters must account for scenarios in which the question resolves as <strong>NO</strong>. This would most likely occur due to administrative delays pushing publication into 2027, or a failure of the document to be marked as &quot;Final.&quot;</p>
+<ol><li><strong>The Base Rate of Bureaucratic Delays:</strong> The most significant threat to a YES resolution is simple government inefficiency. The OSTP missed its initial 90-day deadline from May 2025 by a wide margin <sup class="cite">[9, 11]</sup>. (Note: Precise real-time figures regarding the internal drafting status at the OSTP are unavailable; however, the public frustration expressed in legislative and industry letters confirms the framework is severely delayed). It is entirely plausible that interagency disagreements could stall the publication until 2027.</li><li><strong>The Complexity of &quot;Verifiable&quot; Standards:</strong> Transitioning from self-attestation to a mathematically and legally verifiable standard is technically daunting. Resolving how to screen 50-nucleotide sequences efficiently without generating an unmanageable volume of false positives (alert fatigue) requires highly sophisticated bioinformatics <sup class="cite">[6, 37]</sup>. Standard alignment tools like BLAST often yield high false-positive rates and increased computational costs for short sequences due to shared genes between pathogenic and non-pathogenic organisms <sup class="cite">[35, 37]</sup>. Advanced predictive bioinformatic algorithms and signature-based detection are required to maintain false-positive rates below 1% or 2% (as demonstrated by emerging tools like RTX BBN&#x27;s FAST-NA or UltraQUICK) <sup class="cite">[35, 38, 39]</sup>. If the NIST sandbox takes too long to validate these screening algorithms, the OSTP might delay the final framework until the technical standards are proven <sup class="cite">[22]</sup>.</li><li><strong>The &quot;Interim&quot; Trap:</strong> The forecasting criteria allow for an &quot;Interim Final&quot; document if it establishes a compliance date. However, if the OSTP releases a &quot;Draft for Public Comment&quot; in late 2026 but fails to publish a final or interim final version before December 31, 2026, the question will resolve as NO.</li></ol>
+<h6 class="md-h">Final Synthesis</h6>
+<p>When evaluating the base rates of federal rulemaking, policies involving national security and biological threats historically advance faster than standard domestic regulations, especially when catalyzed by specific executive orders and high-profile industry lobbying. The Trump administration&#x27;s EO 14292 unequivocally laid the legal groundwork in 2025, defining the exact parameters (Section 7 enforcement, verifiable mechanisms) that this forecasting question seeks <sup class="cite">[8, 9]</sup>.</p>
+<p>Throughout early to mid-2026, the ecosystem surrounding synthetic biology oversight reached a critical mass. Bipartisan lawmakers introduced stringent legislative mandates (S. 3741), and the foremost leaders of the artificial intelligence boom publicly demanded government intervention to secure the nucleic acid supply chain <sup class="cite">[20, 28]</sup>.</p>
+<p>Furthermore, the operational realities of the synthesis industry—specifically the scheduled transition to 50-nucleotide screening windows by October 2026—create an unavoidable logistical deadline for the federal government <sup class="cite">[6]</sup>. Benchtop synthesis equipment, while currently limited by lower throughput capabilities (e.g., producing 96 oligos per run) and shorter sequence lengths (up to ~80-100 base pairs), will also require robust regulatory integration as enzymatic synthesis technologies mature <sup class="cite">[1, 2]</sup>. Providers and federally funded institutions cannot implement these enhanced, costly technical standards without finalized legal guidance clarifying compliance and enforcement risks.</p>
+<p>Therefore, it seems highly likely that the intense, multipolar pressure from Capitol Hill, the tech sector, and internal technical deadlines will force the HHS and OSTP to overcome bureaucratic inertia. The evidence strongly leans toward the final, updated &quot;Framework for Nucleic Acid Synthesis Screening&quot; being published before December 31, 2026. Because Executive Order 14292 mandates the inclusion of verifiable screening, Section 7 enforcement, and the baseline encompasses all forms of RNA and DNA, the resulting framework is virtually guaranteed to meet all the nuanced requirements of the resolution criteria.</p>
+<p><strong>Sources:</strong></p>
+<ol><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFCMtBijPryRkMIAHukOunuZXVja9OxLMEs7H_3wuI6W0IqkrOKrULiOzla96cmP3mZOlyNZ4A2Z8zDPQJwXZn3yJj6p8ADmG9JlwthN9oWymvNJ6dQnPbSnIgzSF8SKUIHVB8ZzEBqWyG7mBXKtE-pB0_zt5sMGsKSY2g_GZUw2g==" target="_blank" rel="noopener">substack.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFxn1SOAXA0wPiqkjbrwdtS0ExGv7IL_RtSr28h-qx1qfb5vkkgQqDUwHExt7rRjpFmFKTTTMYgNGKY7HXs_FXu9EQsRmOtsBCaqNHWOy0xfGzrsxoDzeNr4RMJNqMSyg==" target="_blank" rel="noopener">startupintros.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHMULv4nTsRPxutaFJr7QEhzGX_RwqlCvzuv0TgVIPTTRNPFNRssIK7DICMzWorzwIM50TbsHJbwPhUV_1liQZ2ckHPpV2vdLPX45JReXh9jPQmgpU2l7hl9DMWeicu0wLvqkzFOsaodkOvpkdCirJA7pO2CI4nxv1DtXL4FO6pU5qU1q-ZyF0INqLYlJPpDb0tcbl-DUjYFbT956dNZ2zefkbZ_aU-PRCmFw-x7DgYS8OJgxunE9fEo7I1" target="_blank" rel="noopener">ebrc.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEcFawew0aQFQc_K7AX8_030RVR9F0JWofQv6BxpgHlrvpcCHdo7yCciZkF0ptoE2jycE1f5LUDwKfjvC2CuNq9M0kNgzeVlo8sLT5JoHIMh-F_Bo91qSuT5zPo9nCCiPaYvn5AJTi19tlZinzt0gDvkntpnFosKoL-cP51-I-45zV266cliOydHYMi5G356h7LYx3RGBLk7KAqH5hPenJXsYgPnQ==" target="_blank" rel="noopener">archives.gov</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGo6faVqw-Nd5gguNWrlPGwVcQqQ-sZ1vOngXq-MLve7CUWg0X7ViSZ6vzJOVBJT2lNy6aeFfZ0GXDY5xNVfsLwnmk3WINXr2inK3cgCSuIFHB4dMVF93H1vK1poOHvbZNOY07mmztvrvyIv03b9UKCQhbsFRG76uYscH8Gr6M=" target="_blank" rel="noopener">ucf.edu</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE7B59wx5qi3iiNKUhwdZx4l-nndc7wiyw28S4KdhI3AVVT_2lGEvx1lT7kPY5Zt1NoatarrELf29HrgxsFKUQQ-GseNiRfeSEhA6NAOJQlEl1x0QtyRtb_0ybd7tj3eBGPJxdxxrUYthspFyEey5drx_AjrNuSBZxazs6eJQfrqR8f3AueXxqTOTbCCGyVNA==" target="_blank" rel="noopener">hhs.gov</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHaYbamylsikZ-a-CbmhbXUTo2tO6kcw6SD-eY4RnNTOki4vddmlWdkc-B-UtgPbhfZ-eEIYmy6OIzEye_BkJzlC_USk_zIG9lHoRHkKBuJYxjZbIZjsdh0NtgSJ0lyYiYCtVYLsXwDRmUR51VHCp_feEMcmlwNIChv-6A4dq1uCk10ePlpcpi-ZQ7jr3amRzrbCmF4h0RloTIsQthsj8-DpRXx3Q==" target="_blank" rel="noopener">frontiersin.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGCL-8bHarvFuJs2y_SQSYDNIxAG5NTxSdNq9Lz9YuyYS-2PW3JsuWUXixfxZBtK60tCpBEzpBa_eTgxkOm_ijuHyrKPeOj5P-9etva1Jqj4mHVQaKAv2P_Ct-nE1BSgiLEOixnyMD7fCF3PNYIUTPrFfDDjczuttaCPBGYU46BWQB0eXnUmaVaYBHOUl1dJrt01Mc89tl6nOH15Z7LgwpZmkWxlYodPj2DfA==" target="_blank" rel="noopener">lathropgpm.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEIQvOq0oXlpjznCW7em0nHbupDsXDDd5j2C31EsG74HMyg7eQAY_BobE8mC_7PRL0KdT1jw68_HQ3GyRMXVv7bCsFeH5y5ck1UOuzXBK-nKgyyJJW2ik8P6DQ6VPbfduevxXhtqo7oTVZEqDaQRvKDiHYJGiot4-P92m4c26t43bMCBlDWcDPQExGcoXg4TYxgt4zcPO1F7b2z2DLOF8MjkCHtP7augW-hDcs1v08=" target="_blank" rel="noopener">federalregister.gov</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFEIUh6-nR7WO-7XdgI7woPg-_sJnbXC-M3w0r-7HthkH-XQbu9-hTSzznLJa3RvieH1fUlrd4ZL5Lhl7sppIAAPxVz3NbC6llpLF2MEnoKoxtQA92cprLcDDDTX0o6SRZ5lE_QVRIANDceaRgRe87T" target="_blank" rel="noopener">asm.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFHuTW-vg9J6gfjyjZxHcWke_UUtW4HFsmfHcpeNO5758o1IfwBaT3wM2BrpL0c4dKObUCxkCBE4z3zvAZdhDhyK79Zmd0VZosDpc61kINMyQk6PjrfenVyHf2WfbqKjuP6TRd3UrNl7q4HTVGIKFqPjhTmo95dmHEuc-XMNefnXdjJ-dxe7C3nDLs0pDbZRm5urMVuj9CE-1Emplfi6ndyLKW9CIZfYVNLqBY=" target="_blank" rel="noopener">ucsb.edu</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGulW5A5_ZS2xDa6f9CZuBsF4GkNBSAi1OtD4HDpbT64p0n-DJFa5kXiKzj6C1rlxGASoEhgTjR5M-QsGbfY88uoZpX3OlbKs7RhA-xYZQ940CggwPIvXjPCFO7NYRkxWPafd1RvziRBI9wd-U0kx3vGlmk4kTHRt_wPXN7sa_abvkSkw==" target="_blank" rel="noopener">psu.edu</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG6n3Ya9s58ZC3384p7S41uWQnRIH_uDYOVYegHL-F_6GIwQfwYojxOIeaDS8MFgNOzUW-LGwqdlPPZToIYqKwdSZebctWvGrK21_vLEzRNMfO2E_FwxgYxBlrZ0kDJQSfGDl-X1puePtoqW5QlL1zN4WrzBb5EdYCQyoQlxQHlgkslJA==" target="_blank" rel="noopener">precisionbusinessinsights.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzJaXRbQJcTriwe3st1561KoknROWqhjwiMzRMqntV-2_XaWfuo6Bu8Gbdkbyu8Kp8JYh-Pf2wTlHZ6jIELFJFATRJsWIQp2Sjn5t4h3tqh3jo7b5yolN4aHiA5tknj35rgoq1eQ3MULo9crKbdE1BdYwYIwXgbEPBqibjXMdASxqEgtj-BRYsnWNp-F_d3DKgQIiOedwAcNWgcOXcXHM_lw9FOeIXgXTEOmC5Xw2jZNh-tA==" target="_blank" rel="noopener">ecfr.gov</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHkzQipj8U0eTZ68A2PP0yF0zPhw__LifEhiLTDPwJyIrhqISrs2AkopdADH5l3_ihFnElbtx2XGZnXFd2xhggktbMVovianUCFk0Ov9Jeo4CBzTRH_SaRlto4MRYzconoOc6L9GbUKXIifHQkBortQruQU2YGIYqhQoSLMjwngBEqhAf_0Q6I8xufkz6LYQQ==" target="_blank" rel="noopener">tamu.edu</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGi-CgzBCSDmqv6IDoz3hrLE_XyrkYilo81WJVl-kjddlkHKClgjAdjSLOD39lKGJwpDfcM5cQCiABq9PxgezV0jzQbrzwDJ3ZDe0NGqyNy1bMZf-_nRGcxXOls5JTf1_kJCGd80_1KBtaufYVA13-QlBRwUtSu-Pn1kSj58laNFyQvBQuL9DuyOA2eFWiNhChFUV8Rk50xKFd9Oc-groRtQ1UAASaNACN-6GAmfl38I6FBLg9sN1sRRZa5I3OQwqaI14WDJgngYyzeHWklO2bVp8Y=" target="_blank" rel="noopener">longtermresilience.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFrdfN8sbLxtkdb0f2FbBNqSV7eMauhANe0t89e4wqFBHq7_JRf6K0r79l6UXdljVmGMxsyNzabJKgG0K6hC3B3qnk1qDbbBxukoFZihCRrxV6eTD94tCfO-KpK1ftiwsHqu5Ud6a6N3KY1ITcEX0AR4Dwi9pfQ7ojcKE3gP76Pgu99JnmWbnhUH8PqHgcp8Gr6PsQ=" target="_blank" rel="noopener">sciencepolicyjournal.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE75FusMs2mxijvnTEI5skdHNsloF3lMWNy4OdzHGJJCKk8sOubzh3VWIqbdgGsjlKOkIkwTO_eK8L2NVzMkxxkJE8dpD33fGBSad5oxyT9mBrVx7UpAPuGot4KWlDKMK9T9bq-JIUN8u4e-BndqHbQxOgPVE3XjAzKNN5KQqThIQ==" target="_blank" rel="noopener">biosecurityhandbook.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGgSugIq9CdLuPHseTmEB6p1Svj7t8zPay1V6t7wlZIWfUDVQI-SIuCdI9nFI5nnYAtRYW6_-sWDXN4UeBr7DJpvkYVjYcgraVTUfdbAfXYtj5X5jbFjVBsKgEVPhUoIV81HVfj25m3JeGKv6_cRjDYGmFunSVSKV8IJnHvU5OFNLsX1ummW8XcWPMERtKRFEfkkJKiicw2KGKJyRil6Aian_ZOYA==" target="_blank" rel="noopener">frontiersin.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFDnLdfjRym2ZrCnzOi_iUWrm_veripCUAHHT8Fc6rNtCbZSaBbRLBMIpx3r04Kt017bNYfOuv8x3nxwDx93l2GZu4Hs9ivS9ICLoYCrixxut7qCV-8Uf2L1MTSgmkXD2ni1w==" target="_blank" rel="noopener">quiverquant.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG0lheoP9QIcKXv1YMoNpY4hl92bCiCpBZ8nW3S_A8FXYvt--B6J2-BHBuBxBXEk-lFQ3gJUjlGIVOxREczoI9qBoUTQtlOHIjDZyIqw7-aFbrlA7wIgJIeWI8wzqh0" target="_blank" rel="noopener">legiscan.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH7wKBgEbR-xQPzMviqRUSTCt_eUNZKhTjYFmcC-UFneX5hqxi-imFzFGcgSgXn3SZTWq2LH8v5L2_UertiR4tmFCzes0VZeCHNSbDHUKuuIcJDbJizIh0grzQOVso7xNh576c30NgmYEL66g7MjWwu1VNzZoOTx32eWyOQJqfDAKKUPLYHl-YvEXULDg_lj3E_GlkF1Bqt9WFmZI66P-6zqNnuXENrJw8sLJNxxT2lPmiPHY7zJK90nrPTF7689XqzkzzBBLO7XFxvEeaaDIdT6ZI=" target="_blank" rel="noopener">mondaq.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHnDvblYj-vpXu_gD_VRInnQLluhSSUF3k3ci0vxewJMpPfAUOHDMlHE0njQY1l742U5ztiK4xdflFTRKMhT-decI0h1GX7bvYOTioBCImwa8Hy-gSxFsxnD3YaVuZckeL1ySuAANCdBKKzXtD9MImHJIlYjUwcR118leJFVKluT3xwg-WrQ_6xZduRAtjM5GaJ" target="_blank" rel="noopener">centerforhealthsecurity.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHVQlc34ljz_5iCX8S6IGHd8kB6dAFVp9XPWJJbXifBJZyqX9Eb6D6RjYpndxwdcA-kj2c4DZhUtyyXnlEe2VmNVMvYOzhe5U-8bh5Ggo10qM3ixj7cb8h4ulULbSBLR6jpdXzgLZ6-Fmo=" target="_blank" rel="noopener">ifp.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHifMqs7i0Xxw8TQDiCAXfA4lsDmBt5jrw2KSuUJnKfSHfoYUCoq95T9zJM7seBICG_SGnY_X5ehdR3d2cktrLxGJEAsqSvUgDpQbpA2a9CpDBtNULAUDn36aGrf9jd6XyGRM2djJ1I6FfDB_vTFN7RFgMr8w3grQcN0U3GY-BzYcQ=" target="_blank" rel="noopener">securedna.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHT382BuitKrUWOnBjaQI3SQwcqRBbeQrs4ySERiuACOeiSdjs2Vl_hV39BW24y7xhGshY-ALJOZ6TgEOZZB9o4gi5hLk1JsjW6c3r-FQwYbr10kZdhbn1LQNQ5oGWGgCAjkIXHMbu9V2TvFu40WJR8pwUEvMyZ__lzw3Nh_p-WIPMhd62nIghlOPUL7ZRcR4H6wx42Ncq1qZLndHxmkiBIkfBUPxx2BkyUP_-ynw==" target="_blank" rel="noopener">effectivealtruism.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFeVwXPafOaz8KVixblrObVIrILi10vpfSi3Cdobzh-S7E6zgULxeztFYBZZLnk35i2_xCmBiyym1LBWeIjAPmtFaEW0TIqBg7HoLTGDu6GFk7M-RXfNKEKkZVW1pOiCKo10mE1sSgMLImvhU8XvtwazVtQvIaIFQi3o0yPDuyfGiWhTSdB_h6ziFP8QKv5" target="_blank" rel="noopener">letsdatascience.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHuEVJClc3f8hEGTb2EtB_tN9hw9oRgqJoTmhG0qn3ZBq-cypGP2edC_oMaLC51K4C6f6-i9wPJJ9KgmrCfaijbbsZhF9mqmo5MdvC6wmQUl5mJPgDww7XupYRbkjnqT49InKDRiPlLUVYW4kCozC5mvjnpHnKEf0fK7MBfepDm" target="_blank" rel="noopener">qz.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGcQr-HAhFrJ5ZifV1jsMdXe4kqtudcMGYY9djXaIyA6pBPSxybLr_wp01TEhcA_OIq0rBI4rkyEAbzVhr14YLqXm6tkaMXMloUh110JLtnRJuM7eXMJD9Hn6GkykaiB7GGEPwnzFcqnKoQUTGcye9U23ZAFh1kSfa8nGa0hvsCVnQSvjjCk276ozvRrSC9_K8ttLfn" target="_blank" rel="noopener">theplanettools.ai</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGASeH97vs1H6OVhsiKRIusxCrU9IqJ2VneAipBTm0pDXotAUXurRtcx_UGDrx5UsHhnIkSWMXay-Y09iQNkRUhGueftBQnDhJ-AK-30GlNJlqJzR-Nh-uWsH4juCmvIz048A5qD96-QS6QyAn5ZFa-cYdkbbiAqTYJzGEni9q_JOKZSl2JqwuTtwan05ybBlkoyFCzJ00=" target="_blank" rel="noopener">wttlonline.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFhCRzctSxLX0HU0cLRtjyiQ73SowxZLFIX51cItn4t6A2i4XhonokcBocey7VnIydAbDaDaYFuQise9ZTvrEhJbbjz_LU0ELSytMoeVhwJQXXgembwtSdXWdoqNy_j1Ons9l_StNqKSZru3PZSe3hFQZfbfKNU7hdcLE_cKalmz2gbzQVi8nbELfXW1s4l6eal_jQL10DlKjJx" target="_blank" rel="noopener">forbes.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE3YIMk8sFMZhHVdNgoKiHskowSWX7v9uqq-CvgZdeKh15cGUw027VF0-6Z0DKS7lL7FgKLyClkTj9xhBe-JBJ7jH0sJsuDNo6whunZBrDPZPuaCw==" target="_blank" rel="noopener">aiweekly.co</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHliJAXNrMEZcrWV1B-bLqv6ZuTw5VcDccjp8Cba5gw5sVeOtEXMGLH00ADB_ATO_Ie5l6bbtneUM7e3Jewd3A2-MyYk0F3YYI_J3jw5JFXUT6nLM23fRvQgo2UaB3Qf5eeyYWGuOFc5mM47sW8SQesdsMzTxer8yyvl3sowa30LMcJlXOGxk_4nN-9xUuYYv252v1v00jC5ozxM9mhX0WDGbDjceM=" target="_blank" rel="noopener">cnet.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEQBKUDlJzx4AvnDuiIT1jq8RIJFtMzSHvpqjuXbTgRwWZsWKW3KDJpvs7JLN3KrhiB3MWLG-UBVWyxZFMcr0Taj4PfNd-Jmuye86YX6rsbify80B349CvmzN3qbULWOaX0cS-_3boQOA==" target="_blank" rel="noopener">nih.gov</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHY1SCk5kBnSGNaqSYpqF0_6bZ4ei4PeWaI29NS2KDT56HR9S_rbgdPsOkNMMEgSd030QmGIdciwt9Bjc2ZuUa9GDJsgvGxTtvATaGQZYUGe59IcY3eejM3M9akULr_GFonJPRYptZN1yyoyA==" target="_blank" rel="noopener">hhs.gov</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHpXoiVQ4mTFQ02gDNv8JY-84AFu5SrsFiZYURlGOOjYSC4BBjgYHeKoCdVyhmGLws0kNxJQP6m2zTbXP_xg55lwjsHsJssaL--tvPz1B2uSZYbe6RHeMLxw7eQUCtWOdEW5TONPXYsokga2AsmwwCNo0FXP7YHOOmHxrFnfPGmILFMrAmj3y0yVsb1L7R9yEKxSsO98txkeS1GiKOVo39oTcW1lwE=" target="_blank" rel="noopener">eurofinsgenomics.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGl1jA_XE0UUqVEMhKrrBpohj4Ncj5xfGqs1qj3M4ezWqd115pV4hZylCw8VCOcJ4epoxHH9jTFxH3x5uV36vo7a0oNptWBMvyVNkmWTur8RakIpKYAi2lvdJchr8uYuzGzvJMPmJ9CgFtt6igcqt3qpsBcA0ARZboPjBI=" target="_blank" rel="noopener">biorxiv.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHEKVLxIPQexy3vztFsXBgM7wElnjwCmMS66cTRlrUFNBbtLEFJ5lzssxojDxEpJ2tKpi4oMysjszl4o9wX-aC5YCTT21RROxlKnccZV_aOun2HlSgEWMcjaVei-LitAYUQpihwu2sHu5UBPtXj7Oh3CMuORQUmvE2GJfMxeZEFKKxolZtrBJR3Hf5myLG8_hQt5rcxLH0Yqks57jC9ez6ijr5ItA==" target="_blank" rel="noopener">frontiersin.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFsJG-3GVkDOCRUoqKMynPVAo7fJqZ8Qw6Gywy--D0AudeO2MxB7sC8SnpQlO7UlWb_Or9RZHqZJViAsxQGNJT8iVANbxc56t2xmMPFUTQCZyBkBh_jEXD1y4-Ql_4ugNoDdSj4kpZnSgbVUqmcaQ9cwhYWQojYGaqe6Gi4NTrzaDrrJqsnBKArbhItBXGwDW1nm_vuzFpnW1Ou_-HVpG0Z7Swg7MR1v_omqVJCv8pgT3M_K9w_SBVcjOKgUQkDc93aXJ9F5tPhCJECvAuxzcgjx08jC2peeXfcnQ==" target="_blank" rel="noopener">centerforhealthsecurity.org</a></li></ol></section>
+<section class="qsection" id="fable"><h2>Fable 5 second opinion <span class="badge">Stage 6f</span></h2><p><strong>Pipeline:</strong> <span style="color:#558b2f;font-weight:700">60%</span> &rarr; <strong>Fable 5:</strong> <span style="color:#f9a825;font-weight:700">50%</span> &nbsp;<span class="badge">FORECAST_DISAGREE</span></p><p>The question is well-posed: conditions 1-3 (enhanced requirements, three-acid coverage, non-federal applicability) are near-certain conditional on publication, since any EO 14292-driven framework would include them and the 2024 baseline already covers all three acid types. So this reduces almost entirely to P(a qualifying &#x27;Final&#x27; or &#x27;Interim Final&#x27; framework is published in the ~9-month Apr-Dec 2026 window). The pipeline&#x27;s correlation argument is sound, but 60% leans optimistic. The dominant risk is bureaucratic slippage into 2027: the EO&#x27;s 90/180-day deadlines were already badly missed, &#x27;verifiable&#x27; standards are genuinely hard to finalize, and interagency drafting frequently overruns. The Oct 2026 technical forcing function and Interim Final allowance push upward, but a draft-for-comment (not final) by year-end is a very live NO path. I&#x27;d center ~50%. Note: the deep-research report&#x27;s S. 3741 and June 2026 AI-CEO open letter claims are unverified and should not anchor the estimate. Minor: &#x27;RESOLUTION DEADLINE 31 Dec 2027&#x27; conflicts with the Dec 31 2026 window.</p><p><strong>Suggested question fix:</strong> Align the RESOLUTION DEADLINE field (currently 31 Dec 2027) with the resolution window&#x27;s end of 23:59 UTC 31 Dec 2026, and remove the stray &#x27;only/exclusively purchase requirement&#x27; waiver clarification, which maps to no stated resolution condition.</p></section>
+</div></body></html>

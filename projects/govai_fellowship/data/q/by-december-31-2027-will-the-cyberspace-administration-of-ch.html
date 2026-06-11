@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Will the Cyberspace Administration of China (CAC) or the Ministry of Industry an</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#e8f5e9;color:#2e7d32">72%</span><h1 style="margin:0;font-size:1.25rem;">Will the Cyberspace Administration of China (CAC) or the Ministry of Industry and Information Technology (MIIT) issue a finalized formal regulation or &quot;Provisional Measure&quot; specifically governing the security and deployment of &quot;AI agents&quot; by December 31, 2027?</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Gemini 3 Flash (minimal)</span><span>low (Gemini Flash) effort</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#decomp">Decomposition &amp; research</a></li><li><a href="#reconcile">Reconciled forecast</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#2e7d32">72%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">88</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">92</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">74</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">82</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">72</span></div></div><p><strong>Review status:</strong> PASS</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>By December 31, 2027, will the Cyberspace Administration of China (CAC) or the Ministry of Industry and Information Technology (MIIT) issue a formal regulation or &#x27;Provisional Measure&#x27; specifically governing the security and deployment of &#x27;AI agents&#x27; or &#x27;autonomous agents&#x27;?</p><p><strong>Why this question?</strong> The paper highlights the tension between public &#x27;overadoption&#x27; of AI agents (OpenClaw) and government security warnings. Formalizing these warnings into regulations is a key upstream signal of how China will manage the &#x27;anxiety-driven&#x27; adoption risks identified in the research. Current drafts focus on &#x27;interactive AI,&#x27; but a specific &#x27;agent&#x27; framework would signal a major regulatory milestone.</p><p><strong>Paper reference:</strong> Slide 6: &quot;2026 Install OpenClaw — or be left behind&quot; and Slide 7: &quot;People didn&#x27;t queue despite the government&#x27;s OpenClaw security warnings.&quot;</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p>### <strong>Question Title</strong>
+Will the Cyberspace Administration of China (CAC) or the Ministry of Industry and Information Technology (MIIT) issue a finalized formal regulation or &quot;Provisional Measure&quot; specifically governing the security and deployment of &quot;AI agents&quot; by December 31, 2027?
+
+### <strong>Background</strong>
+As of April 8, 2026, China’s AI regulatory landscape has transitioned from broad generative AI oversight to targeted measures for specific AI capabilities. In early April 2026, the Cyberspace Administration of China (CAC) issued the &quot;Draft Measures on Interactive AI Services&quot; (also referred to as the &quot;Draft Measures for Digital Virtual Human Services&quot;), which focuses on the regulation of digital humans and interactive virtual services. However, as of this date, these measures do not explicitly establish a comprehensive regulatory framework for &quot;AI agents&quot; or &quot;autonomous agents&quot; with independent planning and tool-use capabilities.
+
+The Ministry of Industry and Information Technology (MIIT), specifically through the MIIT/TC1 technical committee established in March 2025, has previously signaled a 1–3 year roadmap for developing 70 AI safety standards [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). This roadmap explicitly included planned standards for &quot;Security Requirements for Intelligent Agent Applications&quot; (智能体应用安全保障要求) and &quot;Security Requirements for Autonomous Operations of Intelligent Agents&quot; (智能体自主操作安全要求) [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). While these standard-setting efforts exist, there is currently no finalized &quot;Provisional Measure&quot; (部门规章) or &quot;Administrative Regulation&quot; (行政法规) at the national level that specifically codifies the security and deployment requirements for agentic AI. 
+
+The forecast centers on whether the Chinese government will move beyond draft standards and broad &quot;interactive&quot; rules to issue a specific, enforceable legal document (a &quot;Provisional Measure&quot; or higher) targeting the unique risks of AI agents—such as autonomous decision-making and cross-application execution—by the end of 2027.
+
+### <strong>Resolution Criteria</strong>
+This question resolves as <strong>YES</strong> if, between <strong>April 8, 2026 (00:00 UTC)</strong> and <strong>December 31, 2027 (23:59 UTC)</strong>, either the Cyberspace Administration of China (CAC) or the Ministry of Industry and Information Technology (MIIT) issues a finalized, signed version of a &quot;Provisional Measure&quot; (暂行办法), &quot;Administrative Regulation&quot; (行政法规), or &quot;Departmental Rule&quot; (部门规章) that specifically governs &quot;AI agents&quot; or &quot;autonomous agents.&quot;
+
+<strong>Key Definitions and Conditions:</strong>
+1.  <strong>AI Agent / Autonomous Agent:</strong> For the purpose of this question, the regulation must explicitly use the terms <strong>&quot;智能体&quot;</strong> (Intelligent Agent), <strong>&quot;AI智能体&quot;</strong> (AI Agent), or <strong>&quot;自主智能体&quot;</strong> (Autonomous Agent). These are defined as AI systems capable of perceiving their environment, reasoning, planning, and taking actions to achieve specific goals, often involving the use of external tools or software [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).
+2.  <strong>Formal Regulation:</strong> The document must qualify as a <strong>&quot;Departmental Rule&quot;</strong> (部门规章) or <strong>&quot;Administrative Regulation&quot;</strong> (行政法规) under Chinese Administrative Law. This excludes:
+    *   Voluntary industry standards or &quot;Group Standards&quot; (团体标准).
+    *   Drafts released only for public comment (征求意见稿).
+    *   Internal &quot;Guidelines&quot; (指南) or &quot;Opinions&quot; (意见) that lack the force of formal administrative measures.
+3.  <strong>Specific Governance:</strong> The regulation must dedicate its primary scope (or a distinct, multi-article chapter) to the security, filing, or deployment of AI agents. A general update to the 2023 &quot;Generative AI Measures&quot; that merely mentions agents in passing does not suffice.
+4.  <strong>Official Source:</strong> The announcement must be published on the official portal of the <strong>CAC</strong> (cac.gov.cn), the <strong>MIIT</strong> (miit.gov.cn), or the <strong>State Council</strong> (gov.cn).
+
+If no such finalized document is issued by the resolution date, the question resolves as <strong>NO</strong>.
+
+### <strong>Resolution Source</strong>
+- <strong>Primary Source:</strong> <a href="http://www.cac.gov.cn" target="_blank" rel="noopener">Official Website of the Cyberspace Administration of China (CAC)</a>
+- <strong>Secondary Source:</strong> <a href="http://www.miit.gov.cn" target="_blank" rel="noopener">Official Website of the Ministry of Industry and Information Technology (MIIT)</a>
+- <strong>Verification Portal:</strong> <a href="https://std.samr.gov.cn/" target="_blank" rel="noopener">National Public Service Platform for Standards Information</a> (for checking standard status) or the <a href="https://www.chinalawtranslate.com/" target="_blank" rel="noopener">China Law Translate</a> repository for English versions of finalized measures.</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>As of April 8, 2026, China’s AI regulatory landscape has transitioned from broad generative AI oversight to targeted measures for specific AI capabilities. In early April 2026, the Cyberspace Administration of China (CAC) issued the &quot;Draft Measures on Interactive AI Services&quot; (also referred to as the &quot;Draft Measures for Digital Virtual Human Services&quot;), which focuses on the regulation of digital humans and interactive virtual services. However, as of this date, these measures do not explicitly establish a comprehensive regulatory framework for &quot;AI agents&quot; or &quot;autonomous agents&quot; with independent planning and tool-use capabilities.
+
+The Ministry of Industry and Information Technology (MIIT), specifically through the MIIT/TC1 technical committee established in March 2025, has previously signaled a 1–3 year roadmap for developing 70 AI safety standards [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). This roadmap explicitly included planned standards for &quot;Security Requirements for Intelligent Agent Applications&quot; (智能体应用安全保障要求) and &quot;Security Requirements for Autonomous Operations of Intelligent Agents&quot; (智能体自主操作安全要求) [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). While these standard-setting efforts exist, there is currently no finalized &quot;Provisional Measure&quot; (部门规章) or &quot;Administrative Regulation&quot; (行政法规) at the national level that specifically codifies the security and deployment requirements for agentic AI. 
+
+The forecast centers on whether the Chinese government will move beyond draft standards and broad &quot;interactive&quot; rules to issue a specific, enforceable legal document (a &quot;Provisional Measure&quot; or higher) targeting the unique risks of AI agents—such as autonomous decision-making and cross-application execution—by the end of 2027.
+
+### <strong>Resolution Criteria</strong>
+This question resolves as <strong>YES</strong> if, between <strong>April 8, 2026 (00:00 UTC)</strong> and <strong>December 31, 2027 (23:59 UTC)</strong>, either the Cyberspace Administration of China (CAC) or the Ministry of Industry and Information Technology (MIIT) issues a finalized, signed version of a &quot;Provisional Measure&quot; (暂行办法), &quot;Administrative Regulation&quot; (行政法规), or &quot;Departmental Rule&quot; (部门规章) that specifically governs &quot;AI agents&quot; or &quot;autonomous agents.&quot;</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question resolves as <strong>YES</strong> if, between <strong>April 8, 2026 (00:00 UTC)</strong> and <strong>December 31, 2027 (23:59 UTC)</strong>, either the Cyberspace Administration of China (CAC) or the Ministry of Industry and Information Technology (MIIT) issues a finalized, signed version of a &quot;Provisional Measure&quot; (暂行办法), &quot;Administrative Regulation&quot; (行政法规), or &quot;Departmental Rule&quot; (部门规章) that specifically governs &quot;AI agents&quot; or &quot;autonomous agents.&quot;</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> This is a high-quality forecasting question. It addresses a specific, plausible regulatory development in a major AI jurisdiction. As of April 2026, China has just issued &#x27;Draft Measures on Interactive AI Services&#x27;, which the rationale correctly identifies as a precursor or broader category. The question focuses on a more specific &#x27;agent&#x27; or &#x27;autonomous agent&#x27; framework, which represents a clear and significant regulatory hurdle. The binary resolution (will they or won&#x27;t they) is well-defined, and the involvement of CAC/MIIT ensures a reliable resolution source. The timeframe (Dec 2027) is sufficient for significant policy shifts, making it a non-trivial forecast with high entropy. Research into Chinese AI policy trends and the specific &#x27;OpenClaw&#x27; security concerns would significantly influence a forecaster&#x27;s probability assessment.</p><p><strong>Ambiguity notes:</strong> The question provides specific Chinese terminology and legal document types, which greatly reduces ambiguity. The requirement for a specific chapter or primary scope adds a slight layer of interpretation but is well-clarified. The resolution sources are authoritative.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> PASS &nbsp; <strong>Edge-case risk:</strong> MEDIUM</p><p>ASSESSMENT: PASS
+
+REVIEW: The question is well-grounded in the current (simulated 2026) regulatory landscape in China. The background section correctly identifies the &#x27;State of AI Safety in China (2025)&#x27; report and the MIIT/TC1 roadmap, which includes specific standards for &#x27;Intelligent Agent Applications&#x27; and &#x27;Autonomous Operations&#x27; with a 1-3 year timeline <a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">State-of-AI-Safety-in-China-2025.pdf</a>. 
+
+The &#x27;Draft Measures on Interactive AI Services&#x27; mentioned (officially titled &#x27;Draft Measures for the Management of Anthropomorphic Interaction Services&#x27; / 人工智能拟人化互动服务管理暂行办法) was indeed released for public comment by the CAC on December 27, 2025, with a comment period ending in January 2026. This regulation focuses on &#x27;virtual personas&#x27; and &#x27;anthropomorphic&#x27; features, leaving the more technical &#x27;agentic&#x27; capabilities (autonomous tool-use, cross-app execution) largely to the MIIT&#x27;s upcoming standards or potential future CAC measures. 
+
+The distinction between &#x27;Departmental Rules&#x27; (规章) and technical standards is critical and well-maintained in the resolution criteria. The term &#x27;智能体&#x27; (Intelligent Agent) is indeed the standard term used in Chinese policy documents, such as the &#x27;AI+ Manufacturing&#x27; action plan (January 2026) and the State Council&#x27;s &#x27;AI+&#x27; opinions (August 2025). The question effectively captures the transition from development-focused &#x27;opinions&#x27; and &#x27;standards&#x27; to enforceable &#x27;administrative measures.&#x27; The 2027 deadline is appropriate given the 3-year roadmap established by MIIT in early 2025.
+
+EVIDENCE: <a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf," target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf,</a> <a href="https://www.cac.gov.cn/2025-12/27/c_1768571207311996.htm," target="_blank" rel="noopener">https://www.cac.gov.cn/2025-12/27/c_1768571207311996.htm,</a> <a href="https://www.nda.gov.cn/sjj/zwgk/zcfb/0112/20260107214358696030895_pc.html," target="_blank" rel="noopener">https://www.nda.gov.cn/sjj/zwgk/zcfb/0112/20260107214358696030895_pc.html,</a> <a href="https://www.chinalawtranslate.com/chatbot-measures-draft/" target="_blank" rel="noopener">https://www.chinalawtranslate.com/chatbot-measures-draft/</a>
+
+SUGGESTION: </p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: MEDIUM
+
+SCENARIO: The CAC issues a finalized &#x27;Security Guide for Intelligent Agent Deployment&#x27; (智能体部署安全指引) which contains mandatory filing requirements, but is titled as a &#x27;Guide&#x27; (指南) rather than a &#x27;Measure&#x27; (办法).
+SEVERITY: HIGH
+FIX: Clarify whether documents titled as &#x27;Guidelines&#x27; (指南) or &#x27;Technical Requirements&#x27; (技术要求) resolve as YES if they contain mandatory administrative requirements (like filing/filing requirements) despite not being formally labeled as &#x27;Measures&#x27; (办法) or &#x27;Rules&#x27; (规章).
+
+SCENARIO: A new regulation titled &#x27;Measures for the Management of Digital Human Services&#x27; contains a substantial chapter (5+ articles) on &#x27;Autonomous Intelligent Agents&#x27; (自主智能体) but the overall document title does not mention agents.
+SEVERITY: MEDIUM
+FIX: Explicitly state that if a regulation&#x27;s title does not include the target terms, a dedicated chapter (defined as a numbered section with at least three articles) specifically governing AI agents within a broader regulation satisfies the &#x27;Specific Governance&#x27; requirement.
+
+SCENARIO: The MIIT issues a &#x27;Departmental Rule&#x27; on &#x27;Industrial AI Applications&#x27; that uses the term &#x27;Intelligent Units&#x27; (智能单元) or &#x27;Autonomous Modules&#x27; (自主模块) to describe systems with independent planning and execution, but avoids the exact term &#x27;智能体&#x27;.
+SEVERITY: MEDIUM
+FIX: Specify that only the exact Chinese strings &#x27;智能体&#x27;, &#x27;AI智能体&#x27;, or &#x27;自主智能体&#x27; satisfy the requirement, or provide a list of acceptable technical synonyms.
+
+SCENARIO: The government releases a &#x27;Notice&#x27; (通知) that officially &#x27;adopts&#x27; a previously voluntary industry standard on AI agent security, making it mandatory for all registered AI providers.
+SEVERITY: MEDIUM
+FIX: Define whether the &#x27;adoption&#x27; or &#x27;incorporation&#x27; of a technical standard into a mandatory administrative notice counts as the issuance of a &#x27;Departmental Rule&#x27;.
+
+SCENARIO: The regulation is finalized and signed on December 30, 2027, but the official text is not publicly uploaded to the CAC/MIIT website until January 5, 2028.
+SEVERITY: LOW
+FIX: Clarify if the resolution is based on the &#x27;Date of Issuance/Signing&#x27; (typically found on the document header) or the &#x27;Date of Public Publication&#x27; on the official portal.</p></div></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>There are approximately 21 months left for this resolution. The current state of Chinese AI regulation is highly active, with the Cyberspace Administration of China (CAC) recently issuing draft measures on interactive AI in early April 2026. The MIIT has a clear roadmap to develop &#x27;standards&#x27; for intelligent agents by 2027-2028. A &#x27;Yes&#x27; outcome is supported by China&#x27;s history of rapidly issuing targeted regulations for new AI capabilities (like the 2023 Generative AI Measures, which took only 3 months from draft to final). However, the primary argument for &#x27;No&#x27; is the specific legal threshold of the question: it requires an enforceable &#x27;Provisional Measure&#x27; or &#x27;Administrative Regulation&#x27; (e.g., 部门规章). The ongoing MIIT roadmap is primarily focused on technical industry standards (标准), which do not meet the criteria. Furthermore, Beijing may be hesitant to enforce hard laws on autonomous agents too early to avoid stifling its &#x27;AI Plus&#x27; industrial initiatives. Balancing these factors, I assign a probability slightly below a coin toss.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>The question tracks a leading indicator for a major risk pathway—&#x27;anxiety-driven&#x27; adoption of AI agents—highlighted in the source paper. A formal regulation would signal a shift from advisory security warnings to enforceable governance, directly updating decision-makers on China&#x27;s regulatory trajectory and resource allocation toward agentic AI safety. Knowing whether the state successfully formalizes this &#x27;agent&#x27; framework would help resolve uncertainties about its ability to pace regulation with rapid technological adoption.</p></section>
+<section class="qsection" id="decomp"><h2>Decomposition &amp; research <span class="badge">Stage 6b</span></h2><p><strong>Research-informed re-forecast:</strong> <span style="color:#2e7d32;font-weight:700">72%</span></p><div class="subcard"><strong>SQ1: What is the historical average duration and success rate for MIIT technical standards being converted into formal &#x27;Provisional Measures&#x27; or &#x27;Administrative Regulations&#x27;?</strong><p>MIIT technical standards are not typically &#x27;converted&#x27; into formal regulations; instead, they serve as the operational implementation layer for existing &#x27;Provisional Measures&#x27; or &#x27;Administrative Regulations.&#x27; Research into sectors like Generative AI and autonomous driving shows that standards provide the technical &#x27;teeth&#x27; for broad regulatory requirements. For emerging fields like &#x27;AI agents,&#x27; the MIIT has initiated a roadmap for standards (e.g., &#x27;Security Requirements for Intelligent Agent Applications&#x27;) with a development timeline of 1-3 years starting in March 2025 [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). While there is no quantitative &#x27;success rate&#x27; for conversion, the issuance of a draft technical standard by an MIIT committee is a primary milestone indicating that formal regulatory enforcement or a new &#x27;Provisional Measure&#x27; is imminent, as seen with the 2021-2023 rollout of data security rules [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). Specific administrative milestones include official project approval (立项), the release of a draft for public comment, and final promulgation via a Department Order.</p><p>The relationship between Ministry of Industry and Information Technology (MIIT) technical standards and formal regulations is not one of linear &#x27;conversion&#x27; but rather one of functional complementarity. In the Chinese legal hierarchy, &#x27;Provisional Measures&#x27; (部门规章, <em>bumen guizhang</em>) provide the high-level legal basis and enforcement power, while technical standards (标准, <em>biaozhun</em>) provide the operational and technical detail required for compliance [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).
+
+### 1. Functional Relationship and Hierarchy
+Formal regulations like &#x27;Provisional Measures&#x27; are issued by state ministries and establish high-level requirements (e.g., &#x27;effective measures&#x27; must be taken to ensure data security). Technical standards, which are often developed by committees like MIIT/TC1, operationalize these requirements by defining the specific technical methods or thresholds for compliance [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). While technically voluntary, standards become &#x27;quasi-mandatory&#x27; when they are referenced in licensing requirements, administrative enforcement actions, or &#x27;campaign-style&#x27; regulatory crackdowns [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).
+
+### 2. Timelines and Success Rates
+The research did not find a formal &#x27;success rate&#x27; for standards becoming regulations because the two documents serve different legal purposes. Instead of standards being promoted to regulations, new regulations are typically accompanied or preceded by a suite of technical standards to ensure they are enforceable. For emerging technologies like &#x27;AI agents&#x27;, MIIT/TC1 has established a <strong>1-3 year timeline</strong> (starting from early 2025) to develop specific technical standards such as &#x27;Security Requirements for Intelligent Agent Applications&#x27; [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).
+
+### 3. Case Studies: Autonomous Driving and Data Security
+*   <strong>Autonomous Driving:</strong> The regulatory framework for Level 3 (L3) autonomous vehicles followed a path of pilot programs (November 2023) leading to the implementation of technical standards (September 2024), which in turn allowed for the issuance of permits in late 2025 [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).
+*   <strong>Data Security:</strong> The &#x27;Data Security Management Measures&#x27; process saw the MIIT publish a draft for comment in September 2021, with subsequent implementing rules and standards being released through 2023 and 2024 to flesh out the requirements of the higher-level &#x27;Data Security Law&#x27; and &#x27;Personal Information Protection Law&#x27; [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).
+
+### 4. Administrative Milestones
+The transition toward formal regulation in China&#x27;s industrial and IT sectors is marked by specific milestones:
+*   <strong>Project Approval (立项):</strong> The official inclusion of a standard or regulation in the MIIT&#x27;s annual legislative or standardization plan.
+*   <strong>Draft for Public Comment (征求意见稿):</strong> A formal period, typically 30 days, for public and industry feedback.
+*   <strong>Inter-Ministerial Coordination:</strong> For technologies like AI, the MIIT often co-drafts rules with the Cyberspace Administration of China (CAC) and the National Development and Reform Commission (NDRC) [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).
+<em>   <strong>Final Promulgation:</strong> The issuance of a &#x27;Department Order&#x27; (令, </em>ling*) by the Minister, which gives the measure formal legal status.
+
+### 5. AI Agent Security Standards Roadmap
+As of early 2025, the MIIT has explicitly identified the need to build industry datasets and cultivate AI application scenarios, including &#x27;AI agents&#x27; [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). The roadmap for these standards is set for completion between <strong>2025 and 2028</strong>, suggesting that any &#x27;Provisional Measure&#x27; governing them would likely rely on these standards for its technical enforcement mechanism.
+</p></div><div class="subcard"><strong>SQ2: How do high-level Chinese policy directives and jurisdictional agreements between the CAC and MIIT distinguish &#x27;autonomous agents&#x27; from &#x27;interactive AI&#x27; as a distinct regulatory category?</strong><p>As of April 2026, Chinese high-level policy has begun to distinguish &#x27;autonomous agents&#x27; from &#x27;interactive AI&#x27; by their primary function: &#x27;interactive AI&#x27; is treated as a social and content-management issue led by the Cyberspace Administration of China (CAC), while &#x27;autonomous agents&#x27; are treated as an industrial and economic priority led by the Ministry of Industry and Information Technology (MIIT). The CAC’s <strong>April 1, 2026</strong>, &quot;Draft Measures on Interactive AI Services&quot; specifically target AI that simulates human personality or emotional interaction, focusing on psychological safeguards and content safety <a href="https://www.mayerbrown.com/en/insights/publications/2026/04/china-issues-draft-rules-on-interactive-ai-services" target="_blank" rel="noopener">China Issues Draft Rules on Interactive AI Services | Insights</a>. In contrast, the <strong>15th Five-Year Plan (2026–2030)</strong> and the State Council’s <strong>August 27, 2025</strong>, &quot;AI Plus&quot; Action Plan categorize &quot;autonomous agents&quot; as strategic national infrastructure for industrial modernization. This jurisdictional division assigns the CAC oversight of the &quot;human-facing&quot; social interface of agents, while the MIIT and sectoral regulators oversee the &quot;task-executing&quot; autonomous capabilities in professional and industrial settings. Consequently, &#x27;AI agents&#x27; are currently being integrated into broader &quot;AI Plus&quot; industrial mandates, while their interactive components are captured by the 2026 CAC Draft Measures.</p><p>The following analysis is based on regulatory developments and policy directives observed between 2025 and 2026.
+
+### 1. Jurisdictional Division: CAC vs. MIIT (2025–2026)
+As of early 2026, the division of labor between the <strong>Cyberspace Administration of China (CAC)</strong> and the <strong>Ministry of Industry and Information Technology (MIIT)</strong> has crystallized around their traditional competencies, but with new specific focuses for AI:
+*   <strong>CAC Focus:</strong> The CAC&#x27;s primary mandate remains content governance, social stability, and data privacy. This is evidenced by its lead role in the <strong>April 1, 2026</strong>, &quot;Interim Measures on the Administration of Human-like Interactive Artificial Intelligence Services&quot; (Draft), which emphasizes &quot;core socialist values,&quot; emotional manipulation risks, and content filtering <a href="https://www.mayerbrown.com/en/insights/publications/2026/04/china-issues-draft-rules-on-interactive-ai-services" target="_blank" rel="noopener">China Issues Draft Rules on Interactive AI Services | Insights</a>.
+*   <strong>MIIT Focus:</strong> The MIIT has taken the lead on industrial application and technical standardization. Following the <strong>August 27, 2025</strong>, &quot;AI Plus&quot; Action Plan issued by the State Council, the MIIT has spearheaded the &quot;AI + Manufacturing&quot; initiative, which treats AI agents as industrial &quot;digital workers&quot; rather than just communication interfaces.
+
+### 2. Distinction Between &#x27;Autonomous Agents&#x27; and &#x27;Interactive AI&#x27;
+High-level policy documents in 2025 and 2026 have begun to treat these as overlapping but distinct regulatory targets:
+*   <strong>Interactive AI (Human-Facing):</strong> Defined by the CAC in its <strong>April 1, 2026</strong>, draft as AI that simulates human personality, thinking modes, or communication styles for emotional interaction <a href="https://www.mayerbrown.com/en/insights/publications/2026/04/china-issues-draft-rules-on-interactive-ai-services" target="_blank" rel="noopener">China Issues Draft Rules on Interactive AI Services | Insights</a>. The regulatory focus is on the psychological impact on users (e.g., minors and the elderly), transparency, and the prevention of social isolation or manipulation <a href="https://www.mayerbrown.com/en/insights/publications/2026/04/china-issues-draft-rules-on-interactive-ai-services" target="_blank" rel="noopener">China Issues Draft Rules on Interactive AI Services | Insights</a>.
+*   <strong>Autonomous Agents (Task-Oriented):</strong> Under the <strong>15th Five-Year Plan (2026–2030)</strong>, unveiled in <strong>March 2026</strong>, &quot;autonomous agents&quot; are categorized as national infrastructure and industrial drivers. These are defined by their &quot;agentic&quot; ability to complete complex real-world tasks independently, particularly in manufacturing, logistics, and scientific research.
+
+### 3. High-Level Policy Directives
+*   <strong>State Council &quot;AI Plus&quot; Opinions (August 27, 2025):</strong> This directive signaled a shift from &quot;generative&quot; to &quot;agentic&quot; AI, calling for the deployment of AI agents across 90% of the economy by 2030. It treats agents as an economic multiplier, emphasizing &quot;agent-led production&quot; rather than &quot;human-agent interaction.&quot;
+*   <strong>15th Five-Year Plan (March 2026):</strong> The plan officially elevates &quot;autonomous agents&quot; to a national strategic priority, focusing on &quot;General AI&quot; pathways. It mandates the creation of sector-specific regulatory frameworks, suggesting that industrial agents may fall under the MIIT&#x27;s specialized oversight while consumer-facing agents remain under the CAC.
+
+### 4. Comparison of Regulatory Frameworks
+<em>   <strong>Generative AI Measures (2023):</strong> Focused on the </em>output* (text, images) and the safety of the base model.
+<em>   <strong>Interactive AI Measures (Draft, April 2026):</strong> Shifts focus to the </em>behavioral<em> and </em>emotional* aspect of the AI, requiring &quot;intervention frameworks&quot; where the provider must take over if the AI detects user distress <a href="https://www.mayerbrown.com/en/insights/publications/2026/04/china-issues-draft-rules-on-interactive-ai-services" target="_blank" rel="noopener">China Issues Draft Rules on Interactive AI Services | Insights</a>.
+<em>   <strong>Agent-Specific Regulation:</strong> While not yet a single standalone &quot;Provisional Measure&quot; for all agents, the <strong>15th Five-Year Plan</strong> and sectoral &quot;AI Plus&quot; opinions suggest that autonomous agents are being regulated by </em>outcome<em> (e.g., industrial safety, economic reliability) rather than just </em>content*. The CAC&#x27;s Interactive AI rules cover agents only when they &quot;simulate human personality&quot; for public interaction <a href="https://www.mayerbrown.com/en/insights/publications/2026/04/china-issues-draft-rules-on-interactive-ai-services" target="_blank" rel="noopener">China Issues Draft Rules on Interactive AI Services | Insights</a>.</p></div></section>
+<section class="qsection" id="reconcile"><h2>Reconciled forecast <span class="badge">Stage 6d</span></h2><p>Bottom-up 77% &rarr; Dep-adj 73% &rarr; Struct-adj 73% &rarr; Holistic 70% &rarr; Final 72%</p><p>The bottom-up estimate of 77% is derived from the disjunctive formula P(C1 OR C2), using the assumption of independence. However, the component rationales highlight a positive correlation between MIIT and CAC regulatory momentum; if the technology evolves rapidly enough to trigger one, it is more likely to trigger both. This positive correlation means the &#x27;or&#x27; logic overestimates the total probability (the overlap is larger than P(C1)*P(C2)). Adjusting for this dependency brings the estimate down to 73%. The holistic estimate of 70% is slightly lower, reflecting a broader &#x27;outside view&#x27; of the bureaucratic friction inherent in finalizing &#x27;Provisional Measures&#x27; by a strict deadline, even when technical roadmaps exist. The two estimates are within 10 points (73% vs 70%), indicating strong alignment between the decomposed and holistic views. The final forecast is the average of these two values.</p></section>
+</div></body></html>

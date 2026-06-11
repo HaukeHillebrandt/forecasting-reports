@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Will at least five G7 nations sign a binding international treaty or agreement t</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#ffebee;color:#c62828">1%</span><h1 style="margin:0;font-size:1.25rem;">Will at least five G7 nations sign a binding international treaty or agreement that prohibits the use of AI for autonomous offensive cyber-operations against critical civilian infrastructure between 10th June 2026 and 31st December 2027 (23:59 UTC)?</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Gemini 3 Flash (minimal)</span><span>low (Gemini Flash) effort</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#revised">Revised question</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#fable">Fable 5 second opinion</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#c62828">1%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">88</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">92</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">73</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">82</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">70</span></div></div><p><strong>Review status:</strong> REVISED</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>Will a treaty or international agreement involving at least five of the G7 nations be signed by December 31, 2027, that establishes a binding prohibition on the use of AI for autonomous offensive cyber-operations against critical civilian infrastructure?</p><p><strong>Why this question?</strong> The rapid scaling of offensive AI capabilities described in the paper has led to calls for international &#x27;red-lines&#x27;. Following the Bletchley and Seoul declarations, a binding treaty would be the next step in global governance. This forecast tracks the move from voluntary norms to binding international law. Fallback source: United Nations Office for Disarmament Affairs (UNODA) Treaty Database.</p><p><strong>Paper reference:</strong> Section 5: Trendline Functional Form / Discussion - Projections of capability growth and systemic risk.</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p><strong>Question Title:</strong> Binding G7 agreement prohibiting autonomous offensive cyber-operations against critical civilian infrastructure
+
+<strong>Question:</strong> Will at least five G7 nations sign a binding international treaty or agreement that prohibits the use of AI for autonomous offensive cyber-operations against critical civilian infrastructure between 10th June 2026 and 31st December 2027 (23:59 UTC)?
+
+<strong>Background:</strong>
+As of 10th June 2026, international governance of AI in cyber-operations remains centered on non-binding frameworks and voluntary norms. Key milestones include the 2024 REAIM (Responsible AI in the Military Domain) Seoul Summit, which concluded with a non-binding Blueprint for Action supported by over 60 countries. The G7 Hiroshima AI Process has focused on transparency and codes of conduct for generative AI rather than binding restrictions on offensive capabilities. The 2025 G7 Kananaskis Summit in Canada resulted in a Leaders&#x27; Statement on AI for Prosperity that emphasized public sector adoption and economic benefits but did not establish a legally binding treaty regarding cyber-warfare or critical infrastructure protection <a href="https://www.g7.utoronto.ca/summit/2025kananaskis/index.html" target="_blank" rel="noopener">https://www.g7.utoronto.ca/summit/2025kananaskis/index.html</a>. While the 2015 UN GGE report (A/70/174) established a norm that states should not intentionally damage critical infrastructure providing services to the public, this is not a legally binding instrument <a href="https://undocs.org/A/70/174" target="_blank" rel="noopener">https://undocs.org/A/70/174</a>.
+
+The G7 nations consist of Canada, France, Germany, Italy, Japan, the United Kingdom, and the United States. A transition from voluntary declarations to binding international law would represent a significant shift in the regulation of frontier AI capabilities.
+
+Resolution data for international treaties is maintained by the United Nations Office for Disarmament Affairs (UNODA) at: <a href="https://treaties.unoda.org/" target="_blank" rel="noopener">https://treaties.unoda.org/</a>
+
+<strong>Resolution Criteria:</strong>
+The question resolves to YES if at least five G7 nations (Canada, France, Germany, Italy, Japan, United Kingdom, and United States) sign a binding international treaty or agreement that prohibits the use of AI for autonomous offensive cyber-operations against critical civilian infrastructure between 10th June 2026 and 31st December 2027 (23:59 UTC).
+
+For this question, binding refers to a written agreement governed by international law (e.g., a treaty, convention, or executive agreement) that creates legal obligations for the signatories, distinct from non-binding political declarations or communiques.
+
+Critical civilian infrastructure is defined as systems in the energy, water, healthcare, financial services, or telecommunications sectors providing essential services to the public.
+
+Autonomous offensive cyber-operations are defined as cyber-attacks where an AI system performs target identification, vulnerability analysis, and exploit delivery without real-time human intervention.
+
+Resolution will be determined by official records from the United Nations Office for Disarmament Affairs (UNODA) Treaty Database or the official government treaty gazettes of the signatory nations. If multiple G7 nations sign different agreements, they do not aggregate; at least five G7 nations must sign the same instrument.
+</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>As of 10th June 2026, international governance of AI in cyber-operations remains centered on non-binding frameworks and voluntary norms. Key milestones include the 2024 REAIM (Responsible AI in the Military Domain) Seoul Summit, which concluded with a non-binding Blueprint for Action supported by over 60 countries. The G7 Hiroshima AI Process has focused on transparency and codes of conduct for generative AI rather than binding restrictions on offensive capabilities. The 2025 G7 Kananaskis Summit in Canada resulted in a Leaders&#x27; Statement on AI for Prosperity that emphasized public sector adoption and economic benefits but did not establish a legally binding treaty regarding cyber-warfare or critical infrastructure protection (<a href="https://www.g7.utoronto.ca/summit/2025kananaskis/index.html" target="_blank" rel="noopener">https://www.g7.utoronto.ca/summit/2025kananaskis/index.html</a>). While the 2015 UN GGE report (A/70/174) established a norm that states should not intentionally damage critical infrastructure providing services to the public, this was not a legally binding instrument (<a href="https://undocs.org/A/70/174" target="_blank" rel="noopener">https://undocs.org/A/70/174</a>).
+
+The G7 nations consist of Canada, France, Germany, Italy, Japan, the United Kingdom, and the United States. A transition from voluntary declarations to binding international law would represent a significant shift in the regulation of frontier AI capabilities.</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>The question resolves to <strong>YES</strong> if at least five G7 nations (Canada, France, Germany, Italy, Japan, United Kingdom, and United States) sign the same binding international treaty or agreement that prohibits the use of AI for autonomous offensive cyber-operations against critical civilian infrastructure between 10th June 2026 and 31st December 2027 (23:59 UTC).
+
+*   <strong>Legally Binding:</strong> For this question, &quot;binding&quot; refers to a written agreement governed by international law that meets the criteria of the Vienna Convention on the Law of Treaties or is explicitly characterized as &quot;legally binding&quot; within its own text. This is distinct from non-binding political declarations, communiques, or voluntary codes of conduct.
+*   <strong>Critical Civilian Infrastructure:</strong> This refers to systems in the energy, water, healthcare, financial services, or telecommunications sectors providing essential services to the public. An asset is considered civilian if it meets the &quot;predominant use&quot; rule (more than 50% of its capacity or user base is non-military).
+*   <strong>Autonomous Offensive Cyber-Operations:</strong> This includes operations often referred to as &quot;autonomous weapon systems&quot; or &quot;automated means of warfare&quot; in the cyber domain. These are cyber-attacks where an AI system performs target identification, vulnerability analysis, and exploit delivery without real-time human intervention.
+*   <strong>Real-time Human Intervention:</strong> This requires a human to review and approve each specific target identification and exploit delivery individually at the moment of execution.
+*   <strong>Offensive Operations:</strong> Any operation involving the unauthorized access and alteration of systems outside of a nation&#x27;s own domestic network is considered &quot;offensive&quot; for the purposes of this question.
+*   <strong>Same Instrument:</strong> This includes a single multilateral treaty or identical text signed as part of a coordinated series of bilateral agreements if they share a common entry-into-force mechanism.</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> Real-world. This is a high-quality geopolitical question addressing the transition from voluntary norms to binding international law. It is difficult and high-entropy, as current international consensus is limited to non-binding declarations like the 2024 REAIM &#x27;Blueprint for Action&#x27; and the Bletchley/Seoul declarations. Current SOTA: No binding treaty prohibiting AI in cyber-operations exists; discussions remain in the &#x27;norms-building&#x27; phase at the UN GGE and OEWG levels. The specific threshold (5 of 7 G7 nations) provides a clear, resolvable metric.</p><p><strong>Ambiguity notes:</strong> 1, 5. The terms &#x27;binding,&#x27; &#x27;critical civilian infrastructure,&#x27; and &#x27;autonomous offensive cyber-operations&#x27; are exceptionally well-defined with enumerated lists. The non-aggregation clause in the criteria is a high-quality detail. Minor risk: the distinction between &#x27;signing&#x27; and &#x27;ratification&#x27; for treaties, though the definition of &#x27;binding&#x27; (creating legal obligations) helps clarify. Main risk: a treaty signed but not yet in force. Most important fix: specify if &#x27;entry into force&#x27; is required or if &#x27;signature&#x27; of a binding-type instrument suffices.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge-case risk:</strong> HIGH</p><p>ASSESSMENT: NEEDS_REVISION
+
+REVIEW: The question is well-structured but contains three substantive issues that would hinder effective forecasting:
+
+1. <strong>Resolution Source Mismatch:</strong> The UNODA Treaty Database is explicitly focused on &#x27;multilateral Arms Regulation and Disarmament Agreements&#x27; <a href="https://treaties.unoda.org/" target="_blank" rel="noopener">https://treaties.unoda.org/</a>. A binding agreement signed by &#x27;at least five G7 nations&#x27; (a plurilateral or minilateral agreement) is unlikely to be deposited with the UNODA unless it is part of a broader UN-recognized multilateral disarmament framework. Most G7-specific binding agreements or executive agreements would instead be found in the broader UN Treaty Series (UNTS) or individual national treaty gazettes. Relying on UNODA as the primary source creates a high risk of a &#x27;NO&#x27; resolution simply because the document is not in that specific disarmament-focused database.
+
+2. <strong>Legal vs. Technical Terminology:</strong> The definition of &#x27;autonomous offensive cyber-operations&#x27; (requiring no &#x27;real-time human intervention&#x27;) is a technical specification common in AI ethics but rare in international law. A binding treaty is more likely to use terms like &#x27;autonomous weapon systems&#x27; or &#x27;automated means of warfare.&#x27; If a treaty is signed that prohibits &#x27;autonomous cyber weapons&#x27; without using the specific technical threshold of &#x27;real-time human intervention,&#x27; it would create significant ambiguity for the resolution judge.
+
+3. <strong>Diplomatic Feasibility and Norms:</strong> While the background correctly notes the 2025 Kananaskis Summit outcomes <a href="https://www.g7.utoronto.ca/summit/2025kananaskis/index.html" target="_blank" rel="noopener">https://www.g7.utoronto.ca/summit/2025kananaskis/index.html</a>, it misses the significant diplomatic hurdle: G7 nations, particularly the US and UK, have historically resisted binding treaties in the cyber domain, preferring voluntary &#x27;norms of responsible state behavior&#x27; like those in the 2015 UN GGE report <a href="https://undocs.org/A/70/174" target="_blank" rel="noopener">https://undocs.org/A/70/174</a>. Given that the 2025 summit remained non-binding, the shift to a binding treaty for 5+ G7 nations by 2027 is a &#x27;hard NO&#x27; scenario for experts (median forecasts for authorized autonomous cyber operations often reach into the 2040s).
+
+The background information regarding the 2025 G7 Kananaskis Summit and Prime Minister Mark Carney is consistent with the provided timeline <a href="https://www.g7.utoronto.ca/summit/2025kananaskis/index.html" target="_blank" rel="noopener">https://www.g7.utoronto.ca/summit/2025kananaskis/index.html</a>. However, the 2015 UN GGE report mentioned as a baseline does not contain the terms &#x27;autonomous&#x27; or &#x27;AI&#x27; <a href="https://undocs.org/A/70/174" target="_blank" rel="noopener">https://undocs.org/A/70/174</a>.
+
+EVIDENCE: <a href="https://treaties.unoda.org/" target="_blank" rel="noopener">https://treaties.unoda.org/</a>
+<a href="https://www.g7.utoronto.ca/summit/2025kananaskis/index.html" target="_blank" rel="noopener">https://www.g7.utoronto.ca/summit/2025kananaskis/index.html</a>
+<a href="https://undocs.org/A/70/174" target="_blank" rel="noopener">https://undocs.org/A/70/174</a>
+<a href="https://leap.forecastingresearch.org/reports/wave5" target="_blank" rel="noopener">https://leap.forecastingresearch.org/reports/wave5</a>
+
+SUGGESTION: 1. Replace the resolution source &#x27;UNODA Treaty Database&#x27; with the &#x27;United Nations Treaty Series (UNTS)&#x27; or a requirement that the agreement be published in the official treaty series of at least five signatory G7 governments.
+2. Broaden the definition of the prohibition to include any binding agreement that explicitly targets &#x27;autonomous&#x27; or &#x27;AI-driven&#x27; cyber weapons/operations, or allow for resolution based on a consensus of international law experts if the treaty language is functionally equivalent to the technical definition.
+3. Consider changing &#x27;binding international treaty&#x27; to include &#x27;binding joint commitment with a specified verification or monitoring mechanism&#x27; to better reflect likely diplomatic paths.</p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: HIGH
+
+SCENARIO: Five G7 nations sign a &quot;Joint Program of Action&quot; that includes mandatory language like &quot;nations shall prohibit,&quot; but the document is not registered with the UN Treaty Series and is described by a signatory&#x27;s spokesperson as a &quot;solemn political commitment&quot; rather than a treaty.
+SEVERITY: HIGH
+FIX: Add a requirement that the agreement must be legally binding under the criteria of the Vienna Convention on the Law of Treaties or be explicitly characterized as &quot;legally binding&quot; in its own text.
+
+SCENARIO: An AI system identifies and attacks a series of targets over several hours based on a single initial &quot;fire-and-forget&quot; human command, leading to disagreement over whether the human&#x27;s initial click counts as &quot;real-time intervention.&quot;
+SEVERITY: MEDIUM
+FIX: Define &quot;real-time human intervention&quot; as requiring a human to review and approve each specific target identification and exploit delivery individually at the moment of execution.
+
+SCENARIO: The US, UK, Canada, France, and Germany sign separate but word-for-word identical bilateral agreements with a shared international body, rather than all five signing a single multilateral document.
+SEVERITY: MEDIUM
+FIX: Clarify that &quot;same instrument&quot; includes identical text signed as part of a coordinated series of bilateral agreements if they share a common entry-into-force mechanism.
+
+SCENARIO: A G7 nation deploys an autonomous AI agent that enters a foreign network to &quot;delete&quot; malware before it can be triggered, arguing this is a &quot;non-offensive active defense&quot; operation rather than an &quot;offensive&quot; operation.
+SEVERITY: HIGH
+FIX: Explicitly state that any operation involving the unauthorized access and alteration of systems outside of a nation&#x27;s own domestic network is considered &quot;offensive&quot; for the purposes of this question.
+
+SCENARIO: An autonomous AI attack targets a major regional telecommunications hub that is used primarily by civilian residents but also hosts dedicated secure lines for a nearby military base.
+SEVERITY: HIGH
+FIX: Define &quot;critical civilian infrastructure&quot; using the &quot;predominant use&quot; rule, where an asset is considered civilian if more than 50% of its capacity or user base is non-military.</p></div></section>
+<section class="qsection" id="revised"><h2>Revised question</h2><p><strong>Question Title:</strong> Binding G7 agreement prohibiting autonomous offensive cyber-operations against critical civilian infrastructure
+
+<strong>Question:</strong> Will at least five G7 nations sign a binding international treaty or agreement that prohibits the use of AI for autonomous offensive cyber-operations against critical civilian infrastructure between 10th June 2026 and 31st December 2027 (23:59 UTC)?
+
+<strong>Background:</strong>
+As of 10th June 2026, international governance of AI in cyber-operations remains centered on non-binding frameworks and voluntary norms. Key milestones include the 2024 REAIM (Responsible AI in the Military Domain) Seoul Summit, which concluded with a non-binding Blueprint for Action supported by over 60 countries. The G7 Hiroshima AI Process has focused on transparency and codes of conduct for generative AI rather than binding restrictions on offensive capabilities. The 2025 G7 Kananaskis Summit in Canada resulted in a Leaders&#x27; Statement on AI for Prosperity that emphasized public sector adoption and economic benefits but did not establish a legally binding treaty regarding cyber-warfare or critical infrastructure protection (<a href="https://www.g7.utoronto.ca/summit/2025kananaskis/index.html" target="_blank" rel="noopener">https://www.g7.utoronto.ca/summit/2025kananaskis/index.html</a>). While the 2015 UN GGE report (A/70/174) established a norm that states should not intentionally damage critical infrastructure providing services to the public, this was not a legally binding instrument (<a href="https://undocs.org/A/70/174" target="_blank" rel="noopener">https://undocs.org/A/70/174</a>).
+
+The G7 nations consist of Canada, France, Germany, Italy, Japan, the United Kingdom, and the United States. A transition from voluntary declarations to binding international law would represent a significant shift in the regulation of frontier AI capabilities.
+
+<strong>Resolution Criteria:</strong>
+The question resolves to <strong>YES</strong> if at least five G7 nations (Canada, France, Germany, Italy, Japan, United Kingdom, and United States) sign the same binding international treaty or agreement that prohibits the use of AI for autonomous offensive cyber-operations against critical civilian infrastructure between 10th June 2026 and 31st December 2027 (23:59 UTC).
+
+*   <strong>Legally Binding:</strong> For this question, &quot;binding&quot; refers to a written agreement governed by international law that meets the criteria of the Vienna Convention on the Law of Treaties or is explicitly characterized as &quot;legally binding&quot; within its own text. This is distinct from non-binding political declarations, communiques, or voluntary codes of conduct.
+*   <strong>Critical Civilian Infrastructure:</strong> This refers to systems in the energy, water, healthcare, financial services, or telecommunications sectors providing essential services to the public. An asset is considered civilian if it meets the &quot;predominant use&quot; rule (more than 50% of its capacity or user base is non-military).
+*   <strong>Autonomous Offensive Cyber-Operations:</strong> This includes operations often referred to as &quot;autonomous weapon systems&quot; or &quot;automated means of warfare&quot; in the cyber domain. These are cyber-attacks where an AI system performs target identification, vulnerability analysis, and exploit delivery without real-time human intervention.
+*   <strong>Real-time Human Intervention:</strong> This requires a human to review and approve each specific target identification and exploit delivery individually at the moment of execution.
+*   <strong>Offensive Operations:</strong> Any operation involving the unauthorized access and alteration of systems outside of a nation&#x27;s own domestic network is considered &quot;offensive&quot; for the purposes of this question.
+*   <strong>Same Instrument:</strong> This includes a single multilateral treaty or identical text signed as part of a coordinated series of bilateral agreements if they share a common entry-into-force mechanism.
+
+<strong>Resolution Source:</strong>
+Resolution will be determined by official records from the United Nations Treaty Series (UNTS) or the official national treaty gazettes/series of the signatory nations (e.g., the U.S. Treaties and Other International Acts Series (TIAS), the UK Treaty Series, or the Canada Treaty Series). If official records are delayed, a consensus of reports from at least three major international news agencies (e.g., Reuters, AP, AFP) explicitly stating that a binding treaty has been signed by the required number of G7 nations will suffice.
+</p></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>Summary
+The probability of at least five G7 nations signing a binding international treaty prohibiting the use of AI for autonomous offensive cyber-operations against critical civilian infrastructure by the end of 2027 is exceptionally low. International governance of artificial intelligence and military cyber-operations remains firmly rooted in non-binding frameworks and voluntary norms. Recent multilateral milestones, such as the REAIM 2026 Summit, the 2026 G7 Cybersecurity Working Group Declaration, and the G7 Digital and Technology Ministerial Declaration, consistently yield political declarations and unenforceable guidelines rather than legally binding commitments <a href="https://www.stopkillerrobots.org/news/reaim-2026/" target="_blank" rel="noopener">REAIM 2026 press release – Stop Killer Robots</a> <a href="https://digital-strategy.ec.europa.eu/en/news/european-commission-welcomes-g7-cybersecurity-declaration-strengthen-global-digital-resilience" target="_blank" rel="noopener">European Commission welcomes G7 cybersecurity declaration to ...</a> <a href="https://www.gov.uk/government/publications/g7-digital-and-technology-ministerial-declaration-29-may-2026/g7-digital-and-technology-ministerial-declaration-29-may-2026" target="_blank" rel="noopener">G7 Digital and Technology Ministerial Declaration: 29 May 2026</a>. The one existing binding AI instrument, the Council of Europe AI Framework Convention, explicitly excludes national security and defense matters from its scope, clearly demonstrating the international reluctance to regulate military AI capabilities <a href="https://www.caidp.org/resources/coe-ai-treaty/" target="_blank" rel="noopener">International AI Treaty - Center for AI and Digital Policy</a> <a href="https://rm.coe.int/1680afae3c" target="_blank" rel="noopener">https://rm.coe.int/1680afae3c</a>. Furthermore, there is currently no active negotiation track, mandate, or proposed draft text aimed at establishing a treaty that matches the precise scope of autonomous cyber-operations against civilian infrastructure.
+
+Additionally, achieving the required threshold of five G7 signatories faces overwhelming geopolitical barriers. The United States—a critical G7 member and dominant cyber power—has actively and consistently opposed binding international restrictions on autonomous systems. US policy argues that existing International Humanitarian Law is sufficient and explicitly prioritizes domestic, voluntary innovation over restrictive international regulation <a href="https://lieber.westpoint.edu/human-responsibility-retained-us-positions-judgment-oversight-laws/" target="_blank" rel="noopener">Human Responsibility Retained: U.S. Positions on Judgment and ...</a> <a href="https://www.whitehouse.gov/presidential-actions/2026/06/promoting-advanced-artificial-intelligence-innovation-and-security/" target="_blank" rel="noopener">Promoting Advanced Artificial Intelligence Innovation and Security</a> <a href="https://www.whitehouse.gov/presidential-actions/2026/06/promoting-advanced-artificial-intelligence-innovation-and-security/" target="_blank" rel="noopener">Promoting Advanced Artificial Intelligence Innovation and Security</a>. Without US participation, securing a minimum of five signatures from the remaining six G7 states is practically impossible, especially given that nations like the UK have shown similar reluctance toward binding constraints <a href="https://www.mindfoundry.ai/blog/ai-regulations-around-the-world" target="_blank" rel="noopener">AI Regulations around the World - 2026 - Mind Foundry</a>. Finally, multilateral treaty-making is a consensus-driven, notoriously slow process. Drafting, negotiating, and signing a highly specific, novel international treaty within an 18-month window is fundamentally misaligned with historical diplomatic timelines <a href="https://asil.org/insights/volume-29-issue-1/" target="_blank" rel="noopener">Lethal Autonomous Weapons Systems &amp; International Law</a>. Even if the political will existed, the strict definitional thresholds required by the resolution criteria make an affirmative outcome highly improbable.
+
+Strongest Arguments for Yes
+- A catastrophic, highly visible AI-enabled cyber-attack on critical civilian infrastructure (such as a power grid or financial network) could bypass typical diplomatic gridlock, creating extraordinary urgency and public pressure that forces states into rapid treaty-making.
+- The UN Secretary-General has repeatedly called for a legally binding instrument regarding autonomous weapons systems by 2026 <a href="https://www.un.org/sg/en/content/sg/statements/2023-07-18/secretary-generals-remarks-the-security-council-artificial-intelligence-bilingual-delivered-scroll-down-for-all-english" target="_blank" rel="noopener">Secretary-General&#x27;s remarks to the Security Council on Artificial ...</a> [[PDF] A New Agenda for Peace - the United Nations](<a href="https://www.un.org/climatesecuritymechanism/sites/default/files/2025-06/our-common-agenda-policy-brief-new-agenda-for-peace-en_0.pdf" target="_blank" rel="noopener">https://www.un.org/climatesecuritymechanism/sites/default/files/2025-06/our-common-agenda-policy-brief-new-agenda-for-peace-en_0.pdf</a>) <a href="https://disarmament.unoda.org/index.php/en/our-work/emerging-challenges/lethal-autonomous-weapon-systems" target="_blank" rel="noopener">https://disarmament.unoda.org/index.php/en/our-work/emerging-challenges/lethal-autonomous-weapon-systems</a>. If diplomatic pressure successfully overcomes current resistance, these negotiations could theoretically expand to cover cyber-operations, offering a pre-existing multilateral vehicle.
+
+Strongest Arguments for No
+- The international governance landscape remains strictly non-binding; outcomes like the REAIM 2026 summit and UN cyber discussions continue to produce only voluntary guidelines <a href="https://www.stopkillerrobots.org/news/reaim-2026/" target="_blank" rel="noopener">REAIM 2026 press release – Stop Killer Robots</a> <a href="https://www.stopkillerrobots.org/news/reaim-2026/" target="_blank" rel="noopener">REAIM 2026 press release – Stop Killer Robots</a> <a href="https://disarmament.unoda.org/en/our-work/emerging-challenges/developments-field-information-and-telecommunications-context" target="_blank" rel="noopener">https://disarmament.unoda.org/en/our-work/emerging-challenges/developments-field-information-and-telecommunications-context</a>.
+- The United States actively opposes binding international restrictions on autonomous systems, prioritizing voluntary domestic frameworks and existing law <a href="https://lieber.westpoint.edu/human-responsibility-retained-us-positions-judgment-oversight-laws/" target="_blank" rel="noopener">Human Responsibility Retained: U.S. Positions on Judgment and ...</a> <a href="https://www.whitehouse.gov/presidential-actions/2026/06/promoting-advanced-artificial-intelligence-innovation-and-security/" target="_blank" rel="noopener">Promoting Advanced Artificial Intelligence Innovation and Security</a> <a href="https://www.whitehouse.gov/presidential-actions/2026/06/promoting-advanced-artificial-intelligence-innovation-and-security/" target="_blank" rel="noopener">Promoting Advanced Artificial Intelligence Innovation and Security</a>.
+- Fully autonomous cyber-attacks do not yet technically exist, drastically reducing the immediate urgency for states to adopt binding prohibitions on capabilities that have not fully matured <a href="https://internationalaisafetyreport.org/publication/international-ai-safety-report-2026" target="_blank" rel="noopener">International AI Safety Report 2026</a>.
+- Multilateral diplomacy is notoriously slow; the 18-month timeframe is far too brief for states to conceptualize, negotiate, and sign an unprecedented treaty with highly specific definitional requirements.
+
+Key Uncertainties
+- Severe Cyber Shocks: A devastating AI-driven attack against vital public services could dramatically alter the political landscape, potentially compressing a decades-long treaty process into mere months and significantly increasing the likelihood of an agreement.
+- Changes in US Policy: A sudden shift in US diplomatic posture toward supporting legally binding AI restrictions would alter the broader G7 calculus, lowering the threshold for other states to sign and vastly increasing the probability of a treaty.
+- Adaptation of Existing Treaties: In the highly unlikely event that existing autonomous weapons discussions rapidly shift to encompass strict cyber domain definitions and predominant-use infrastructure rules, it could provide an accelerated path to a binding agreement.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>Resolution would indicate a major pivot from voluntary norms (Bletchley/Seoul) to binding international law, significantly constraining military/intelligence AI doctrine among the world&#x27;s most capable cyber powers. Not a benchmark question.</p></section>
+<section class="qsection" id="fable"><h2>Fable 5 second opinion <span class="badge">Stage 6f</span></h2><p><strong>Pipeline:</strong> <span style="color:#c62828;font-weight:700">1%</span> &rarr; <strong>Fable 5:</strong> <span style="color:#c62828;font-weight:700">1%</span> &nbsp;<span class="badge">AGREE</span></p><p>The question is well-constructed: &#x27;binding&#x27; is operationalized via the Vienna Convention, definitions for autonomy, civilian infrastructure, and &#x27;same instrument&#x27; are precise, and resolution by signature (not ratification) is clear. The 1% estimate is well-calibrated, possibly even slightly generous. Base rates strongly support a very low probability: multilateral security treaties typically take 5-10+ years from negotiation mandate to signature, and as of mid-2026 no treaty negotiation on this subject has even been proposed, let alone opened. The US has consistently opposed binding cyber-warfare instruments (rejecting calls for a &#x27;Digital Geneva Convention&#x27;), preferring voluntary norms (UN GGE, REAIM Blueprint). G7 outputs are structurally communique-based; the G7 has essentially never produced a binding treaty among its members. The CoE AI Convention&#x27;s explicit national-security carve-out confirms states&#x27; reluctance to bind military AI. A dramatic catalyst (e.g., a catastrophic AI-driven attack on civilian infrastructure) could accelerate matters, but even then an 18-month path from shock to signed binding treaty among 5+ G7 states is nearly unprecedented. I&#x27;d put it at 0.5-1.5%, consistent with the pipeline&#x27;s 1%.</p></section>
+</div></body></html>

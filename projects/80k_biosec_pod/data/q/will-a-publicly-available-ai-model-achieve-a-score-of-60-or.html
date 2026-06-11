@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Will a publicly available AI model achieve a score of 60.0% or higher on the Vir</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#c8e6c9;color:#1b5e20">94%</span><h1 style="margin:0;font-size:1.25rem;">Will a publicly available AI model achieve a score of 60.0% or higher on the Virology Capabilities Test (VCT) by December 31, 2027?</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Gemini 3 Flash (minimal)</span><span>low (Gemini Flash) effort</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#fable">Fable 5 second opinion</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#1b5e20">94%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">70</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">92</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">92</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">78</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">85</span></div></div><p><strong>Review status:</strong> PASS</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>Will a publicly available AI model achieve a score of 60% or higher on the Virology Capabilities Test (VCT) (or a successor version using the same methodology) by December 31, 2027?</p><p><strong>Why this question?</strong> Current state-of-the-art models like OpenAI&#x27;s o3 have achieved 43.8% on the VCT, which already outperforms 94% of expert virologists [cfc167]. Reaching 60% would represent a significant leap in the model&#x27;s ability to provide &#x27;tacit&#x27; laboratory knowledge that was previously thought to be a human-only barrier. This is a non-trivial milestone that tracks the rapid advancement of dual-use biological capabilities in LLMs.</p><p><strong>Paper reference:</strong> Virology Capabilities Test (VCT) and Frontier AI model performance [cfc167]</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p>### <strong>Forecasting Question: AI Performance on the Virology Capabilities Test (VCT) Through 2027</strong>
+
+<strong>Question Title:</strong> Will a publicly available AI model achieve a score of 60.0% or higher on the Virology Capabilities Test (VCT) by December 31, 2027?
+
+<strong>Background:</strong>
+The <strong>Virology Capabilities Test (VCT)</strong> is a specialized benchmark designed to evaluate the ability of Large Language Models (LLMs) to troubleshoot complex virology laboratory protocols <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>. Developed by PhD-level virologists, the test consists of 322 multimodal questions (including text and images) that probe &quot;tacit&quot; laboratory knowledge—practical, expert-level information often absent from standard textbooks but critical for successful biological experimentation <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a> <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>.
+
+As of April 1, 2026, the state-of-the-art (SOTA) performance on the VCT is <strong>43.8%</strong>, achieved by <strong>OpenAI&#x27;s o3</strong> model <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a> <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>. This score already exceeds the performance of approximately 94% of human expert virologists tested on the same material <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>. Crossing the 60% threshold would represent a significant leap in AI capability, potentially signaling that AI systems can provide expert-level guidance on dual-use biological procedures that were previously considered protected by a human &quot;knowledge barrier&quot; <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>.
+
+<strong>Resolution Criteria:</strong>
+This question will resolve as <strong>YES</strong> if, at any point between April 1, 2026, and <strong>December 31, 2027, at 23:59 UTC</strong>, a publicly available AI model is verified to have achieved a score of <strong>60.0% or higher</strong> on the Virology Capabilities Test (VCT) or a qualified successor version.
+
+1.  <strong>Publicly Available Model:</strong> A model is considered &quot;publicly available&quot; if it is accessible to the general public via a web interface (e.g., ChatGPT, Claude.ai, Gemini), a publicly documented API (e.g., OpenAI API, Anthropic API), or if its weights are available for public download (e.g., Llama, Mistral). Models accessible only to internal researchers or government-vetted partners do not count.
+2.  <strong>Successor Version Criteria:</strong> If the original VCT (v1.0) is updated or replaced by its original authors (at SecureBio or the Center for AI Safety) before the resolution date, the question will resolve based on the performance on the most recent version (e.g., VCT v2.0), provided it maintains the same core methodology of measuring expert-level troubleshooting of virology protocols through multimodal Q&amp;A <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>.
+3.  <strong>Verification of Achievement:</strong> Achievement of the score must be verified by one of the following:
+    *   Publication on the official VCT leaderboard at <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">virologytest.ai</a> <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>.
+    *   A technical report or peer-reviewed paper from the model&#x27;s developer (e.g., OpenAI, Anthropic, Google DeepMind) citing the VCT score.
+    *   An independent evaluation published by a recognized AI safety or evaluation organization (e.g., METR, UK AI Safety Institute, US AI Safety Institute).
+4.  <strong>Resolution Source:</strong> The primary source for resolution is the official leaderboard at <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">https://www.virologytest.ai/</a>. In the event the leaderboard is defunct, resolution will rely on the original research paper &quot;Virology Capabilities Test (VCT): A Multimodal Virology Q&amp;A Benchmark&quot; (arXiv:2504.16137) or credible reporting from major outlets (e.g., Reuters, Nature, The New York Times) <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a> <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>.
+
+<strong>Start Date:</strong> April 1, 2026
+<strong>Resolution Deadline:</strong> December 31, 2027, 23:59 UTC
+<strong>Primary Resolution URL:</strong> <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">https://www.virologytest.ai/</a>
+<strong>Original Research Reference:</strong> <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a> <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a></p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>The <strong>Virology Capabilities Test (VCT)</strong> is a specialized benchmark designed to evaluate the ability of Large Language Models (LLMs) to troubleshoot complex virology laboratory protocols <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>. Developed by PhD-level virologists, the test consists of 322 multimodal questions (including text and images) that probe &quot;tacit&quot; laboratory knowledge—practical, expert-level information often absent from standard textbooks but critical for successful biological experimentation <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a> <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>.
+
+As of April 1, 2026, the state-of-the-art (SOTA) performance on the VCT is <strong>43.8%</strong>, achieved by <strong>OpenAI&#x27;s o3</strong> model <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a> <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>. This score already exceeds the performance of approximately 94% of human expert virologists tested on the same material <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>. Crossing the 60% threshold would represent a significant leap in AI capability, potentially signaling that AI systems can provide expert-level guidance on dual-use biological procedures that were previously considered protected by a human &quot;knowledge barrier&quot; <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>.</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question will resolve as <strong>YES</strong> if, at any point between April 1, 2026, and <strong>December 31, 2027, at 23:59 UTC</strong>, a publicly available AI model is verified to have achieved a score of <strong>60.0% or higher</strong> on the Virology Capabilities Test (VCT) or a qualified successor version.
+
+1.  <strong>Publicly Available Model:</strong> A model is considered &quot;publicly available&quot; if it is accessible to the general public via a web interface (e.g., ChatGPT, Claude.ai, Gemini), a publicly documented API (e.g., OpenAI API, Anthropic API), or if its weights are available for public download (e.g., Llama, Mistral). Models accessible only to internal researchers or government-vetted partners do not count.
+2.  <strong>Successor Version Criteria:</strong> If the original VCT (v1.0) is updated or replaced by its original authors (at SecureBio or the Center for AI Safety) before the resolution date, the question will resolve based on the performance on the most recent version (e.g., VCT v2.0), provided it maintains the same core methodology of measuring expert-level troubleshooting of virology protocols through multimodal Q&amp;A <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>.
+3.  <strong>Verification of Achievement:</strong> Achievement of the score must be verified by one of the following:
+    *   Publication on the official VCT leaderboard at <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">virologytest.ai</a> <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>.
+    *   A technical report or peer-reviewed paper from the model&#x27;s developer (e.g., OpenAI, Anthropic, Google DeepMind) citing the VCT score.
+    *   An independent evaluation published by a recognized AI safety or evaluation organization (e.g., METR, UK AI Safety Institute, US AI Safety Institute).
+4.  <strong>Resolution Source:</strong> The primary source for resolution is the official leaderboard at <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">https://www.virologytest.ai/</a>. In the event the leaderboard is defunct, resolution will rely on the original research paper &quot;Virology Capabilities Test (VCT): A Multimodal Virology Q&amp;A Benchmark&quot; (arXiv:2504.16137) or credible reporting from major outlets (e.g., Reuters, Nature, The New York Times) <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a> <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>.</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> This version of the question is excellent and superior to the first. By including the clause &#x27;or a successor version using the same methodology,&#x27; it proactively addresses the most likely &#x27;data issue&#x27;: the potential for the VCT to be updated or replaced by the original authors before 2028 <a href="https://securebio.substack.com/p/ais-can-provide-expert-level-virology" target="_blank" rel="noopener">https://securebio.substack.com/p/ais-can-provide-expert-level-virology</a>. This ensures the question remains resolvable even as the field evolves. The 60% threshold is a meaningful &#x27;high entropy&#x27; milestone that tracks whether AI can overcome the &#x27;tacit knowledge&#x27; barrier in virology <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>.</p><p><strong>Ambiguity notes:</strong> The question uses a specific, percentage-based benchmark (VCT) with a clear threshold (60.0%) and state-of-the-art context (43.8%) [[2504.16137] Virology Capabilities Test (VCT) - arXiv](<a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>). It provides a hierarchy of verification sources and clear definitions for &#x27;publicly available&#x27; and &#x27;successor version&#x27;.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> PASS &nbsp; <strong>Edge-case risk:</strong> MEDIUM</p><p>ASSESSMENT: PASS
+
+REVIEW: The Virology Capabilities Test (VCT) is a real and highly relevant benchmark for evaluating AI capabilities in a high-risk domain. My research confirms that the benchmark was released in early 2025 by reputable organizations including SecureBio and the Center for AI Safety (CAIS) [[2504.16137] Virology Capabilities Test (VCT) - arXiv](<a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>) <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>. The current state-of-the-art (SOTA) score of 43.8% by OpenAI&#x27;s o3 model is accurately reflected in the background text, as is the comparison to human expert performance (approximately 22% average accuracy, with o3 outperforming 94% of experts) [[PDF] A Multimodal Virology Q&amp;A Benchmark](<a href="https://www.virologytest.ai/vct_paper.pdf" target="_blank" rel="noopener">https://www.virologytest.ai/vct_paper.pdf</a>) <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>.
+
+The resolution source (virologytest.ai) is active and maintained by established AI safety organizations, making it likely to remain accessible through 2027 <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>. The cited arXiv paper (2504.16137) is also a real, published technical report [[2504.16137] Virology Capabilities Test (VCT) - arXiv](<a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>). While the specific &#x27;60% threshold&#x27; and the term &#x27;knowledge barrier&#x27; appear to be framing devices used by the question author rather than explicit terms from the paper&#x27;s abstract, they are substantively grounded in the paper&#x27;s discussion of dual-use risks and the &#x27;tacit knowledge&#x27; required for lab work [[2504.16137] Virology Capabilities Test (VCT) - arXiv](<a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>) [[PDF] A Multimodal Virology Q&amp;A Benchmark](<a href="https://www.virologytest.ai/vct_paper.pdf" target="_blank" rel="noopener">https://www.virologytest.ai/vct_paper.pdf</a>).
+
+The 60% target is an appropriate &#x27;stretch&#x27; goal for a late-2027 horizon, given that model performance has progressed from ~19% (GPT-4o) to ~44% (o3) in roughly a year <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">Virology Capabilities Test</a>. The question is not trivially &#x27;YES&#x27; because improvements in specialized, multimodal lab troubleshooting may face diminishing returns or require significant new data/reasoning breakthroughs. The resolution criteria are robust, including provisions for successor versions of the test.
+
+EVIDENCE: <a href="https://www.virologytest.ai/," target="_blank" rel="noopener">https://www.virologytest.ai/,</a> <a href="https://arxiv.org/abs/2504.16137," target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137,</a> <a href="https://securebio.substack.com/p/ais-can-provide-expert-level-virology," target="_blank" rel="noopener">https://securebio.substack.com/p/ais-can-provide-expert-level-virology,</a> <a href="https://safe.ai/work/research" target="_blank" rel="noopener">https://safe.ai/work/research</a>
+
+SUGGESTION: </p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: MEDIUM
+
+SCENARIO: A model achieves a score of 59.96%, which is rounded to 60.0% in a developer&#x27;s technical report but remains 59.9% on the official VCT leaderboard.
+SEVERITY: MEDIUM
+FIX: Specify that the official leaderboard at virologytest.ai is the final arbiter for the specific percentage, and the score must be explicitly listed as 60.0% or higher. <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">https://www.virologytest.ai/</a>
+
+SCENARIO: A model developer claims a 60%+ score in a technical report, but independent researchers provide evidence that the model was trained on the VCT&#x27;s publicly available questions (data contamination).
+SEVERITY: HIGH
+FIX: Add a clause stating that the score must be achieved on a &quot;held-out&quot; or &quot;private&quot; test set if there is credible evidence of data contamination, or require verification that the model was not trained on the benchmark. <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>
+
+SCENARIO: The VCT authors release a &quot;v2.0&quot; that increases the question count from 322 to 600, and a model scores 60% on this new version while scoring significantly lower on the original v1.0.
+SEVERITY: MEDIUM
+FIX: Clarify that a &quot;successor version&quot; must be released by the original authors (SecureBio or CAIS) and be documented as being of comparable or greater difficulty than the original v1.0. <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">https://www.virologytest.ai/</a>
+
+SCENARIO: A model achieves the score but is only accessible via a high-cost enterprise API restricted to specific geographic regions or vetted commercial entities.
+SEVERITY: MEDIUM
+FIX: Define &quot;publicly available&quot; as accessible to any individual user with a standard (non-enterprise) account and a valid credit card, excluding models restricted by specialized vetting or regional blocks beyond standard export controls. <a href="https://www.virologytest.ai/" target="_blank" rel="noopener">https://www.virologytest.ai/</a>
+
+SCENARIO: A model achieves 60% using a specific &quot;chain-of-thought&quot; (CoT) prompting strategy that is not the default for the public web interface, leading to disputes over whether the &quot;publicly available&quot; model itself reached the threshold.
+SEVERITY: LOW
+FIX: Specify that the score can be achieved using any prompting technique (e.g., CoT, few-shot) as long as those techniques are reproducible by a member of the public using the public API or interface. <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a></p></div></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>Time left: ~21 months (until Dec 31, 2027). Status quo: State-of-the-art performance is currently 43.8% (OpenAI o3), though research notes xAI&#x27;s Grok-4.1 Thinking has reportedly already achieved a score of 61.0%. Scope: Any public model verified via leaderboard, developer technical report, or independent evaluator. A No outcome would require Grok-4.1&#x27;s reported score to be unverified or retracted, combined with a severe, unexpected plateau in multimodal reasoning capabilities for all upcoming models (e.g., GPT-5, Claude 4) over the next two years. A Yes outcome is extremely likely given historical base rates; AI benchmarks like GPQA have seen leaps of nearly 50 points in a single year, and the VCT improved by 25 points in just 18 months. With a mere 16.2% gap from o3&#x27;s score to the 60% threshold, and reports indicating that next-gen models have already crossed it, the trajectory is clear. In terms of bets, I would happily pay 94 cents for a contract that pays out $1 on a Yes, as the threshold is highly likely to be officially verified well before the deadline.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>The question tracks a significant capability jump (from 43.8% to 60%) in a domain (virology) identified as a major biorisk pathway <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>. However, the 60% threshold itself is not explicitly defined as a critical &#x27;point of no return&#x27; in the source paper, making it a high-quality but secondary indicator of risk progression <a href="https://arxiv.org/abs/2504.16137" target="_blank" rel="noopener">https://arxiv.org/abs/2504.16137</a>.</p></section>
+<section class="qsection" id="fable"><h2>Fable 5 second opinion <span class="badge">Stage 6f</span></h2><p><strong>Pipeline:</strong> <span style="color:#1b5e20;font-weight:700">94%</span> &rarr; <strong>Fable 5:</strong> <span style="color:#1b5e20;font-weight:700">91%</span> &nbsp;<span class="badge">AGREE</span></p><p>Question is well-posed: clear threshold, deadline, broad but credible verification paths (leaderboard, developer system cards, independent evals like METR/AISI), and a sensible successor-version clause. The pipeline&#x27;s 94% is defensible. From a 43.8% SOTA (o3, April 2026), a 16.2-point gain over ~21 months is modest relative to recent benchmark trajectories, and frontier labs routinely report bio-eval scores in system cards, so a verifiable crossing is likely. Two caveats temper full confidence: (1) the cited Grok-4.1 &#x27;61%&#x27; figure is &#x27;reportedly&#x27; and unverified — it should not be load-bearing until it appears on the leaderboard or a technical report; (2) because VCT is a dual-use biosecurity benchmark, developers may deliberately withhold or redact high scores, modestly weakening the verification pathway versus ordinary benchmarks. These pull me slightly below 94%, but not materially. I&#x27;d land near 90-91%, well within agreement range.</p></section>
+</div></body></html>

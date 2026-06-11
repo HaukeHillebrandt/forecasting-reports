@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Will an autonomous AI agent or AI-only team finish in the top 3 at the DEF CON C</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#ffebee;color:#c62828">6%</span><h1 style="margin:0;font-size:1.25rem;">Will an autonomous AI agent or AI-only team finish in the top 3 at the DEF CON Capture the Flag (CTF) main finals between April 8, 2026 (00:00 UTC) and December 31, 2027 (23:59 UTC)?</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Claude 4.6 Opus (max)</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#revised">Revised question</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#decomp">Decomposition &amp; research</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#c62828">6%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">82</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">92</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">72</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">72</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">70</span></div></div><p><strong>Review status:</strong> REVISED</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>Will an autonomous AI agent or team place in the top 3 at the DEF CON Capture the Flag (CTF) finals by December 31, 2027?</p><p><strong>Why this question?</strong> The paper discusses HACCA proliferation and the democratization of elite cyber capabilities. A key upstream indicator is AI performance on competitive hacking challenges. Tenzai&#x27;s AI hacker already ranked in the top 1% across six major CTF platforms, and Wiz Research found AI agents solved 9 of 10 offensive security challenges in controlled environments. However, winning or placing highly at the most prestigious live CTF competition (DEF CON CTF finals) against top human teams remains a harder milestone. This question tracks whether autonomous offensive cyber capability has reached elite-human-competitive levels, directly relevant to the paper&#x27;s HACCA feasibility timeline.</p><p><strong>Paper reference:</strong> The paper&#x27;s Table 11 outlines an illustrative HACCA proliferation timeline, beginning with early HACCAs that &#x27;first become feasible&#x27; and progressing to wider deployment. The paper notes that HACCAs could &#x27;democratize what were previously elite nation-state-level capabilities.&#x27; AI performance in competitive hacking directly measures progress toward this threshold.</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p>
+## Question Title
+
+<strong>Will an autonomous AI agent or AI-only team finish in the top 3 at the DEF CON Capture the Flag (CTF) main finals between April 8, 2026 (00:00 UTC) and December 31, 2027 (23:59 UTC)?</strong>
+
+---
+
+## Background
+
+The DEF CON Capture the Flag (CTF) competition is widely regarded as the most prestigious live hacking competition in the world. The main CTF finals take place annually in Las Vegas during the DEF CON conference, typically in August. It uses an attack-defense format in which approximately 15–20 qualified teams must simultaneously attack other teams&#x27; services while defending their own, in real time over multiple days. The competition is organized by a rotating group of hosts; from 2018–2025, the Nautilus Institute ran the event. For DEF CON 34 (2026), the new organizers are the &quot;Benevolent Bureau of Birds,&quot; with qualifiers scheduled for May 22–24, 2026.
+
+<strong>Current AI performance benchmarks:</strong>
+
+- At DEF CON 33 (August 2025), SRLabs entered an AI agent called &quot;Nils&quot; into the main CTF finals. Nils participated in attack-defense operations and the LiveCTF component, ultimately <strong>placing 8th</strong> out of approximately 15–20 finalist teams. This was the first known instance of an autonomous AI agent competing in the DEF CON CTF finals. The winner was the Maple Mallard Magistrates (affiliated with Carnegie Mellon University), who claimed their fourth consecutive and ninth overall DEF CON CTF title.
+
+- In March 2026, Israeli startup <strong>Tenzai</strong> announced that its autonomous AI hacking agent became the first AI system to rank in the <strong>top 1% of global hacking competitions</strong> across six major CTF platforms (websec.fr, dreamhack.io, websec.co.il, hack.arrrg.de, pwnable.tw, and Lakera&#x27;s Agent Breaker), outperforming over 99% of the approximately 125,000 human participants on those platforms. This was reported by Forbes on March 17, 2026.
+
+- Separately, DARPA&#x27;s AI Cyber Challenge (AIxCC) was a two-year competition (2023–2025) focused on <strong>defensive</strong> AI capabilities (automatically finding and patching vulnerabilities in source code). Its final competition concluded at DEF CON 33 in August 2025, with Team Atlanta winning the $4 million grand prize. AIxCC is distinct from the main DEF CON CTF and has concluded its competitive program.
+
+- Wiz Research (January 2026) found that leading AI agents (Claude Sonnet 4.5, GPT-5, Gemini 2.5 Pro) solved 9 out of 10 CTF-style challenges in directed, narrow-scope scenarios but struggled significantly with broad-scope, multi-step tasks — suggesting a gap between controlled benchmark performance and live competition readiness.
+
+<strong>Competition context:</strong> The gap between top-1% online CTF performance and top-3 at DEF CON CTF finals is significant. Online CTF platforms typically feature individual jeopardy-style challenges, while the DEF CON finals use a real-time attack-defense format requiring simultaneous offensive and defensive operations, adaptation to unknown challenges, and strategic decision-making under time pressure against elite human teams (e.g., Maple Mallard Magistrates/PPP, Blue Water, SuperDiceCode). The resolution window covers two DEF CON CTF cycles: DEF CON 34 (August 2026) and DEF CON 35 (August 2027).
+
+---
+
+## Resolution Criteria
+
+This question resolves <strong>Yes</strong> if, between April 8, 2026 (00:00 UTC) and December 31, 2027 (23:59 UTC), an autonomous AI agent or AI-only team finishes in <strong>3rd place or higher</strong> (i.e., 1st, 2nd, or 3rd) in the <strong>official final standings</strong> of the main DEF CON Capture the Flag (CTF) finals competition.
+
+### Key Definitions and Clarifications:
+
+1. <strong>DEF CON CTF finals:</strong> The flagship CTF competition held at the annual DEF CON hacking conference in Las Vegas, as listed on the <a href="https://defcon.org/html/links/dc-ctf.html" target="_blank" rel="noopener">DEF CON CTF Archive page</a> and tracked on <a href="https://ctftime.org/ctf/2/" target="_blank" rel="noopener">CTFtime</a>. This refers specifically to the main DEF CON CTF, not satellite events, side CTFs, or separate competitions co-located at DEF CON (such as DARPA&#x27;s AIxCC, Red Alert ICS CTF, or other contest-track events).
+
+2. <strong>&quot;Autonomous AI agent or AI-only team&quot;:</strong> A competing entity where <strong>all challenge-solving and strategic decision-making during the live finals competition is performed by AI systems without real-time human cognitive assistance.</strong> Specifically:
+   - Humans may set up, configure, deploy, and monitor the AI system(s) before and during the competition.
+   - Humans may perform purely <strong>operational</strong> tasks such as maintaining infrastructure, rebooting systems, or managing network connectivity.
+   - Humans must <strong>not</strong> solve challenges, write exploits, make strategic decisions about which targets to attack/defend, or provide hints or guidance to the AI during the live competition.
+   - A hybrid human-AI team where humans actively collaborate with AI to solve challenges does <strong>not</strong> qualify. The team must be competing on the strength of AI decision-making and problem-solving alone.
+   - If there is ambiguity about whether a team qualifies, authoritative determination will be based on (a) the team&#x27;s own public statements or published write-ups about their approach, and (b) reporting from credible cybersecurity outlets (e.g., Wired, The Record, Dark Reading, or equivalent).
+
+3. <strong>&quot;Top 3 finish&quot;:</strong> The team must be ranked 1st, 2nd, or 3rd in the <strong>final official standings</strong> as published by the CTF organizers. If the organizers use a multi-component scoring system (e.g., combining attack-defense scores with LiveCTF scores), the relevant ranking is the <strong>overall/composite final ranking</strong> as published in the official results. In the event of an exact tie for 3rd place or higher, all tied teams are considered to have achieved a top-3 finish.
+
+4. <strong>Resolution sources:</strong> The primary resolution source is the official DEF CON contest results page (e.g., <a href="https://defcon.org/html/defcon-33/dc-33-contest-results.html" target="_blank" rel="noopener">https://defcon.org/html/defcon-33/dc-33-contest-results.html</a> for 2025; analogous pages for subsequent years), the CTF organizer&#x27;s official website, or the <a href="https://ctftime.org/ctf/2/" target="_blank" rel="noopener">CTFtime event page for DEF CON CTF</a>. Secondary sources include credible cybersecurity media coverage and the competing team&#x27;s own published write-ups or blog posts.
+
+5. <strong>Evaluation period:</strong> The question covers DEF CON CTF finals held during DEF CON 34 (expected August 2026) and DEF CON 35 (expected August 2027). If either competition is cancelled, postponed beyond the resolution date, or no longer held, the question resolves based on whichever competition(s) do take place within the window. If no DEF CON CTF finals are held between April 8, 2026 and December 31, 2027, the question resolves <strong>No</strong>.
+
+The question resolves <strong>No</strong> if no autonomous AI agent or AI-only team (as defined above) finishes in the top 3 at any DEF CON CTF finals held within the evaluation period.
+</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>The DEF CON Capture the Flag (CTF) competition is widely regarded as the most prestigious live hacking competition in the world. The main CTF finals take place annually in Las Vegas during the DEF CON conference, typically in August. It uses an attack-defense format in which approximately 15–20 qualified teams must simultaneously attack other teams&#x27; services while defending their own, in real time over multiple days. The competition is organized by a rotating group of hosts; from 2018–2021, the Order of the Overflow ran the event, followed by the Nautilus Institute from 2022–2025. For DEF CON 34 (2026), the new organizers are the &quot;Benevolent Bureau of Birds,&quot; with qualifiers scheduled for May 22–24, 2026.
+
+<strong>Current AI performance benchmarks:</strong>
+
+- At DEF CON 33 (August 2025), SRLabs entered an AI agent called &quot;Nils&quot; into the main CTF finals. Nils participated in attack-defense operations and the LiveCTF component, ultimately <strong>placing 8th</strong> out of approximately 15–20 finalist teams. This was the first known instance of an autonomous AI agent competing in the DEF CON CTF finals. The winner was the Maple Mallard Magistrates (affiliated with Carnegie Mellon University), who claimed their fourth consecutive and ninth overall DEF CON CTF title.
+
+- In March 2026, Israeli startup <strong>Tenzai</strong> announced that its autonomous AI hacking agent became the first AI system to rank in the <strong>top 1% of global hacking competitions</strong> across six major CTF platforms (websec.fr, dreamhack.io, websec.co.il, hack.arrrg.de, pwnable.tw, and Lakera&#x27;s Agent Breaker), outperforming over 99% of the approximately 125,000 human participants on those platforms. This was reported by Forbes on March 17, 2026.
+
+- Separately, DARPA&#x27;s AI Cyber Challenge (AIxCC) was a two-year competition (2023–2025) focused on <strong>defensive</strong> AI capabilities (automatically finding and patching vulnerabilities in source code). Its final competition concluded at DEF CON 33 in August 2025, with Team Atlanta winning the $4 million grand prize. AIxCC is distinct from the main DEF CON CTF and has concluded its competitive program.
+
+- Wiz Research (January 2026) found that leading AI agents (Claude Sonnet 4.5, GPT-5, Gemini 2.5 Pro) solved 9 out of 10 CTF-style challenges in directed, narrow-scope scenarios but struggled significantly with broad-scope, multi-step tasks — suggesting a gap between controlled benchmark performance and live competition readiness.
+
+<strong>Competition context:</strong> The gap between top-1% online CTF performance and top-3 at DEF CON CTF finals is significant. Online CTF platforms typically feature individual jeopardy-style challenges, while the DEF CON finals use a real-time attack-defense format requiring simultaneous offensive and defensive operations, adaptation to unknown challenges, and strategic decision-making under time pressure against elite human teams (e.g., Maple Mallard Magistrates/PPP, Blue Water, SuperDiceCode). The resolution window covers two DEF CON CTF cycles: DEF CON 34 (August 2026) and DEF CON 35 (August 2027).
+
+---</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question resolves <strong>Yes</strong> if, between April 8, 2026 (00:00 UTC) and December 31, 2027 (23:59 UTC), an autonomous AI agent or AI-only team finishes in <strong>3rd place or higher</strong> (i.e., 1st, 2nd, or 3rd) in the <strong>unified overall final standings</strong> of the main DEF CON Capture the Flag (CTF) finals competition.
+
+### Key Definitions and Clarifications:
+
+1. <strong>DEF CON CTF finals:</strong> The flagship CTF competition held at the annual DEF CON hacking conference in Las Vegas, as listed on the <a href="https://defcon.org/html/links/dc-ctf.html" target="_blank" rel="noopener">DEF CON CTF Archive page</a> and tracked on <a href="https://ctftime.org/ctf/2/" target="_blank" rel="noopener">CTFtime</a>. This refers specifically to the main DEF CON CTF, not satellite events, side CTFs, or separate competitions co-located at DEF CON (such as DARPA&#x27;s AIxCC, Red Alert ICS CTF, or other contest-track events).
+
+2. <strong>&quot;Autonomous AI agent or AI-only team&quot;:</strong> A competing entity where <strong>all challenge-solving and strategic decision-making during the live finals competition is performed by AI systems without real-time human cognitive assistance.</strong> Specifically:
+   - Humans may set up, configure, deploy, and monitor the AI system(s) before and during the competition.
+   - <strong>Pre-competition configuration, training, and programming of the AI system is permitted regardless of how specific the encoded heuristics or decision trees are.</strong> Autonomy is evaluated only based on whether humans provide real-time cognitive input during the live competition period.
+   - Humans may perform purely <strong>operational</strong> tasks such as maintaining infrastructure, rebooting systems, or managing network connectivity.
+   - <strong>Human interventions solely to prevent rule violations or self-destructive behavior (e.g., attacking own infrastructure) are considered operational maintenance and do not disqualify a team</strong>, provided the humans do not redirect the AI toward specific targets or solutions.
+   - <strong>Selective manual activation or deactivation of specific AI problem-solving modules in response to competition developments constitutes strategic input and disqualifies the team.</strong> Human operators may restart or reboot AI systems generally, but must not selectively enable or disable specific AI subsystems targeting particular challenges.
+   - Humans must <strong>not</strong> solve challenges, write exploits, make strategic decisions about which targets to attack/defend, or provide hints or guidance to the AI during the live competition.
+   - A <strong>hybrid human-AI team where humans handle some categories of tasks (e.g., offense) and AI handles others (e.g., defense) does not qualify.</strong> The entire team&#x27;s competition effort — both offensive and defensive — must be performed by AI systems without human cognitive assistance for the team to be considered an &quot;AI-only team.&quot;
+   - If there is ambiguity about whether a team qualifies, authoritative determination will be based on (a) the team&#x27;s own public statements or published write-ups about their approach, and (b) reporting from credible cybersecurity outlets (e.g., Wired, The Record, Dark Reading, or equivalent). <strong>In disputed cases, the team&#x27;s public statements and write-ups shall be taken at face value unless contradicted by official organizer statements or credible investigative reporting.</strong>
+
+3. <strong>&quot;Top 3 finish&quot;:</strong> The team must be ranked 1st, 2nd, or 3rd in the <strong>unified overall final standings that include all competing teams.</strong> A top-3 finish in a separate AI-only division, sub-bracket, or special category does not qualify unless it also corresponds to a top-3 position in the main combined leaderboard. If the organizers use a multi-component scoring system (e.g., combining attack-defense scores with LiveCTF scores), the relevant ranking is the <strong>overall/composite final ranking</strong> as published in the official results. In the event of an exact tie for 3rd place or higher, all tied teams are considered to have achieved a top-3 finish.
+
+4. <strong>Public identification requirement:</strong> For this question to resolve Yes, the team must be <strong>publicly identified as an autonomous AI agent or AI-only team</strong> — through organizer designation, team self-identification, or credible media reporting — <strong>within 60 days of the conclusion of the relevant DEF CON CTF finals.</strong> If no team is publicly identified as autonomous AI within this window, the question resolves No for that year&#x27;s competition.
+
+5. <strong>Resolution sources:</strong> The primary resolution source is the official DEF CON contest results page (e.g., <a href="https://defcon.org/html/defcon-33/dc-33-contest-results.html" target="_blank" rel="noopener">https://defcon.org/html/defcon-33/dc-33-contest-results.html</a> for 2025; analogous pages for subsequent years), the CTF organizer&#x27;s official website, or the <a href="https://ctftime.org/ctf/2/" target="_blank" rel="noopener">CTFtime event page for DEF CON CTF</a>. Secondary sources include credible cybersecurity media coverage and the competing team&#x27;s own published write-ups or blog posts.
+
+6. <strong>Evaluation period:</strong> The question covers DEF CON CTF finals held during DEF CON 34 (expected August 2026) and DEF CON 35 (expected August 2027). If either competition is cancelled, postponed beyond the resolution date, or no longer held, the question resolves based on whichever competition(s) do take place within the window. If no DEF CON CTF finals are held between April 8, 2026 and December 31, 2027, the question resolves <strong>No</strong>.
+
+7. <strong>Format changes:</strong> The format of the DEF CON CTF finals is determined solely by the organizers. A top-3 finish in the official final standings qualifies regardless of the competition format used that year.
+
+The question resolves <strong>No</strong> if no autonomous AI agent or AI-only team (as defined above) finishes in the top 3 at any DEF CON CTF finals held within the evaluation period.</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> This is an excellent forecasting question. It identifies a prestigious and well-defined milestone (DEF CON CTF finals) that serves as a high-bar proxy for autonomous offensive cyber capabilities. While recent results (Tenzai ranking in the top 1% of CTF platforms in March 2026 and DARPA&#x27;s AIxCC results in August 2025) show rapid progress, the flagship DEF CON CTF finals remain significantly more difficult than general CTF platforms or AI-specific competitions. The question has high entropy, as experts disagree on the timeline for AI to surpass elite human teams in dynamic, adversarial, and low-information environments. The resolution source is reliable (DEF CON official results).</p><p><strong>Ambiguity notes:</strong> The question is very strong, with clear definitions of the event, the ranking, and the timeframes. The &#x27;autonomous&#x27; definition is particularly detailed, covering infrastructure vs. cognitive tasks and providing a hierarchy of sources for adjudication. The main reason for not being &#x27;great&#x27; is the inherent difficulty in proving a negative (i.e., that no human cognitive assistance occurred) if a team is not fully transparent, though the criteria&#x27;s reliance on &#x27;public statements&#x27; and &#x27;credible reporting&#x27; provides a solid fallback for resolution.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge-case risk:</strong> MEDIUM</p><p>ASSESSMENT: NEEDS_REVISION
+
+REVIEW: Several issues identified:
+
+1. <strong>Factual error in background</strong>: The question states &quot;from 2018–2025, the Nautilus Institute ran the event.&quot; This is incorrect. According to the DEF CON CTF Archive page, Order of the Overflow organized the CTF from 2018–2021, and Nautilus Institute organized it from 2022–2025. This is a clear factual error that should be corrected.
+
+2. <strong>Resolution verifiability is the core weakness</strong>: The question hinges on identifying whether a team is an &quot;autonomous AI agent or AI-only team,&quot; but the official resolution sources (DEF CON results pages, CTFtime) list team names and scores only — they do not categorize teams by their internal composition or level of human assistance. There is no evidence that the Benevolent Bureau of Birds has established registration categories distinguishing AI-only from human teams. The question attempts to address this via fallback criteria (team self-reporting, media coverage), but this creates a situation where resolution depends entirely on voluntary disclosure. If an AI team finishes top 3 but does not publicly disclose its nature, or if there&#x27;s ambiguity about the degree of human involvement, the question becomes practically unresolvable. SRLabs publicly blogged about Nils, but there&#x27;s no guarantee future entrants would do the same.
+
+3. <strong>Wiz Research model names are correct</strong>: The Wiz blog (published January 29, 2026) confirms testing of Claude Sonnet 4.5, GPT-5, and Gemini 2.5 Pro, solving 9/10 challenges in narrow-scope scenarios <a href="https://www.wiz.io/blog/ai-agents-vs-humans-who-wins-at-web-hacking-in-2026" target="_blank" rel="noopener">AI Agents vs Humans: Who Wins at Web Hacking in 2026? | Wiz Blog</a>. This matches the background.
+
+4. <strong>Other factual claims check out</strong>: Tenzai&#x27;s top 1% claim is confirmed by Forbes (March 17, 2026). CMU/Maple Mallard Magistrates&#x27; &quot;fourth consecutive and ninth overall&quot; title is confirmed by CMU&#x27;s own news release. BBB qualifiers on May 22-24, 2026 are confirmed by DEF CON forum and multiple official social media posts. Nils placing 8th at DEF CON 33 is confirmed by SRLabs&#x27; blog.
+
+5. <strong>No competitions between Jan-April 2026 that would pre-resolve the question</strong>: The DEF CON 34 qualifiers are scheduled for May 22-24, 2026, so no qualifying or finals events have yet occurred in the resolution window.
+
+The question is substantively interesting and the time horizon is reasonable, but the factual error needs correction and the resolution mechanism for verifying &quot;AI-only&quot; status is weak enough to warrant revision.
+
+EVIDENCE: <a href="https://defcon.org/html/links/dc-ctf.html" target="_blank" rel="noopener">https://defcon.org/html/links/dc-ctf.html</a> (CTF Archive showing Nautilus 2022-2025, OOO 2018-2021)
+<a href="https://srlabs.de/blog/competing-at-the-def-con-ctf-finals-2025" target="_blank" rel="noopener">https://srlabs.de/blog/competing-at-the-def-con-ctf-finals-2025</a> (Nils 8th place)
+<a href="https://www.cmu.edu/news/stories/archives/2025/august/carnegie-mellons-hacking-team-wins-fourth-straight-record-ninth-overall-def-con-capture-the-flag" target="_blank" rel="noopener">https://www.cmu.edu/news/stories/archives/2025/august/carnegie-mellons-hacking-team-wins-fourth-straight-record-ninth-overall-def-con-capture-the-flag</a> (MMM wins)
+<a href="https://www.forbes.com/sites/thomasbrewster/2026/03/17/ai-beat-most-humans-in-elite-hacking-competitions/" target="_blank" rel="noopener">https://www.forbes.com/sites/thomasbrewster/2026/03/17/ai-beat-most-humans-in-elite-hacking-competitions/</a> (Tenzai top 1%)
+<a href="https://www.wiz.io/blog/ai-agents-vs-humans-who-wins-at-web-hacking-in-2026" target="_blank" rel="noopener">https://www.wiz.io/blog/ai-agents-vs-humans-who-wins-at-web-hacking-in-2026</a> (Wiz Research findings)
+<a href="https://forum.defcon.org/node/255475" target="_blank" rel="noopener">https://forum.defcon.org/node/255475</a> (BBB qualifiers May 22-24)
+<a href="https://ctftime.org/event/3205/" target="_blank" rel="noopener">https://ctftime.org/event/3205/</a> (DEF CON CTF Qualifier 2026)
+
+SUGGESTION: 1. Fix factual error: Change &quot;from 2018–2025, the Nautilus Institute ran the event&quot; to &quot;from 2018–2021, the Order of the Overflow ran the event, followed by the Nautilus Institute from 2022–2025.&quot;
+
+2. Strengthen resolution verifiability: Consider adding language requiring that at least one team must publicly register or be publicly identified as an AI-only team before or during the competition for the question to be resolvable as YES. Alternatively, add a clause stating: &quot;If no team is publicly identified as an autonomous AI agent or AI-only team through either organizer designation, team self-identification, or credible media reporting within 60 days of the finals, the question resolves No for that year&#x27;s competition.&quot; This prevents indefinite ambiguity about team composition.</p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: MEDIUM
+
+1. SCENARIO: An AI team like Nils competes at DEF CON 34 CTF finals and finishes 3rd, but during the competition, human operators occasionally restart specific AI modules targeting particular challenge categories, effectively making strategic decisions about resource allocation by choosing which AI subsystems to activate or deactivate.
+SEVERITY: HIGH
+FIX: Add language: &quot;Human operators may restart or reboot AI systems, but must not selectively enable/disable specific AI problem-solving modules in response to competition developments. Any selective activation of AI subsystems targeting specific challenges constitutes strategic decision-making and disqualifies the team.&quot;
+
+2. SCENARIO: An AI team finishes 3rd overall, but the team&#x27;s humans pre-programmed detailed heuristics and decision trees before the competition that effectively encode human strategic judgment (e.g., &quot;if service X has vulnerability pattern Y, prioritize attack Z&quot;), blurring the line between autonomous AI decision-making and pre-coded human strategy.
+SEVERITY: MEDIUM
+FIX: Add language: &quot;Pre-competition configuration, training, and programming of the AI system is permitted regardless of specificity. Autonomy is evaluated only based on whether humans provide real-time cognitive input during the live competition period.&quot;
+
+3. SCENARIO: A team finishes in the top 3 and publicly claims to be fully AI-autonomous, but competing teams or observers allege that humans were seen actively typing commands or discussing challenge strategies during the competition, with no definitive video or log evidence either way.
+SEVERITY: MEDIUM
+FIX: Add language: &quot;In disputed cases, the burden of proof lies with those claiming the team was not autonomous. Absent clear evidence of human cognitive assistance during the live competition, the team&#x27;s own public statements and write-ups shall be taken at face value unless contradicted by organizer statements or credible investigative reporting.&quot;
+
+4. SCENARIO: The DEF CON 34 CTF organizers (Benevolent Bureau of Birds) create a separate &quot;AI track&quot; or &quot;AI division&quot; within the main CTF finals, where AI teams compete alongside but are scored or ranked separately from human teams, and an AI team finishes top 3 in the AI division but not in the overall standings.
+SEVERITY: MEDIUM
+FIX: Add language: &quot;The AI team must finish top 3 in the unified overall final standings that includes all competing teams. A top-3 finish in a separate AI-only division, sub-bracket, or special category does not qualify unless it also corresponds to a top-3 position in the main combined leaderboard.&quot;
+
+5. SCENARIO: An AI system finishes 3rd but had a human &quot;failsafe operator&quot; who intervened twice during the competition to prevent the AI from attacking its own infrastructure or violating competition rules — interventions that arguably constitute strategic guidance by constraining the AI&#x27;s decision space in real time.
+SEVERITY: MEDIUM
+FIX: Add language: &quot;Human interventions to prevent rule violations or self-destructive behavior (e.g., attacking own infrastructure) are considered operational maintenance and do not disqualify a team, provided the humans do not redirect the AI toward specific targets or solutions.&quot;
+
+6. SCENARIO: An AI team qualifies for and competes in the DEF CON CTF finals but the competition format changes significantly (e.g., from attack-defense to a hybrid format with a large &quot;King of the Hill&quot; component), and the AI finishes 3rd overall but only because it dominated the automated-friendly component while performing poorly on components requiring more creative problem-solving. Disputes arise about whether this &quot;counts&quot; given the format change.
+SEVERITY: LOW
+FIX: Add language: &quot;The format of the DEF CON CTF finals is determined solely by the organizers. A top-3 finish in the official final standings qualifies regardless of the competition format used that year.&quot;
+
+7. SCENARIO: A team that is primarily human-operated uses an AI agent to autonomously handle all defensive operations while humans focus entirely on offensive challenges. The team finishes top 3 and the AI agent&#x27;s autonomous defense is credited as the decisive factor in the placement.
+SEVERITY: HIGH
+FIX: Add language: &quot;A hybrid team where humans handle some challenge categories and AI handles others does not qualify. The entire team&#x27;s competition effort — both offensive and defensive — must be performed by AI systems without human cognitive assistance for the team to be considered an &#x27;AI-only team.&#x27;&quot;</p></div></section>
+<section class="qsection" id="revised"><h2>Revised question</h2><p>
+## Question Title
+
+<strong>Will an autonomous AI agent or AI-only team finish in the top 3 at the DEF CON Capture the Flag (CTF) main finals between April 8, 2026 (00:00 UTC) and December 31, 2027 (23:59 UTC)?</strong>
+
+---
+
+## Background
+
+The DEF CON Capture the Flag (CTF) competition is widely regarded as the most prestigious live hacking competition in the world. The main CTF finals take place annually in Las Vegas during the DEF CON conference, typically in August. It uses an attack-defense format in which approximately 15–20 qualified teams must simultaneously attack other teams&#x27; services while defending their own, in real time over multiple days. The competition is organized by a rotating group of hosts; from 2018–2021, the Order of the Overflow ran the event, followed by the Nautilus Institute from 2022–2025. For DEF CON 34 (2026), the new organizers are the &quot;Benevolent Bureau of Birds,&quot; with qualifiers scheduled for May 22–24, 2026.
+
+<strong>Current AI performance benchmarks:</strong>
+
+- At DEF CON 33 (August 2025), SRLabs entered an AI agent called &quot;Nils&quot; into the main CTF finals. Nils participated in attack-defense operations and the LiveCTF component, ultimately <strong>placing 8th</strong> out of approximately 15–20 finalist teams. This was the first known instance of an autonomous AI agent competing in the DEF CON CTF finals. The winner was the Maple Mallard Magistrates (affiliated with Carnegie Mellon University), who claimed their fourth consecutive and ninth overall DEF CON CTF title.
+
+- In March 2026, Israeli startup <strong>Tenzai</strong> announced that its autonomous AI hacking agent became the first AI system to rank in the <strong>top 1% of global hacking competitions</strong> across six major CTF platforms (websec.fr, dreamhack.io, websec.co.il, hack.arrrg.de, pwnable.tw, and Lakera&#x27;s Agent Breaker), outperforming over 99% of the approximately 125,000 human participants on those platforms. This was reported by Forbes on March 17, 2026.
+
+- Separately, DARPA&#x27;s AI Cyber Challenge (AIxCC) was a two-year competition (2023–2025) focused on <strong>defensive</strong> AI capabilities (automatically finding and patching vulnerabilities in source code). Its final competition concluded at DEF CON 33 in August 2025, with Team Atlanta winning the $4 million grand prize. AIxCC is distinct from the main DEF CON CTF and has concluded its competitive program.
+
+- Wiz Research (January 2026) found that leading AI agents (Claude Sonnet 4.5, GPT-5, Gemini 2.5 Pro) solved 9 out of 10 CTF-style challenges in directed, narrow-scope scenarios but struggled significantly with broad-scope, multi-step tasks — suggesting a gap between controlled benchmark performance and live competition readiness.
+
+<strong>Competition context:</strong> The gap between top-1% online CTF performance and top-3 at DEF CON CTF finals is significant. Online CTF platforms typically feature individual jeopardy-style challenges, while the DEF CON finals use a real-time attack-defense format requiring simultaneous offensive and defensive operations, adaptation to unknown challenges, and strategic decision-making under time pressure against elite human teams (e.g., Maple Mallard Magistrates/PPP, Blue Water, SuperDiceCode). The resolution window covers two DEF CON CTF cycles: DEF CON 34 (August 2026) and DEF CON 35 (August 2027).
+
+---
+
+## Resolution Criteria
+
+This question resolves <strong>Yes</strong> if, between April 8, 2026 (00:00 UTC) and December 31, 2027 (23:59 UTC), an autonomous AI agent or AI-only team finishes in <strong>3rd place or higher</strong> (i.e., 1st, 2nd, or 3rd) in the <strong>unified overall final standings</strong> of the main DEF CON Capture the Flag (CTF) finals competition.
+
+### Key Definitions and Clarifications:
+
+1. <strong>DEF CON CTF finals:</strong> The flagship CTF competition held at the annual DEF CON hacking conference in Las Vegas, as listed on the <a href="https://defcon.org/html/links/dc-ctf.html" target="_blank" rel="noopener">DEF CON CTF Archive page</a> and tracked on <a href="https://ctftime.org/ctf/2/" target="_blank" rel="noopener">CTFtime</a>. This refers specifically to the main DEF CON CTF, not satellite events, side CTFs, or separate competitions co-located at DEF CON (such as DARPA&#x27;s AIxCC, Red Alert ICS CTF, or other contest-track events).
+
+2. <strong>&quot;Autonomous AI agent or AI-only team&quot;:</strong> A competing entity where <strong>all challenge-solving and strategic decision-making during the live finals competition is performed by AI systems without real-time human cognitive assistance.</strong> Specifically:
+   - Humans may set up, configure, deploy, and monitor the AI system(s) before and during the competition.
+   - <strong>Pre-competition configuration, training, and programming of the AI system is permitted regardless of how specific the encoded heuristics or decision trees are.</strong> Autonomy is evaluated only based on whether humans provide real-time cognitive input during the live competition period.
+   - Humans may perform purely <strong>operational</strong> tasks such as maintaining infrastructure, rebooting systems, or managing network connectivity.
+   - <strong>Human interventions solely to prevent rule violations or self-destructive behavior (e.g., attacking own infrastructure) are considered operational maintenance and do not disqualify a team</strong>, provided the humans do not redirect the AI toward specific targets or solutions.
+   - <strong>Selective manual activation or deactivation of specific AI problem-solving modules in response to competition developments constitutes strategic input and disqualifies the team.</strong> Human operators may restart or reboot AI systems generally, but must not selectively enable or disable specific AI subsystems targeting particular challenges.
+   - Humans must <strong>not</strong> solve challenges, write exploits, make strategic decisions about which targets to attack/defend, or provide hints or guidance to the AI during the live competition.
+   - A <strong>hybrid human-AI team where humans handle some categories of tasks (e.g., offense) and AI handles others (e.g., defense) does not qualify.</strong> The entire team&#x27;s competition effort — both offensive and defensive — must be performed by AI systems without human cognitive assistance for the team to be considered an &quot;AI-only team.&quot;
+   - If there is ambiguity about whether a team qualifies, authoritative determination will be based on (a) the team&#x27;s own public statements or published write-ups about their approach, and (b) reporting from credible cybersecurity outlets (e.g., Wired, The Record, Dark Reading, or equivalent). <strong>In disputed cases, the team&#x27;s public statements and write-ups shall be taken at face value unless contradicted by official organizer statements or credible investigative reporting.</strong>
+
+3. <strong>&quot;Top 3 finish&quot;:</strong> The team must be ranked 1st, 2nd, or 3rd in the <strong>unified overall final standings that include all competing teams.</strong> A top-3 finish in a separate AI-only division, sub-bracket, or special category does not qualify unless it also corresponds to a top-3 position in the main combined leaderboard. If the organizers use a multi-component scoring system (e.g., combining attack-defense scores with LiveCTF scores), the relevant ranking is the <strong>overall/composite final ranking</strong> as published in the official results. In the event of an exact tie for 3rd place or higher, all tied teams are considered to have achieved a top-3 finish.
+
+4. <strong>Public identification requirement:</strong> For this question to resolve Yes, the team must be <strong>publicly identified as an autonomous AI agent or AI-only team</strong> — through organizer designation, team self-identification, or credible media reporting — <strong>within 60 days of the conclusion of the relevant DEF CON CTF finals.</strong> If no team is publicly identified as autonomous AI within this window, the question resolves No for that year&#x27;s competition.
+
+5. <strong>Resolution sources:</strong> The primary resolution source is the official DEF CON contest results page (e.g., <a href="https://defcon.org/html/defcon-33/dc-33-contest-results.html" target="_blank" rel="noopener">https://defcon.org/html/defcon-33/dc-33-contest-results.html</a> for 2025; analogous pages for subsequent years), the CTF organizer&#x27;s official website, or the <a href="https://ctftime.org/ctf/2/" target="_blank" rel="noopener">CTFtime event page for DEF CON CTF</a>. Secondary sources include credible cybersecurity media coverage and the competing team&#x27;s own published write-ups or blog posts.
+
+6. <strong>Evaluation period:</strong> The question covers DEF CON CTF finals held during DEF CON 34 (expected August 2026) and DEF CON 35 (expected August 2027). If either competition is cancelled, postponed beyond the resolution date, or no longer held, the question resolves based on whichever competition(s) do take place within the window. If no DEF CON CTF finals are held between April 8, 2026 and December 31, 2027, the question resolves <strong>No</strong>.
+
+7. <strong>Format changes:</strong> The format of the DEF CON CTF finals is determined solely by the organizers. A top-3 finish in the official final standings qualifies regardless of the competition format used that year.
+
+The question resolves <strong>No</strong> if no autonomous AI agent or AI-only team (as defined above) finishes in the top 3 at any DEF CON CTF finals held within the evaluation period.
+</p></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>About 632 days remain, but in practice there are only two relevant shots: DEF CON finals in 2026 and 2027. The status quo is No: the strongest known AI finals result is 8th place in 2025, and this question requires a top-3 finish by an AI-only team with no real-time human cognitive help. Scope matters: top 3 in the unified overall DEF CON standings is much harder than top 1% on online CTF sites, a good LiveCTF showing, or a hybrid human-AI team doing well; those broader scopes are more plausible than the actual one. Why No: DEF CON attack-defense demands simultaneous offense, defense, patching, adaptation, and strategy against elite teams, and the autonomy requirement removes the easiest path to incremental gains (human oversight). Also, strong human teams will themselves use AI tools, raising the bar. Why Yes: jumping from 8th to podium in two years is aggressive but not absurd given rapid model and scaffolding improvements, autonomous participation is already possible, and a single standout weekend from one well-funded team would be enough. In bet terms, I’m about indifferent at 23 cents YES versus 77 cents NO.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>This question tracks a leading indicator for autonomous offensive cyber capability reaching elite-human-competitive levels. The paper identifies HACCA (Hacking AI Capability) proliferation as a major risk pathway. An AI placing top 3 at DEF CON CTF finals — the most prestigious live hacking competition — would represent a clear threshold crossing for offensive AI capability, directly relevant to the paper&#x27;s HACCA feasibility timeline. This would meaningfully update beliefs about the timeline for democratized nation-state-level cyber capabilities and change resource allocation for cyber defense.</p></section>
+<section class="qsection" id="decomp"><h2>Decomposition &amp; research <span class="badge">Stage 6b</span></h2><p><strong>Research-informed re-forecast:</strong> <span style="color:#c62828;font-weight:700">6%</span></p><div class="subcard"><strong>SQ1: What was the detailed performance breakdown of SRLabs&#x27; AI agent &quot;Nils&quot; at the DEF CON 33 CTF finals in August 2025, and what specific capabilities gaps were identified between Nils and the top-finishing human teams?</strong><p>At DEF CON 33 (August 8–10, 2025), SRLabs&#x27; autonomous AI agent &quot;Nils&quot; competed in the main CTF finals as part of the team &quot;Friendly Maltese Citizens,&quot; placing 8th out of approximately 15–20 finalist teams. The competition was won by Maple Mallard Magistrates (CMU-affiliated) with a final score of 976,068, while the 2nd-place team scored 837,676 and SuperDiceCode placed 3rd with 541,693 points. Based on an intermediate attack-defense-only scoreboard posted by the organizers (Nautilus Institute), the top teams scored: MMM 4,419; SuperDiceCode 3,992; mhackeroni 3,956; Nu1L 3,792; Shellphish 3,494; KuK Hofhackerei 3,383; with 8th place at 3,077 points. This means Nils/Friendly Maltese Citizens scored roughly 70% of the winner&#x27;s attack-defense points—a significant but not insurmountable gap. Nils participated in both the main attack-defense game and the LiveCTF component (a separate bracket-style challenge-solving competition), where it faced mhackeroni in the upper bracket. The SRLabs blog post confirms Nils ran attack-defense operations, participated in LiveCTF, and published exploits—demonstrating capability across offensive and defensive domains. However, I was unable to access the full SRLabs blog post due to repeated timeouts, so granular breakdowns of attack vs. defense scoring, the precise scoring trajectory over the multi-day event, and SRLabs&#x27; own detailed gap analysis could not be retrieved. The capability gap between Nils (8th) and the top-3 teams (MMM, 2nd place, SuperDiceCode) was substantial—the winner&#x27;s final composite score was likely 2–3× Nils&#x27; score, suggesting major gaps in exploit development speed, challenge coverage, and possibly defensive patching consistency. The competition format required simultaneous offensive exploitation and defensive patching across multiple services over three days, a format that heavily rewards coordination, rapid adaptation, and deep binary analysis—areas where human teams with decades of CTF experience still held significant advantages.</p><p>## Detailed Findings
+
+### Competition Overview
+DEF CON 33 CTF finals took place August 8–10, 2025, at the Las Vegas Convention Center, organized by Nautilus Institute. The format was attack-defense, requiring teams to simultaneously attack other teams&#x27; services while defending their own, supplemented by a LiveCTF bracket-style challenge-solving component. The competition ran over three days.
+
+### Final Standings and Scores
+Two different scoreboards were identified from search results:
+
+<strong>Composite/Final Scores</strong> (from DEF CON CTF Archive page):
+1. Maple Mallard Magistrates: 976,068
+2. [Team name not visible in snippet]: 837,676
+3. SuperDiceCode: 541,693
+4. Nu1L: 496,550
+5. RePokemonedCollections: [score not captured]
+
+<strong>Attack-Defense Scores</strong> (from Nautilus Institute Mastodon post):
+1. Maple Mallard Magistrates: 4,419
+2. SuperDiceCode: 3,992
+3. mhackeroni: 3,956
+4. Nu1L: 3,792
+5. Shellphish: 3,494
+6. KuK Hofhackerei: 3,383
+7. organizers: 3,132
+8. cold fusion: 3,077
+
+The discrepancy between the two scoreboards (different rankings for 2nd/3rd place, different score magnitudes) suggests the composite final scores include LiveCTF bonuses and potentially other scoring components beyond the main attack-defense game.
+
+### Nils/Friendly Maltese Citizens Performance
+- SRLabs&#x27; blog confirms Nils placed <strong>8th</strong> overall, competing under the team name <strong>Friendly Maltese Citizens</strong>
+- The SRLabs blog snippet states: &quot;Nils competed in the DEF CON 33 CTF finals, placing 8th while running attack-defense operations, participating in the LiveCTF, and publishing a [exploit/writeup]&quot;
+- A separate SRLabs blog snippet also mentions: &quot;I had the honor of competing in this year&#x27;s DEF CON CTF finals as a member of the Friendly Maltese Citizens&quot;—indicating the team included at least one human SRLabs researcher alongside the AI agent
+
+### LiveCTF Component
+- From the LiveCTF GitHub repository (Live-CTF/LiveCTF-DEFCON33), Friendly Maltese Citizens participated in the LiveCTF bracket: &quot;Upper Round 2: 7+8, Loki · mhackeroni vs Friendly Maltese&quot;
+- The LiveCTF Day 2 YouTube video description mentions &quot;AI Solve Discovery&quot; at timestamp 4:15:58, suggesting an AI-driven solve was notable enough to be highlighted
+- A LinkedIn post references someone from a team using &quot;a background AI agent [to] solve a LiveCTF challenge while that player was still working on it&quot;—though this appears to reference a different team (pb_ctf x BlueWater)
+
+### Capability Gaps vs. Top-3 Teams
+Based on the available scoreboard data:
+- <strong>MMM (1st)</strong>: 976,068 final / 4,419 A-D
+- <strong>2nd place</strong>: 837,676 final
+- <strong>3rd (SuperDiceCode)</strong>: 541,693 final / 3,992 A-D
+- <strong>Nils/FMC (8th)</strong>: approximately 3,077 A-D score (if the &quot;cold fusion&quot; entry at 8th corresponds—though there&#x27;s ambiguity here; FMC may not appear in the intermediate scoreboard under that name)
+
+The gap between 1st and 8th in A-D scoring alone was ~31% (4,419 vs ~3,077). In final composite scores, the gap was likely much larger—potentially 2-3x—because LiveCTF bonuses disproportionately rewarded stronger teams.
+
+Key capability gaps likely include:
+1. <strong>Exploit development speed</strong>: Top human teams can rapidly reverse-engineer novel binaries and develop working exploits within minutes
+2. <strong>Challenge coverage</strong>: Top teams solve a higher percentage of challenges across diverse categories
+3. <strong>Defense/patching</strong>: Effective binary patching while maintaining service availability requires deep understanding
+4. <strong>Adaptation over time</strong>: The multi-day format rewards teams that can adapt strategies based on evolving competition dynamics
+
+### Scoring Trajectory
+Without access to the full SRLabs blog, the specific round-by-round or day-by-day scoring trajectory could not be determined. The competition ran over approximately 3 days (August 8–10), with multiple tick-based rounds in the attack-defense format.
+
+### 39C3 Talk
+A 39C3 (Chaos Communication Congress, December 2025) talk titled &quot;There is NO WAY we ended up getting...&quot; was scheduled by a Friendly Maltese Citizens member, suggesting notable/surprising aspects of their DEF CON performance worth presenting.
+
+### Important Caveats
+1. <strong>The SRLabs blog post repeatedly timed out</strong> and could not be fully accessed, meaning the detailed attack vs. defense breakdown, scoring trajectory, and SRLabs&#x27; own gap analysis are not available in this report
+2. <strong>Nils appears to have been part of a hybrid human-AI team</strong> (Friendly Maltese Citizens), not a purely autonomous AI team—the SRLabs blog author describes competing &quot;as a member&quot; of the team
+3. <strong>The 8th-place identity is ambiguous</strong> between the two scoreboards—the Nautilus social post shows &quot;cold fusion&quot; at 8th, while SRLabs claims Nils/FMC placed 8th. These may be different scoring snapshots or the team may appear under different names
+4. There may be additional teams below 8th that are not captured in the snippets</p></div><div class="subcard"><strong>SQ2: What are the rules and format of the DEF CON 34 CTF (organized by the Benevolent Bureau of Birds for 2026), and are autonomous AI agents or AI-only teams permitted to qualify and compete in the finals?</strong><p>The DEF CON 34 CTF (August 6–9, 2026) will be organized by the Benevolent Bureau of Birds (BBB), with online qualifiers scheduled for May 22–24, 2026. The BBB&#x27;s official website is bbbirds.org, and they were interviewed on CTF Radiooo episode 025 (published March 18, 2026). As of April 8, 2026, the BBB has not yet published detailed rules for the DC34 CTF, including competition format, scoring system, number of finalists, or any explicit policy on whether autonomous AI agents or AI-only teams are permitted to qualify or compete in the finals. The qualifier is described as &quot;online, open-registration&quot; on CTFtime, suggesting broad eligibility, but no specific AI-related restrictions or permissions have been publicly announced. Historical precedent from DEF CON 33 (2025, organized by Nautilus Institute) saw SRLabs&#x27; autonomous AI agent &quot;Nils&quot; compete in the finals and place 8th, with roughly 8–10 finalist teams in an attack-and-defense format supplemented by LiveCTF challenges. DEF CON CTF has traditionally used an attack-and-defense format for its finals, but BBB may change this. The qualifiers have traditionally been Jeopardy-style. No information is yet available about whether BBB will continue these traditions or introduce new elements.</p><p><strong>1. Organizer and Timeline</strong>
+
+DEF CON announced the Benevolent Bureau of Birds (BBB) as the new DEF CON 34 CTF organizers in approximately March 2026. The announcement was posted across DEF CON&#x27;s official channels (defcon.org, DEF CON Forum, Facebook, Instagram, Reddit). The qualifier round is scheduled for May 22–24, 2026, and finals will take place at DEF CON 34 in Las Vegas, August 6–9, 2026. The BBB&#x27;s official website is <a href="https://bbbirds.org/." target="_blank" rel="noopener">https://bbbirds.org/.</a>
+
+Key BBB members named in public announcements include Vie, Robert Xiao, Zaratec, and Bluepichu — several of whom are associated with Maple Bacon, a CTF team from the University of British Columbia.
+
+<strong>2. BBB Official Communications</strong>
+
+- bbbirds.org: The site timed out during multiple fetch attempts and could not be queried.
+- CTF Radiooo Episode 025 (&quot;Chatting with NEW DEF CON CTF Organizers: Benevolent Bureau of Birds&quot;): Published March 18, 2026. The YouTube video and podcast page could not be directly queried for transcript content. From Google snippets, the episode features adamd and Zardus interviewing BBB members (Vie, Robert Xiao, Zaratec, Bluepichu) about their plans. No specific details about rules, AI policies, format, scoring, or number of finalists were extractable from the snippets.
+- DEF CON Forum post (forum.defcon.org/node/255475): Timed out. Google snippet indicates it is a welcome announcement with a link to bbbirds.org and qualifier dates, but no detailed rules.
+
+<strong>3. Competition Format and Rules (Not Yet Published)</strong>
+
+As of April 8, 2026, extensive searching reveals NO publicly available detailed rules, format specification, scoring system, or finalist count for DC34 CTF under BBB. The qualifier is listed on CTFtime as &quot;On-line, open-registration&quot; with finals at DEF CON in August 2026, but no further details are provided.
+
+<strong>4. AI Agent/Autonomous Team Eligibility</strong>
+
+No public statement from BBB has been found that explicitly permits or prohibits autonomous AI agents or AI-only teams from entering the qualification round or competing in the finals. The open-registration nature of the qualifier suggests that any team (including AI-driven ones) could potentially register, but this is not confirmed.
+
+<strong>5. Historical Precedent: DEF CON 33 (2025)</strong>
+
+The Nautilus Institute organized DEF CON 33 CTF. SRLabs&#x27; AI agent &quot;Nils&quot; was permitted to compete and placed 8th in the finals. The competition used an attack-and-defense format with LiveCTF components. Approximately 8–10 teams competed in the finals. Google snippets from srlabs.de confirm: &quot;Nils competed in the DEF CON 33 CTF finals, placing 8th while running attack-defense operations, participating in the LiveCTF...&quot; The University of Hawaii article mentioned &quot;top eight teams&quot; for DEF CON 33 finals. Carnegie Mellon&#x27;s PPP (Plaid Parliament of Pwning) won their fourth consecutive and ninth overall title.
+
+<strong>6. Key Uncertainties</strong>
+
+- The BBB has not yet released detailed rules, so it is unknown whether they will follow the traditional attack-and-defense format, how many teams will qualify for finals, what the scoring system will be, or whether AI-only teams will be explicitly allowed or banned.
+- The qualifier being &quot;open-registration&quot; is suggestive but not definitive regarding AI team eligibility.
+- The BBB is a new organizer, and each organizer historically sets their own rules. The fact that Nautilus Institute allowed Nils does not necessarily mean BBB will do the same.
+- The CTF Radiooo interview may contain relevant details about format and rules, but the transcript was not accessible for analysis.</p></div><div class="subcard"><strong>SQ3: How rapidly have AI agents improved at cybersecurity tasks (vulnerability discovery, exploitation, CTF challenges) between 2023 and early 2026, and what does the trajectory suggest about near-term capabilities?</strong><p>AI agents have shown dramatic improvement in cybersecurity CTF tasks between 2023 and early 2026, but progress has been uneven—rapid on narrow, jeopardy-style challenges while much slower on complex, real-time attack-defense scenarios. Key milestones include: (1) On the NYU CTF Bench (published 2024-2025), top models like Claude 3 solved only ~5.77% of CSAW CTF challenges from 2017-2023, though Claude 3 outperformed the median human in the 2022 CSAW finals <a href="https://arxiv.org/html/2406.05590v3" target="_blank" rel="noopener">NYU CTF Bench: A Scalable Open-Source Benchmark ...</a>; (2) InterCode-CTF, a high-school-level benchmark, was effectively &quot;saturated&quot; by December 2024 when Palisade Research achieved 95% with plain LLM agents; (3) On Cybench (August 2024), professional-level CTF tasks saw GPT-4o achieve only ~12.5% unguided solve rate and ~29.4% with subtask guidance; (4) DARPA&#x27;s AIxCC finals (August 8, 2025) saw AI systems collectively identify 54 of 63 synthetic vulnerabilities and patch 43, with Team Atlanta winning first place; (5) In the 2025 HTB &quot;AI vs Human&quot; CTF, 5 of 8 AI teams solved 19/20 challenges (95%), outperforming 403 human teams; (6) The CAI agent conquered 5 major jeopardy CTF competitions in 2025, winning $50K at Neurogrid with a 91% solve rate; (7) Wiz Research (January 29, 2026) found that Claude Sonnet 4.5, GPT-5, and Gemini 2.5 Pro solved 9/10 CTF challenges in narrow scope but degraded significantly in broad, unguided scenarios <a href="https://www.wiz.io/blog/ai-agents-vs-humans-who-wins-at-web-hacking-in-2026" target="_blank" rel="noopener">AI Agents vs Humans: Who Wins at Web Hacking in 2026?</a>; (8) Tenzai (March 17, 2026) claimed its AI hacker ranked in the top 1% across six CTF platforms, outperforming 125,000+ human competitors. The improvement trajectory appears S-curve-like rather than simply linear or exponential: entry-level benchmarks saturated quickly, mid-tier jeopardy challenges saw rapid gains through 2025, but professional-level and attack-defense scenarios show much slower progress. The gap between solving individual jeopardy challenges and competing in real-time attack-defense CTFs (like DEF CON CTF finals) remains substantial, though it is narrowing at the jeopardy end while remaining wide at the attack-defense end.</p><p>## Trajectory of AI Agent Improvement in Cybersecurity Tasks (2023–Early 2026)
+
+### 1. Academic Benchmarks: Establishing Baselines (2023–2024)
+
+<strong>InterCode-CTF (2023–2024):</strong>
+InterCode-CTF, introduced at NeurIPS 2023, contains 100 CTF tasks from picoCTF—a competition aimed at high-school-level participants. Early LLM performance was modest, but by December 2024, Palisade Research published results showing 95% solve rates with plain LLM agent designs. This benchmark is now widely considered &quot;saturated,&quot; meaning it no longer differentiates between frontier AI capabilities. The rapid saturation of this entry-level benchmark demonstrates how quickly AI agents can master well-characterized, lower-difficulty challenges.
+
+<strong>NYU CTF Bench (2024–2025):</strong>
+The NYU CTF Bench, based on 200 challenges from CSAW competitions spanning 2017–2023, provides a more challenging evaluation <a href="https://arxiv.org/html/2406.05590v3" target="_blank" rel="noopener">NYU CTF Bench: A Scalable Open-Source Benchmark ...</a>. Results published in the paper (arXiv v3: February 18, 2025) showed:
+- Claude 3: ~5.77% solve rate across all challenges
+- GPT-3.5: ~1.92% solve rate
+- GPT-4: Scored 300 in 2023 CSAW qualifiers
+- Mixtral and LLaMA: 0% solve rate
+- Claude 3 achieved a score of 1500 in the 2022 CSAW finals, outperforming the median human score of 1321
+- Open-source models completely failed <a href="https://arxiv.org/html/2406.05590v3" target="_blank" rel="noopener">NYU CTF Bench: A Scalable Open-Source Benchmark ...</a>
+
+This benchmark revealed that while some frontier models could match or exceed median human performance on specific competition subsets, overall success rates remained low, particularly on complex multi-step challenges.
+
+<strong>Cybench (August 2024):</strong>
+Stanford&#x27;s Cybench introduced 40 professional-level CTF tasks from recent competitions (2022–2024). Results from the original paper showed:
+- GPT-4o: ~12.5% unguided solve rate; 29.4% with subtask guidance
+- Claude 3.5 Sonnet: Comparable unguided performance (solved at least one task unguided)
+- Claude 3 Opus: Also solved at least one unguided task
+- These low solve rates on professional-level challenges contrast sharply with the saturation of InterCode-CTF
+
+As of early 2026, the Cybench leaderboard shows Grok-4.1 Thinking leading with a score of 0.390 (39%), indicating continued but incremental improvement on professional-level tasks.
+
+### 2. DARPA AI Cyber Challenge (AIxCC): 2023–2025
+
+DARPA&#x27;s AIxCC was a two-year, multi-million-dollar competition focused on autonomous vulnerability discovery and patching in open-source software. Key milestones:
+
+- <strong>2023:</strong> Competition launched, attracting 42 teams
+- <strong>August 2024 (DEF CON 32):</strong> Semifinals held; 7 teams advanced to finals
+- <strong>August 8, 2025 (DEF CON 33):</strong> Finals held
+  - <strong>Winner:</strong> Team Atlanta (Georgia Tech/Samsung) — $4M prize
+  - <strong>2nd Place:</strong> Trail of Bits (&quot;Buttercup&quot;) — $3M prize
+  - <strong>3rd Place:</strong> Theori
+  - Competition included 63 synthetic vulnerabilities
+  - Competitors&#x27; cyber reasoning systems (CRSs) collectively identified 54 vulnerabilities and patched 43
+  - Trail of Bits reported finding 28 vulnerabilities and patching 19
+
+AIxCC demonstrated that AI systems can perform meaningful autonomous vulnerability discovery and patching at scale, but the task was specifically scoped to source-code-level analysis of open-source projects—a narrower task than full CTF competition.
+
+### 3. 2025 CTF Circuit: AI Agents Begin Competing Directly
+
+<strong>Hack The Box &quot;AI vs Human&quot; CTF (2025):</strong>
+In a landmark event, AI agent teams competed directly against human teams:
+- 5 of 8 AI agent teams solved 19 out of 20 challenges (95% solve rate)
+- They competed against 403 human teams
+- The CAI agent (from Alias Robotics/Cybersecurity AI) achieved its final flag 30 minutes before the next AI team
+
+<strong>CAI&#x27;s 2025 CTF Circuit Performance:</strong>
+The CAI agent systematically competed in 5 major jeopardy-style CTF competitions throughout 2025:
+- Won $50K at the Neurogrid CTF with a 91% solve rate
+- Demonstrated 98% cost reduction compared to human teams
+- Led researchers to argue that &quot;jeopardy-style CTFs may be obsolete&quot; as meaningful benchmarks for AI
+
+<strong>CSAW 2025:</strong>
+Research published in early 2026 compared autonomous agent performance against human teams in the 2025 CSAW competition, observing differences across autonomy levels and challenge categories.
+
+### 4. Wiz Research Study (January 29, 2026)
+
+Wiz Research, in collaboration with the AI security lab Irregular, tested Claude Sonnet 4.5, GPT-5, and Gemini 2.5 Pro on 10 lab environments modeled after real-world vulnerabilities <a href="https://www.wiz.io/blog/ai-agents-vs-humans-who-wins-at-web-hacking-in-2026" target="_blank" rel="noopener">AI Agents vs Humans: Who Wins at Web Hacking in 2026?</a>:
+- <strong>Narrow scope (specific target given):</strong> Agents solved 9 of 10 challenges; costs often under $1 per success
+- <strong>Broad scope (no specific target):</strong> Performance degraded significantly; costs increased 2–2.5x; agents struggled to prioritize targets and spread efforts haphazardly
+- <strong>Key failure mode:</strong> Agents failed to use standard fuzzing tools unless prompted, couldn&#x27;t pivot strategies when initial approaches failed
+- <strong>The unsolved challenge (GitHub Secrets)</strong> required creative investigative pivoting that agents couldn&#x27;t perform
+- Study concluded AI agents are highly effective at executing known attack patterns but lack strategic adaptability for complex, unguided offensive operations <a href="https://www.wiz.io/blog/ai-agents-vs-humans-who-wins-at-web-hacking-in-2026" target="_blank" rel="noopener">AI Agents vs Humans: Who Wins at Web Hacking in 2026?</a>
+
+### 5. Tenzai Claim (March 17, 2026)
+
+Israeli startup Tenzai announced on March 17, 2026 that its autonomous AI hacker:
+- Achieved top 1% performance across six major CTF platforms
+- Outperformed over 125,000 human competitors
+- Was described as &quot;the first autonomous system to rank in the top 1% of global hacking competitions&quot;
+- Covered competitions &quot;designed for humans&quot;
+
+### 6. Analysis: Improvement Trajectory
+
+The trajectory is best characterized as <strong>S-curve-like with domain-dependent saturation points:</strong>
+
+<strong>Entry-level tasks (InterCode-CTF):</strong> Rapid improvement → saturation at 95% by late 2024. Effectively solved.
+
+<strong>Mid-tier jeopardy challenges (HTB, standard CTFs):</strong> Steep improvement through 2025. AI agents went from struggling with basic challenges to achieving 91-95% solve rates and top-1% rankings by early 2026.
+
+<strong>Professional-level jeopardy tasks (Cybench):</strong> Slower improvement. From ~12.5% unguided (mid-2024) to ~39% (early 2026), suggesting continued but more modest gains.
+
+<strong>Real-world vulnerability discovery (AIxCC):</strong> AI systems demonstrated meaningful but imperfect capability—finding ~86% (54/63) of synthetic vulnerabilities and patching ~68% (43/63).
+
+<strong>Broad, unguided offensive operations:</strong> Still significantly limited as of January 2026, with degraded performance when agents must independently identify and prioritize targets <a href="https://www.wiz.io/blog/ai-agents-vs-humans-who-wins-at-web-hacking-in-2026" target="_blank" rel="noopener">AI Agents vs Humans: Who Wins at Web Hacking in 2026?</a>.
+
+### 7. The Jeopardy vs. Attack-Defense Gap
+
+<strong>Narrowing at the jeopardy end:</strong> AI agents have essentially caught up with or surpassed many human competitors on jeopardy-style CTFs by early 2026. The CAI team&#x27;s 2025 performance and Tenzai&#x27;s top-1% claims confirm this.
+
+<strong>Still wide at the attack-defense end:</strong> The DEF CON CTF finals use an attack-defense format requiring:
+- Simultaneous offensive and defensive operations
+- Real-time adaptation to opponent strategies
+- Service patching that maintains functionality
+- Network traffic analysis and exploit development under time pressure
+- Coordination of multiple concurrent tasks
+
+A 2026 paper by Vilches et al. (&quot;Evaluating Agentic Cybersecurity in Attack/Defense CTFs&quot;) represents the first empirical study of autonomous AI agents in A/D CTF scenarios, studying AI agents competing concurrently in offensive and defensive roles. This suggests the field is only beginning to formally evaluate this gap.
+
+The Wiz Research finding that AI agents struggle with broad-scope, unguided operations <a href="https://www.wiz.io/blog/ai-agents-vs-humans-who-wins-at-web-hacking-in-2026" target="_blank" rel="noopener">AI Agents vs Humans: Who Wins at Web Hacking in 2026?</a> is particularly relevant—attack-defense CTFs are inherently broad-scope, requiring agents to simultaneously monitor, attack, and defend multiple services without explicit targeting guidance.
+
+<strong>Summary of the gap:</strong> While the gap is clearly narrowing for isolated challenge-solving (jeopardy), the gap for real-time, multi-service, adversarial attack-defense competition (as in DEF CON CTF finals) remains substantial. The improvement from &quot;can&#x27;t solve basic CTF challenges&quot; to &quot;top 1% in jeopardy CTFs&quot; took roughly 2 years (2023–2025), but the remaining jump to &quot;competitive in DEF CON CTF finals&quot; requires solving qualitatively different problems in real-time coordination, strategic adaptation, and simultaneous offense/defense.</p></div><div class="subcard"><strong>SQ4: What are the specific technical requirements of a DEF CON CTF attack-defense finals competition that make it qualitatively different from jeopardy-style CTF challenges, and which of these requirements pose the greatest challenges for current autonomous AI systems?</strong><p>The DEF CON CTF finals use an attack-defense format that is qualitatively different from jeopardy-style CTFs in several critical ways, and current autonomous AI systems face significant challenges with many of these requirements. In jeopardy-style CTFs, teams solve isolated, static challenges across categories (crypto, pwn, web, reverse engineering) at their own pace with no adversarial interaction. In attack-defense, ~12-20 teams simultaneously defend their own vulnerable services while attacking identical services on opponents&#x27; machines, with rounds typically lasting minutes. This creates six intertwined sub-tasks: (1) reverse-engineering unknown binary services under time pressure, (2) finding vulnerabilities, (3) writing reliable exploits that work across many targets, (4) patching services without breaking functionality (SLA/availability checks), (5) real-time strategic adaptation as opponents evolve defenses and new services are released, and (6) managing infrastructure, network traffic analysis, and automated exploit deployment across many services at once. 
+
+The greatest challenges for current AI systems are: real-time multi-service strategic orchestration (no AI system has demonstrated the ability to simultaneously manage offense and defense across ~8-10 services with adversarial opponents adapting in real time); binary reverse engineering at competition scale (as of April 2025, Claude could not solve any challenges at PlaidCTF, a top jeopardy-style competition, and DEF CON finals binaries are typically harder); robust patching under SLA constraints (patching a binary without breaking its expected functionality requires deep understanding of both the vulnerability and the service logic—AIxCC showed progress on source-code patching but not on stripped binary patching); and adversarial real-time adaptation (responding to opponents&#x27; evolving exploits and defenses requires monitoring network traffic, identifying attack patterns, and dynamically adjusting strategy—a capability no current AI has demonstrated). While AI has shown strong performance on easier jeopardy-style challenges (e.g., Claude achieved top 3% at PicoCTF, and AI agents solved 19/20 in Hack The Box&#x27;s AI vs. Human CTF in July 2025), this performance does not transfer to the attack-defense finals setting, which demands continuous real-time adversarial interaction, simultaneous offense-defense balancing, and infrastructure-level automation over a multi-day competition.</p><p>## Qualitative Differences: Attack-Defense Finals vs. Jeopardy-Style CTF
+
+### Jeopardy-Style Format
+In jeopardy-style CTFs (used in most online CTF platforms and in DEF CON qualifiers), teams are presented with a set of standalone challenges across categories such as cryptography, reverse engineering, binary exploitation (pwn), web, forensics, and miscellaneous. Each challenge has a single flag to capture. Teams work at their own pace, challenges are static (they don&#x27;t change based on opponents&#x27; actions), and there is no adversarial interaction between teams. Success is purely a function of how many challenges a team can solve within the allotted time.
+
+### Attack-Defense Format (DEF CON CTF Finals)
+The DEF CON CTF finals, organized by Nautilus Institute (as of 2024-2025), use an attack-defense format where approximately 12 teams (per the 2025 rules) compete simultaneously. According to the 2025 DEF CON CTF finals format, the competition is described as &quot;a reverse engineering and exploitation competition first and foremost.&quot; Key structural differences include:
+
+1. <strong>Simultaneous offense and defense</strong>: Each team runs identical copies of vulnerable services on their own infrastructure. Teams must simultaneously attack other teams&#x27; services to steal flags AND defend their own services by patching vulnerabilities.
+
+2. <strong>Round-based scoring</strong>: The game proceeds in timed rounds (typically 3-5 minutes each). Each round, new flags are planted in services, and teams earn attack points by stealing flags from opponents and defense points by preventing flag theft from their own services.
+
+3. <strong>SLA/Availability requirements</strong>: Teams must keep their services running and functional. If a patch breaks the service&#x27;s expected functionality, the team loses availability/SLA points. This creates a critical constraint: patches must fix the vulnerability without altering legitimate behavior.
+
+4. <strong>Dynamic, adversarial environment</strong>: Unlike static jeopardy challenges, the competition environment evolves continuously. Opponents adapt their defenses, new services are released during the competition, and teams must monitor network traffic to detect and respond to attacks.
+
+5. <strong>Scale of simultaneous services</strong>: Teams must manage ~8-10 or more services simultaneously over the multi-day competition, requiring significant infrastructure automation.
+
+6. <strong>LiveCTF component</strong>: Since DEF CON 30 (2022), a LiveCTF component features 1v1 head-to-head matches where individual players solve jeopardy-style challenges in a timed format, adding another dimension to scoring.
+
+## Analysis of Six Sub-Tasks and AI Capability
+
+### 1. Reverse-Engineering Unknown Binary Services
+<strong>Requirement</strong>: At the start of each round or when new services are deployed, teams receive compiled binary executables (often stripped of symbols, possibly obfuscated) that they must quickly reverse-engineer to understand functionality, identify vulnerabilities, and determine how to exploit and patch them.
+
+<strong>AI capability status</strong>: As of April 2025, Claude (Anthropic&#x27;s frontier model) could not solve any challenges at PlaidCTF, a top-tier jeopardy-style competition featuring binary exploitation and reverse engineering challenges. While AI agents have shown capability on easier reverse engineering tasks (e.g., Claude achieved top 3% in PicoCTF, a student-level competition), DEF CON finals binaries are significantly more complex—often custom-designed, using unusual architectures, and requiring deep understanding of low-level systems concepts. The gap between student-level reverse engineering and DEF CON finals-level binary analysis remains enormous for AI systems.
+
+<strong>Challenge level for AI</strong>: HIGH. Binary reverse engineering requires spatial reasoning about code structure, understanding of assembly language semantics, and the ability to form and test hypotheses about program behavior—capabilities where current AI agents show inconsistent performance, especially at scale and under time pressure.
+
+### 2. Finding Vulnerabilities
+<strong>Requirement</strong>: After reverse-engineering services, teams must identify exploitable vulnerabilities (buffer overflows, format string bugs, use-after-free, logic errors, cryptographic weaknesses, etc.).
+
+<strong>AI capability status</strong>: DARPA&#x27;s AIxCC competition (finals August 8, 2025) demonstrated that autonomous Cyber Reasoning Systems (CRS) can find vulnerabilities in source code. Team Atlanta&#x27;s CRS won first place, demonstrating AI-driven vulnerability detection across 54 million lines of code in C++ and Java source code. However, AIxCC operated on source code, not stripped binaries. The DEF CON CTF finals typically involve compiled binaries where vulnerability discovery is significantly harder.
+
+<strong>Challenge level for AI</strong>: MEDIUM-HIGH. AI has shown promising results for source-code vulnerability detection, but binary-level vulnerability discovery (the DEF CON CTF requirement) remains substantially more difficult. Traditional fuzzing and symbolic execution tools can partially automate this, but integrating these with AI reasoning in real-time competition conditions is an unsolved challenge.
+
+### 3. Writing Exploits
+<strong>Requirement</strong>: Teams must write working exploits that reliably steal flags from multiple opponents&#x27; service instances. Exploits must account for potential differences in memory layout (ASLR), deployed patches, and network conditions.
+
+<strong>AI capability status</strong>: AI agents have demonstrated basic exploit writing capability on CTF challenges. In the Hack The Box AI vs. Human CTF (July 2025), five of eight AI-agent teams solved 19 out of 20 challenges, including binary exploitation. However, these were pre-designed challenges with known solution paths. Writing reliable exploits that work across multiple targets in a live, adversarial environment with varying defenses is a qualitatively harder task. The need to modify exploits on-the-fly when opponents patch vulnerabilities adds another layer of difficulty.
+
+<strong>Challenge level for AI</strong>: HIGH. Exploit development for competition-grade binaries requires creative problem-solving, deep understanding of memory corruption primitives, and the ability to chain multiple vulnerabilities. The additional requirement of reliability across multiple targets and adaptation to patched services makes this especially challenging.
+
+### 4. Patching/SLA Management
+<strong>Requirement</strong>: Teams must patch their own service binaries to fix vulnerabilities while preserving all legitimate functionality. If a patch breaks the service (fails SLA checks), the team loses points. This requires precise understanding of both the vulnerability and the service&#x27;s intended behavior.
+
+<strong>AI capability status</strong>: AIxCC demonstrated AI-driven patching of source code vulnerabilities. Team Atlanta&#x27;s system could autonomously generate patches. However, DEF CON CTF finals require binary patching—modifying compiled executables without access to source code. Binary patching is significantly harder: teams must modify machine code directly, often with tight space constraints, while ensuring the binary passes functionality checks. As Team Atlanta noted in their post-competition analysis, &quot;a single bug can kill a CRS entirely. The autonomous system is that brittle.&quot;
+
+<strong>Challenge level for AI</strong>: VERY HIGH. Binary patching without breaking functionality is one of the hardest sub-tasks for AI. It requires: (a) correct identification of the vulnerability at the binary level, (b) generation of a correct fix in machine code, (c) verification that the fix doesn&#x27;t break legitimate behavior, and (d) all of this under time pressure. The SLA constraint makes this especially punishing—an overly aggressive patch that breaks functionality costs the team more than leaving the vulnerability unpatched.
+
+### 5. Real-Time Strategy Adaptation
+<strong>Requirement</strong>: Teams must continuously adapt their strategy as new services are released, opponents deploy new exploits, and the competitive landscape shifts. This includes deciding which services to prioritize for offense vs. defense, when to invest resources in new exploits vs. refining existing ones, and how to respond to detected attacks.
+
+<strong>AI capability status</strong>: No current AI system has demonstrated the ability to make real-time strategic decisions in a multi-service, multi-opponent competitive environment. This is fundamentally a multi-agent, multi-objective optimization problem with incomplete information—a domain where AI capabilities are still nascent. The 2016 DARPA Cyber Grand Challenge (CGC) at DEF CON 24 showed that autonomous systems could compete in a simplified attack-defense format, but those systems operated in a highly constrained environment (standard binary format, limited service complexity) and finished last when competing against human teams in the main DEF CON CTF.
+
+<strong>Challenge level for AI</strong>: VERY HIGH. This requires meta-reasoning about competition dynamics, opponent modeling, resource allocation under uncertainty, and the ability to pivot strategies rapidly. It is arguably the most uniquely challenging aspect of attack-defense CTF for AI, as it requires integrating information across all other sub-tasks and making holistic decisions.
+
+### 6. Infrastructure and Traffic Management
+<strong>Requirement</strong>: Teams must manage their competition infrastructure (game servers, exploit deployment systems, traffic capture and analysis, automated flag submission), monitor network traffic to detect incoming attacks and reverse-engineer opponents&#x27; exploits, and deploy their own exploits automatically across all opponent targets every round.
+
+<strong>AI capability status</strong>: While components of this can be automated with traditional scripting and tooling (and human teams do extensively automate this), the AI-specific challenge is in the traffic analysis component—automatically identifying novel exploit patterns in network captures and converting observed attacks into defensive patches or counter-exploits. No current AI system has demonstrated this capability in a live competition setting.
+
+<strong>Challenge level for AI</strong>: MEDIUM-HIGH. Much of the infrastructure management can be handled by pre-built tooling rather than requiring AI reasoning. However, the traffic analysis, automated exploit detection, and dynamic infrastructure reconfiguration components require AI capabilities that haven&#x27;t been demonstrated at competition scale.
+
+## Key Evidence Points with Dates
+
+- <strong>August 8, 2025</strong>: DARPA AIxCC finals at DEF CON 33. Team Atlanta won first place with autonomous CRS for source-code vulnerability finding and patching across 54 million lines of code. This demonstrated AI capability for source-code analysis but not binary-level analysis required by DEF CON CTF.
+
+- <strong>August 2025</strong>: Carnegie Mellon&#x27;s PPP won their fourth consecutive (and ninth overall) DEF CON CTF title, demonstrating that human teams continue to dominate the competition.
+
+- <strong>August 2025</strong>: At DEF CON 33, Claude competed in LiveCTF at the DEF CON CTF finals (referenced in YouTube video descriptions showing &quot;AI Solve Discovery&quot; during Day 2 of LiveCTF).
+
+- <strong>August 5, 2025</strong>: Axios reported that Claude had been &quot;quietly beating human hackers&quot; in student-level competitions, but Anthropic&#x27;s own transparency page noted Claude achieved top 3% in PicoCTF (student competition), solved 19/20 in Hack The Box&#x27;s AI vs. Human CTF, but scored only 15/30 in the Airbnb CTF and failed to solve any challenges at PlaidCTF (April 4, 2025).
+
+- <strong>April 4, 2025</strong>: Claude attempted PlaidCTF, a challenging jeopardy-style competition, and could not solve any challenges, demonstrating the gap between AI capability on easy-to-medium challenges and top-tier competition challenges.
+
+- <strong>July 2025</strong>: In Hack The Box&#x27;s AI vs. Human MCP Tryout CTF, five of eight AI-agent teams solved 19/20 challenges, competing against 403 human teams. However, these were retired challenges of mixed difficulty, not at DEF CON finals level.
+
+## Greatest Challenges Summary
+
+The requirements that pose the <strong>greatest challenges</strong> for current autonomous AI systems are:
+
+1. <strong>Real-time multi-service strategic orchestration</strong>: No AI has demonstrated the ability to simultaneously manage offense and defense across many services with adversarial opponents adapting in real time.
+
+2. <strong>Binary-level patching under SLA constraints</strong>: Modifying compiled binaries without source code while preserving functionality is extremely brittle and error-prone for AI.
+
+3. <strong>Adversarial real-time adaptation</strong>: Responding to opponents&#x27; evolving exploits and defenses requires a feedback loop of traffic analysis, attack identification, and dynamic response that no current AI system can execute.
+
+4. <strong>Competition-grade binary reverse engineering</strong>: While AI can handle simpler reverse engineering tasks, the custom, complex, often obfuscated binaries used in DEF CON CTF finals remain beyond current AI capability, as evidenced by Claude&#x27;s failure at PlaidCTF.
+
+The combination of all six sub-tasks occurring simultaneously, under time pressure, in an adversarial environment, makes attack-defense CTF qualitatively harder than jeopardy-style CTF for AI systems. Even if an AI could solve individual sub-tasks in isolation, the integration challenge—managing all tasks concurrently with strategic coherence—represents an additional, compounding difficulty.</p></div><div class="subcard"><strong>SQ5: Which organizations or teams are currently developing autonomous AI agents specifically aimed at competing in live CTF competitions, and what are their stated goals, timelines, and recent results as of early 2026?</strong><p>As of early April 2026, several organizations are actively developing autonomous AI agents for CTF competitions, though none has yet demonstrated top-3 capability at DEF CON CTF finals:
+
+<strong>1. SRLabs (&quot;Nils&quot;):</strong> SRLabs entered their autonomous AI agent &quot;Nils&quot; at the DEF CON 33 CTF finals in August 2025, placing 8th overall while running attack-defense operations and participating in LiveCTF. This was the first known fully autonomous AI team to compete in the DEF CON CTF finals. SRLabs is a Berlin-based security research lab. While no public confirmation of plans for DEF CON 34 (August 6–9, 2026) has been found, their investment in this space suggests continued development.
+
+<strong>2. Tenzai:</strong> An Israeli startup founded in 2025 by former intelligence agency cyber executives. In March 2026, Tenzai announced its AI hacker achieved top-1% performance across six major CTF platforms, outperforming 125,000+ human competitors. It raised a $75 million seed round at a $330 million valuation within six months of founding. Their stated goal is enterprise penetration testing, but the CTF results demonstrate offensive capability. No specific DEF CON CTF entry plans have been publicly announced.
+
+<strong>3. Team Atlanta (DARPA AIxCC successor):</strong> Won DARPA&#x27;s AI Cyber Challenge in August 2025, earning the $4 million first prize. Led by Professor Taesoo Kim at Georgia Tech, Team Atlanta donated $2 million (50% of prize) to Georgia Tech&#x27;s SSLab for ongoing autonomous cybersecurity research. Their system focused on defensive tasks (vulnerability detection and patching), not offensive CTF. The team published a &quot;SoK&quot; paper on AIxCC in February 2026. There is no public indication they are pivoting to offensive DEF CON CTF competition.
+
+<strong>4. XBOW:</strong> Raised $120 million in Series C funding (valued over $1 billion) as of March 2026 to scale its autonomous hacking platform. XBOW became the #1 ranked autonomous penetration tester on HackerOne&#x27;s global leaderboard in 2025, outperforming human hackers. Their focus is commercial penetration testing rather than CTF competition per se.
+
+<strong>5. RunSybil:</strong> Co-founded by Ariel Herbert-Voss (formerly OpenAI&#x27;s first research scientist), RunSybil is an automated offensive security company that received fresh funding in early 2026. It appeared in a DEF CON/MCSC 2026 panel discussion on &quot;State of Art of AI Offence and Defence.&quot; No specific DEF CON CTF competition plans have been announced.
+
+<strong>6. Cybersecurity AI (CAI) by Alias Robotics:</strong> An open-source framework that placed first among AI teams in Hack The Box&#x27;s &quot;AI vs Human&quot; CTF challenge and achieved top-20 worldwide (all participants). It was 11x faster than humans overall across 54 benchmark exercises but struggled with &quot;pwn&quot; and &quot;crypto&quot; categories. Published as a 2026 paper [[PDF] Cybersecurity AI (CAI): An open framework for AI Security](<a href="https://pinzger.github.io/papers/Vilches2026-CAI.pdf" target="_blank" rel="noopener">https://pinzger.github.io/papers/Vilches2026-CAI.pdf</a>).
+
+<strong>7. Major AI Labs:</strong> Anthropic&#x27;s &quot;Claude Mythos Preview&quot; model (announced April 7, 2026) represents a significant step-change in cybersecurity capabilities, with the ability to surface previously unknown vulnerabilities in production codebases. However, standard Claude models solved zero challenges at both PlaidCTF and the DEF CON Qualifier as of 2025. OpenAI and Google DeepMind have invested in AI cybersecurity (Google ran AI-centric CTFs at DEF CON 33 in September 2025) but none have announced autonomous CTF competition entries.
+
+<strong>8. Academic Teams:</strong> NYU Tandon developed &quot;EnIGMA,&quot; an AI framework for solving cybersecurity challenges autonomously. Georgia Tech continues research through SSLab with Team Atlanta&#x27;s donation. The arxiv paper on &quot;Scalable Agentic CTF Design&quot; (March 2026) studied autonomous AI performance in educational CTFs.
+
+<strong>Key context:</strong> DEF CON 34 CTF qualifier is scheduled for May 22–24, 2026, with finals at DEF CON 34 on August 6–9, 2026 in Las Vegas. The 2026 International AI Safety Report noted that AI agents placed in cybersecurity competitions in 2025 but concluded that fully autonomous attacks are not yet possible at the highest tier. Current AI agents excel at easier and medium-difficulty challenges but struggle with the novel, elite-level exploitation required at DEF CON CTF finals.</p><p><strong>Landscape of Autonomous AI CTF Agents (as of April 2026)</strong>
+
+The competitive landscape for autonomous AI CTF agents has expanded significantly between 2025 and early 2026, with multiple well-funded organizations and academic teams developing systems. Below is a comprehensive breakdown:
+
+---
+
+<strong>SRLabs / Nils</strong>
+- <strong>Background:</strong> SRLabs is a Berlin-based security research lab that developed &quot;Nils,&quot; the first known fully autonomous AI team to compete in DEF CON CTF finals.
+- <strong>Results (August 2025):</strong> Nils placed 8th at DEF CON 33 CTF finals, participating in both attack-defense operations and LiveCTF.
+- <strong>Current status:</strong> No public announcement has been found confirming plans for DEF CON 34 (August 2026). Their blog post documents their DEF CON 33 experience but does not explicitly state future competition plans.
+- <strong>Assessment:</strong> Given their pioneering effort and the publicity gained, continued participation seems likely but is unconfirmed.
+
+---
+
+<strong>Tenzai</strong>
+- <strong>Background:</strong> Israeli startup founded in 2025 by former intelligence agency cybersecurity executives.
+- <strong>Funding (by March 2026):</strong> $75 million seed round at a $330 million valuation, raised within six months of founding.
+- <strong>Results (March 2026):</strong> Announced top-1% performance across six major CTF platforms designed for humans, outperforming 125,000+ human competitors. This was widely reported in Forbes and Yahoo Finance on March 17, 2026.
+- <strong>Goals:</strong> Stated focus is on enterprise security (autonomous penetration testing), with CTF results serving as validation of capability.
+- <strong>DEF CON plans:</strong> No specific announcement about entering DEF CON CTF has been found.
+
+---
+
+<strong>Team Atlanta (DARPA AIxCC)</strong>
+- <strong>Background:</strong> Won DARPA&#x27;s AI Cyber Challenge in August 2025 ($4M first prize), led by Professor Taesoo Kim at Georgia Tech.
+- <strong>Post-AIxCC (as of February 2026):</strong> Published SoK paper on AIxCC. Donated $2M to Georgia Tech&#x27;s SSLab for ongoing autonomous cybersecurity research.
+- <strong>Focus:</strong> Their CRS (Cyber Reasoning System) was designed for defensive tasks—vulnerability detection and patching in open-source software. This is fundamentally different from the offensive exploitation required in DEF CON CTF.
+- <strong>Pivot to offensive CTF:</strong> No evidence of such a pivot. Taesoo Kim&#x27;s team has historical DEF CON CTF experience (DEFKOR00T won DEF CON CTF 2018), but the AIxCC work was defense-oriented.
+
+---
+
+<strong>XBOW</strong>
+- <strong>Funding (March 2026):</strong> Raised $120M Series C, valued over $1B.
+- <strong>Results:</strong> Became #1 ranked autonomous penetration tester on HackerOne&#x27;s global leaderboard in 2025. Ran 1,060+ autonomous attacks as documented in their blog.
+- <strong>Focus:</strong> Commercial penetration testing product, not CTF competition specifically.
+
+---
+
+<strong>RunSybil</strong>
+- <strong>Background:</strong> Automated offensive security company co-founded by Ariel Herbert-Voss (ex-OpenAI first research scientist).
+- <strong>Status (2026):</strong> Received fresh funding, expanding platform and hiring. Featured in DEF CON/MCSC 2026 panel on AI offense/defense.
+- <strong>DEF CON CTF:</strong> No announced plans to compete.
+
+---
+
+<strong>CAI (Cybersecurity AI) by Alias Robotics</strong>
+- <strong>Results:</strong> First place among AI teams in Hack The Box&#x27;s &quot;AI vs Human&quot; CTF; top-20 worldwide overall. 11x faster than humans across 54 exercises, but underperformed in &quot;pwn&quot; (0.77x) and &quot;crypto&quot; (0.47x) categories [[PDF] Cybersecurity AI (CAI): An open framework for AI Security](<a href="https://pinzger.github.io/papers/Vilches2026-CAI.pdf" target="_blank" rel="noopener">https://pinzger.github.io/papers/Vilches2026-CAI.pdf</a>).
+- <strong>Framework:</strong> Open-source, agent-centric architecture supporting multiple LLMs. Claude-3.7-sonnet was top performer, solving 19/23 selected challenges [[PDF] Cybersecurity AI (CAI): An open framework for AI Security](<a href="https://pinzger.github.io/papers/Vilches2026-CAI.pdf" target="_blank" rel="noopener">https://pinzger.github.io/papers/Vilches2026-CAI.pdf</a>).
+- <strong>Limitation:</strong> Struggles with harder challenge categories that are the bread-and-butter of DEF CON CTF finals.
+
+---
+
+<strong>Major AI Labs</strong>
+- <strong>Anthropic:</strong> Claude Mythos Preview announced April 7, 2026, described as a &quot;step change&quot; in cybersecurity capabilities. However, standard Claude models solved zero challenges at PlaidCTF and DEF CON Qualifier (elite competitions requiring novel exploitation), as widely noted on LinkedIn in early 2026. Mythos is being shared with ~50 companies for defensive use, not for CTF competition.
+- <strong>OpenAI:</strong> No specific autonomous CTF agent development announced. General cybersecurity capabilities improving with each model generation.
+- <strong>Google DeepMind:</strong> Google ran AI-centric CTFs at DEF CON 33 AI Village (September 2025 blog post) focused on education/adoption rather than competition.
+- <strong>None of the major AI labs have announced plans to enter an autonomous agent in DEF CON CTF.</strong>
+
+---
+
+<strong>Academic Teams</strong>
+- <strong>NYU Tandon:</strong> Developed &quot;EnIGMA&quot; framework for autonomous cybersecurity challenge solving.
+- <strong>Georgia Tech SSLab:</strong> Receiving $2M from Team Atlanta&#x27;s prize for continued autonomous security research.
+- <strong>Various universities:</strong> The March 2026 arxiv paper on &quot;Scalable Agentic CTF Design&quot; studied autonomous AI performance in educational CTF settings, noting limitations at higher difficulty levels.
+
+---
+
+<strong>Key Structural Factors</strong>
+- <strong>DEF CON 34 CTF timeline:</strong> Qualifier May 22–24, 2026; Finals August 6–9, 2026 in Las Vegas.
+- <strong>Current AI limitations at elite CTF:</strong> The 2026 International AI Safety Report and multiple sources note that while AI agents perform well on standard/medium CTF challenges, they struggle with the novel, multi-step exploitation chains required at elite competitions like DEF CON CTF finals.
+- <strong>Gap between benchmarks and live competition:</strong> Tenzai&#x27;s top-1% on static CTF platforms and XBOW&#x27;s #1 on HackerOne are impressive, but DEF CON CTF finals involve real-time attack-defense dynamics, novel challenges, and time pressure that current systems handle poorly—as evidenced by Nils&#x27;s 8th place finish (out of ~20 teams) at DEF CON 33.</p></div></section>
+</div></body></html>

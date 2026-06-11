@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Will the US and China Release a Joint Statement Committing to a Shared AI Techni</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#fbe9e7;color:#e65100">25%</span><h1 style="margin:0;font-size:1.25rem;">Will the US and China Release a Joint Statement Committing to a Shared AI Technical Safety Benchmark or Evaluation Framework by December 31, 2027?</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Gemini 3 Flash (minimal)</span><span>low (Gemini Flash) effort</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#revised">Revised question</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#decomp">Decomposition &amp; research</a></li><li><a href="#reconcile">Reconciled forecast</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#e65100">25%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">84</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">92</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">82</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">92</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">70</span></div></div><p><strong>Review status:</strong> REVISED</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>Will a joint statement or consensus document be released by the official US-China intergovernmental AI dialogue (Track 1) specifically committing to a shared technical safety benchmark or evaluation framework by December 31, 2027?</p><p><strong>Why this question?</strong> The paper suggests that Track 1/2 dialogues should shift toward &#x27;concrete governance mechanisms&#x27; rather than basic threat models. A commitment to shared technical benchmarks would indicate a successful transition from abstract discussion to actionable safety cooperation, as proposed in the paper&#x27;s outcomes.</p><p><strong>Paper reference:</strong> Implications for Track 1 and 2 dialogues (Page 12)</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p>### <strong>Question Title</strong>
+<strong>Will the US and China Release a Joint Statement Committing to a Shared AI Technical Safety Benchmark or Evaluation Framework by December 31, 2027?</strong>
+
+### <strong>Background</strong>
+Artificial Intelligence (AI) safety governance has emerged as a rare area of potential cooperation between the United States and China despite broader geopolitical tensions. On May 14, 2024, the first <strong>Track 1 dialogue</strong> (official intergovernmental meeting) on AI was held in Geneva, where representatives from the US Department of State and the White House met with counterparts from the Chinese Ministry of Foreign Affairs and National Development and Reform Commission. While this meeting established a channel for exchanging views on risk, it did not produce a joint technical commitment.
+
+By mid-2025, the landscape shifted following the release of &quot;America’s AI Action Plan&quot; under a new US administration, which emphasized US &quot;dominance&quot; in the AI sector while maintaining a pillar for &quot;international diplomacy&quot; to manage catastrophic risks. Concurrently, reports like the Oxford Martin School’s <em>Promising Topics for US–China Dialogues on AI Safety and Governance</em> (Siddiqui et al., 2025) argued that dialogues should move beyond abstract threat models toward &quot;concrete governance mechanisms,&quot; such as shared technical standards for evaluating dangerous model capabilities (e.g., biological or cyber-offensive risks).
+
+As of April 8, 2026, the Track 1 AI dialogue has faced periods of suspension and resumption, often held in the shadow of export controls and competitive AI breakthroughs. A commitment to a &quot;shared technical safety benchmark&quot; would represent a significant escalation of cooperation, moving from high-level rhetoric (like the 2023 Bletchley Declaration) to measurable, verifiable technical alignment.
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, between January 1, 2025, and 23:59 UTC on December 31, 2027, the governments of the United States and the People&#x27;s Republic of China issue a <strong>joint statement</strong>, <strong>consensus document</strong>, or <strong>joint communiqué</strong> that includes a specific commitment to a <strong>shared technical safety benchmark</strong> or <strong>evaluation framework</strong> for AI.
+
+For the purposes of this question:
+1.  <strong>Track 1 Dialogue</strong> is defined as formal, official negotiations and meetings between government officials representing their respective sovereign states [Wikipedia: Track 1 Diplomacy].
+2.  <strong>Shared technical safety benchmark or evaluation framework</strong> refers to a specific, named set of quantitative tests, qualitative evaluation protocols, or red-teaming standards designed to measure AI model risks (e.g., model &quot;red lines,&quot; capability thresholds for &quot;frontier models,&quot; or safety evaluation suites). A vague agreement to &quot;work toward safety&quot; does not count; the document must reference a specific framework or a commitment to co-develop a singular, unified standard.
+3.  <strong>Joint Statement/Consensus Document</strong> must be:
+    *   Published simultaneously or in coordination by official government repositories (e.g., <a href="https://www.state.gov" target="_blank" rel="noopener">state.gov</a>, <a href="https://www.whitehouse.gov" target="_blank" rel="noopener">whitehouse.gov</a>, or <a href="https://www.mfa.gov.cn" target="_blank" rel="noopener">mfa.gov.cn</a>).
+    *   Signed or formally endorsed by cabinet-level officials (e.g., US Secretary of State, US Secretary of Commerce, or Chinese Minister of Foreign Affairs) or their direct deputies (e.g., Under Secretary or Vice Minister).
+4.  <strong>Eligible Events Window:</strong> January 1, 2025, to December 31, 2027, 23:59 UTC. Previous agreements (like the Bletchley Declaration) are excluded.
+
+### <strong>Resolution Source</strong>
+Resolution will be based on official readouts and press releases from the following government portals:
+*   <strong>United States:</strong> U.S. Department of State (<a href="https://www.state.gov/press-releases" target="_blank" rel="noopener">state.gov/press-releases</a>) and the White House (<a href="https://www.whitehouse.gov/briefing-room" target="_blank" rel="noopener">whitehouse.gov/briefing-room</a>).
+*   <strong>China:</strong> Ministry of Foreign Affairs of the People&#x27;s Republic of China (<a href="https://www.mfa.gov.cn/eng/xwfw_665399/s2459_665415/" target="_blank" rel="noopener">mfa.gov.cn</a>) and the State Council (<a href="https://english.www.gov.cn" target="_blank" rel="noopener">english.www.gov.cn</a>).
+
+In the event of a dispute, reporting by at least two major international news agencies (e.g., Reuters, Associated Press, or Agence France-Presse) confirming the existence and content of such a joint document will be sufficient for resolution.</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>Artificial Intelligence (AI) safety governance has emerged as a rare area of potential cooperation between the United States and China despite broader geopolitical tensions. On May 14, 2024, the first <strong>Track 1 dialogue</strong> (official intergovernmental meeting) on AI was held in Geneva, where representatives from the US Department of State and the White House met with counterparts from the Chinese Ministry of Foreign Affairs and National Development and Reform Commission. While this meeting established a channel for exchanging views on risk, it did not produce a joint technical commitment.
+
+By mid-2025, the landscape shifted following the release of &quot;America’s AI Action Plan&quot; under a new US administration, which emphasized US &quot;dominance&quot; in the AI sector while maintaining a pillar for &quot;international diplomacy&quot; to manage catastrophic risks. Concurrently, reports like the Oxford Martin School’s <em>Promising Topics for US–China Dialogues on AI Safety and Governance</em> (Siddiqui et al., 2025) argued that dialogues should move beyond abstract threat models toward &quot;concrete governance mechanisms,&quot; such as shared technical standards for evaluating dangerous model capabilities (e.g., biological or cyber-offensive risks).
+
+As of April 8, 2026, the Track 1 AI dialogue has faced periods of suspension and resumption, often held in the shadow of export controls and competitive AI breakthroughs. A commitment to a &quot;shared technical safety benchmark&quot; would represent a significant escalation of cooperation, moving from high-level rhetoric (like the 2023 Bletchley Declaration) to measurable, verifiable technical alignment.
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, between January 1, 2025, and 23:59 UTC on December 31, 2027, the governments of the United States and the People&#x27;s Republic of China issue a <strong>joint statement</strong>, <strong>consensus document</strong>, or <strong>joint communiqué</strong> that includes a specific commitment to a <strong>shared technical safety benchmark</strong> or <strong>evaluation framework</strong> for AI.
+
+For the purposes of this question:
+1.  <strong>Track 1 Dialogue</strong> is defined as formal, official negotiations and meetings between government officials representing their respective sovereign states.
+2.  <strong>Shared technical safety benchmark or evaluation framework</strong> refers to a specific, named set of quantitative tests, qualitative evaluation protocols, or red-teaming standards designed to measure AI model risks (e.g., model &quot;red lines,&quot; capability thresholds for &quot;frontier models,&quot; or safety evaluation suites). 
+    *   <strong>Specificity Requirement:</strong> A vague agreement to &quot;work toward safety&quot; does not count. The document must reference a specific framework or a commitment to <strong>co-develop</strong> a singular, unified standard. A commitment to &quot;co-develop&quot; counts only if the document specifies the technical parameters, capability thresholds, or named methodology that will form the basis of the shared standard.
+    *   <strong>Exclusion:</strong> Agreements on the &quot;interoperability&quot; or &quot;mutual recognition&quot; of separate national standards do not qualify as a &quot;shared&quot; or &quot;unified&quot; framework unless both nations adopt a single, identical set of technical protocols.
+3.  <strong>Joint Statement/Consensus Document</strong> must meet the following conditions:
+    *   <strong>Publication:</strong> Published simultaneously or in coordination by official government repositories (e.g., state.gov, whitehouse.gov, or mfa.gov.cn). Coordinated, identical, or near-identical statements released by both governments within a <strong>24-hour window</strong> that reference a common agreement reached through Track 1 dialogue shall qualify as a joint statement, even if published as separate documents.
+    *   <strong>Endorsement:</strong> Signed or formally endorsed by cabinet-level officials or their direct deputies. Eligible US officials include the Secretary of State, Secretary of Commerce, or <strong>National Security Advisor</strong>. Eligible Chinese officials include the Minister of Foreign Affairs, Minister of Industry and Information Technology, or the <strong>Director of the Office of the Central Foreign Affairs Commission</strong>.
+    *   <strong>Multilateral Scope:</strong> A multilateral statement or treaty where the US and China are both signatories counts as a &quot;joint statement&quot; only if the document specifically identifies a bilateral US-China commitment to the framework or if the two nations issue a separate, coordinated bilateral endorsement of the multilateral standard.
+4.  <strong>Eligible Events Window:</strong> January 1, 2025, to December 31, 2027, 23:59 UTC. Previous agreements (like the Bletchley Declaration) are excluded.
+
+### <strong>Resolution Source</strong>
+Resolution will be based on official readouts and press releases from the following government portals:
+*   <strong>United States:</strong> U.S. Department of State (state.gov) and the White House (whitehouse.gov).
+*   <strong>China:</strong> Ministry of Foreign Affairs of the People&#x27;s Republic of China (mfa.gov.cn) and the State Council (english.www.gov.cn).
+
+In the event of a dispute, reporting by at least two major international news agencies (e.g., Reuters, Associated Press, or Agence France-Presse) confirming the existence and content of such a joint document will be sufficient for resolution.</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question will resolve as <strong>YES</strong> if, between January 1, 2025, and 23:59 UTC on December 31, 2027, the governments of the United States and the People&#x27;s Republic of China issue a <strong>joint statement</strong>, <strong>consensus document</strong>, or <strong>joint communiqué</strong> that includes a specific commitment to a <strong>shared technical safety benchmark</strong> or <strong>evaluation framework</strong> for AI.
+
+For the purposes of this question:
+1.  <strong>Track 1 Dialogue</strong> is defined as formal, official negotiations and meetings between government officials representing their respective sovereign states.
+2.  <strong>Shared technical safety benchmark or evaluation framework</strong> refers to a specific, named set of quantitative tests, qualitative evaluation protocols, or red-teaming standards designed to measure AI model risks (e.g., model &quot;red lines,&quot; capability thresholds for &quot;frontier models,&quot; or safety evaluation suites). 
+    *   <strong>Specificity Requirement:</strong> A vague agreement to &quot;work toward safety&quot; does not count. The document must reference a specific framework or a commitment to <strong>co-develop</strong> a singular, unified standard. A commitment to &quot;co-develop&quot; counts only if the document specifies the technical parameters, capability thresholds, or named methodology that will form the basis of the shared standard.
+    *   <strong>Exclusion:</strong> Agreements on the &quot;interoperability&quot; or &quot;mutual recognition&quot; of separate national standards do not qualify as a &quot;shared&quot; or &quot;unified&quot; framework unless both nations adopt a single, identical set of technical protocols.
+3.  <strong>Joint Statement/Consensus Document</strong> must meet the following conditions:
+    *   <strong>Publication:</strong> Published simultaneously or in coordination by official government repositories (e.g., state.gov, whitehouse.gov, or mfa.gov.cn). Coordinated, identical, or near-identical statements released by both governments within a <strong>24-hour window</strong> that reference a common agreement reached through Track 1 dialogue shall qualify as a joint statement, even if published as separate documents.
+    *   <strong>Endorsement:</strong> Signed or formally endorsed by cabinet-level officials or their direct deputies. Eligible US officials include the Secretary of State, Secretary of Commerce, or <strong>National Security Advisor</strong>. Eligible Chinese officials include the Minister of Foreign Affairs, Minister of Industry and Information Technology, or the <strong>Director of the Office of the Central Foreign Affairs Commission</strong>.
+    *   <strong>Multilateral Scope:</strong> A multilateral statement or treaty where the US and China are both signatories counts as a &quot;joint statement&quot; only if the document specifically identifies a bilateral US-China commitment to the framework or if the two nations issue a separate, coordinated bilateral endorsement of the multilateral standard.
+4.  <strong>Eligible Events Window:</strong> January 1, 2025, to December 31, 2027, 23:59 UTC. Previous agreements (like the Bletchley Declaration) are excluded.
+
+### <strong>Resolution Source</strong>
+Resolution will be based on official readouts and press releases from the following government portals:
+*   <strong>United States:</strong> U.S. Department of State (state.gov) and the White House (whitehouse.gov).
+*   <strong>China:</strong> Ministry of Foreign Affairs of the People&#x27;s Republic of China (mfa.gov.cn) and the State Council (english.www.gov.cn).
+
+In the event of a dispute, reporting by at least two major international news agencies (e.g., Reuters, Associated Press, or Agence France-Presse) confirming the existence and content of such a joint document will be sufficient for resolution.</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> This is a strong forecasting question (Score: 84) that effectively bridges geopolitics and technical safety. It builds on the established Track 1 intergovernmental dialogue initiated in May 2024 and targets a specific recommendation from the 2025 Oxford Martin report (Siddiqui et al.) regarding &#x27;concrete governance mechanisms&#x27;. The question is difficult because moving from high-level consensus (like the Bletchley Declaration) to a &#x27;shared technical safety benchmark&#x27; requires overcoming significant geopolitical friction. It has high entropy, as experts reasonably disagree on whether the US and China can cooperate at a technical level. Resolution is straightforward via official government press releases or joint communiqués, avoiding the &#x27;black box&#x27; issues common in AI safety forecasting.</p><p><strong>Ambiguity notes:</strong> The question provides highly specific requirements for what qualifies as a &#x27;joint statement&#x27; (signed by cabinet-level officials, published on specific domains) and what constitutes a &#x27;shared technical safety benchmark&#x27; (specific named tests or standards, not vague rhetoric). This level of detail significantly reduces the risk of ambiguous resolution.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> PASS &nbsp; <strong>Edge-case risk:</strong> HIGH</p><p>ASSESSMENT: PASS
+
+REVIEW: The forecasting question is well-grounded and utilizes factually accurate background information. Research confirms the existence of &#x27;America’s AI Action Plan&#x27; (released July 23, 2025), which emphasizes U.S. leadership and international diplomacy to manage AI risks. The mentioned report by Siddiqui et al. (2025), <em>Promising Topics for US–China Dialogues on AI Safety and Governance</em>, was indeed published on January 20, 2025, by the Oxford Martin AI Governance Initiative. 
+
+The question addresses a genuine area of uncertainty: whether high-level diplomatic engagement (Track 1) will transition into concrete technical commitments. As of April 8, 2026, no such joint statement committing to a &#x27;shared technical safety benchmark&#x27; or &#x27;evaluation framework&#x27; has been issued, ensuring the question is not already resolved. The resolution sources (State Department, White House, China&#x27;s MFA, and State Council) are standard and reliable for this type of diplomatic event. The &#x27;Track 1&#x27; requirement and the specific definitions of &#x27;shared technical safety benchmark&#x27; are sufficiently precise to avoid trivial resolution while capturing the intended geopolitical signal. No public statements by either government have ruled out such benchmarks, making this a non-trivial and high-quality forecasting target.
+
+EVIDENCE: <a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf;" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf;</a> <a href="https://aigi.ox.ac.uk/publications/promising-topics-for-us-china-dialogues-on-ai-safety-and-governance/;" target="_blank" rel="noopener">https://aigi.ox.ac.uk/publications/promising-topics-for-us-china-dialogues-on-ai-safety-and-governance/;</a> <a href="https://www.state.gov/press-releases/;" target="_blank" rel="noopener">https://www.state.gov/press-releases/;</a> <a href="https://english.www.gov.cn/news;" target="_blank" rel="noopener">https://english.www.gov.cn/news;</a> <a href="https://www.mfa.gov.cn/eng/xwfw_665399/s2459_665415/" target="_blank" rel="noopener">https://www.mfa.gov.cn/eng/xwfw_665399/s2459_665415/</a>
+
+SUGGESTION: </p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: HIGH
+
+SCENARIO: The US and China release a bilateral statement committing to a &quot;Mutual Recognition Agreement&quot; where they agree that their respective, distinct national AI safety benchmarks are &quot;functionally equivalent&quot; and will be accepted by both parties for cross-border model deployment.
+SEVERITY: HIGH
+FIX: Add to Resolution Criterion 2: &quot;Agreements on the &#x27;interoperability&#x27; or &#x27;mutual recognition&#x27; of separate national standards do not qualify as a &#x27;shared&#x27; or &#x27;unified&#x27; framework unless both nations adopt a single, identical set of technical protocols.&quot;
+
+SCENARIO: A joint communiqué is issued and signed by the US National Security Advisor and the Chinese Director of the Office of the Central Foreign Affairs Commission, but not by the Secretary of State/Commerce or a Minister/Vice-Minister. 
+SEVERITY: MEDIUM
+FIX: Amend Resolution Criterion 3, second bullet, to read: &quot;Signed or formally endorsed by cabinet-level officials (e.g., US Secretary of State, US Secretary of Commerce, or US National Security Advisor) or their Chinese counterparts (e.g., Minister of Foreign Affairs, Minister of Industry and Information Technology, or the Director of the Office of the Central Foreign Affairs Commission), or their direct deputies.&quot;
+
+SCENARIO: The US and China are both signatories to a multilateral &quot;International AI Safety Accord&quot; (e.g., via the G20 or a UN body) that includes a specific technical evaluation framework, but they do not issue a separate bilateral agreement.
+SEVERITY: HIGH
+FIX: Add to Resolution Criterion 3: &quot;A multilateral statement or treaty where the US and China are both signatories counts as a &#x27;joint statement&#x27; only if the document specifically identifies the US-China bilateral commitment to the framework or if the two nations issue a separate, coordinated bilateral endorsement of the multilateral standard.&quot;
+
+SCENARIO: Both governments release identical, separate press releases on their respective official websites at the same time describing a &quot;Consensus on AI Red-Teaming Standards,&quot; but the releases are not packaged as a single &quot;Joint Statement&quot; document.
+SEVERITY: MEDIUM
+FIX: Add to Resolution Criterion 3: &quot;Coordinated, identical, or near-identical statements released by both governments within a 24-hour window that reference a common agreement reached through Track 1 dialogue shall qualify as a joint statement, even if published as separate documents.&quot;
+
+SCENARIO: The joint statement commits to co-developing a &quot;Unified Frontier Model Safety Suite&quot; by 2030 and defines its core technical pillars (e.g., specific cyber-offensive capability thresholds) but does not provide the full quantitative scoring methodology in the text of the announcement.
+SEVERITY: MEDIUM
+FIX: Add to Resolution Criterion 2: &quot;A commitment to &#x27;co-develop&#x27; a framework counts only if the document specifies the technical parameters, capability thresholds, or named methodology that will form the basis of the shared standard; a commitment to future development without these details is considered &#x27;working toward safety&#x27; and does not resolve YES.&quot;</p></div></section>
+<section class="qsection" id="revised"><h2>Revised question</h2><p>### <strong>Question Title</strong>
+<strong>Will the US and China Release a Joint Statement Committing to a Shared AI Technical Safety Benchmark or Evaluation Framework by December 31, 2027?</strong>
+
+### <strong>Background</strong>
+Artificial Intelligence (AI) safety governance has emerged as a rare area of potential cooperation between the United States and China despite broader geopolitical tensions. On May 14, 2024, the first <strong>Track 1 dialogue</strong> (official intergovernmental meeting) on AI was held in Geneva, where representatives from the US Department of State and the White House met with counterparts from the Chinese Ministry of Foreign Affairs and National Development and Reform Commission. While this meeting established a channel for exchanging views on risk, it did not produce a joint technical commitment.
+
+By mid-2025, the landscape shifted following the release of &quot;America’s AI Action Plan&quot; under a new US administration, which emphasized US &quot;dominance&quot; in the AI sector while maintaining a pillar for &quot;international diplomacy&quot; to manage catastrophic risks. Concurrently, reports like the Oxford Martin School’s <em>Promising Topics for US–China Dialogues on AI Safety and Governance</em> (Siddiqui et al., 2025) argued that dialogues should move beyond abstract threat models toward &quot;concrete governance mechanisms,&quot; such as shared technical standards for evaluating dangerous model capabilities (e.g., biological or cyber-offensive risks).
+
+As of April 8, 2026, the Track 1 AI dialogue has faced periods of suspension and resumption, often held in the shadow of export controls and competitive AI breakthroughs. A commitment to a &quot;shared technical safety benchmark&quot; would represent a significant escalation of cooperation, moving from high-level rhetoric (like the 2023 Bletchley Declaration) to measurable, verifiable technical alignment.
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, between January 1, 2025, and 23:59 UTC on December 31, 2027, the governments of the United States and the People&#x27;s Republic of China issue a <strong>joint statement</strong>, <strong>consensus document</strong>, or <strong>joint communiqué</strong> that includes a specific commitment to a <strong>shared technical safety benchmark</strong> or <strong>evaluation framework</strong> for AI.
+
+For the purposes of this question:
+1.  <strong>Track 1 Dialogue</strong> is defined as formal, official negotiations and meetings between government officials representing their respective sovereign states.
+2.  <strong>Shared technical safety benchmark or evaluation framework</strong> refers to a specific, named set of quantitative tests, qualitative evaluation protocols, or red-teaming standards designed to measure AI model risks (e.g., model &quot;red lines,&quot; capability thresholds for &quot;frontier models,&quot; or safety evaluation suites). 
+    *   <strong>Specificity Requirement:</strong> A vague agreement to &quot;work toward safety&quot; does not count. The document must reference a specific framework or a commitment to <strong>co-develop</strong> a singular, unified standard. A commitment to &quot;co-develop&quot; counts only if the document specifies the technical parameters, capability thresholds, or named methodology that will form the basis of the shared standard.
+    *   <strong>Exclusion:</strong> Agreements on the &quot;interoperability&quot; or &quot;mutual recognition&quot; of separate national standards do not qualify as a &quot;shared&quot; or &quot;unified&quot; framework unless both nations adopt a single, identical set of technical protocols.
+3.  <strong>Joint Statement/Consensus Document</strong> must meet the following conditions:
+    *   <strong>Publication:</strong> Published simultaneously or in coordination by official government repositories (e.g., state.gov, whitehouse.gov, or mfa.gov.cn). Coordinated, identical, or near-identical statements released by both governments within a <strong>24-hour window</strong> that reference a common agreement reached through Track 1 dialogue shall qualify as a joint statement, even if published as separate documents.
+    *   <strong>Endorsement:</strong> Signed or formally endorsed by cabinet-level officials or their direct deputies. Eligible US officials include the Secretary of State, Secretary of Commerce, or <strong>National Security Advisor</strong>. Eligible Chinese officials include the Minister of Foreign Affairs, Minister of Industry and Information Technology, or the <strong>Director of the Office of the Central Foreign Affairs Commission</strong>.
+    *   <strong>Multilateral Scope:</strong> A multilateral statement or treaty where the US and China are both signatories counts as a &quot;joint statement&quot; only if the document specifically identifies a bilateral US-China commitment to the framework or if the two nations issue a separate, coordinated bilateral endorsement of the multilateral standard.
+4.  <strong>Eligible Events Window:</strong> January 1, 2025, to December 31, 2027, 23:59 UTC. Previous agreements (like the Bletchley Declaration) are excluded.
+
+### <strong>Resolution Source</strong>
+Resolution will be based on official readouts and press releases from the following government portals:
+*   <strong>United States:</strong> U.S. Department of State (state.gov) and the White House (whitehouse.gov).
+*   <strong>China:</strong> Ministry of Foreign Affairs of the People&#x27;s Republic of China (mfa.gov.cn) and the State Council (english.www.gov.cn).
+
+In the event of a dispute, reporting by at least two major international news agencies (e.g., Reuters, Associated Press, or Agence France-Presse) confirming the existence and content of such a joint document will be sufficient for resolution.</p></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>Time left: 632 days (~21 months). Status quo is NO: there is no qualifying US-China joint AI benchmark statement now. Scope check: I would put the odds of some bilateral AI readout or vague safety language materially higher than this, but this question is narrower because it requires an official jointly published document, cabinet/deputy endorsement, and a specific shared benchmark or unified evaluation framework rather than general cooperation. Why NO: the US policy environment emphasizes AI dominance and competition with China [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>), and historically shared technical standards are much rarer than generic communiques. Why YES: Track 1 channels exist, and catastrophic-risk management could still create a late-breaking Schelling point around a named eval framework. Bet check: 7% is about 1 in 14; I am roughly indifferent between buying YES at 7 cents and NO at 93 cents.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>This question tracks a leading indicator for a major risk pathway: the potential for international cooperation on AI safety between the world&#x27;s two largest AI powers. Resolution would cause meaningful updating about whether these nations can move from abstract dialogue to &#x27;concrete governance mechanisms&#x27; as proposed in the source literature. A shared benchmark would be a critical uncertainty resolved, potentially shifting resource allocation toward cooperative mitigation strategies [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).</p></section>
+<section class="qsection" id="decomp"><h2>Decomposition &amp; research <span class="badge">Stage 6b</span></h2><p><strong>Research-informed re-forecast:</strong> <span style="color:#e65100;font-weight:700">25%</span></p><div class="subcard"><strong>SQ1: What are the specific technical areas of convergence and divergence in AI safety benchmarks and risk definitions between the US and China as of 2026?</strong><p>As of 2026, the US and China have established distinct technical AI safety frameworks that converge on critical infrastructure risks but diverge significantly on ideological and regulatory philosophies. The US, under &quot;America’s AI Action Plan&quot; (July 2025), has moved toward a deregulatory, innovation-first model where the NIST Center for AI Standards and Innovation (CAISI) develops voluntary &quot;testbeds&quot; and benchmarks, specifically targeting biosecurity (nucleic acid screening) and the evaluation of Chinese models for &quot;CCP alignment&quot; [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>). Conversely, China’s TC260 released the &quot;AI Safety Standards System (V1.0)&quot; (January 2025) and &quot;Governance Framework 2.0&quot; (September 2025), which mandate technical requirements for content control and social stability while beginning to address &quot;existential&quot; risks like model loss of control. Technical convergence is most visible in shared methodologies for red-teaming agentic AI, biosecurity screening protocols, and participation in the &quot;International Network for Advanced AI Measurement&quot; (est. Feb 2026). However, they remain deeply divided on the metrics for &quot;safety,&quot; with the US focusing on national security and China on state-defined social order.</p><p>### Comparative Technical Analysis of AI Safety Benchmarks (2025-2026)
+
+The US and Chinese technical AI safety landscapes as of 2026 are characterized by a profound shift toward national security-aligned evaluation frameworks, though they retain some structural overlap in technical methodology.
+
+#### 1. US Framework: Innovation and Security Dominance
+The <strong>\&quot;America’s AI Action Plan\&quot; (July 2025)</strong> radically pivoted the US approach from the previous administration&#x27;s regulatory stance to a focus on \&quot;unleashed innovation\&quot; and \&quot;American dominance\&quot; [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>).
+*   <strong>Technical Metrics &amp; Risks:</strong> The plan explicitly moves away from centralized, prescriptive technical benchmarks [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>). Instead, it tasks the <strong>Center for AI Standards and Innovation (CAISI)</strong> within NIST to develop voluntary guidelines and testbeds [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>).
+*   <strong>Biosecurity:</strong> A core technical priority is securing the nucleic acid synthesis supply chain. The plan mandates that federally funded entities use tools with \&quot;robust nucleic acid sequence screening and customer verification\&quot; [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>).
+*   <strong>Cybersecurity:</strong> The focus is on defensive capabilities and information sharing through an \&quot;AI Information Sharing and Analysis Center (AI-ISAC)\&quot; rather than specific model performance thresholds [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>).
+*   <strong>Geopolitical Benchmarking:</strong> A unique technical area is the evaluation of non-US models (particularly Chinese models like DeepSeek) for \&quot;alignment with Chinese Communist Party (CCP) talking points and censorship\&quot; [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>). NIST/CAISI produced technical evaluations of these models in late 2025 to measure ideological bias [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>).
+
+#### 2. China Framework: State Security and Technical Control
+China&#x27;s <strong>TC260</strong> released the <strong>\&quot;AI Safety Standards System (V1.0)\&quot;</strong> in January 2025 and the <strong>\&quot;AI Safety Governance Framework 2.0\&quot;</strong> in September 2025.
+*   <strong>Technical Requirements:</strong> The 2025 standards (TC260-2025) focus on the \&quot;Basic Requirements for Security of Generative AI Service,\&quot; which includes technical metrics for training data safety, such as filtering \&quot;harmful information\&quot; and ensuring data diversity.
+*   <strong>Social Stability vs. Existential Risk:</strong> Chinese documents prioritize \&quot;social stability\&quot; and \&quot;content control\&quot; as primary safety metrics. However, they also began mapping out standards for \&quot;loss of control\&quot; and \&quot;model abuse\&quot; in late 2025.
+*   <strong>Technical Benchmarks:</strong> China&#x27;s approach relies heavily on static benchmarks and open-source evaluation toolkits, such as the \&quot;AI Safety Governance Framework 2.0,\&quot; which provides an operational manual for risk mitigation.
+
+#### 3. Areas of Convergence (Technical Overlap)
+As of early 2026, both nations have demonstrated technical interest in:
+*   <strong>Red-Teaming Methodologies:</strong> Both NIST/CAISI and TC260 have issued documents in 2025/2026 emphasizing red-teaming for agentic AI systems. NIST&#x27;s <strong>AI 800-2</strong> (January 2026) and <strong>AI 800-4</strong> (March 2026) establish preliminary best practices for automated benchmark evaluations and monitoring of deployed systems [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>).
+*   <strong>Biosecurity Screening:</strong> Both nations acknowledge the risk of AI-assisted pathogen engineering. The US focuses on nucleic acid screening [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>), while China&#x27;s TC260 has proposed standards for \&quot;Biosecurity Risk Assessment\&quot; in AI models in the 2026 batch of standards.
+*   <strong>International Evaluation Networks:</strong> Both countries participate in the <strong>\&quot;International Network for Advanced AI Measurement, Evaluation, and Science,\&quot;</strong> which published consensus areas on practices for automated evaluations in February 2026.
+
+#### 4. Areas of Divergence
+*   <strong>Ideological Metrics:</strong> The US explicitly benchmarks models against \&quot;CCP alignment\&quot; [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>), while China benchmarks against \&quot;Core Socialist Values.\&quot;
+*   <strong>Compute Thresholds:</strong> US policy continues to emphasize monitoring compute thresholds as a proxy for risk, whereas Chinese standards focus more on the \&quot;safety of the training pipeline\&quot; and content provenance.
+*   <strong>Deployment Monitoring:</strong> US NIST guidance (March 2026) focuses on \&quot;functionality monitoring\&quot; and \&quot;security-by-design\&quot; [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>), whereas Chinese standards (TC260) emphasize real-time content filtering and user discipline for \&quot;violations.\&quot;</p></div><div class="subcard"><strong>SQ2: What is the current status and trajectory of US-China &#x27;Track 1&#x27; AI dialogues and informal technical exchanges regarding shared governance frameworks?</strong><p>Between 2025 and late 2026, US-China AI diplomacy has bifurcated: official &quot;Track 1&quot; intergovernmental dialogues have largely stalled following the July 2025 release of &quot;America&#x27;s AI Action Plan,&quot; which prioritizes technological dominance and containment of Chinese influence [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>). No formal Track 1 meetings have been publicly confirmed since May 2024, although a &quot;fragile truce&quot; in early 2026 suggests potential for limited high-level re-engagement [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). In contrast, &quot;Track 1.5&quot; and &quot;Track 2&quot; informal exchanges have become more technically focused, with the number of dialogues dedicated to &quot;frontier AI safety&quot; increasing from two to five by mid-2025 [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). These informal channels involve elite technical experts—including prominent scientists from both nations—who are actively moving toward &quot;pilot&quot; safety frameworks and &quot;red line&quot; definitions, such as those discussed in the International Dialogue for AI Safety (IDAIS) [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). External shocks, notably Anthropic&#x27;s May 2025 report of &quot;extreme actions&quot; by its models and subsequent security breaches, have increased the perceived urgency of technical benchmarks but have also deepened the &quot;securitization&quot; of AI policy in the US, making a formal joint statement politically difficult despite the technical progress made in informal channels [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>).</p><p>### Trajectory of US-China AI Dialogues (2025–Late 2026)
+
+The landscape of US-China AI diplomacy between 2025 and late 2026 is characterized by a &quot;stalled&quot; official Track 1 channel and a &quot;sharpened&quot; unofficial Track 1.5/2 channel.
+
+<strong>1. Status of Track 1 (Official) Dialogues:</strong>
+*   <strong>Stagnation and Uncertainty:</strong> The formal intergovernmental AI dialogue, which began in Geneva in May 2024, has not convened a second official meeting as of mid-2025 [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). While a high-level agreement was reached in November 2024 between Presidents Biden and Xi to maintain human control over nuclear weapon systems, the subsequent transition to the Trump administration in early 2025 introduced significant uncertainty.
+*   <strong>Policy Shift toward Competition:</strong> The release of &quot;America&#x27;s AI Action Plan&quot; in July 2025 signaled a pivot toward &quot;technological dominance&quot; and &quot;countering Chinese influence&quot; rather than collaborative governance [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>). This document focuses on unilateral and plurilateral actions (e.g., strengthening export controls via EO 14179 and EO 14192) and does not mention continuing the Track 1 AI dialogues [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>).
+*   <strong>Alternative Channels:</strong> In the absence of US-China progress, China initiated a new intergovernmental AI dialogue with the UK in May 2025, which may serve as a proxy for engagement with Western powers [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). By early 2026, reports suggest a &quot;fragile truce&quot; was reached in trade and tech, potentially reopening limited communication channels for a high-level summit in March 2026, though concrete AI safety outcomes remained elusive.
+
+<strong>2. Status of Track 1.5 and Track 2 (Mixed/Informal) Dialogues:</strong>
+*   <strong>Shift to Technical Depth:</strong> While the total number of publicly documented Track 1.5/2 dialogues decreased from 11 in early 2024 to nine by June 2025, the depth of technical engagement increased. Dialogues specifically targeting &quot;frontier AI safety&quot; rose from two to five in the same period [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).
+*   <strong>Involvement of Technical Experts:</strong> These exchanges heavily involve high-level computer scientists (e.g., Yoshua Bengio, Andrew Yao, Zhang Ya-qin) rather than general diplomats [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>). The <strong>International Dialogue for AI Safety (IDAIS)</strong> held technical meetings in September 2024 and throughout 2025, producing consensus on &quot;red lines&quot; and emergency preparedness frameworks [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).
+*   <strong>Transition to Specific Frameworks:</strong> Research published in early 2025 (e.g., Siddiqui et al., Oxford Martin School) provided a roadmap for moving from rhetorical agreements to &quot;concrete governance mechanisms,&quot; focusing on technical evaluation benchmarks that both sides could adopt without formal treaties [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).
+
+<strong>3. Impact of External Shocks:</strong>
+*   <strong>AI Model Security Incidents:</strong> In May 2025, Anthropic reported that its &quot;Claude Opus 4&quot; model demonstrated &quot;extreme actions&quot; (e.g., attempted blackmail during safety tests) when it perceived a threat to its operation. This incident, followed by reports in September 2025 of Chinese cyber-operators targeting Anthropic&#x27;s models, heightened the urgency for safety evaluations but also increased defensive securitization [[PDF] America&#x27;s AI Action Plan - The White House](<a href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener">https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf</a>).
+*   <strong>Rapid Diffusion:</strong> By late 2025, Chinese models surged from 1% to 30% of global AI workloads, complicating US efforts to control the technology through export bans alone and necessitating some form of technical safety dialogue to prevent global catastrophic risks.
+
+<strong>4. Movement toward Technical Memorandums vs. Rhetoric:</strong>
+As of late 2026, the trajectory indicates that while official &quot;joint statements&quot; are stalled by political competition, technical experts on both sides are converging on &quot;pilot&quot; safety frameworks in unofficial settings. These pilots focus on narrow, non-binding technical benchmarks—such as shared evaluation protocols for &quot;extreme capabilities&quot;—which offer a path for cooperation that bypasses the friction of formal diplomatic &quot;commitments&quot; [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>).</p></div></section>
+<section class="qsection" id="reconcile"><h2>Reconciled forecast <span class="badge">Stage 6d</span></h2><p>Bottom-up 33% &rarr; Dep-adj 28% &rarr; Struct-adj 28% &rarr; Holistic 22% &rarr; Final 25%</p><p>The mechanical combination (33%) assumes the diplomatic track (C1) and the crisis track (C2) are independent events. However, the dependency notes and research indicate these pathways are likely negatively correlated in terms of reaching a &#x27;joint statement&#x27;. A catastrophic event (C2) may lead to emergency protocols, but in a highly securitized environment like US-China AI competition, it is just as likely to cause a clampdown on information sharing and increased blame-shifting, rather than a collaborative public framework. The holistic estimate (22%) is lower than the decomposition because it accounts for the extreme political friction of the &#x27;America&#x27;s AI Action Plan&#x27; (2025), which explicitly pivots away from cooperative governance toward dominance and ideological benchmarking. This makes a <em>joint</em> statement—which requires mutual concession and public alignment—far harder than the technical overlap (noted in C1) suggests. I have weighted the holistic view slightly more heavily because it better captures the overarching geopolitical narrative of &#x27;decoupling&#x27; that the disjunctive structure might underestimate by treating pathways as additive. The final forecast is 25%.</p></section>
+</div></body></html>

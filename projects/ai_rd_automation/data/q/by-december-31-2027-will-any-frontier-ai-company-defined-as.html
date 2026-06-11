@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Between April 1, 2026, and December 31, 2027, will any &quot;frontier AI company&quot; (Op</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#fbe9e7;color:#e65100">30%</span><h1 style="margin:0;font-size:1.25rem;">Between April 1, 2026, and December 31, 2027, will any &quot;frontier AI company&quot; (OpenAI, Anthropic, or Google DeepMind) publicly state in an official blog post, technical report, &quot;AI permission list,&quot; or &quot;autonomy framework&quot; that they have used an AI agent to autonomously initiate and manage a single discrete AI model training run with market-equivalent compute costs exceeding $10 million USD?</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Gemini 3 Flash (minimal)</span><span>low (Gemini Flash) effort</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#revised">Revised question</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#decomp">Decomposition &amp; research</a></li><li><a href="#reconcile">Reconciled forecast</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#e65100">30%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">92</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">75</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">80</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">75</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">70</span></div></div><p><strong>Review status:</strong> REVISED</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>By December 31, 2027, will any &#x27;frontier AI company&#x27; (defined as OpenAI, Anthropic, or Google DeepMind) publicly state in an official blog post or report that they have used an AI agent to autonomously initiate and manage a training run costing more than $1 million without human-in-the-loop approval for individual step execution?</p><p><strong>Why this question?</strong> The paper emphasizes tracking the &#x27;oversight gap&#x27; and &#x27;AI use in high-stakes decisions&#x27; (Metric #7) [2a3bbc]. Granting AI systems the authority to manage large-scale training runs (Metric #14) is a critical transition from &#x27;assistance&#x27; to &#x27;automation&#x27; in the &#x27;Running experiments&#x27; stage (Section 2) [2a3bbc]. OpenAI has already set a &#x27;North Star&#x27; goal for an autonomous research intern by 2026/2027, making this a timely and high-entropy indicator of institutional trust in AIRDA.</p><p><strong>Paper reference:</strong> Metric #7: Extent of AI use in high-stakes decisions &amp; Metric #14: AI permission lists (Table 1) [2a3bbc]</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p>### <strong>Question Title</strong>
+<strong>Autonomous AI-Led Training Runs at Frontier Labs by 2028</strong>
+
+---
+
+### <strong>Question</strong>
+Between April 1, 2026, and December 31, 2027, will any &quot;frontier AI company&quot; (OpenAI, Anthropic, or Google DeepMind) publicly state in an official blog post or technical report that they have used an AI agent to autonomously initiate and manage an AI model training run costing more than $1 million USD without human-in-the-loop approval for individual step execution?
+
+---
+
+### <strong>Background</strong>
+As of April 1, 2026, the automation of AI Research and Development (AIRDA) has moved from a theoretical possibility to a core strategic &quot;North Star&quot; for leading AI labs. OpenAI has publicly targeted the deployment of an &quot;autonomous research intern&quot; by late 2026, capable of independent multi-day investigations <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. Similarly, Anthropic and Google DeepMind have published frameworks for &quot;Intelligent AI Delegation&quot; and &quot;Agent Autonomy&quot; to track the transition from human-led to agentic R&amp;D processes.
+
+A critical inflection point in this transition is the delegation of &quot;high-stakes decisions&quot;—such as the initiation of large-scale, expensive training runs—to AI agents. Historically, training runs costing millions of dollars required rigorous human oversight for every stage, from resource allocation to monitoring for divergence. The Chan et al. (2026) paper, <em>Measuring AI R&amp;D Automation</em>, proposes tracking this via &quot;AI permission lists&quot; (Metric #14), which define the actions an AI system is authorized to take without human intervention <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. 
+
+This question tracks whether frontier labs will publicly cross the threshold of trusting an AI agent to manage a million-dollar asset autonomously. While autonomous coding and hypothesis generation are increasingly common, the &quot;Running experiments&quot; stage (Section 2 of Chan et al. 2026) involves complex real-time interventions that represent a significant leap in operational trust <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>.
+
+---
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, between April 1, 2026, and December 31, 2027 (inclusive, UTC), any of the named companies (OpenAI, Anthropic, or Google DeepMind) publishes an official statement confirming the following conditions were met for at least one specific instance:
+
+1.  <strong>Autonomous Initiation and Management</strong>: An AI agent (an autonomous AI system) initiated and managed a training run. &quot;Managed&quot; includes monitoring for failure, adjusting hyperparameters, or handling resource distribution during the run.
+2.  <strong>No Human-in-the-Loop for Steps</strong>: The statement must specify that the agent operated &quot;autonomously,&quot; &quot;without human-in-the-loop approval for individual steps,&quot; or using a &quot;permission list&quot; <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a> that granted it authority to execute the run to completion without per-step human authorization. High-level human authorization at the start of the project (i.e., &quot;Go&quot; at the outset) does <em>not</em> disqualify the event, provided individual execution steps were autonomous.
+3.  <strong>Cost Threshold</strong>: The training run cost more than $1,000,000 USD. This cost can be explicitly stated or calculated based on the hardware and duration mentioned (e.g., using standard 2026 cloud rental rates for H100/B200 equivalents or the lab&#x27;s own nominal figure).
+4.  <strong>Frontier Companies</strong>: The company must be OpenAI, Anthropic, or Google DeepMind.
+5.  <strong>Official Communication</strong>: The claim must appear in an official company newsroom, technical blog, or peer-reviewed paper/technical report published by the company.
+
+<strong>Resolution Sources:</strong>
+- <strong>OpenAI</strong>: <a href="https://openai.com/news/" target="_blank" rel="noopener">openai.com/news</a>
+- <strong>Anthropic</strong>: <a href="https://www.anthropic.com/news" target="_blank" rel="noopener">anthropic.com/news</a> or <a href="https://www.anthropic.com/research" target="_blank" rel="noopener">anthropic.com/research</a>
+- <strong>Google DeepMind</strong>: <a href="https://deepmind.google/blog/" target="_blank" rel="noopener">deepmind.google/blog</a> or <a href="https://research.google/blog/" target="_blank" rel="noopener">research.google/blog</a>
+
+If no such statement is published by 23:59 UTC on December 31, 2027, the question resolves as <strong>NO</strong>.
+
+---
+
+### <strong>Definitions</strong>
+- <strong>AIRDA (AI R&amp;D Automation)</strong>: The use of AI to carry out parts of the AI R&amp;D pipeline, including capabilities research and safety research <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>.
+- <strong>Training Run</strong>: A discrete process of optimizing a machine learning model&#x27;s parameters on a dataset, typically involving distributed computation across a GPU cluster.
+- <strong>AI Agent</strong>: An AI system capable of pursuing complex goals with limited human intervention by perceiving its environment and taking actions <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>.
+- <strong>Permission List</strong>: A list of actions AI systems are authorized to take with different levels of human approval, including where none is required <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>.
+- <strong>Frontier AI Company</strong>: For this question, limited to OpenAI, Anthropic, and Google DeepMind.
+</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>As of April 1, 2026, the automation of AI Research and Development (AIRDA) has moved from a theoretical possibility to a core strategic &quot;North Star&quot; for leading AI labs. OpenAI has publicly targeted the deployment of an &quot;autonomous research intern&quot; by late 2026, capable of independent multi-day investigations [Measuring AI R&amp;D Automation - arXiv]. Similarly, Anthropic and Google DeepMind have published frameworks for &quot;Intelligent AI Delegation&quot; and &quot;Agent Autonomy&quot; to track the transition from human-led to agentic R&amp;D processes.
+
+A critical inflection point in this transition is the delegation of &quot;high-stakes decisions&quot;—such as the initiation of large-scale, expensive training runs—to AI agents. Historically, training runs costing millions of dollars required rigorous human oversight for every stage, from resource allocation to monitoring for divergence. The Chan et al. (2026) paper, <em>Measuring AI R&amp;D Automation</em>, proposes tracking this via &quot;AI permission lists&quot; (Metric #14), which define the actions an AI system is authorized to take without human intervention. 
+
+This question tracks whether frontier labs will publicly cross the threshold of trusting an AI agent to manage a $10 million compute asset autonomously. While autonomous coding and hypothesis generation are increasingly common, the &quot;Running experiments&quot; stage (Section 2 of Chan et al. 2026) involves complex real-time interventions that represent a significant leap in operational trust.
+
+---
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, between April 1, 2026, and December 31, 2027 (inclusive, UTC), any of the named companies (OpenAI, Anthropic, or Google DeepMind) publishes an official statement confirming the following conditions were met for at least one specific instance:
+
+1.  <strong>Autonomous Initiation and Management</strong>: An AI agent (an autonomous AI system) initiated and managed a training run. 
+    *   <strong>Management</strong> is only considered autonomous if the AI agent has the direct technical authority to modify hyperparameters or resource distribution directly in the training environment without a human reviewing the specific change before it takes effect.
+    *   <strong>Autonomous initiation</strong> requires the agent to independently determine at least one key training parameter (e.g., learning rate, batch size, or architecture variant) rather than simply triggering a human-pre-configured job template.
+2.  <strong>No Human-in-the-Loop for Steps</strong>: The statement must specify that the agent operated &quot;autonomously,&quot; &quot;without human-in-the-loop approval for individual steps,&quot; or using a &quot;permission list&quot; or &quot;autonomy framework&quot; that granted it authority to execute the run to completion without per-step human authorization. 
+    *   A run is <strong>not</strong> considered autonomous if human-in-the-loop approval is required to resume the training process after an agent-initiated pause or failure-handling event.
+    <em>   High-level human authorization at the start of the project (i.e., &quot;Go&quot; at the outset) does </em>not* disqualify the event, provided individual execution steps were autonomous.
+3.  <strong>Cost Threshold</strong>: The training run cost more than $10,000,000 USD. 
+    *   This threshold applies specifically to the market-equivalent rental cost of the compute hardware used (e.g., H100/B200 GPU hours) and <strong>excludes</strong> labor, facility overhead, or dataset acquisition costs.
+    *   The cost threshold must be met by a <strong>single discrete training run</strong> (a single model optimization process) rather than an aggregate of multiple small-scale experiments.
+4.  <strong>Frontier Companies</strong>: The company must be OpenAI, Anthropic, or Google DeepMind.
+5.  <strong>Official Communication</strong>: The claim must appear in an official company newsroom, technical blog, peer-reviewed paper, technical report, or published &quot;AI permission list&quot; or &quot;autonomy framework.&quot;</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question will resolve as <strong>YES</strong> if, between April 1, 2026, and December 31, 2027 (inclusive, UTC), any of the named companies (OpenAI, Anthropic, or Google DeepMind) publishes an official statement confirming the following conditions were met for at least one specific instance:
+
+1.  <strong>Autonomous Initiation and Management</strong>: An AI agent (an autonomous AI system) initiated and managed a training run. 
+    *   <strong>Management</strong> is only considered autonomous if the AI agent has the direct technical authority to modify hyperparameters or resource distribution directly in the training environment without a human reviewing the specific change before it takes effect.
+    *   <strong>Autonomous initiation</strong> requires the agent to independently determine at least one key training parameter (e.g., learning rate, batch size, or architecture variant) rather than simply triggering a human-pre-configured job template.
+2.  <strong>No Human-in-the-Loop for Steps</strong>: The statement must specify that the agent operated &quot;autonomously,&quot; &quot;without human-in-the-loop approval for individual steps,&quot; or using a &quot;permission list&quot; or &quot;autonomy framework&quot; that granted it authority to execute the run to completion without per-step human authorization. 
+    *   A run is <strong>not</strong> considered autonomous if human-in-the-loop approval is required to resume the training process after an agent-initiated pause or failure-handling event.
+    <em>   High-level human authorization at the start of the project (i.e., &quot;Go&quot; at the outset) does </em>not* disqualify the event, provided individual execution steps were autonomous.
+3.  <strong>Cost Threshold</strong>: The training run cost more than $10,000,000 USD. 
+    *   This threshold applies specifically to the market-equivalent rental cost of the compute hardware used (e.g., H100/B200 GPU hours) and <strong>excludes</strong> labor, facility overhead, or dataset acquisition costs.
+    *   The cost threshold must be met by a <strong>single discrete training run</strong> (a single model optimization process) rather than an aggregate of multiple small-scale experiments.
+4.  <strong>Frontier Companies</strong>: The company must be OpenAI, Anthropic, or Google DeepMind.
+5.  <strong>Official Communication</strong>: The claim must appear in an official company newsroom, technical blog, peer-reviewed paper, technical report, or published &quot;AI permission list&quot; or &quot;autonomy framework.&quot;</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> This question is excellent for tracking critical transitions in AI autonomy. It directly operationalizes Metric #7 (high-stakes decisions) and Metric #14 (permission lists) from the Chan et al. (2026) framework for measuring AI R&amp;D automation [[PDF] Measuring AI R&amp;D Automation - arXiv](<a href="https://arxiv.org/pdf/2603.03992" target="_blank" rel="noopener">https://arxiv.org/pdf/2603.03992</a>). The focus on autonomous training runs costing &gt;$1M is a clear, high-stakes indicator of &#x27;North Star&#x27; goals like OpenAI&#x27;s autonomous research intern. While the resolution depends on public disclosure, the high-profile nature of such a milestone makes it likely to be reported if achieved. There is significant room for disagreement on when (or if) companies will bypass human-in-the-loop approval for million-dollar investments, making it a high-entropy question. It requires deep research into company safety frameworks and internal R&amp;D roadmaps.</p><p><strong>Ambiguity notes:</strong> The question is well-structured and uses specific metrics (Metric #14) from the referenced literature <a href="https://arxiv.org/html/2603.03992v3" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. However, it relies on interpreting corporate communications (&#x27;official statement&#x27;) which may use marketing language rather than the precise technical definitions required (e.g., &#x27;no human-in-the-loop&#x27;) <a href="https://arxiv.org/html/2603.03992v3" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. The cost threshold (&gt;$1M) may also require estimation if not explicitly stated <a href="https://arxiv.org/html/2603.03992v3" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge-case risk:</strong> MEDIUM</p><p>ASSESSMENT: NEEDS_REVISION
+
+REVIEW: The question is well-grounded in current AI R&amp;D trends but contains two substantive issues that could hinder resolution or lead to a &#x27;trivial&#x27; outcome. 
+
+First, the $1 million USD cost threshold is likely too low for the 2026–2027 timeframe. Research indicates that frontier model training costs are scaling toward $1 billion by 2027 <a href="https://epoch.ai/blog/how-much-does-it-cost-to-train-frontier-ai-models" target="_blank" rel="noopener">How much does it cost to train frontier AI models?</a>. While $1 million is not &#x27;trivial,&#x27; it may represent a routine medium-scale experiment rather than a &#x27;high-stakes&#x27; milestone for labs like OpenAI or Google DeepMind, potentially leading to a &#x27;YES&#x27; resolution for a relatively minor technical achievement.
+
+Second, the resolution criteria rely heavily on a specific form of public admission (&#x27;without human-in-the-loop approval&#x27;). As noted in the background paper Chan et al. (2026), labs face high oversight demands and risks when removing humans from the loop for significant actions like training <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a> <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. Due to safety, liability, and PR concerns, companies may be highly incentivized to describe their systems as &#x27;human-supervised&#x27; or &#x27;human-led&#x27; even if the agent is performing the bulk of the autonomous management. This creates a significant reporting bias where the technical event might occur, but the &#x27;official statement&#x27; criteria are never met because the company avoids the specific phrasing required by the prompt.
+
+Finally, the reference to Chan et al. (2026) is accurate regarding &#x27;AI permission lists&#x27; (Metric #14) and the &#x27;Running experiments&#x27; stage, which explicitly identifies &#x27;initiating training runs&#x27; as a key automation target <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a> <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>.
+
+EVIDENCE: <a href="https://arxiv.org/abs/2603.03992," target="_blank" rel="noopener">https://arxiv.org/abs/2603.03992,</a> <a href="https://epoch.ai/blog/how-much-does-it-cost-to-train-frontier-ai-models," target="_blank" rel="noopener">https://epoch.ai/blog/how-much-does-it-cost-to-train-frontier-ai-models,</a> <a href="https://openai.com/news," target="_blank" rel="noopener">https://openai.com/news,</a> <a href="https://www.anthropic.com/news" target="_blank" rel="noopener">https://www.anthropic.com/news</a>
+
+SUGGESTION: 1. Increase the cost threshold to $10 million USD to ensure the event represents a truly &#x27;high-stakes&#x27; delegation of trust. 
+2. Broaden the resolution criteria to include &#x27;AI permission lists&#x27; or &#x27;autonomy frameworks&#x27; as described in Chan et al. (2026). Instead of requiring an admission of &#x27;no human-in-the-loop,&#x27; allow resolution if a company publishes a &#x27;permission list&#x27; that grants an agent the authority to initiate and manage runs without per-step approval.
+3. Clarify if the $1 million (or suggested $10 million) refers specifically to compute/hardware costs or total R&amp;D costs, as the latter can be significantly higher <a href="https://epoch.ai/blog/how-much-does-it-cost-to-train-frontier-ai-models" target="_blank" rel="noopener">How much does it cost to train frontier AI models?</a>.</p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: MEDIUM
+
+SCENARIO: OpenAI reports that an AI agent &#x27;managed&#x27; a training run by suggesting hyperparameter adjustments that were then manually reviewed and applied by a human engineer via a Slack integration.
+SEVERITY: HIGH
+FIX: Add: &quot;Management is only considered autonomous if the AI agent has the technical authority to modify hyperparameters or resource distribution directly in the training environment without a human reviewing the specific change before it takes effect.&quot;
+
+SCENARIO: Anthropic announces a $1.5 million training run initiated by an agent, but the $1.5 million figure includes &#x27;internal overhead&#x27; such as researcher salaries and facility costs, while the pure compute cost (H100/B200 rental equivalent) is only $800,000.
+SEVERITY: MEDIUM
+FIX: Add: &quot;The $1,000,000 USD threshold applies specifically to the market-equivalent rental cost of the compute hardware used (e.g., H100/B200 GPU hours) and excludes labor, facility overhead, or dataset acquisition costs.&quot;
+
+SCENARIO: Google DeepMind claims an agent autonomously initiated a run, but the agent&#x27;s &#x27;initiation&#x27; was limited to selecting a pre-approved template from a &#x27;Permission List&#x27; <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a> where a human had already pre-defined all variables except the start time.
+SEVERITY: MEDIUM
+FIX: Add: &quot;Autonomous initiation requires the agent to determine at least one key training parameter (e.g., learning rate, batch size, or architecture variant) independently within a broad search space, rather than simply triggering a human-pre-configured job template.&quot;
+
+SCENARIO: A lab uses an agent to monitor a run, and the agent identifies a &#x27;loss spike&#x27; and pauses the run; however, the company policy requires a human to manually &#x27;resume&#x27; the run after investigating the cause.
+SEVERITY: MEDIUM
+FIX: Add: &quot;A run is not &#x27;autonomous&#x27; if human-in-the-loop approval is required to resume the training process after an agent-initiated pause or failure-handling event.&quot;
+
+SCENARIO: OpenAI&#x27;s &#x27;autonomous research intern&#x27; <a href="https://arxiv.org/html/2603.03992v2" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a> conducts a series of 100 small experiments that cumulatively cost $2 million, but no single discrete &#x27;training run&#x27; exceeded the $1 million threshold.
+SEVERITY: LOW
+FIX: Add: &quot;The $1,000,000 USD threshold must be met by a single discrete training run (a single model optimization process) rather than an aggregate of multiple small-scale experiments.&quot;</p></div></section>
+<section class="qsection" id="revised"><h2>Revised question</h2><p>### <strong>Question Title</strong>
+<strong>Autonomous AI-Led Training Runs at Frontier Labs by 2028</strong>
+
+---
+
+### <strong>Question</strong>
+Between April 1, 2026, and December 31, 2027, will any &quot;frontier AI company&quot; (OpenAI, Anthropic, or Google DeepMind) publicly state in an official blog post, technical report, &quot;AI permission list,&quot; or &quot;autonomy framework&quot; that they have used an AI agent to autonomously initiate and manage a single discrete AI model training run with market-equivalent compute costs exceeding $10 million USD?
+
+---
+
+### <strong>Background</strong>
+As of April 1, 2026, the automation of AI Research and Development (AIRDA) has moved from a theoretical possibility to a core strategic &quot;North Star&quot; for leading AI labs. OpenAI has publicly targeted the deployment of an &quot;autonomous research intern&quot; by late 2026, capable of independent multi-day investigations [Measuring AI R&amp;D Automation - arXiv]. Similarly, Anthropic and Google DeepMind have published frameworks for &quot;Intelligent AI Delegation&quot; and &quot;Agent Autonomy&quot; to track the transition from human-led to agentic R&amp;D processes.
+
+A critical inflection point in this transition is the delegation of &quot;high-stakes decisions&quot;—such as the initiation of large-scale, expensive training runs—to AI agents. Historically, training runs costing millions of dollars required rigorous human oversight for every stage, from resource allocation to monitoring for divergence. The Chan et al. (2026) paper, <em>Measuring AI R&amp;D Automation</em>, proposes tracking this via &quot;AI permission lists&quot; (Metric #14), which define the actions an AI system is authorized to take without human intervention. 
+
+This question tracks whether frontier labs will publicly cross the threshold of trusting an AI agent to manage a $10 million compute asset autonomously. While autonomous coding and hypothesis generation are increasingly common, the &quot;Running experiments&quot; stage (Section 2 of Chan et al. 2026) involves complex real-time interventions that represent a significant leap in operational trust.
+
+---
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>YES</strong> if, between April 1, 2026, and December 31, 2027 (inclusive, UTC), any of the named companies (OpenAI, Anthropic, or Google DeepMind) publishes an official statement confirming the following conditions were met for at least one specific instance:
+
+1.  <strong>Autonomous Initiation and Management</strong>: An AI agent (an autonomous AI system) initiated and managed a training run. 
+    *   <strong>Management</strong> is only considered autonomous if the AI agent has the direct technical authority to modify hyperparameters or resource distribution directly in the training environment without a human reviewing the specific change before it takes effect.
+    *   <strong>Autonomous initiation</strong> requires the agent to independently determine at least one key training parameter (e.g., learning rate, batch size, or architecture variant) rather than simply triggering a human-pre-configured job template.
+2.  <strong>No Human-in-the-Loop for Steps</strong>: The statement must specify that the agent operated &quot;autonomously,&quot; &quot;without human-in-the-loop approval for individual steps,&quot; or using a &quot;permission list&quot; or &quot;autonomy framework&quot; that granted it authority to execute the run to completion without per-step human authorization. 
+    *   A run is <strong>not</strong> considered autonomous if human-in-the-loop approval is required to resume the training process after an agent-initiated pause or failure-handling event.
+    <em>   High-level human authorization at the start of the project (i.e., &quot;Go&quot; at the outset) does </em>not* disqualify the event, provided individual execution steps were autonomous.
+3.  <strong>Cost Threshold</strong>: The training run cost more than $10,000,000 USD. 
+    *   This threshold applies specifically to the market-equivalent rental cost of the compute hardware used (e.g., H100/B200 GPU hours) and <strong>excludes</strong> labor, facility overhead, or dataset acquisition costs.
+    *   The cost threshold must be met by a <strong>single discrete training run</strong> (a single model optimization process) rather than an aggregate of multiple small-scale experiments.
+4.  <strong>Frontier Companies</strong>: The company must be OpenAI, Anthropic, or Google DeepMind.
+5.  <strong>Official Communication</strong>: The claim must appear in an official company newsroom, technical blog, peer-reviewed paper, technical report, or published &quot;AI permission list&quot; or &quot;autonomy framework.&quot;
+
+<strong>Resolution Sources:</strong>
+- <strong>OpenAI</strong>: <a href="https://openai.com/news/" target="_blank" rel="noopener">openai.com/news</a>
+- <strong>Anthropic</strong>: <a href="https://www.anthropic.com/news" target="_blank" rel="noopener">anthropic.com/news</a> or <a href="https://www.anthropic.com/research" target="_blank" rel="noopener">anthropic.com/research</a>
+- <strong>Google DeepMind</strong>: <a href="https://deepmind.google/blog/" target="_blank" rel="noopener">deepmind.google/blog</a> or <a href="https://research.google/blog/" target="_blank" rel="noopener">research.google/blog</a>
+
+If no such statement is published by 23:59 UTC on December 31, 2027, the question resolves as <strong>NO</strong>.
+
+---
+
+### <strong>Definitions</strong>
+- <strong>AIRDA (AI R&amp;D Automation)</strong>: The use of AI to carry out parts of the AI R&amp;D pipeline, including capabilities research and safety research [Measuring AI R&amp;D Automation - arXiv].
+- <strong>Training Run</strong>: A discrete process of optimizing a machine learning model&#x27;s parameters on a dataset, typically involving distributed computation across a GPU cluster.
+- <strong>AI Agent</strong>: An AI system capable of pursuing complex goals with limited human intervention by perceiving its environment and taking actions.
+- <strong>Permission List / Autonomy Framework</strong>: Documentation defining the actions AI systems are authorized to take with different levels of human approval, including where none is required.
+- <strong>Frontier AI Company</strong>: For this question, limited to OpenAI, Anthropic, and Google DeepMind.</p></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>Time left: ~21 months (638 days) until the resolution date of December 31, 2027. The status quo is that no such autonomous training run has been publicly acknowledged. For a YES outcome, a frontier lab must publicly confirm an AI agent autonomously initiated and managed a $10 million training run without human-in-the-loop intervention for individual steps. A YES outcome is plausible because labs like OpenAI consider the &#x27;autonomous research intern&#x27; a North Star goal, and managing mid-sized ($10M) runs autonomously would be a powerful proof of concept for automating multi-billion dollar runs. A NO outcome is more likely, however, because $10 million is a massive financial risk to run without human oversight in case of node failures or divergence. Additionally, safety frameworks (like Anthropic&#x27;s RSP) mandate human checks, and labs might avoid publicizing such autonomous capabilities to avoid regulatory blowback or appearing reckless. I would be indifferent at 28 cents on the dollar for a YES bet.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>The question tracks a &#x27;crucial transition&#x27; from AI as an assistant to AI as an autonomous agent <a href="https://arxiv.org/html/2603.03992v3" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. Granting AI systems the authority to manage large-scale training runs (Metric #14) is a leading indicator for the &#x27;oversight gap&#x27; <a href="https://arxiv.org/html/2603.03992v3" target="_blank" rel="noopener">Measuring AI R&amp;D Automation - arXiv</a>. OpenAI has already set a &#x27;North Star&#x27; goal for an &#x27;autonomous research intern&#x27; by 2026/2027, making this a highly decision-relevant indicator of institutional trust in AI R&amp;D automation (AIRDA). Resolution would meaningfully update beliefs about the trajectory of AI capabilities and the speed at which human oversight is being removed from the critical path of AI development.</p></section>
+<section class="qsection" id="decomp"><h2>Decomposition &amp; research <span class="badge">Stage 6b</span></h2><p><strong>Research-informed re-forecast:</strong> <span style="color:#558b2f;font-weight:700">68%</span></p><div class="subcard"><strong>SQ1: What are the specific technical and safety thresholds defined in the &#x27;AI permission lists&#x27; and &#x27;Intelligent AI Delegation&#x27; frameworks at OpenAI, Anthropic, and Google DeepMind??</strong><p>As of early 2026, OpenAI, Anthropic, and Google DeepMind have implemented structured metrics to govern AI autonomy, specifically &#x27;Metric #14&#x27; (AI permission lists) and &#x27;Metric #7&#x27; (AI use in high-stakes decisions). These metrics originate from the &#x27;Measuring AI R&amp;D Automation&#x27; framework <a href="https://arxiv.org/pdf/2603.03992.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2603.03992.pdf</a>. Currently, none of the three labs permit AI agents to autonomously &#x27;initiate training runs&#x27; or &#x27;modify production code&#x27; without human-in-the-loop verification for high-stakes assets <a href="https://arxiv.org/pdf/2602.11865.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2602.11865.pdf</a>. Instead, they utilize &#x27;Intelligent AI Delegation&#x27; frameworks that require &#x27;just-in-time&#x27; access and &#x27;privilege attenuation&#x27; to ensure agents operate only within narrow, pre-approved scopes <a href="https://arxiv.org/pdf/2602.11865.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2602.11865.pdf</a>. Safety thresholds are often tied to &#x27;AI Self-improvement&#x27; benchmarks—for instance, OpenAI triggers high-level safety protocols if an agent matches the performance of a senior research engineer <a href="https://arxiv.org/pdf/2603.03992.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2603.03992.pdf</a>, while Anthropic uses a &#x27;progress compression&#x27; metric to flag dangerous levels of R&amp;D automation <a href="https://arxiv.org/pdf/2603.03992.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2603.03992.pdf</a>.</p><p>Research into current frontier lab protocols reveals that OpenAI, Anthropic, and Google DeepMind have transitioned from theoretical safety frameworks to more structured, metric-driven governance as of early 2026. The primary evidence for these shifts is found in the work of Chan et al. (2026) regarding &#x27;AI R&amp;D Automation&#x27; (AIRDA) metrics and Google DeepMind&#x27;s &#x27;Intelligent AI Delegation&#x27; framework (Tomašev et al., 2026).
+
+### 1. Metric #14: AI Permission Lists
+Metric #14 is defined as a systematic record of actions AI systems are authorized to take, categorized by the required level of human approval <a href="https://arxiv.org/pdf/2603.03992.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2603.03992.pdf</a>.
+<em>   <strong>OpenAI:</strong> Tracks autonomous capabilities within its </em>Preparedness Framework* (updated 2025b). It establishes a &#x27;High&#x27; threshold for &#x27;AI Self-improvement&#x27; when an agent&#x27;s performance equals a &#x27;highly performant mid-career research engineer assistant&#x27; relative to 2024 baselines <a href="https://arxiv.org/pdf/2603.03992.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2603.03992.pdf</a>.
+<em>   <strong>Anthropic:</strong> Utilizes its </em>Responsible Scaling Policy* (2026a) to define automation thresholds. A key safety trigger occurs when AI progress is &#x27;compressed&#x27; such that two years of 2018–2024 era progress is achieved within a single year <a href="https://arxiv.org/pdf/2603.03992.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2603.03992.pdf</a>.
+<em>   <strong>Google DeepMind:</strong> Employs the </em>Frontier Safety Framework* (2025a), which mandates high security for models capable of significantly accelerating Machine Learning R&amp;D <a href="https://arxiv.org/pdf/2603.03992.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2603.03992.pdf</a>.
+
+### 2. Metric #7: AI Use in High-Stakes Decisions
+Metric #7 tracks the extent to which AI agents make critical operational choices without human intervention <a href="https://arxiv.org/pdf/2603.03992.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2603.03992.pdf</a>. 
+*   <strong>Thresholds for Autonomous Training/Code Modification:</strong> Current protocols generally prohibit &#x27;initiating training runs&#x27; or &#x27;modifying production code&#x27; without human-in-the-loop (HITL) verification for high-stakes assets <a href="https://arxiv.org/pdf/2602.11865.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2602.11865.pdf</a>.
+*   <strong>Intelligent AI Delegation Framework (Google DeepMind):</strong> Proposes &#x27;Risk-Adaptive Access&#x27; where permissions are granted on a &#x27;just-in-time&#x27; basis. For high-criticality tasks, the framework mandates either HITL approval or third-party cryptographic authorization <a href="https://arxiv.org/pdf/2602.11865.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2602.11865.pdf</a>.
+*   <strong>Capability Attenuation:</strong> To prevent unauthorized escalation, agents are restricted by &#x27;privilege attenuation,&#x27; meaning they can only pass on a subset of their own permissions to sub-agents <a href="https://arxiv.org/pdf/2602.11865.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2602.11865.pdf</a>.
+
+### 3. Agentic Protocol Standards
+The labs are moving toward standardized protocols for these delegations:
+<em>   <strong>Anthropic:</strong> Uses the </em>Model Context Protocol* (MCP, 2024) to connect models to tools, though as of 2026, it is noted to lack a native policy layer for deep delegation chains <a href="https://arxiv.org/pdf/2602.11865.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2602.11865.pdf</a>.
+<em>   <strong>Google DeepMind:</strong> Has developed </em>Agents-to-Agents<em> (A2A, 2025b) and </em>Agents-to-Payments* (A2P/AP2, 2025a) protocols, but internal research suggests these still require &#x27;semantic attenuation&#x27; to safely handle autonomous operations <a href="https://arxiv.org/pdf/2602.11865.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2602.11865.pdf</a>.</p></div><div class="subcard"><strong>SQ2: What is the current state and projected roadmap for AI agents autonomously managing R&amp;D training runs at frontier labs??</strong><p>OpenAI has established a &#x27;North Star&#x27; goal to develop a fully autonomous AI researcher by 2028, with a near-term roadmap to deploy an &#x27;autonomous research intern&#x27; by September 2026 <a href="https://www.technologyreview.com/2026/03/20/1134438/openai-is-throwing-everything-into-building-a-fully-automated-researcher/" target="_blank" rel="noopener">OpenAI is throwing everything into building a fully automated ...</a> <a href="https://sharedsapience.com/century-report/the-century-report-march-20-2026/" target="_blank" rel="noopener">OpenAI targets an autonomous researcher by September</a>. This &#x27;intern&#x27; is designed to independently manage research tasks and experiments spanning several days. Currently, AI agents are already being used at frontier labs to compress week-long coding and experimental tasks into weekends <a href="https://www.technologyreview.com/2026/03/20/1134438/openai-is-throwing-everything-into-building-a-fully-automated-researcher/" target="_blank" rel="noopener">OpenAI is throwing everything into building a fully automated ...</a>. To scale to autonomous $10 million training runs, labs are developing three operational pillars: real-time monitoring via &#x27;chain-of-thought&#x27; scratch pads, automated resource allocation through integrated tooling like Astral, and agentic troubleshooting of code and data <a href="https://www.technologyreview.com/2026/03/20/1134438/openai-is-throwing-everything-into-building-a-fully-automated-researcher/" target="_blank" rel="noopener">OpenAI is throwing everything into building a fully automated ...</a> <a href="https://sharedsapience.com/century-report/the-century-report-march-20-2026/" target="_blank" rel="noopener">OpenAI targets an autonomous researcher by September</a>. While agents are actively managing smaller-scale R&amp;D tasks and revenue-generating operations in the $100k-$1M range, the transition to fully autonomous management of large-scale $10M+ frontier training runs remains the primary objective for the 2026–2028 window.</p><p>### Current State of AI Autonomous Research (2025–2026)
+As of early 2026, AI agents have transitioned from basic coding assistants to sophisticated tools capable of managing multi-day research tasks. OpenAI’s Chief Scientist Jakub Pachocki reported in March 2026 that he uses agentic tools (such as &#x27;Codex&#x27; and internal research agents) to execute experiments in a single weekend that previously required a full week of human effort <a href="https://www.technologyreview.com/2026/03/20/1134438/openai-is-throwing-everything-into-building-a-fully-automated-researcher/" target="_blank" rel="noopener">OpenAI is throwing everything into building a fully automated ...</a> <a href="https://sharedsapience.com/century-report/the-century-report-march-20-2026/" target="_blank" rel="noopener">OpenAI targets an autonomous researcher by September</a>. These agents are being integrated into the core research stack, utilizing &#x27;chain-of-thought monitoring&#x27; where models document their logic in &#x27;scratch pads&#x27; to allow human researchers to oversee their reasoning and detect misalignment in real-time <a href="https://www.technologyreview.com/2026/03/20/1134438/openai-is-throwing-everything-into-building-a-fully-automated-researcher/" target="_blank" rel="noopener">OpenAI is throwing everything into building a fully automated ...</a>.
+
+### The Roadmap: &#x27;North Star&#x27; and Autonomous Interns
+OpenAI has officially designated the creation of a fully automated AI researcher as its &#x27;North Star&#x27; goal for the next several years <a href="https://www.technologyreview.com/2026/03/20/1134438/openai-is-throwing-everything-into-building-a-fully-automated-researcher/" target="_blank" rel="noopener">OpenAI is throwing everything into building a fully automated ...</a>.
+*   <strong>September 2026 Milestone:</strong> The labs are targeting the release of an &#x27;autonomous research intern.&#x27; This agent is designed to tackle specific, bounded research problems independently over several days, handling the planning and execution of experiments <a href="https://www.technologyreview.com/2026/03/20/1134438/openai-is-throwing-everything-into-building-a-fully-automated-researcher/" target="_blank" rel="noopener">OpenAI is throwing everything into building a fully automated ...</a> <a href="https://sharedsapience.com/century-report/the-century-report-march-20-2026/" target="_blank" rel="noopener">OpenAI targets an autonomous researcher by September</a>.
+*   <strong>2028 Target:</strong> The long-term objective is a &#x27;multi-agent research system&#x27; capable of operating like a full research lab within a data center. This system is intended to solve complex scientific problems in fields like physics and biology that currently exceed human capability <a href="https://sharedsapience.com/century-report/the-century-report-march-20-2026/" target="_blank" rel="noopener">OpenAI targets an autonomous researcher by September</a>.
+
+### Operational Components for Training Runs
+For an agent to manage a large-scale training run (such as the $10M threshold), three critical operational components must be automated:
+1.  <strong>Real-time Monitoring for Divergence:</strong> Current systems utilize &#x27;chain-of-thought monitoring&#x27; to track model progress <a href="https://www.technologyreview.com/2026/03/20/1134438/openai-is-throwing-everything-into-building-a-fully-automated-researcher/" target="_blank" rel="noopener">OpenAI is throwing everything into building a fully automated ...</a>. In the context of training runs, this involves detecting loss spikes or gradient explosions. While frontier labs are automating these detection layers, high-level governance still relies on human validation of autonomous findings <a href="https://sharedsapience.com/century-report/the-century-report-march-20-2026/" target="_blank" rel="noopener">OpenAI targets an autonomous researcher by September</a>.
+2.  <strong>Resource Allocation:</strong> Frontier labs have begun integrating AI agents with infrastructure management tools. For instance, OpenAI&#x27;s acquisition of Astral in early 2026 was aimed at embedding agentic coding and resource management directly into the Python-based tools researchers use to allocate compute <a href="https://sharedsapience.com/century-report/the-century-report-march-20-2026/" target="_blank" rel="noopener">OpenAI targets an autonomous researcher by September</a>.
+3.  <strong>Troubleshooting:</strong> Training failures often stem from hardware issues or data imbalances. Current &#x27;training ops&#x27; still involve significant human-led stress testing and Slurm reservation management, though agents are increasingly used to handle the sub-tasks of debugging code and optimizing dataloaders <a href="https://djdumpling.github.io/2026/01/31/frontier_training.html" target="_blank" rel="noopener">frontier model training methodologies - Alex Wa&#x27;s Blog</a> <a href="https://www.technologyreview.com/2026/03/20/1134438/openai-is-throwing-everything-into-building-a-fully-automated-researcher/" target="_blank" rel="noopener">OpenAI is throwing everything into building a fully automated ...</a>.
+
+### Scale of Autonomous Runs
+There is evidence that agents are managing &#x27;smaller-scale&#x27; operations in the $100k - $1M range, particularly in algorithmic trading and revenue operations, where agents have been reported to close over $1M in revenue within 90 days. In pure R&amp;D, agents are currently used to &#x27;run experiments over a weekend,&#x27; which correlates with the compute costs of smaller-scale model fine-tuning or ablation studies, though a fully &#x27;lights-out&#x27; $1M training run managed entirely by an agent without human check-ins has not been publicly documented as a standard industry milestone yet.</p></div></section>
+<section class="qsection" id="reconcile"><h2>Reconciled forecast <span class="badge">Stage 6d</span></h2><p>Bottom-up 18% &rarr; Dep-adj 22% &rarr; Struct-adj 25% &rarr; Holistic 35% &rarr; Final 30%</p><p>The mechanical bottom-up estimate (18%) is low because it assumes the events are strictly sequential and independent. However, the dependency between formal authorization (C1) and a public statement (C2) is extremely high; if a lab decides to publicize such a run, they will likely update their frameworks simultaneously or even retrospectively to maintain governance appearances. The structure-adjusted estimate (25%) accounts for the possibility that a lab might report a &#x27;rogue&#x27; or &#x27;breakthrough&#x27; autonomous run even without a prior formal &#x27;permission list&#x27; update. The holistic estimate (35%) is higher because it weights the intense competitive pressure and &#x27;North Star&#x27; strategic alignment of OpenAI and DeepMind more heavily than the bureaucratic hurdle of framework updates. The divergence (10 points) is explained by the decomposition&#x27;s focus on formal documentation versus the holistic view&#x27;s focus on technological momentum. Given the aggressive 2026-2027 timelines for &#x27;autonomous interns,&#x27; the final forecast reconciles these by leaning toward the holistic view while respecting the significant operational barriers to $10M+ autonomy.</p></section>
+</div></body></html>

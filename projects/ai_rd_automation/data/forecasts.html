@@ -177,6 +177,8 @@
     flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
     line-height: 1.35;
   }
+  a.q-title-link { text-decoration: none; cursor: pointer; }
+  a.q-title-link:hover { color: var(--accent); text-decoration: underline; }
   .q-meta {
     display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
   }
@@ -263,6 +265,18 @@
     color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
     border-radius: 0 6px 6px 0;
   }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
 
   /* Decomposition */
   .subq-card {
@@ -435,7 +449,7 @@
       <span class="expand-icon">&#9654;</span>
       <button type="button" class="anchor-link" data-anchor="q-by-december-31-2027-will-any-frontier-ai-company-defined-as" aria-label="Copy link to this question">#</button>
       <span class="q-prob-badge" style="background: #fbe9e7; color: #e65100" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">30%</span>
-      <span class="q-title">Between April 1, 2026, and December 31, 2027, will any &quot;frontier AI company&quot; (OpenAI, Anthropic, or Google DeepMind) publicly state in an official blog post, technical report, &quot;AI permission list,&quot; or &quot;autonomy framework&quot; that they have used an AI agent to autonomously initiate and manage a single discrete AI model training run with market-equivalent compute costs exceeding $10 million USD?</span>
+      <a class="q-title q-title-link" href="q/by-december-31-2027-will-any-frontier-ai-company-defined-as.html" onclick="event.stopPropagation()" data-tooltip="Open this question on its own page">Between April 1, 2026, and December 31, 2027, will any &quot;frontier AI company&quot; (OpenAI, Anthropic, or Google DeepMind) publicly state in an official blog post, technical report, &quot;AI permission list,&quot; or &quot;autonomy framework&quot; that they have used an AI agent to autonomously initiate and manage a single discrete AI model training run with market-equivalent compute costs exceeding $10 million USD?</a>
       <span class="q-meta">
         <span class="q-status-badge badge-revised" data-tooltip="Question was revised after adversarial review found issues">REVISED</span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">80</span></span>
@@ -713,7 +727,7 @@ The $10 million threshold is well within the range of modern frontier training c
       <span class="expand-icon">&#9654;</span>
       <button type="button" class="anchor-link" data-anchor="q-will-any-ai-model-achieve-a-success-rate-of-70-or-higher-on" aria-label="Copy link to this question">#</button>
       <span class="q-prob-badge" style="background: #e8f5e9; color: #2e7d32" data-tooltip="Estimated likelihood this event occurs by the resolution deadline">77%</span>
-      <span class="q-title">Will any AI model achieve a success rate of 70% or higher on the full &#x27;SWE-bench Pro&#x27; benchmark by December 31, 2027?</span>
+      <a class="q-title q-title-link" href="q/will-any-ai-model-achieve-a-success-rate-of-70-or-higher-on.html" onclick="event.stopPropagation()" data-tooltip="Open this question on its own page">Will any AI model achieve a success rate of 70% or higher on the full &#x27;SWE-bench Pro&#x27; benchmark by December 31, 2027?</a>
       <span class="q-meta">
         <span class="q-status-badge badge-revised" data-tooltip="Question was revised after adversarial review found issues">REVISED</span>
         <span class="q-meta-item" data-tooltip="Composite priority score: weighted average of Importance (25%), Neglectedness (25%), Tractability (20%), Soon (10%), Sudden (10%), Sharp (10%)"><span class="q-meta-label">ITNSSS</span><span class="q-meta-value">66</span></span>

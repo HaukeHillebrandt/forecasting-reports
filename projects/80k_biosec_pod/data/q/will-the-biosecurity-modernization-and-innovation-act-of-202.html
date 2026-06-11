@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Will the &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741) or a su</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#fbe9e7;color:#e65100">24%</span><h1 style="margin:0;font-size:1.25rem;">Will the &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741) or a successor bill mandating DNA synthesis screening be signed into law in the United States by December 31, 2027?</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Gemini 3 Flash (minimal)</span><span>low (Gemini Flash) effort</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#revised">Revised question</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#decomp">Decomposition &amp; research</a></li><li><a href="#reconcile">Reconciled forecast</a></li><li><a href="#fable">Fable 5 second opinion</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#e65100">24%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">92</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">95</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">83</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">90</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">80</span></div></div><p><strong>Review status:</strong> REVISED</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>Will the &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741) or a successor bill containing a mandate for DNA synthesis screening be signed into US law by 31st December 2027?</p><p><strong>Why this question?</strong> The podcast discusses the need for &quot;damage control&quot; and &quot;defusing the bomb&quot; of biological risk [Page 67]. Research reveals that bipartisan legislation (S.3741) was introduced in early 2026 specifically to mandate that gene synthesis providers screen orders for dangerous sequences—a key policy milestone for mitigating AI-enabled biorisks. Its passage would represent a major regulatory response to the threats described.</p><p><strong>Paper reference:</strong> Biosecurity Modernization and Innovation Act of 2026 (S.3741) provisions regarding DNA synthesis screening.</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p>### Question Title
+Will the &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741) or a successor bill mandating DNA synthesis screening be signed into law in the United States by December 31, 2027?
+
+### Background
+As of April 1, 2026, the regulation of synthetic DNA in the United States relies primarily on voluntary frameworks, such as the <strong>2023 HHS Screening Framework Guidance for Providers and Users of Synthetic Nucleic Acids</strong>. This guidance encourages providers to screen synthetic nucleic acid orders for &quot;sequences of concern&quot; (SOCs)—sequences that contribute to the pathogenicity or toxicity of regulated or unregulated biological agents <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acids.aspx" target="_blank" rel="noopener">HHS Screening Framework Guidance for Synthetic Nucleic Acids</a>. While these guidelines establish best practices for identifying risks, they lack federal enforcement mechanisms, leading to inconsistent industry compliance.
+
+To address these gaps, the <strong>Biosecurity Modernization and Innovation Act of 2026 (S.3741)</strong> was introduced in the U.S. Senate on January 29, 2026, by Senator Tom Cotton (R-AR) and co-sponsored by Senator Amy Klobuchar (D-MN) <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. The bill seeks to establish a mandatory regulatory framework overseen by the Secretary of Commerce. Core provisions include requiring &quot;covered providers&quot; to screen all orders against a centralized list of sequences of concern, implementing customer verification protocols, and participating in compliance audits and adversarial &quot;red-team&quot; testing <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. 
+
+As of March 2026, S.3741 has been referred to the Senate Committee on Commerce, Science, and Transportation. This forecasting question tracks whether the U.S. will transition from a voluntary biosecurity regime to a mandatory, legally enforceable system for DNA synthesis screening before the end of 2027.
+
+### Resolution Criteria
+This question will resolve as <strong>Yes</strong> if, between January 1, 2026, and 23:59 UTC on December 31, 2027, the <strong>Biosecurity Modernization and Innovation Act of 2026 (S.3741)</strong> or a <strong>successor bill</strong> is &quot;signed into law&quot; by the President of the United States or otherwise enacted via constitutional processes.
+
+*   <strong>DNA Synthesis Screening:</strong> Defined as the process of identifying whether a requested or synthesized nucleic acid sequence matches a &quot;Sequence of Concern&quot; (SOC) to prevent the misuse of synthetic biology for creating pathogens or toxins <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acids.aspx" target="_blank" rel="noopener">HHS Screening Framework Guidance for Synthetic Nucleic Acids</a>.
+*   <strong>Mandatory Requirement:</strong> The enacted legislation must contain a provision that makes screening and/or customer verification a legal requirement for &quot;covered providers&quot; (entities synthesizing/selling synthetic nucleic acids or benchtop synthesis equipment), carrying legal or regulatory penalties for non-compliance (e.g., fines or loss of license) <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+*   <strong>Successor Bill:</strong> A bill qualifies as a successor if it originates from the same legislative intent as S.3741, regardless of its final bill number or title (e.g., a House companion bill, a revised version in a subsequent session of the 119th or 120th Congress, or its inclusion in a larger omnibus package), provided it retains the core mandate for DNA synthesis screening.
+*   <strong>Signed into Law:</strong> This includes the President signing the bill, the bill becoming law without a signature after 10 days while Congress is in session, or Congress successfully overriding a presidential veto.
+*   <strong>Resolution Source:</strong> The official status and text of the legislation as tracked on <a href="https://www.congress.gov" target="_blank" rel="noopener">Congress.gov</a> for bill S.3741 (119th Congress) or its successors. The &quot;All Actions&quot; and &quot;Text&quot; tabs will be used to verify enactment and the presence of the mandatory screening provision.</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>As of April 1, 2026, the regulation of synthetic DNA in the United States is transitioning from voluntary frameworks to mandatory requirements. While the 2023 HHS Screening Framework Guidance established best practices, the May 5, 2025, Executive Order, &quot;Improving the Safety and Security of Biological Research,&quot; mandated that federal agencies ensure synthetic nucleic acid procurement is conducted through providers adhering to an updated screening framework <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. Furthermore, the Executive Order directed the development of a strategy to govern non-federally funded research and mandated the submission of a legislative proposal to address gaps in authority to achieve comprehensive, scalable, and verifiable nucleic acid synthesis screening in non-federally funded settings <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>.
+
+The &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741), introduced on January 29, 2026, by Senator Tom Cotton (R-AR) and co-sponsored by Senator Amy Klobuchar (D-MN), serves as the legislative vehicle for this administration-backed initiative to extend mandatory screening requirements to the entire industry <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. This forecasting question tracks whether the U.S. will successfully enact this mandatory, legally enforceable system for DNA synthesis screening before the end of 2027.</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question will resolve as <strong>Yes</strong> if, between January 1, 2026, and 23:59 UTC on December 31, 2027, the <strong>Biosecurity Modernization and Innovation Act of 2026 (S.3741)</strong> or a <strong>successor bill</strong> is &quot;signed into law&quot; by the President of the United States or otherwise enacted via constitutional processes.
+
+*   <strong>DNA Synthesis Screening:</strong> Defined as the process of identifying whether a requested or synthesized nucleic acid sequence matches a &quot;Sequence of Concern&quot; (SOC) to prevent the misuse of synthetic biology for creating pathogens or toxins.
+*   <strong>Mandatory Requirement:</strong> The enacted legislation must contain a provision that makes screening and/or customer verification a legal requirement for &quot;covered providers&quot; (entities synthesizing/selling synthetic nucleic acids or benchtop synthesis equipment). The mandate must apply to all &quot;covered providers&quot; as defined in S.3741, regardless of revenue or organizational size, including both synthesis services and benchtop equipment manufacturers <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. The legislation must impose a direct legal obligation on the private-sector providers themselves, rather than solely restricting federal procurement or agency behavior.
+*   <strong>Penalties:</strong> The penalties for non-compliance must include punitive measures such as civil fines, statutory damages (e.g., as described in Section 4(f) of S.3741), or revocation of operating licenses, rather than just a loss of optional federal funding <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+*   <strong>Successor Bill:</strong> A bill qualifies as a successor if it originates from the same legislative intent as S.3741, regardless of its final bill number or title, provided it retains the core mandate for DNA synthesis screening. The bill must retain a requirement to screen against a comprehensive and evolving list of sequences of concern that includes, but is not limited to, the Pathogens and Toxins of Biosecurity Concern.
+*   <strong>Signed into Law:</strong> This includes the President signing the bill, the bill becoming law without a signature after 10 days while Congress is in session, or Congress successfully overriding a presidential veto. The legislation qualifies for a YES resolution if it is enacted by the deadline, even if the implementation date or the date on which penalties become enforceable occurs after December 31, 2027.
+*   <strong>Resolution Source:</strong> The official status and text of the legislation as tracked on <a href="https://www.congress.gov" target="_blank" rel="noopener">Congress.gov</a> for bill S.3741 (119th Congress) or its successors. The &quot;All Actions&quot; and &quot;Text&quot; tabs will be used to verify enactment and the presence of the mandatory screening provision.</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> This is a high-quality legislative forecasting question. It identifies a concrete, bipartisan bill (S.3741, introduced Jan 2026) with a specific biosecurity mandate (DNA synthesis screening) <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. Legislative outcomes are inherently non-trivial and subject to significant expert disagreement, satisfying the &#x27;high entropy&#x27; criterion. The resolution source (Congress.gov) is authoritative and persistent. The inclusion of &#x27;successor bills&#x27; provides necessary flexibility for legislative drift while maintaining the core policy focus on mandatory screening. This is a very good question for a tournament.</p><p><strong>Ambiguity notes:</strong> The question is exceptionally well-defined with clear legal terminology and a robust definition of &#x27;successor bill&#x27; to handle legislative technicalities. The resolution source (Congress.gov) is authoritative and unambiguous <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge-case risk:</strong> MEDIUM</p><p>ASSESSMENT: NEEDS_REVISION
+
+REVIEW: The forecasting question is technically well-defined but contains a significant gap in its background section that affects the framing of the uncertainty. 
+
+1. <strong>Existence of Bill and Sponsors:</strong> The Biosecurity Modernization and Innovation Act of 2026 (S.3741) and its sponsors (Senators Cotton and Klobuchar) are real <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. The bill was introduced on January 29, 2026, and includes mandatory screening requirements with civil penalties (up to $750,000 for non-individuals) <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+2. <strong>Current Regulatory Landscape:</strong> The background correctly identifies the 2023 HHS Screening Framework as a voluntary guideline <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acids.aspx" target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acids.aspx</a>. However, it fails to mention the May 5, 2025, Executive Order, &quot;Improving the Safety and Security of Biological Research&quot; <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. 
+3. <strong>Substantive Problem:</strong> This Executive Order already mandates DNA synthesis screening for all federally funded research and, crucially, directed the OSTP to submit a legislative proposal by November 2025 to cover non-federally funded settings <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. S.3741 appears to be the bipartisan legislative vehicle for this administration-backed initiative.
+4. <strong>Impact on Forecasters:</strong> By presenting the bill as a new attempt to fix a &quot;gap&quot; in a &quot;voluntary regime,&quot; the background ignores that the transition to a mandatory regime is already official executive policy. This makes the bill more likely to pass (as it has administration support and bipartisan sponsorship) than the current text suggests. The &quot;uncertainty&quot; is less about <em>whether</em> the U.S. wants a mandatory system and more about the <em>legislative timing</em> of a pre-planned policy shift.
+5. <strong>Resolution Criteria:</strong> The criteria for &quot;successor bill&quot; and &quot;mandatory requirement&quot; are objective and provide clear guardrails for resolution <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. The use of Congress.gov as a source is appropriate.
+
+EVIDENCE: <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text," target="_blank" rel="noopener">https://www.congress.gov/bill/119th-congress/senate-bill/3741/text,</a> <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acids.aspx," target="_blank" rel="noopener">https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acids.aspx,</a> <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/</a>
+
+SUGGESTION: Update the &#x27;Background&#x27; section to include the May 5, 2025, Executive Order. Specifically, note that the executive branch has already mandated screening for federally funded projects and that S.3741 serves as the legislative fulfillment of the administration&#x27;s strategy to extend these mandates to the entire industry. This provides forecasters with the necessary context that the bill is part of an active, bipartisan, and multi-branch policy push rather than a speculative independent proposal.</p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: MEDIUM
+
+SCENARIO: A bill is passed that mandates DNA synthesis screening but limits the definition of &#x27;covered providers&#x27; to only those with annual revenues exceeding $100 million, exempting smaller providers and benchtop synthesis equipment startups.
+SEVERITY: MEDIUM
+FIX: Add language to the &#x27;Mandatory Requirement&#x27; section stating: &#x27;The mandate must apply to all &quot;covered providers&quot; as defined in S.3741, regardless of revenue or organizational size, including both synthesis services and benchtop equipment manufacturers.&#x27; <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">https://www.congress.gov/bill/119th-congress/senate-bill/3741/text</a>
+
+SCENARIO: An omnibus spending bill is enacted that requires federal agencies to screen their own synthesis orders but does not impose a legal mandate or penalties on private-sector synthesis providers themselves.
+SEVERITY: HIGH
+FIX: Amend the &#x27;Mandatory Requirement&#x27; definition to state: &#x27;The legislation must impose a direct legal obligation on the private-sector providers themselves, rather than solely restricting federal procurement or agency behavior.&#x27; <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">https://www.congress.gov/bill/119th-congress/senate-bill/3741/text</a> <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>
+
+SCENARIO: A successor bill is enacted that mandates screening for &#x27;pathogens on the Select Agent list&#x27; but does not include the broader &#x27;Sequences of Concern&#x27; (SOC) framework or the centralized list overseen by the Secretary of Commerce as described in S.3741.
+SEVERITY: MEDIUM
+FIX: Add to the &#x27;Successor Bill&#x27; definition: &#x27;The bill must retain a requirement to screen against a comprehensive and evolving list of sequences of concern that includes, but is not limited to, the Pathogens and Toxins of Biosecurity Concern.&#x27; <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">https://www.congress.gov/bill/119th-congress/senate-bill/3741/text</a>
+
+SCENARIO: The legislation is signed into law with a &#x27;mandatory&#x27; screening provision, but the effective date of the penalties for non-compliance is set for January 1, 2029, which is after the resolution deadline.
+SEVERITY: MEDIUM
+FIX: Clarify in the &#x27;Signed into Law&#x27; section: &#x27;The legislation qualifies for a YES resolution if it is enacted by the deadline, even if the implementation date or the date on which penalties become enforceable occurs after December 31, 2027.&#x27; <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>
+
+SCENARIO: A bill is enacted that mandates screening but defines the &#x27;penalty&#x27; solely as a loss of eligibility for future federal grants, rather than the civil fines or &#x27;statutory damages&#x27; specified in S.3741.
+SEVERITY: HIGH
+FIX: Modify the &#x27;Mandatory Requirement&#x27; section to specify: &#x27;The penalties for non-compliance must include punitive measures such as civil fines, statutory damages (e.g., as described in Section 4(f) of S.3741), or revocation of operating licenses, rather than just a loss of optional federal funding.&#x27; <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">https://www.congress.gov/bill/119th-congress/senate-bill/3741/text</a></p></div></section>
+<section class="qsection" id="revised"><h2>Revised question</h2><p>### Question Title
+Will the &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741) or a successor bill mandating DNA synthesis screening be signed into law in the United States by December 31, 2027?
+
+### Background
+As of April 1, 2026, the regulation of synthetic DNA in the United States is transitioning from voluntary frameworks to mandatory requirements. While the 2023 HHS Screening Framework Guidance established best practices, the May 5, 2025, Executive Order, &quot;Improving the Safety and Security of Biological Research,&quot; mandated that federal agencies ensure synthetic nucleic acid procurement is conducted through providers adhering to an updated screening framework <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. Furthermore, the Executive Order directed the development of a strategy to govern non-federally funded research and mandated the submission of a legislative proposal to address gaps in authority to achieve comprehensive, scalable, and verifiable nucleic acid synthesis screening in non-federally funded settings <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>.
+
+The &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741), introduced on January 29, 2026, by Senator Tom Cotton (R-AR) and co-sponsored by Senator Amy Klobuchar (D-MN), serves as the legislative vehicle for this administration-backed initiative to extend mandatory screening requirements to the entire industry <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. This forecasting question tracks whether the U.S. will successfully enact this mandatory, legally enforceable system for DNA synthesis screening before the end of 2027.
+
+### Resolution Criteria
+This question will resolve as <strong>Yes</strong> if, between January 1, 2026, and 23:59 UTC on December 31, 2027, the <strong>Biosecurity Modernization and Innovation Act of 2026 (S.3741)</strong> or a <strong>successor bill</strong> is &quot;signed into law&quot; by the President of the United States or otherwise enacted via constitutional processes.
+
+*   <strong>DNA Synthesis Screening:</strong> Defined as the process of identifying whether a requested or synthesized nucleic acid sequence matches a &quot;Sequence of Concern&quot; (SOC) to prevent the misuse of synthetic biology for creating pathogens or toxins.
+*   <strong>Mandatory Requirement:</strong> The enacted legislation must contain a provision that makes screening and/or customer verification a legal requirement for &quot;covered providers&quot; (entities synthesizing/selling synthetic nucleic acids or benchtop synthesis equipment). The mandate must apply to all &quot;covered providers&quot; as defined in S.3741, regardless of revenue or organizational size, including both synthesis services and benchtop equipment manufacturers <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. The legislation must impose a direct legal obligation on the private-sector providers themselves, rather than solely restricting federal procurement or agency behavior.
+*   <strong>Penalties:</strong> The penalties for non-compliance must include punitive measures such as civil fines, statutory damages (e.g., as described in Section 4(f) of S.3741), or revocation of operating licenses, rather than just a loss of optional federal funding <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+*   <strong>Successor Bill:</strong> A bill qualifies as a successor if it originates from the same legislative intent as S.3741, regardless of its final bill number or title, provided it retains the core mandate for DNA synthesis screening. The bill must retain a requirement to screen against a comprehensive and evolving list of sequences of concern that includes, but is not limited to, the Pathogens and Toxins of Biosecurity Concern.
+*   <strong>Signed into Law:</strong> This includes the President signing the bill, the bill becoming law without a signature after 10 days while Congress is in session, or Congress successfully overriding a presidential veto. The legislation qualifies for a YES resolution if it is enacted by the deadline, even if the implementation date or the date on which penalties become enforceable occurs after December 31, 2027.
+*   <strong>Resolution Source:</strong> The official status and text of the legislation as tracked on <a href="https://www.congress.gov" target="_blank" rel="noopener">Congress.gov</a> for bill S.3741 (119th Congress) or its successors. The &quot;All Actions&quot; and &quot;Text&quot; tabs will be used to verify enactment and the presence of the mandatory screening provision.</p></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>There are 639 days left until the Dec. 31, 2027 resolution date. The status quo, if nothing changes, is NO: S.3741 is still only introduced and sitting in Senate Commerce with no hearings or markup yet <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. On a narrow scope of just this standalone bill, the odds are low; historically only about 2-3% of Senate bills become law, and only about 10-20% of referred bills even get a hearing or markup <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. On the broader scope that matters for resolution, a successor bill or an NDAA/omnibus rider makes passage materially more plausible, especially because similar biosecurity language has recently ridden the NDAA, which has passed for 64 straight years <a href="https://www.arnoldporter.com/en/perspectives/advisories/2025/12/the-biosecure-act-becomes-law-in-the-united-states" target="_blank" rel="noopener">The BIOSECURE Act Becomes Law in the United States | Advisories</a>. The main NO case is legislative inertia, crowding by higher-priority issues, and the risk that any eventual compromise adds exemptions or softens obligations enough to fail this question&#x27;s strict all-covered-providers plus penalties criteria <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. The YES case is unusually strong for a niche bill: bipartisan Cotton/Klobuchar sponsorship, explicit alignment with the 2025 executive order calling for a legislative proposal, likely presidential support if it reaches the desk, and a plausible must-pass vehicle path <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a> <a href="https://www.arnoldporter.com/en/perspectives/advisories/2025/12/the-biosecure-act-becomes-law-in-the-united-states" target="_blank" rel="noopener">The BIOSECURE Act Becomes Law in the United States | Advisories</a>. In betting terms, I would be roughly indifferent between buying YES at 36 cents and NO at 64 cents; above that, I prefer NO because the committee-stage starting point still dominates.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>The Biosecurity Modernization and Innovation Act of 2026 (S.3741) represents a critical regulatory milestone by attempting to mandate DNA synthesis screening, transitioning it from a voluntary to a federally enforceable requirement <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. This is a leading indicator for the US government&#x27;s ability to mitigate AI-enabled biorisks, a key concern identified in the source material <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. Resolution would significantly update beliefs about the trajectory of biosecurity governance and the practical constraints on malicious actors&#x27; access to dangerous genetic material <a href="https://thecounterfactual.substack.com/p/s3741-and-the-art-of-not-dying-of" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p></section>
+<section class="qsection" id="decomp"><h2>Decomposition &amp; research <span class="badge">Stage 6b</span></h2><p><strong>Research-informed re-forecast:</strong> <span style="color:#558b2f;font-weight:700">65%</span></p><div class="subcard"><strong>SQ1: What are the primary legislative obstacles and milestones for S.3741 and its House companions within the 119th Congress?</strong><p>As of April 1, 2026, the &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741) remains in the early stages of the legislative process in the 119th Congress. Introduced on January 29, 2026, by Senators Tom Cotton (R-AR) and Amy Klobuchar (D-MN), the bill was referred to the Senate Committee on Commerce, Science, and Transportation <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. No hearings or markups have been officially scheduled to date <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. While some sources link the bill to a House companion, H.R. 4242, official records do not yet formally list a related House measure, though a similar but more voluntary bill, H.R. 3029, has already seen committee action in the House <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. The bill&#x27;s progress will depend on navigating the Commerce committee and potentially competing with less prescriptive biosecurity standards already advancing in the House.</p><p>The &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741) was introduced in the Senate by Senator Tom Cotton (R-AR) and Senator Amy Klobuchar (D-MN) on January 29, 2026 <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. The bill was referred to the Senate Committee on Commerce, Science, and Transportation on the same day <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. As of the current date, official legislative records from Congress.gov indicate no scheduled hearings or markups for the bill <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>.
+
+Regarding the House companion, there is conflicting data. Official Senate records for S.3741 list zero related bills as of early 2026 <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. However, external tracking services and legislative summaries suggest that a House version, H.R. 4242, exists or is associated with the same policy area <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. It is important to note that a separate bill, H.R. 3029 (the &quot;Nucleic Acid Standards for Biosecurity Act&quot;), was introduced earlier in the 119th Congress (April 2025) and has already cleared the House Science Committee, indicating a faster track for standards-based biosecurity measures compared to the regulatory mandates in S.3741 <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+
+Key gatekeepers include Senator Cotton and Senator Klobuchar, whose bipartisan sponsorship provides a strong foundation <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. However, the bill&#x27;s focus on mandatory regulations rather than voluntary standards (the approach of H.R. 3029) may face resistance from industry-aligned members in the House. Historical data for similar bipartisan, security-focused tech regulations shows they often require 12-18 months to move from introduction to final passage, placing the December 2027 deadline within a realistic but tight window.
+
+| Legislative Milestone | Status (as of April 1, 2026) | Date |
+| :--- | :--- | :--- |
+| Senate Introduction (S.3741) | Completed | Jan 29, 2026 |
+| Senate Committee Referral | Commerce, Science, and Transportation | Jan 29, 2026 |
+| Senate Hearings/Markups | None scheduled | N/A |
+| House Companion Status | Identified as H.R. 4242 (unconfirmed by official cross-ref) | N/A |
+| Competing Legislation | H.R. 3029 (Passed Committee) | April 2025 |
+</p></div><div class="subcard"><strong>SQ2: How do industry stakeholders and executive branch agencies view the technical and economic feasibility of the mandatory screening requirements in S.3741?</strong><p>The &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741) marks a transition from voluntary to mandatory DNA synthesis screening, a shift that industry stakeholders and executive agencies view as technically complex but economically viable if implemented with regulatory clarity. Industry leaders like the International Gene Synthesis Consortium (IGSC) highlight the lack of a standardized &quot;Sequence of Concern&quot; (SOC) list as a primary technical hurdle, as current taxonomy-based screening is prone to both false positives and evasion by AI-designed sequences [[PDF] IGSC Harmonized Screening Protocol v3.0](<a href="https://genesynthesisconsortium.org/wp-content/uploads/IGSC-Harmonized-Screening-Protocol-v3.0-1.pdf" target="_blank" rel="noopener">https://genesynthesisconsortium.org/wp-content/uploads/IGSC-Harmonized-Screening-Protocol-v3.0-1.pdf</a>) [[PDF] Strengthening a Safe and Secure Nucleic Acid Synthesis Ecosystem](<a href="https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf" target="_blank" rel="noopener">https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf</a>). Benchtop manufacturers face unique technical requirements, including the need for secure hardware architectures and internet-connected screening protocols for previously offline devices <a href="https://ifp.org/securing-benchtop-dna-synthesizers/" target="_blank" rel="noopener">Securing Benchtop DNA Synthesizers | IFP</a>. Economically, while compliance costs (including PhD-level expert review and hardware certification) are significant, proponents argue that a federal mandate &quot;levels the playing field&quot; and provides a necessary market signal for biosecurity innovation [[PDF] Competitive Compliance: Why Uniform Screening Standards ...](<a href="https://ari.us/wp-content/uploads/2026/01/Competitive-Compliance_-Why-Uniform-Screening-Standards-Support-Innovation-and-Thwart-Regulatory-Capture.pdf" target="_blank" rel="noopener">https://ari.us/wp-content/uploads/2026/01/Competitive-Compliance_-Why-Uniform-Screening-Standards-Support-Innovation-and-Thwart-Regulatory-Capture.pdf</a>). Following the May 5, 2025, Executive Order, the Department of Commerce and HHS are tasked with replacing voluntary guidelines with a formal conformity assessment system that includes punitive damages—up to $750,000 per violation—and mandatory &#x27;red-team&#x27; testing to ensure system integrity <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS &amp; OSTP Screening | Synthetic Nucleic Acid Security &amp; Biorisk ...</a>.</p><p>### Industry Stakeholder Perspectives (IGSC and Broad Industry)
+Industry stakeholders, led by the International Gene Synthesis Consortium (IGSC), have historically favored a voluntary, harmonized screening framework but acknowledge the shift toward mandatory requirements [[PDF] IGSC Harmonized Screening Protocol v3.0](<a href="https://genesynthesisconsortium.org/wp-content/uploads/IGSC-Harmonized-Screening-Protocol-v3.0-1.pdf" target="_blank" rel="noopener">https://genesynthesisconsortium.org/wp-content/uploads/IGSC-Harmonized-Screening-Protocol-v3.0-1.pdf</a>). 
+*   <strong>Technical Feasibility:</strong> The primary technical challenge is the lack of a standardized, internationally agreed-upon &#x27;Sequence of Concern&#x27; (SOC) list [[PDF] IGSC Harmonized Screening Protocol v3.0](<a href="https://genesynthesisconsortium.org/wp-content/uploads/IGSC-Harmonized-Screening-Protocol-v3.0-1.pdf" target="_blank" rel="noopener">https://genesynthesisconsortium.org/wp-content/uploads/IGSC-Harmonized-Screening-Protocol-v3.0-1.pdf</a>) [[PDF] Strengthening a Safe and Secure Nucleic Acid Synthesis Ecosystem](<a href="https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf" target="_blank" rel="noopener">https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf</a>). Screening currently relies on &#x27;best match&#x27; taxonomic hits, which stakeholders argue is insufficient as it misses functional threats and flags benign housekeeping genes [[PDF] Strengthening a Safe and Secure Nucleic Acid Synthesis Ecosystem](<a href="https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf" target="_blank" rel="noopener">https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf</a>). As of September 2024, IGSC protocols require transitioning to a 50bp screening threshold by October 2026 to align with federal guidance [[PDF] IGSC Harmonized Screening Protocol v3.0](<a href="https://genesynthesisconsortium.org/wp-content/uploads/IGSC-Harmonized-Screening-Protocol-v3.0-1.pdf" target="_blank" rel="noopener">https://genesynthesisconsortium.org/wp-content/uploads/IGSC-Harmonized-Screening-Protocol-v3.0-1.pdf</a>).
+*   <strong>Economic Feasibility:</strong> Industry reports from January 2026 suggest mandatory screening is economically viable, with a UK-based study estimating £3.50 in security benefits for every £1 spent [[PDF] Competitive Compliance: Why Uniform Screening Standards ...](<a href="https://ari.us/wp-content/uploads/2026/01/Competitive-Compliance_-Why-Uniform-Screening-Standards-Support-Innovation-and-Thwart-Regulatory-Capture.pdf" target="_blank" rel="noopener">https://ari.us/wp-content/uploads/2026/01/Competitive-Compliance_-Why-Uniform-Screening-Standards-Support-Innovation-and-Thwart-Regulatory-Capture.pdf</a>). However, stakeholders note &#x27;negative financial incentives,&#x27; where rigorous screening increases operational costs and may drive customers to less-regulated overseas providers [[PDF] Strengthening a Safe and Secure Nucleic Acid Synthesis Ecosystem](<a href="https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf" target="_blank" rel="noopener">https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf</a>).
+
+### Benchtop Equipment Manufacturers
+The &quot;Biosecurity Modernization and Innovation Act of 2026&quot; (S.3741) explicitly includes benchtop manufacturers as &#x27;covered providers&#x27; <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+*   <strong>Technical Feasibility:</strong> Manufacturers must move from offline devices to integrated systems capable of secure, cloud-based screening or token-based authentication for air-gapped environments <a href="https://ifp.org/securing-benchtop-dna-synthesizers/" target="_blank" rel="noopener">Securing Benchtop DNA Synthesizers | IFP</a>. They are expected to implement the STRIDE security framework (e.g., secure boot, encrypted I/O) to prevent tampering <a href="https://ifp.org/securing-benchtop-dna-synthesizers/" target="_blank" rel="noopener">Securing Benchtop DNA Synthesizers | IFP</a>.
+*   <strong>Economic Impact:</strong> Compliance introduces significant upfront R&amp;D and &#x27;Biosecurity Readiness Certification&#x27; (BRC) costs <a href="https://ifp.org/securing-benchtop-dna-synthesizers/" target="_blank" rel="noopener">Securing Benchtop DNA Synthesizers | IFP</a>. While these costs strain a low-margin market, proponents argue that regulatory clarity will eventually stimulate innovation by providing a clear &#x27;demand signal&#x27; for screening technologies [[PDF] Competitive Compliance: Why Uniform Screening Standards ...](<a href="https://ari.us/wp-content/uploads/2026/01/Competitive-Compliance_-Why-Uniform-Screening-Standards-Support-Innovation-and-Thwart-Regulatory-Capture.pdf" target="_blank" rel="noopener">https://ari.us/wp-content/uploads/2026/01/Competitive-Compliance_-Why-Uniform-Screening-Standards-Support-Innovation-and-Thwart-Regulatory-Capture.pdf</a>).
+
+### Executive Branch Implementation (Commerce and HHS)
+The May 5, 2025, Executive Order (&quot;Improving the Safety and Security of Biological Research&quot;) directed a 120-day review to &quot;revise or replace&quot; the 2024 Screening Framework <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS &amp; OSTP Screening | Synthetic Nucleic Acid Security &amp; Biorisk ...</a>.
+*   <strong>HHS Role:</strong> HHS (via ASPR) is the lead for technical guidance. As of late 2025, the agency is in a transitional phase, awaiting the finalized revised framework required by the 2025 EO <a href="https://aspr.hhs.gov/S3/Pages/Synthetic-Nucleic-Acid-Screening.aspx" target="_blank" rel="noopener">HHS &amp; OSTP Screening | Synthetic Nucleic Acid Security &amp; Biorisk ...</a>.
+*   <strong>Commerce Role:</strong> S.3741 designates the Secretary of Commerce as the lead for promulgating mandatory regulations within one year of enactment <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. This includes establishing a conformity assessment system and performing &#x27;red-team&#x27; adversarial testing to verify compliance <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+
+### Sequence of Concern (SOC) Definition Concerns
+The industry is highly concerned that current SOC definitions are both too broad and too narrow. 
+*   <strong>Specific Concerns:</strong> Stakeholders argue that current homology-based screening is vulnerable to AI-enabled &#x27;biodesign&#x27; tools that can create functional homologs with low sequence identity to known pathogens [[PDF] Strengthening a Safe and Secure Nucleic Acid Synthesis Ecosystem](<a href="https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf" target="_blank" rel="noopener">https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf</a>). 
+*   <strong>Industry Demand:</strong> There is a strong industry call for a move toward &#x27;function-based&#x27; screening and the creation of a government-funded, centralized SOC database to replace the current fragmented system of proprietary databases [[PDF] Strengthening a Safe and Secure Nucleic Acid Synthesis Ecosystem](<a href="https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf" target="_blank" rel="noopener">https://ebrc.org/wp-content/uploads/2025/02/EBRC-2025-Strengthening-a-Safe-and-Secure-Nucleic-Acid-Synthesis-Screening-Ecosystem.pdf</a>).
+
+### Potential Liabilities and Enforcement
+S.3741 introduces significant legal risks for non-compliance.
+*   <strong>Statutory Damages:</strong> The bill authorizes the Attorney General to seek civil penalties up to $500,000 for individuals and $750,000 for organizations per violation <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+*   <strong>Compliance Costs:</strong> While the direct cost of screening tools is relatively low, the cost of &#x27;human-in-the-loop&#x27; expert review for flagged sequences (often requiring PhD-level staff) is a major operational expense [[PDF] IGSC Harmonized Screening Protocol v3.0](<a href="https://genesynthesisconsortium.org/wp-content/uploads/IGSC-Harmonized-Screening-Protocol-v3.0-1.pdf" target="_blank" rel="noopener">https://genesynthesisconsortium.org/wp-content/uploads/IGSC-Harmonized-Screening-Protocol-v3.0-1.pdf</a>) [[PDF] Competitive Compliance: Why Uniform Screening Standards ...](<a href="https://ari.us/wp-content/uploads/2026/01/Competitive-Compliance_-Why-Uniform-Screening-Standards-Support-Innovation-and-Thwart-Regulatory-Capture.pdf" target="_blank" rel="noopener">https://ari.us/wp-content/uploads/2026/01/Competitive-Compliance_-Why-Uniform-Screening-Standards-Support-Innovation-and-Thwart-Regulatory-Capture.pdf</a>). Manufacturers also face liability for failure to prevent sales to embargoed entities, as seen in historical export control cases <a href="https://ifp.org/securing-benchtop-dna-synthesizers/" target="_blank" rel="noopener">Securing Benchtop DNA Synthesizers | IFP</a>.</p></div></section>
+<section class="qsection" id="reconcile"><h2>Reconciled forecast <span class="badge">Stage 6d</span></h2><p>Bottom-up 18% &rarr; Dep-adj 22% &rarr; Struct-adj 22% &rarr; Holistic 25% &rarr; Final 24%</p><p>The bottom-up mechanical estimate (0.40 * 0.45 = 0.18) likely underestimates the outcome due to positive correlation between the political momentum required to pass the bill and the political strength to retain its core provisions. If the bill has enough support to reach the President&#x27;s desk in a crowded legislative calendar, it is more likely that the &#x27;hard&#x27; security provisions (punitive damages and benchtop mandates) which define its purpose have remained intact. Therefore, the dependency-adjusted estimate (22%) is higher. The holistic estimate (25%) is slightly higher still, accounting for the possibility that the bill is folded into an &#x27;omnibus&#x27; or &#x27;must-pass&#x27; national security package like the NDAA, which historically has higher passage rates than standalone regulatory bills and often preserves specific security-focused mandates. Because the holistic and structure-adjusted estimates are within 10 points (22% and 25%), they are averaged for the final forecast.</p></section>
+<section class="qsection" id="fable"><h2>Fable 5 second opinion <span class="badge">Stage 6f</span></h2><p><strong>Pipeline:</strong> <span style="color:#e65100;font-weight:700">24%</span> &rarr; <strong>Fable 5:</strong> <span style="color:#e65100;font-weight:700">20%</span> &nbsp;<span class="badge">AGREE</span></p><p>The question is well-posed with detailed, source-anchored resolution criteria and a sensible successor-bill clause. The pipeline&#x27;s 24% is reasonable and its reasoning is sound: it correctly weights the strong tailwinds (bipartisan Cotton/Klobuchar sponsorship, explicit EO directive to submit legislation, possible NDAA vehicle) against the strict requirement that the &#x27;hard&#x27; provisions (punitive penalties, all covered providers regardless of size, benchtop mandates) survive intact. Two factors pull me slightly lower than 24%. First, even bipartisan, administration-backed bills rarely complete enactment within a ~2-year window given a crowded calendar; standalone regulatory bills especially stall. Second, the resolution demands the enacted text retain specific hard provisions — the most common path to passage (a watered-down compromise dropping benchtop/penalty teeth) would resolve NO, and the positive-correlation argument only partially offsets this. The NDAA-rider possibility is the main upside. Net, I&#x27;d place it around 18-20%, materially overlapping the pipeline estimate. The 4-point gap is not large enough to warrant disagreement.</p></section>
+</div></body></html>

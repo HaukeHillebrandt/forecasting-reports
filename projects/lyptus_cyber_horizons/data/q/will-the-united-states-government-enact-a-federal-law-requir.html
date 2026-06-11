@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Between June 10, 2026, and 11:59 PM UTC on December 31, 2027, will a United Stat</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#fbe9e7;color:#e65100">20%</span><h1 style="margin:0;font-size:1.25rem;">Between June 10, 2026, and 11:59 PM UTC on December 31, 2027, will a United States federal law be enacted that mandates, or requires the establishment of regulations mandating, that domestic providers of synthetic nucleic acids screen orders for sequences of concern?</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Gemini 3 Flash (minimal)</span><span>low (Gemini Flash) effort</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#revised">Revised question</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#decomp">Decomposition &amp; research</a></li><li><a href="#fable">Fable 5 second opinion</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#e65100">20%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">82</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">76</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">72</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">80</span></div></div><p><strong>Review status:</strong> REVISED</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>Will the United States government enact a federal law requiring all domestic providers of synthetic nucleic acids to screen every order for sequences of concern?</p><p><strong>Why this question?</strong> As of June 10, 2026, DNA synthesis screening remains largely voluntary under current frameworks [59ac9d]. The Biosecurity Modernization and Innovation Act of 2026 (S.3741), introduced in January 2026, aims to mandate such screening to mitigate AI-enabled biological risks [c40810]. The primary source is Congress.gov; the fallback is the Federal Register.</p><p><strong>Paper reference:</strong> Lyptus Research Section 2 (Introduction), Context: &quot;The 2026 International AI Safety Report identifies cybersecurity as the domain where evidence of real-world harm from AI is now strongest&quot; [6f106e].</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p><strong>Question Title:</strong> Enactment of a United States federal law that mandates all domestic providers of synthetic nucleic acids to screen every order for sequences of concern
+
+<strong>Question:</strong> Between June 10, 2026, and 11:59 PM UTC on December 31, 2027, will a United States federal law be enacted that mandates all domestic providers of synthetic nucleic acids to screen every order for sequences of concern?
+
+<strong>Background:</strong> DNA synthesis allows for the creation of custom genetic material from digital sequences, a technology critical for biotechnology but also flagged as a potential biosecurity risk in the age of advanced AI. As of June 10, 2026, the United States primarily relies on the 2024 OSTP Framework for Nucleic Acid Synthesis Screening, which establishes a voluntary screening regime for most commercial providers, though it is mandatory for those receiving federal research funding [[PDF] Framework For Nucleic Acid Synthesi Screening](<a href="https://aspr.hhs.gov/s3/documents/ostp-nucleic-acid-synthesis-screening-framework-sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/s3/documents/ostp-nucleic-acid-synthesis-screening-framework-sep2024.pdf</a>). On January 29, 2026, the Biosecurity Modernization and Innovation Act of 2026 (S.3741) was introduced by Senators Tom Cotton (R-AR) and Amy Klobuchar (D-MN) to transition this to a mandatory federal requirement for all domestic providers <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. As of June 10, 2026, S.3741 remains in the Senate Committee on Commerce, Science, and Transportation and has not yet received a floor vote <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. The bill has bipartisan sponsorship, including Senators Ted Budd (R-NC) and Christopher A. Coons (D-DE) <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. If enacted, this legislation would represent a significant shift from voluntary industry standards to a legally enforced biosecurity framework.
+
+<strong>Resolution Criteria:</strong> This question resolves as YES if a United States federal law is enacted between June 10, 2026, and 11:59 PM UTC on December 31, 2027, that mandates all domestic providers of synthetic nucleic acids to screen every order for sequences of concern.
+
+* A United States federal law is considered enacted if it is signed by the President of the United States, becomes law without the President&#x27;s signature, or if a presidential veto is overridden by Congress according to Article I, Section 7 of the U.S. Constitution.
+* Domestic providers of synthetic nucleic acids refers to any commercial entity that synthesizes and sells synthetic DNA, RNA, or other nucleic acids to customers located within the United States.
+* Sequences of concern refers to nucleotide or amino acid sequences that match pathogens on the Biological Select Agents and Toxins (BSAT) list, the Commerce Control List (CCL), or a list specifically established by a federal agency (such as the Secretary of Commerce) for biosecurity screening purposes.
+* Screen every order refers to the requirement for the provider to compare the sequence of every incoming purchase order against the established list of sequences of concern to identify potential biosecurity risks.
+* Resolution will be determined based on the official legislative status records provided by Congress.gov (<a href="https://www.congress.gov/" target="_blank" rel="noopener">https://www.congress.gov/</a>). If multiple laws are enacted, any one law meeting the criteria is sufficient for a YES resolution. If no such law is enacted by the deadline, the question resolves as NO.</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>DNA synthesis allows for the creation of custom genetic material from digital sequences, a technology critical for biotechnology but also flagged as a potential biosecurity risk in the age of advanced AI. As of June 10, 2026, the United States primarily relies on the 2024 OSTP Framework for Nucleic Acid Synthesis Screening, which establishes a voluntary screening regime for most commercial providers. On January 29, 2026, the Biosecurity Modernization and Innovation Act of 2026 (S.3741) was introduced to transition this to a mandatory federal requirement for domestic providers. While some analysts describe the bill as a direct mandate for the Secretary of Commerce to promulgate screening regulations, others characterize it as an assessment-focused step to inform future implementation. This question tracks whether the US formally codifies a mandatory screening requirement into federal law by the end of 2027.</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question resolves as YES if a United States federal law is enacted between June 10, 2026, and 11:59 PM UTC on December 31, 2027, that mandates, or requires a federal agency to establish regulations mandating, that domestic providers of synthetic nucleic acids screen orders for sequences of concern.
+
+*   <strong>Enactment:</strong> A &quot;United States federal law&quot; refers to a statute passed by Congress and signed by the President (or otherwise enacted per Article I, Section 7 of the U.S. Constitution). Mandatory requirements established solely through Executive Orders or agency rulemaking under existing authorities (e.g., IEEPA) do not qualify.
+*   <strong>Timing:</strong> The question resolves as YES if the law is enacted by December 31, 2027, even if the mandatory screening requirement does not take legal effect or become enforceable until a date after the deadline.
+*   <strong>Mandate vs. Assessment:</strong> The law must either directly mandate screening or require an agency (such as the Department of Commerce) to promulgate regulations establishing a mandatory screening program. A law that solely mandates a study, assessment, or report to Congress without requiring the implementation of screening protocols resolves as NO.
+*   <strong>Scope and Exemptions:</strong> 
+    *   The law must apply to &quot;all&quot; domestic providers. If the law includes exemptions for business size, revenue thresholds, or production volume (e.g., de minimis exemptions for small providers), the question resolves as NO.
+    *   The requirement to screen &quot;every order&quot; means no category of customer or order may be exempt. If the law allows providers to skip screening for &quot;trusted partners,&quot; &quot;institutional customers,&quot; or &quot;verified researchers,&quot; the question resolves as NO.
+*   <strong>Sequences of Concern:</strong> Refers to nucleotide or amino acid sequences that match pathogens on the Biological Select Agents and Toxins (BSAT) list, the Commerce Control List (CCL), or any technical list or functional definition established by a federal agency (e.g., Secretary of Commerce, NIST) for biosecurity screening purposes.
+*   <strong>Providers:</strong> Domestic providers refers to any commercial entity that synthesizes and sells synthetic DNA, RNA, or other nucleic acids to customers located within the United States.
+
+Resolution will be determined based on official records from Congress.gov. If no such law is enacted by the deadline, the question resolves as NO.</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> Real-world. This question tracks a significant policy shift from voluntary to mandatory biosecurity screening. It is high entropy as legislative outcomes are uncertain, and it is easily resolvable via public records. SOTA: DNA screening is currently voluntary under the 2023 OSTP Framework; the Biosecurity Modernization and Innovation Act (S.3741) was introduced on January 29, 2026, and remains in committee as of June 2026 <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>.</p><p><strong>Ambiguity notes:</strong> 1. Terms are well-defined. 3. Stem and criteria match. 5. Successor hedge is missing for sequence lists. Main risk: The rigid definition of &#x27;sequences of concern&#x27; (union of three specific lists) without &#x27;at minimum&#x27; language makes the question fragile to minor legislative variations or list name changes. Fix: Add &#x27;at minimum&#x27; to list requirements and &#x27;successor list&#x27; language for future-proofing.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> NEEDS_REVISION &nbsp; <strong>Edge-case risk:</strong> HIGH</p><p>ASSESSMENT: NEEDS_REVISION
+
+REVIEW: The question is well-timed and targets a significant policy shift, but it has substantive issues that could lead to an unintended NO resolution:
+
+1. <strong>Mandate vs. Assessment:</strong> Research indicates that the primary bill cited, S.3741 (119th Congress), may be designed as an &#x27;assessment&#x27; or &#x27;study&#x27; bill to inform future oversight rather than a direct, immediate mandate for universal screening <a href="https://fas.org/publication/biosecurity-modernization-and-innovation-act-of-2026/" target="_blank" rel="noopener">Biosecurity Modernization and Innovation Act of 2026 is a Major Step</a>. If the law only requires a study or directs an agency to <em>develop</em> regulations (which are then finalized after the 2027 deadline), the question would resolve as NO despite the law&#x27;s passage.
+2. <strong>Absolute Terms:</strong> The criteria require the law to mandate &#x27;all&#x27; domestic providers and &#x27;every&#x27; order. Federal legislation typically includes exemptions for small businesses, specific research use cases, or benchtop equipment <a href="https://www.lawbc.com/senate-bill-would-establish-federal-biotechnology-security-framework/" target="_blank" rel="noopener">Senate Bill Would Establish Federal Biotechnology Security ...</a> <a href="https://aspr.hhs.gov/s3/documents/ostp-nucleic-acid-synthesis-screening-framework-sep2024.pdf" target="_blank" rel="noopener">https://aspr.hhs.gov/s3/documents/ostp-nucleic-acid-synthesis-screening-framework-sep2024.pdf</a>. These absolutes create a high risk that a major biosecurity law passes but fails to meet the &#x27;all/every&#x27; threshold.
+3. <strong>Sequence Definition:</strong> The resolution criteria provide a narrow list (BSAT, CCL). However, S.3741 and the OSTP Framework often delegate the technical definition of &#x27;sequences of concern&#x27; to federal agencies (like the Secretary of Commerce or NIST) or allow for &#x27;functional&#x27; definitions that may not perfectly align with the specific lists provided in the criteria <a href="https://www.lawbc.com/senate-bill-would-establish-federal-biotechnology-security-framework/" target="_blank" rel="noopener">Senate Bill Would Establish Federal Biotechnology Security ...</a> <a href="https://centerforhealthsecurity.org/2026/chs-commends-senators-new-bill-to-create-federal-biotech-security-framework" target="_blank" rel="noopener">Johns Hopkins Center for Health Security Commends Senators ...</a>.
+4. <strong>Enactment vs. Implementation:</strong> The criteria focus on the law&#x27;s enactment, but the mandate for screening might only become &#x27;legally enforced&#x27; once agency rules are promulgated, which often occurs months or years after a bill is signed.
+
+EVIDENCE: <a href="https://www.lawbc.com/senate-bill-would-establish-federal-biotechnology-security-framework/;" target="_blank" rel="noopener">https://www.lawbc.com/senate-bill-would-establish-federal-biotechnology-security-framework/;</a> <a href="https://aspr.hhs.gov/s3/documents/ostp-nucleic-acid-synthesis-screening-framework-sep2024.pdf;" target="_blank" rel="noopener">https://aspr.hhs.gov/s3/documents/ostp-nucleic-acid-synthesis-screening-framework-sep2024.pdf;</a> <a href="https://fas.org/publication/biosecurity-modernization-and-innovation-act-of-2026/" target="_blank" rel="noopener">https://fas.org/publication/biosecurity-modernization-and-innovation-act-of-2026/</a>
+
+SUGGESTION: 1. <strong>Loosen Absolutes:</strong> Change &#x27;all domestic providers&#x27; to &#x27;a majority of commercial domestic providers&#x27; and &#x27;every order&#x27; to &#x27;orders exceeding a specified length or complexity&#x27; to reflect standard legislative exemptions.
+2. <strong>Clarify Mandate Path:</strong> Allow for a YES resolution if a law is enacted that <em>requires</em> the establishment of a mandatory screening program, even if the specific technical regulations are to be promulgated by an agency (e.g., Department of Commerce) at a later date.
+3. <strong>Flexible Definitions:</strong> Update the definition of &#x27;sequences of concern&#x27; to include any list or functional definition established by the Secretary of Commerce or other relevant federal agency as authorized by the law.
+4. <strong>Example Fix:</strong> &#x27;Will a federal law be enacted that establishes a mandatory biosecurity screening framework for commercial providers of synthetic nucleic acids, requiring the screening of orders for sequences identified by federal agencies as potential biosecurity risks?&#x27;</p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: HIGH
+
+- SCENARIO: The President issues an Executive Order or the Department of Commerce updates the &#x27;Framework For Nucleic Acid Synthesis Screening&#x27; to be mandatory for all providers using emergency executive powers, but no new legislation is passed by Congress.
+- SEVERITY: MEDIUM
+- FIX: Add to Resolution Criteria: &quot;A &#x27;United States federal law&#x27; must be a statute passed by Congress and signed by the President (or otherwise enacted per Article I, Section 7); mandatory requirements established solely through Executive Orders or agency rulemaking under existing authorities (e.g., the International Emergency Economic Powers Act) do not qualify for a YES resolution.&quot;
+
+- SCENARIO: A law is enacted that mandates screening only for &#x27;large-scale providers&#x27; defined as those with annual gross revenues exceeding $20 million or those producing more than 2,000 unique sequences per month, exempting small biotech startups.
+- SEVERITY: HIGH
+- FIX: Add to Resolution Criteria: &quot;The law must apply to &#x27;all&#x27; domestic providers without exception for business size, revenue thresholds, or production volume. If the law includes a &#x27;de minimis&#x27; exemption or applies only to a subset of providers based on commercial metrics, the question resolves as NO.&quot;
+
+- SCENARIO: The enacted law (similar to S.3741) mandates screening for most orders but provides a categorical exemption for &#x27;trusted partners&#x27; such as U.S. government laboratories or pre-vetted academic research institutions, allowing them to bypass the sequence screening requirement <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+- SEVERITY: HIGH
+- FIX: Add to Resolution Criteria: &quot;The requirement to screen &#x27;every order&#x27; means no category of customer or order may be exempt. If the law allows providers to skip screening for &#x27;trusted partners,&#x27; &#x27;institutional customers,&#x27; or &#x27;verified researchers,&#x27; the question resolves as NO.&quot;
+
+- SCENARIO: The law mandates screening against a broad registry of all sequences longer than 50 base pairs for &#x27;biosecurity registry&#x27; purposes, rather than comparing them against specific pathogens on the BSAT, CCL, or a list established by a federal agency for biosecurity risks.
+- SEVERITY: MEDIUM
+- FIX: Add to Resolution Criteria: &quot;The screening must be specifically for &#x27;sequences of concern&#x27; related to biosecurity risks (pathogens and toxins). A law mandating a general registry or screening for length/complexity that is not cross-referenced against a pathogen-based list (BSAT, CCL, or equivalent agency list) does not satisfy the criteria.&quot;
+
+- SCENARIO: The &#x27;Biosecurity Modernization and Innovation Act&#x27; is signed into law in November 2027, but the statute grants the Secretary of Commerce 12 months to promulgate regulations, meaning the mandatory screening does not legally begin until late 2028 <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+- SEVERITY: HIGH
+- FIX: Add to Resolution Criteria: &quot;The question resolves as YES if the law is &#x27;enacted&#x27; (signed or otherwise passed) by December 31, 2027, even if the mandatory screening requirement does not take legal effect or become enforceable until a date after December 31, 2027.&quot;</p></div></section>
+<section class="qsection" id="revised"><h2>Revised question</h2><p><strong>Question Title:</strong> Enactment of a United States federal law mandating biosecurity screening for synthetic nucleic acid providers
+
+<strong>Question:</strong> Between June 10, 2026, and 11:59 PM UTC on December 31, 2027, will a United States federal law be enacted that mandates, or requires the establishment of regulations mandating, that domestic providers of synthetic nucleic acids screen orders for sequences of concern?
+
+<strong>Background:</strong> DNA synthesis allows for the creation of custom genetic material from digital sequences, a technology critical for biotechnology but also flagged as a potential biosecurity risk in the age of advanced AI. As of June 10, 2026, the United States primarily relies on the 2024 OSTP Framework for Nucleic Acid Synthesis Screening, which establishes a voluntary screening regime for most commercial providers. On January 29, 2026, the Biosecurity Modernization and Innovation Act of 2026 (S.3741) was introduced to transition this to a mandatory federal requirement for domestic providers. While some analysts describe the bill as a direct mandate for the Secretary of Commerce to promulgate screening regulations, others characterize it as an assessment-focused step to inform future implementation. This question tracks whether the US formally codifies a mandatory screening requirement into federal law by the end of 2027.
+
+<strong>Resolution Criteria:</strong>
+This question resolves as YES if a United States federal law is enacted between June 10, 2026, and 11:59 PM UTC on December 31, 2027, that mandates, or requires a federal agency to establish regulations mandating, that domestic providers of synthetic nucleic acids screen orders for sequences of concern.
+
+*   <strong>Enactment:</strong> A &quot;United States federal law&quot; refers to a statute passed by Congress and signed by the President (or otherwise enacted per Article I, Section 7 of the U.S. Constitution). Mandatory requirements established solely through Executive Orders or agency rulemaking under existing authorities (e.g., IEEPA) do not qualify.
+*   <strong>Timing:</strong> The question resolves as YES if the law is enacted by December 31, 2027, even if the mandatory screening requirement does not take legal effect or become enforceable until a date after the deadline.
+*   <strong>Mandate vs. Assessment:</strong> The law must either directly mandate screening or require an agency (such as the Department of Commerce) to promulgate regulations establishing a mandatory screening program. A law that solely mandates a study, assessment, or report to Congress without requiring the implementation of screening protocols resolves as NO.
+*   <strong>Scope and Exemptions:</strong> 
+    *   The law must apply to &quot;all&quot; domestic providers. If the law includes exemptions for business size, revenue thresholds, or production volume (e.g., de minimis exemptions for small providers), the question resolves as NO.
+    *   The requirement to screen &quot;every order&quot; means no category of customer or order may be exempt. If the law allows providers to skip screening for &quot;trusted partners,&quot; &quot;institutional customers,&quot; or &quot;verified researchers,&quot; the question resolves as NO.
+*   <strong>Sequences of Concern:</strong> Refers to nucleotide or amino acid sequences that match pathogens on the Biological Select Agents and Toxins (BSAT) list, the Commerce Control List (CCL), or any technical list or functional definition established by a federal agency (e.g., Secretary of Commerce, NIST) for biosecurity screening purposes.
+*   <strong>Providers:</strong> Domestic providers refers to any commercial entity that synthesizes and sells synthetic DNA, RNA, or other nucleic acids to customers located within the United States.
+
+Resolution will be determined based on official records from Congress.gov. If no such law is enacted by the deadline, the question resolves as NO.</p></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>Summary
+The probability of a United States federal law mandating biosecurity screening for all synthetic nucleic acid providers without any exemptions being enacted by the end of 2027 is exceptionally low. While there is meaningful momentum toward establishing biosecurity regulations, the specific criteria for this event are remarkably stringent. The primary legislative vehicle currently in Congress, the Biosecurity Modernization and Innovation Act of 2026 (S.3741), has bipartisan sponsorship and strong backing from industry leaders, national security experts, and the executive branch <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a> <a href="https://www.science.org/content/article/ai-executives-join-call-stricter-regulation-synthetic-biology" target="_blank" rel="noopener">AI executives join call for stricter regulation of synthetic biology</a> <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. Currently, the US relies on the 2024 OSTP framework, which operates mostly as a set of voluntary guidelines tied to federal research funding <a href="https://aspr.hhs.gov/S3/Pages/OSTP-Framework-for-Nucleic-Acid-Synthesis-Screening.aspx" target="_blank" rel="noopener">OSTP Framework for Nucleic Acid Synthesis Screening</a> <a href="https://www.congress.gov/crs_external_products/R/HTML/R48155.html" target="_blank" rel="noopener">Table 1. Selected US Policies for Biosafety and Biosecurity Oversight</a>. S.3741 seeks to change this paradigm by requiring the Secretary of Commerce to promulgate mandatory screening regulations <a href="https://www.congress.gov/119/bills/s3741/BILLS-119s3741is.htm" target="_blank" rel="noopener">Untitled</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+
+However, even if this legislation were to pass, it currently contains explicit exemptions that would immediately disqualify it from meeting the necessary conditions. To satisfy the criteria, legislation must strictly apply to all domestic providers and screen every single order, with no carve-outs for institutional customers, verified researchers, or small businesses. S.3741 explicitly permits an &quot;expedited review process for institutional customers, including accredited institutions of higher education&quot; <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://www.congress.gov/119/bills/s3741/BILLS-119s3741is.htm" target="_blank" rel="noopener">Untitled</a> and allows &quot;exemptions from customer screening requirements for sequences or products that are clearly non-hazardous&quot; <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+
+The legislative process almost universally trends toward adding industry-friendly exemptions to reduce friction, rather than removing them. Therefore, realizing this event requires not only the difficult hurdle of passing a standalone bill or attaching it to a larger legislative package by the December 31, 2027 deadline, but also the highly improbable scenario where Congress actively strips existing, widely-supported exemptions from the legislative text. Multiplying the baseline probability of any mandatory screening law passing (roughly 15–20%) by the very low likelihood that such a law strictly avoids all disqualifying exemptions (around 10–20%) results in a final assessment firmly in the low single digits.
+
+Strongest Arguments for Yes
+* Broad Industry and Expert Support: A robust coalition of AI, biotechnology, and national security leaders actively advocates for mandatory screening <a href="https://prod-i.a.dj.com/public/resources/documents/dnaletter.pdf" target="_blank" rel="noopener">https://prod-i.a.dj.com/public/resources/documents/dnaletter.pdf</a> <a href="https://www.genengnews.com/bioperspectives/open-letter-in-support-of-mandatory-nucleic-acid-synthesis-screening-and-recordkeeping/" target="_blank" rel="noopener">Open Letter: In Support of Mandatory Nucleic Acid Synthesis ...</a>. A June 2026 open letter signed by 69 prominent figures, including executives from major AI companies, specifically pushed for S.3741, characterizing it as a critical vehicle for mandatory requirements <a href="https://blogs.microsoft.com/on-the-issues/2026/06/04/strengthening-biosecurity-in-the-era-of-ai/" target="_blank" rel="noopener">Strengthening biosecurity in the era of AI - Microsoft On the Issues</a> <a href="https://www.science.org/content/article/ai-executives-join-call-stricter-regulation-synthetic-biology" target="_blank" rel="noopener">AI executives join call for stricter regulation of synthetic biology</a> <a href="https://www.science.org/content/article/ai-executives-join-call-stricter-regulation-synthetic-biology" target="_blank" rel="noopener">AI executives join call for stricter regulation of synthetic biology</a>.
+* Bipartisan Legislative Vehicles and Executive Alignment: S.3741 is a bipartisan bill with sponsors spanning both political parties <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. Furthermore, a May 2025 Executive Order on biological research safety called for legislative proposals to address gaps in screening authorities, indicating alignment with the executive branch <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>.
+* Potential for Must-Pass Legislation: Biosecurity measures frequently advance by being attached to larger, must-pass defense and funding bills. There is precedent for this pathway, such as the BIOSECURE Act being included in the FY2026 National Defense Authorization Act (NDAA) <a href="https://manifold.markets/HaukeHillebrandt/will-the-biosecurity-modernization" target="_blank" rel="noopener">https://manifold.markets/HaukeHillebrandt/will-the-biosecurity-modernization</a> <a href="https://manifold.markets/HaukeHillebrandt/will-the-biosecurity-modernization" target="_blank" rel="noopener">Mandatory DNA synthesis screening law in the US by &#x27;27? | Manifold</a>.
+
+Strongest Arguments for No
+* Strict Exemption Constraints: The conditions for this event demand that no customers or sequences can be exempt. The leading bill, S.3741, fundamentally conflicts with this by legally establishing expedited reviews for institutional customers and exemptions for clearly non-hazardous sequences <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://www.congress.gov/119/bills/s3741/BILLS-119s3741is.htm" target="_blank" rel="noopener">Untitled</a>.
+* Legislative Inertia and Reality: The vast majority of introduced bills fail to become law. As of June 2026, S.3741 has seen no committee hearings, markups, or floor votes <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a> <a href="https://manifold.markets/HaukeHillebrandt/will-the-biosecurity-modernization" target="_blank" rel="noopener">https://manifold.markets/HaukeHillebrandt/will-the-biosecurity-modernization</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>.
+* Industry Pressure for Compromise: Any legislation that successfully advances typically relies on compromises that minimize operational burdens on industry. Removing the &quot;institutional customer&quot; and &quot;non-hazardous product&quot; exemptions would create immense friction, making it highly unlikely they are stripped from the final text <a href="https://www.congress.gov/119/bills/s3741/BILLS-119s3741is.htm" target="_blank" rel="noopener">Untitled</a> <a href="https://haukehillebrandt.github.io/forecasting-reports/projects/_global/global_forecasts.html#q-will-the-biosecurity-modernization-and-innovation-act-of-202" target="_blank" rel="noopener">https://haukehillebrandt.github.io/forecasting-reports/projects/_global/global_forecasts.html#q-will-the-biosecurity-modernization-and-innovation-act-of-202</a>.
+* Competing Legislative Priorities: The alternative House bill, H.R.3029, focuses solely on research, standards, and best practices, rather than instituting an enforceable federal screening mandate, indicating that not all lawmakers are aligned on a strict mandate <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a> <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a> <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/all-info" target="_blank" rel="noopener">All Info - H.R.3029 - 119th Congress (2025-2026): Nucleic Acid ...</a>.
+
+Key Uncertainties
+* Amendments to Legislative Vehicles: If the current exemptions in S.3741 are unexpectedly removed to create a truly universal screening mandate, or if a new, stricter bill is introduced and rapidly prioritized, the likelihood of this outcome would significantly increase.
+* Interpretation of &quot;Expedited Review&quot;: There is slight uncertainty regarding whether future regulatory interpretation might view &quot;expedited review&quot; as a streamlined form of screening rather than a full exemption. If this interpretation holds, the current legislative text could theoretically qualify, pushing the probability higher.
+* Catalyzing Biosecurity Events: A high-profile biosecurity incident or scare before the end of 2027 could rapidly unify Congress to pass a draconian, no-exceptions statutory mandate, overcoming normal legislative hurdles and industry lobbying.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>Passage of a federal mandate for DNA screening would mark a transition from a voluntary regime [59ac9d] to a legally enforced framework, directly impacting the mitigation of AI-enabled biological risks [c40810]. As a real-world regulatory outcome with enforcement, it settles a major policy crux regarding biosecurity oversight.</p></section>
+<section class="qsection" id="decomp"><h2>Decomposition &amp; research <span class="badge">Stage 6b</span></h2><p><strong>Research-informed re-forecast:</strong> <span style="color:#e65100;font-weight:700">20%</span></p><div class="subcard"><strong>SQ1: Does the Biosecurity Modernization and Innovation Act of 2026 (S.3741) mandate the implementation of screening regulations, or does it only require an assessment or report?</strong><p>Section 4 of the Biosecurity Modernization and Innovation Act of 2026 (S.3741), introduced on January 29, 2026, <strong>mandates</strong> the implementation of biosecurity screening regulations for synthetic nucleic acid providers <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. It is not merely a requirement for a report or assessment; the bill explicitly states that the Secretary of Commerce <strong>shall</strong> establish and maintain these regulations not later than one year after enactment <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://www.lawbc.com/senate-bill-would-establish-federal-biotechnology-security-framework/" target="_blank" rel="noopener">Senate Bill Would Establish Federal Biotechnology Security ...</a>. These mandatory regulations must include protocols for screening sequences of concern, verifying customer identity, and implementing &quot;red-teaming&quot; conformity audits to ensure compliance <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. While other parts of the bill (such as Section 6) require broader assessments of the federal biosecurity landscape, Section 4 establishes a legally enforceable mandatory regime backed by civil penalties of up to $750,000 for non-compliance <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. Legal and policy analyses from early 2026 confirm that the legislation is designed to transition the U.S. from its current voluntary screening framework to a mandatory federal oversight system <a href="https://www.lawbc.com/senate-bill-would-establish-federal-biotechnology-security-framework/" target="_blank" rel="noopener">Senate Bill Would Establish Federal Biotechnology Security ...</a> <a href="https://environmentallawnetwork.com/eln-updates/biobased-and-renewable-products-update-for-march-2026-from-bergeson-campbell-p-c/" target="_blank" rel="noopener">Biobased and Renewable Products Update for March 2026 from ...</a>.</p><p>The determination that Section 4 of the Biosecurity Modernization and Innovation Act of 2026 (S.3741) mandates regulatory implementation is based on the following textual and legal evidence:
+
+<strong>1. Mandatory Regulatory Language</strong>
+Section 4(a) of the bill, as introduced on January 29, 2026, utilizes the legal imperative &quot;shall,&quot; stating: &quot;Not later than 1 year after the date of the enactment of this Act, the Secretary [of Commerce] shall... establish and maintain by regulation the following...&quot; <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. This phrasing is a direct instruction for the Secretary to create and enforce binding regulations rather than merely evaluating the possibility of doing so. 
+
+<strong>2. Specific Regulatory Requirements under Section 4</strong>
+The bill defines several mandatory components that the Secretary must include in the regulations:
+*   <strong>Screening Protocols:</strong> &quot;Covered providers&quot; are required to implement protocols to screen nucleic acid sequences of concern <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.
+*   <strong>Customer Verification:</strong> Providers must verify the identity and legitimacy of customers <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+*   <strong>Conformity Assessments:</strong> The Secretary is mandated to establish a system for verifying compliance, which includes random &quot;red-teaming&quot; or adversarial testing to ensure the effectiveness of screening <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+*   <strong>List of Sequences:</strong> The Secretary is responsible for maintaining a &quot;list of sequences of concern&quot; that must be screened against <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.
+
+<strong>3. Enforcement Mechanisms</strong>
+Section 4(f) provides for civil enforcement of these regulations. As of March 30, 2026, analysis indicates that violations of the screening requirements are subject to significant civil penalties: up to $500,000 for individuals and $750,000 for organizations <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. The existence of statutory damages and enforcement by the Attorney General further distinguishes Section 4 as a mandatory regime rather than a report-based study <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+
+<strong>4. Context and Distinctions within the Bill</strong>
+While the bill does contain assessment requirements, these are largely separate from the Section 4 mandate. For instance:
+*   <strong>Section 6</strong> requires the Office of Science and Technology Policy (OSTP) to conduct an &quot;assessment and plan&quot; regarding broader federal biosecurity oversight <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://fas.org/publication/biosecurity-modernization-and-innovation-act-of-2026/" target="_blank" rel="noopener">Biosecurity Modernization and Innovation Act of 2026 is a Major Step</a>.
+*   <strong>Section 4(b)(3)</strong> directs NIST to conduct research on sequence-to-function models <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.
+*   An analysis dated June 2, 2026, by the Federation of American Scientists (FAS) emphasizes the bill’s requirement for a 90-day assessment by the White House to clarify roles and identify gaps <a href="https://fas.org/publication/biosecurity-modernization-and-innovation-act-of-2026/" target="_blank" rel="noopener">Biosecurity Modernization and Innovation Act of 2026 is a Major Step</a>. However, this assessment is framed as a foundational step to inform the &quot;modern governance&quot; that Section 4 explicitly codifies into mandatory law <a href="https://fas.org/publication/biosecurity-modernization-and-innovation-act-of-2026/" target="_blank" rel="noopener">Biosecurity Modernization and Innovation Act of 2026 is a Major Step</a> <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.
+
+Legislative summaries from March 2026 confirm that the bill is intended to transition the U.S. biosecurity framework from a &quot;voluntary to a mandatory regime&quot; <a href="https://www.lawbc.com/senate-bill-would-establish-federal-biotechnology-security-framework/" target="_blank" rel="noopener">Senate Bill Would Establish Federal Biotechnology Security ...</a> <a href="https://environmentallawnetwork.com/eln-updates/biobased-and-renewable-products-update-for-march-2026-from-bergeson-campbell-p-c/" target="_blank" rel="noopener">Biobased and Renewable Products Update for March 2026 from ...</a>. Furthermore, Section 4 explicitly states that these regulations &quot;shall supplant any Federal guidelines or recommendations&quot; that are currently voluntary <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.</p></div><div class="subcard"><strong>SQ2: What specific provisions in S.3741 or similar pending biosecurity bills address exemptions for small-scale providers or &quot;institutional customers&quot;?</strong><p>As of <strong>January 29, 2026</strong>, the Biosecurity Modernization and Innovation Act of 2026 (<strong>S.3741</strong>) includes specific provisions to reduce regulatory friction through <strong>Section 4(a)(6)(A)</strong>, which permits an expedited review process for &quot;institutional customers&quot; (such as accredited universities) with proven legitimacy, and <strong>Section 4(a)(6)(B)</strong>, which allows exemptions for sequences or products that are &quot;clearly non-hazardous&quot; and pose no credible threat <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. However, S.3741 does <strong>not</strong> provide de minimis exemptions for small-scale providers based on revenue or production volume; its definition of &quot;covered provider&quot; is universal <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. Similarly, the Nucleic Acid Standards for Biosecurity Act (<strong>H.R. 3029</strong>), introduced on <strong>April 28, 2025</strong>, contains no revenue or volume-based exemptions and focuses primarily on authorizing NIST to develop consensus-driven technical standards rather than establishing tiered regulatory requirements for different provider sizes <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a>.</p><p>### Legislative Analysis of Biosecurity Screening Exemptions
+
+#### S.3741: Biosecurity Modernization and Innovation Act of 2026
+The Biosecurity Modernization and Innovation Act of 2026 (S.3741), introduced on <strong>January 29, 2026</strong>, contains specific provisions designed to streamline the screening process for low-risk entities and products while maintaining a broad regulatory scope for providers <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+
+<strong>1. Institutional Customer Expedited Review (Section 4(a)(6)(A))</strong>
+As of <strong>January 29, 2026</strong>, Section 4(a)(6)(A) of S.3741 directs the Secretary of Commerce to establish safeguards that &quot;avoid unnecessary burdens on innovation and research&quot; by permitting &quot;covered providers to offer an expedited review process for institutional customers&quot; <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+*   <strong>Target Entities:</strong> The provision specifically identifies &quot;accredited institutions of higher education&quot; as examples of such customers <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+*   <strong>Qualifying Criteria:</strong> To qualify for expedited review, these customers must possess &quot;demonstrated records of legitimacy&quot; <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+
+<strong>2. Non-Hazardous Product Exemptions (Section 4(a)(6)(B))</strong>
+As of <strong>January 29, 2026</strong>, Section 4(a)(6)(B) provides for &quot;exemptions from customer screening requirements for sequences or products that are clearly non-hazardous and pose no credible threat to public health and safety&quot; <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+*   <strong>Basis for Exemption:</strong> Determinations for these exemptions are to be rooted in &quot;scientific literature and industry best practices for biosecurity screening&quot; <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+
+<strong>3. Small-Scale Provider Provisions</strong>
+As of <strong>January 29, 2026</strong>, S.3741 does not contain any de minimis exemptions based on revenue or production volume <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+*   <strong>Scope:</strong> The bill defines a &quot;covered provider&quot; as &quot;any person that synthesizes and sells synthetic nucleic acids or distributes or sells equipment for such synthesis to persons in the United States&quot; <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. This definition lacks any threshold for company size, annual revenue, or synthesis volume, suggesting the mandate is intended to be universal for all commercial providers regardless of scale <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+
+#### H.R. 3029: Nucleic Acid Standards for Biosecurity Act
+The Nucleic Acid Standards for Biosecurity Act (H.R. 3029), introduced on <strong>April 28, 2025</strong>, takes a different approach by focusing on standards development rather than immediate mandatory screening <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a>.
+
+<strong>1. Small-Scale Provider and Institutional Exemptions</strong>
+As of <strong>April 28, 2025</strong>, H.R. 3029 does not establish any exemptions or carve-outs for small-scale providers based on revenue or production volume <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a>.
+*   <strong>Focus:</strong> Because the bill focuses on authorizing NIST to develop technical standards and best practices through a stakeholder consortium (which includes &quot;industry, institutions of higher education, nonprofit organizations, and customers&quot;), it does not yet impose the type of regulatory mandate that would necessitate de minimis exemptions <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a>.
+*   <strong>Institutional Provisions:</strong> Unlike S.3741, H.R. 3029 does not contain provisions for &quot;institutional customers&quot; or &quot;expedited review&quot; processes <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a>. Its primary mention of academic institutions is as participants in the consensus-driven standards development process <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a>.
+
+### Summary of Findings by Date
+| Provision Type | S.3741 (As of Jan 29, 2026) | H.R. 3029 (As of Apr 28, 2025) |
+| :--- | :--- | :--- |
+| <strong>Institutional Expedited Review</strong> | Included for accredited institutions with legitimate records (Sec. 4(a)(6)(A)) <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. | Not included <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a>. |
+| <strong>Non-Hazardous Exemptions</strong> | Included for products posing no credible threat (Sec. 4(a)(6)(B)) <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. | Not included <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a>. |
+| <strong>Revenue/Volume Exemptions</strong> | None; applies broadly to all &quot;covered providers&quot; <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. | None; focuses on voluntary standards development <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/text" target="_blank" rel="noopener">H.R.3029 - 119th Congress (2025-2026): Nucleic Acid Standards for ...</a>. |</p></div><div class="subcard"><strong>SQ3: What is the historical frequency of U.S. federal laws being enacted that establish new mandatory biosecurity screening requirements for the private sector?</strong><p>Legislative research reveals that major U.S. federal laws imposing mandatory biotechnology or biosecurity requirements on the private sector are typically enacted within 5 to 22 months of their introduction, establishing a reliable &#x27;base rate&#x27; for successful legislation within a two-year (24-month) window. Key precedents include the <strong>Public Health Security and Bioterrorism Preparedness and Response Act of 2002</strong> (7 months), the <strong>National Bioengineered Food Disclosure Standard of 2016</strong> (16 months), and the <strong>Food Safety Modernization Act of 2011</strong> (22 months). While the majority of biosecurity screening for synthetic nucleic acids has historically been voluntary, these laws demonstrate a consistent legislative capacity to move from bill introduction to private-sector mandate in under two years when bipartisan or national security priorities align. Recent efforts, such as the <strong>Securing Gene Synthesis Act</strong> introduced in <strong>July 2023</strong>, illustrate the risk of bills stalling in committee, whereas the <strong>CHIPS and Science Act of 2022</strong> (13 months) signifies a growing role for the Department of Commerce and NIST in biotechnology oversight. Overall, for bills that achieve sufficient momentum to pass, the historical average timeline for enactment is approximately 14 months.</p><p>### Historical Precedents and Legislative Timelines
+
+The enactment of federal laws establishing mandatory biotechnology-related compliance for the private sector is a infrequent but documented occurrence in U.S. legislative history. The following analysis tracks the legislative trajectory of major bills that imposed new regulatory requirements on commercial entities, specifically focused on biotechnology and biosecurity:
+
+*   <strong>Public Health Security and Bioterrorism Preparedness and Response Act of 2002 (P.L. 107-188):</strong>
+    *   <strong>Introduction Date:</strong> November 14, 2001.
+    *   <strong>Enactment Date:</strong> June 12, 2002.
+    *   <strong>Elapsed Time:</strong> <strong>210 days (~7 months).</strong>
+    *   <strong>Mandatory Requirements:</strong> This law established the first significant mandatory biosecurity regime for the private sector, including the registration of possession, use, and transfer of select agents and toxins. It also mandated the registration of food facilities with the FDA to protect the food supply from bioterrorism.
+
+*   <strong>Plant Protection Act of 2000 (P.L. 106-224, Title IV):</strong>
+    *   <strong>Introduction Date:</strong> July 12, 1999 (as H.R. 2559).
+    *   <strong>Enactment Date:</strong> June 20, 2000.
+    *   <strong>Elapsed Time:</strong> <strong>344 days (~11 months).</strong>
+    *   <strong>Mandatory Requirements:</strong> Consolidated authorities to regulate the movement of plant pests and noxious weeds, establishing mandatory permitting for the introduction of genetically engineered (GE) organisms that could pose a plant pest risk.
+
+*   <strong>Food Safety Modernization Act (FSMA) of 2011 (P.L. 111-353):</strong>
+    *   <strong>Introduction Date:</strong> March 3, 2009 (as S. 510).
+    *   <strong>Enactment Date:</strong> January 4, 2011.
+    *   <strong>Elapsed Time:</strong> <strong>672 days (~22 months).</strong>
+    *   <strong>Mandatory Requirements:</strong> Transformed the food safety system from reactive to proactive by mandating preventive controls for human and animal food facilities. It required the private sector to develop and implement written food safety plans.
+
+*   <strong>National Bioengineered Food Disclosure Standard of 2016 (P.L. 114-216):</strong>
+    *   <strong>Introduction Date:</strong> March 17, 2015 (as S. 764).
+    *   <strong>Enactment Date:</strong> July 29, 2016.
+    *   <strong>Elapsed Time:</strong> <strong>499 days (~16 months).</strong>
+    *   <strong>Mandatory Requirements:</strong> Established a mandatory national standard for disclosing &quot;bioengineered&quot; (GMO) food to consumers, preempting various state-level labeling laws.
+
+*   <strong>CHIPS and Science Act of 2022 (P.L. 117-167):</strong>
+    *   <strong>Introduction Date:</strong> July 1, 2021 (as H.R. 4346).
+    *   <strong>Enactment Date:</strong> August 9, 2022.
+    *   <strong>Elapsed Time:</strong> <strong>404 days (~13 months).</strong>
+    *   <strong>Biotech/NIST Involvement:</strong> While primarily a funding bill, it authorized the National Engineering Biology Research and Development Initiative and directed the Department of Commerce and NIST to lead efforts in establishing technical standards for biotechnology.
+
+### Legislative &#x27;Base Rate&#x27; for a Two-Year Window
+Based on the major biotechnology-related regulatory statutes enacted over the last 25 years, the success rate for bills moving from introduction to enactment within a two-year congressional session (a &quot;two-year window&quot;) is high <em>once they gain significant bipartisan momentum or respond to a perceived national security crisis</em>. 
+
+1.  <strong>Selectivity:</strong> Most biosecurity-related bills introduced in Congress fail to reach the floor. For example, the <strong>Securing Gene Synthesis Act</strong> (H.R. 4702/S. 2400) was introduced on <strong>July 18-19, 2023</strong>, during the 118th Congress but failed to move past the committee stage within its two-year window.
+2.  <strong>Timing:</strong> For those that are successfully enacted, the average duration from introduction to signature is approximately <strong>426 days (~14 months)</strong>. This falls well within the 24-month (730-day) window of a standard Congressional term.
+3.  <strong>Role of NIST and Department of Commerce:</strong> Historically, NIST and the Department of Commerce have managed voluntary standards and export controls (e.g., the 2024 OSTP Framework). The transition to mandatory compliance via Department of Commerce oversight is a newer trend seen in the <strong>CHIPS and Science Act</strong> and the introduction of the <strong>Biosecurity Modernization and Innovation Act of 2026 (S. 3741)</strong> on <strong>January 29, 2026</strong>.
+
+### Mandatory vs. Voluntary Frameworks
+Historically, biosecurity screening for synthetic DNA providers has relied on voluntary industry cooperation (e.g., the International Gene Synthesis Consortium, IGSC). Federal mandates have traditionally been reserved for high-risk pathogens (Select Agents) or consumer health (FSMA). The current legislative landscape shows a shift toward NIST-led technical standards becoming the basis for mandatory federal procurement or broader private sector compliance.</p></div><div class="subcard"><strong>SQ4: How have the International Gene Synthesis Consortium (IGSC) and major DNA synthesis providers responded to the proposed mandatory requirements in S.3741?</strong><p>The International Gene Synthesis Consortium (IGSC) and major DNA synthesis providers like Twist Bioscience and Ginkgo Bioworks have expressed general support for the mandatory biosecurity screening requirements proposed in S.3741, viewing them as a way to create a &quot;level playing field&quot; <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. Following the bill&#x27;s introduction on January 29, 2026, analysts noted that the industry broadly supports the transition from voluntary to mandatory federal standards <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a> <a href="https://www.healthlawpolicy.org/2026/03/29/biosecurity-catching-up-to-modern-era-look-into-s-3741/" target="_blank" rel="noopener">https://www.healthlawpolicy.org/2026/03/29/biosecurity-catching-up-to-modern-era-look-into-s-3741/</a>. While individual providers have advocated for technical improvements to screening methods (e.g., against AI-designed proteins), there is no documented lobbying for &quot;trusted partner&quot; programs or &quot;de minimis&quot; exemptions within the context of S.3741 as of March 2026 <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. The IGSC as an entity continues to promote its screening protocols but has not issued a formal opposition statement to the bill <a href="https://genesynthesisconsortium.org/" target="_blank" rel="noopener">International Gene Synthesis Consortium: Home</a>.</p><p>The response of the International Gene Synthesis Consortium (IGSC) and major individual DNA synthesis providers to <strong>S.3741</strong> (the Biosecurity Modernization and Innovation Act of 2026) has been characterized as broadly supportive, primarily driven by a desire for a &quot;level playing field&quot; in biosecurity standards.
+
+### International Gene Synthesis Consortium (IGSC) Position
+As of March 30, 2026, industry analysts noted that &quot;the industry supports&quot; the bill, which would transition the current voluntary screening regime into a federally enforceable mandatory framework <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. While the IGSC has historically championed voluntary screening through its Harmonized Screening Protocol, its official website (as of June 2026) had not yet posted a formal organization-wide statement specifically naming S.3741, continuing instead to emphasize its existing collaborations with federal agencies such as HHS and ASPR <a href="https://genesynthesisconsortium.org/" target="_blank" rel="noopener">International Gene Synthesis Consortium: Home</a>.
+
+### Individual Provider Positions
+Major providers have been actively engaged in the policy discussions surrounding the bill:
+*   <strong>Twist Bioscience</strong>: James Diggans, Vice President of Policy and Biosecurity, has been a prominent industry voice in the lead-up to and following the introduction of S.3741. Twist has publicly advocated for the evolution of screening practices to keep pace with AI-assisted protein design, highlighting that a mandatory federal framework helps ensure that all market entrants adhere to the same high standards they have followed voluntarily <a href="https://investors.twistbioscience.com/news-releases/news-release-details/twist-bioscience-announces-publication-science-examining" target="_blank" rel="noopener">Press Release Details - Twist Bioscience | Investor Relations</a>.
+*   <strong>Ginkgo Bioworks</strong>: Ginkgo has hosted congressional members as recently as February 2024 to discuss biosecurity and national security, positioning itself as a &quot;cloud lab&quot; partner that supports stronger biosecurity oversight and the &quot;bioeconomy&quot; <a href="https://www.synbiobeta.com/read/ginkgo-bioworks-hosts-congressional-members-to-discuss-u-s-bioeconomy-and-national-security" target="_blank" rel="noopener">Ginkgo Bioworks Hosts Congressional Members to Discuss U.S. ...</a>.
+
+### &#x27;Trusted Partner&#x27; Programs and &#x27;De Minimis&#x27; Exemptions
+The analysis of S.3741 and related industry commentary does not show evidence of stakeholders currently lobbying for &quot;trusted partner&quot; programs or &quot;de minimis&quot; exemptions within the specific context of this bill <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a> <a href="https://www.healthlawpolicy.org/2026/03/29/biosecurity-catching-up-to-modern-era-look-into-s-3741/" target="_blank" rel="noopener">https://www.healthlawpolicy.org/2026/03/29/biosecurity-catching-up-to-modern-era-look-into-s-3741/</a>. Instead, criticism of the bill has focused on technical gaps, such as its reliance on homology-based screening (which can be bypassed by AI) and its failure to mandate split-order detection (which remains legally optional under the bill&#x27;s current &quot;may&quot; rather than &quot;shall&quot; language) <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. The absence of lobbying for &quot;de minimis&quot; exemptions suggests that major providers, who already bear the cost of screening, may prefer a universal mandate that prevents smaller, un-screened competitors from gaining a price advantage.
+
+### Timeline of Key Findings
+*   <strong>January 29, 2026</strong>: S.3741 was introduced by Senators Tom Cotton (R-AR) and Amy Klobuchar (D-MN) <a href="https://www.healthlawpolicy.org/2026/03/29/biosecurity-catching-up-to-modern-era-look-into-s-3741/" target="_blank" rel="noopener">https://www.healthlawpolicy.org/2026/03/29/biosecurity-catching-up-to-modern-era-look-into-s-3741/</a> <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.
+*   <strong>March 29, 2026</strong>: Legal analysis identifies S.3741 as a pivotal step in modernization but notes it is early in the legislative process <a href="https://www.healthlawpolicy.org/2026/03/29/biosecurity-catching-up-to-modern-era-look-into-s-3741/" target="_blank" rel="noopener">https://www.healthlawpolicy.org/2026/03/29/biosecurity-catching-up-to-modern-era-look-into-s-3741/</a>.
+*   <strong>March 30, 2026</strong>: Industry analysts confirm broad support for the bill while highlighting concerns about screening effectiveness against AI-designed sequences <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.
+*   <strong>June 10, 2026</strong>: Review of IGSC and provider platforms shows ongoing emphasis on existing biosecurity protocols with no documented opposition to the mandatory transition <a href="https://genesynthesisconsortium.org/" target="_blank" rel="noopener">International Gene Synthesis Consortium: Home</a>.</p></div><div class="subcard"><strong>SQ5: Which legislative vehicles in the 119th Congress are most likely to serve as the basis for enacting a mandatory nucleic acid screening law?</strong><p>As of June 10, 2026, the <strong>Biosecurity Modernization and Innovation Act of 2026 (S.3741)</strong> remains the primary legislative vehicle for a federal screening mandate in the 119th Congress <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. Introduced on January 29, 2026, and gaining bipartisan cosponsors as recently as June 3, 2026, it is currently referred to the Senate Committee on Commerce, Science, and Transportation <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. While its core provisions for mandatory screening have not yet been incorporated into larger &#x27;must-pass&#x27; vehicles like the <strong>National Defense Authorization Act (NDAA)</strong> or a final omnibus, the <strong>Commerce, Justice, Science (CJS) Appropriations Bill for 2027 (H.R. 8845)</strong> includes report language as of May 15, 2026, directing the Department of Commerce to identify legislative gaps for universal screening compliance <a href="https://www.congress.gov/committee-report/119th-congress/house-report/652" target="_blank" rel="noopener">H. Rept. 119-652 - COMMERCE, JUSTICE, SCIENCE, AND ...</a>. This indicates that while the mandate is not yet law, the infrastructure for its incorporation into a broader statutory package is being actively developed through the appropriations process.</p><p>### Legislative Status of S.3741 (Biosecurity Modernization and Innovation Act of 2026)
+The <strong>Biosecurity Modernization and Innovation Act of 2026 (S.3741)</strong> was introduced in the Senate on January 29, 2026, by Senator Tom Cotton (R-AR) <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. As of June 10, 2026, the bill is in the &#x27;Introduced&#x27; stage and remains under the jurisdiction of the <strong>Senate Committee on Commerce, Science, and Transportation</strong>, to which it was referred on the date of its introduction <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. 
+
+The bill has seen modest bipartisan movement in the 119th Congress:
+*   <strong>January 29, 2026:</strong> Introduced with Senator Amy Klobuchar (D-MN) as an original cosponsor <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>.
+*   <strong>June 3, 2026:</strong> Two additional cosponsors, Senators Ted Budd (R-NC) and Christopher A. Coons (D-DE), joined the bill <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>.
+
+The core provisions of S.3741 include a federal mandate for the Secretary of Commerce to regulate &#x27;covered providers&#x27; of synthetic nucleic acids, requiring them to screen all orders against a government-maintained list of sequences of concern and verify customer legitimacy <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. It also prohibits any recipient of federal funds from purchasing from non-compliant providers and establishes statutory civil damages for violations <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+
+### Evaluation of Larger Legislative Vehicles
+Two primary &#x27;must-pass&#x27; vehicles in the 119th Congress have been identified as potential carriers for these provisions: the National Defense Authorization Act (NDAA) and the annual appropriations bills.
+
+#### 1. National Defense Authorization Act (NDAA)
+As of June 10, 2026, the <strong>National Defense Authorization Act for Fiscal Year 2026 (S.2296)</strong> is active in the legislative cycle. While various sections of the NDAA traditionally address biotechnology and biosecurity, there is no evidence as of this date that the specific mandatory screening language of S.3741 has been formally incorporated into the base text of the NDAA for FY2026 or FY2027. Legislative interest in the intersection of nucleic acid screening and defense remains high, but the mandate currently exists only in the standalone S.3741 <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>.
+
+#### 2. Omnibus Appropriations / CJS Appropriations Bill
+The <strong>Commerce, Justice, Science, and Related Agencies Appropriations Bill, 2027 (H.R. 8845)</strong> serves as a critical potential vehicle. According to <strong>House Report 119-652</strong>, released on May 15, 2026, the committee has not yet included a mandatory screening law but has taken significant preparatory steps:
+*   <strong>Funding:</strong> The Committee provided up to $6,000,000 for NIST to develop and validate technical standards for screening <a href="https://www.congress.gov/committee-report/119th-congress/house-report/652" target="_blank" rel="noopener">H. Rept. 119-652 - COMMERCE, JUSTICE, SCIENCE, AND ...</a>.
+*   <strong>Reporting Requirement:</strong> The Department of Commerce is directed to provide a briefing within 180 days of the Act&#x27;s enactment <a href="https://www.congress.gov/committee-report/119th-congress/house-report/652" target="_blank" rel="noopener">H. Rept. 119-652 - COMMERCE, JUSTICE, SCIENCE, AND ...</a>.
+*   <strong>Gap Analysis:</strong> This briefing must specifically assess &quot;gaps in existing legislative or administrative authority that hinder the Department&#x27;s ability to ensure universal screening compliance&quot; and recommend frameworks for oversight and enforcement <a href="https://www.congress.gov/committee-report/119th-congress/house-report/652" target="_blank" rel="noopener">H. Rept. 119-652 - COMMERCE, JUSTICE, SCIENCE, AND ...</a>.
+
+### Status of Incorporation
+As of June 10, 2026, the mandatory screening provisions of S.3741 have <strong>not</strong> been incorporated into the NDAA or a final omnibus appropriations package. Instead, the 119th Congress appears to be pursuing a two-track approach:
+1.  <strong>Mandatory Track:</strong> S.3741 remains a standalone legislative proposal for immediate regulatory mandates <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>.
+2.  <strong>Preparatory Track:</strong> Appropriations language in H.R. 8845 (as of May 15, 2026) focuses on funding the development of standards through NIST and requiring the Executive Branch to formally identify the legislative gaps that S.3741 is designed to fill <a href="https://www.congress.gov/committee-report/119th-congress/house-report/652" target="_blank" rel="noopener">H. Rept. 119-652 - COMMERCE, JUSTICE, SCIENCE, AND ...</a>.
+3.  <strong>Voluntary Track:</strong> <strong>H.R. 3029 (Nucleic Acid Standards for Biosecurity Act)</strong>, introduced earlier in the session on April 28, 2025, continues to focus on strengthening biosecurity through voluntary adoption of standards rather than the mandatory framework proposed in S.3741 <a href="https://www.congress.gov/committee-report/119th-congress/house-report/652" target="_blank" rel="noopener">H. Rept. 119-652 - COMMERCE, JUSTICE, SCIENCE, AND ...</a>.</p></div></section>
+<section class="qsection" id="fable"><h2>Fable 5 second opinion <span class="badge">Stage 6f</span></h2><p><strong>Pipeline:</strong> <span style="color:#e65100;font-weight:700">20%</span> &rarr; <strong>Fable 5:</strong> <span style="color:#c62828;font-weight:700">7%</span> &nbsp;<span class="badge">FORECAST_DISAGREE</span></p><p>The pipeline correctly identifies legislative difficulty but under-weights how brutally the resolution criteria cut against YES. The criteria require the law to apply to &#x27;all&#x27; providers with NO de minimis exemptions and NO ability to skip screening for &#x27;trusted partners,&#x27; &#x27;institutional customers,&#x27; or &#x27;verified researchers.&#x27; Real-world biosecurity screening frameworks (including the 2024 OSTP Framework and IGSC practices) universally rely on customer/institution verification and risk-tiering — exactly the &#x27;trusted partner&#x27; carve-outs the criteria disqualify. Any statute Congress actually passes would almost certainly delegate rulemaking to Commerce, which would then build in precisely these exemptions; even a directly-mandating statute is highly likely to permit verified-customer streamlining. So the conjunction is: (1) bill passes within ~18 months (already hard for a standalone bill, ~20-25%), AND (2) it contains a maximally strict universal mandate with zero exemptions (low, maybe 25-35% conditional). That product lands well below 20%. The pipeline&#x27;s rationale even flags this strictness but doesn&#x27;t propagate it into the number. I put this near 7%.</p></section>
+</div></body></html>

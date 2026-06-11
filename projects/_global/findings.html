@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forecasting Pipeline — Findings (2026-06-09 → 06-11)</title>
+<style>
+  :root{--ink:#1a1a2e;--accent:#4f46e5;--accent-soft:#e0e7ff;--text:#1f2430;--text-2:#5c6370;--label:#595959;--line:#e5e7eb;--bg:#f7f8fa;--card:#fff;--good:#2e7d32;--bad:#c62828;--warn:#b45309;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:2.5rem 1rem;font-size:16px;font-variant-numeric:tabular-nums}
+  .container{max-width:1000px;margin:0 auto}
+  .page-header{background:linear-gradient(135deg,#1a1a2e,#24244a);color:#eee;border-radius:14px;padding:2rem 2.2rem;margin-bottom:1.6rem}
+  .page-header h1{font-size:1.7rem;font-weight:650;letter-spacing:-.015em;margin-bottom:.4rem}
+  .page-header p{color:#a0a0b8;font-size:.95rem;max-width:62ch}
+  .page-header .when{display:inline-block;margin-top:.7rem;background:rgba(255,255,255,.09);padding:.2rem .65rem;border-radius:5px;font-size:.8rem;color:#c0c0d4}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.9rem;margin-bottom:1.8rem}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.2rem;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .stat .big{font-size:1.9rem;font-weight:700;line-height:1.1}
+  .stat .lbl{font-size:.78rem;color:var(--label);text-transform:uppercase;letter-spacing:.03em;margin-top:.35rem}
+  .stat .sub{font-size:.85rem;color:var(--text-2);margin-top:.3rem}
+  .arrow{color:var(--text-2)}
+  section.finding{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.3rem 1.5rem;margin-bottom:1.1rem;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  section.finding h2{font-size:1.15rem;font-weight:650;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+  section.finding h2 .tag{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:.15rem .5rem;border-radius:20px;background:var(--accent-soft);color:#3730a3}
+  section.finding p{margin:.5rem 0;color:#33384a}
+  table{border-collapse:collapse;width:100%;margin:.7rem 0;font-size:.9rem}
+  th,td{text-align:left;padding:.4rem .6rem;border-bottom:1px solid var(--line)}
+  th{font-size:.72rem;text-transform:uppercase;letter-spacing:.03em;color:var(--label)}
+  td.num{text-align:right}
+  .good{color:var(--good);font-weight:600}.bad{color:var(--bad);font-weight:600}.warn{color:var(--warn);font-weight:600}
+  .caveat{background:#fff8e1;border-left:3px solid var(--warn);padding:.6rem .9rem;border-radius:0 8px 8px 0;font-size:.88rem;color:#5c4a1a;margin-top:.7rem}
+  ul{margin:.5rem 0 .5rem 1.3rem}li{margin:.25rem 0}
+  a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+  .links{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem}
+  .links a{background:var(--accent-soft);color:#3730a3;padding:.3rem .7rem;border-radius:7px;font-size:.85rem;font-weight:500}
+  footer{color:var(--text-2);font-size:.82rem;text-align:center;margin-top:1.5rem}
+  .bar{height:10px;border-radius:5px;background:var(--line);overflow:hidden;display:inline-block;width:100%;max-width:160px;vertical-align:middle}
+  .bar>i{display:block;height:100%;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="page-header">
+    <h1>Forecasting Pipeline — what we learned</h1>
+    <p>Two days of work on the paper-to-forecast pipeline: a v2 prompt rewrite, a 16-bug fix sweep, a report redesign, a blind quality experiment, an architecture audit, and a Gemini deep-research trial. The verdicts below are evidence-backed; caveats are stated, not hidden.</p>
+    <span class="when">2026-06-09 → 2026-06-11</span>
+  </div>
+
+  <div class="cards">
+    <div class="stat">
+      <div class="big"><span class="bad">22%</span> <span class="arrow">→</span> <span class="good">0%</span></div>
+      <div class="lbl">Benchmark over-indexing</div>
+      <div class="sub">v1 prompts vs v2 prompts (share of generated questions that resolve via an AI benchmark score)</div>
+    </div>
+    <div class="stat">
+      <div class="big good">+10pp</div>
+      <div class="lbl">Deep-research effect</div>
+      <div class="sub">Forecast shift (29% → 39%), variance-controlled — non-overlapping ranges, not noise</div>
+    </div>
+    <div class="stat">
+      <div class="big">80.0 <span class="arrow" style="font-size:1rem">vs</span> 60.6</div>
+      <div class="lbl">Blind quality (pipeline vs one-shot)</div>
+      <div class="sub">3 blinded judges, pipeline question ranked #1 by all; 18/18 correct source guesses</div>
+    </div>
+    <div class="stat">
+      <div class="big bad">$15.62</div>
+      <div class="lbl">Cost of stage 06b alone</div>
+      <div class="sub">63% of a ~$25 low-effort paper — the deep-research re-forecast stage</div>
+    </div>
+  </div>
+
+  <section class="finding">
+    <h2><span class="tag">Prompts</span> v2 prompts eliminated benchmark over-indexing</h2>
+    <p>Your suspicion was right and quantified: the old prompts over-produced "will model X hit Y% on benchmark Z" questions instead of decision-relevant real-world outcomes, and the quality filter made it <em>worse</em> (42% → 44% of finals). The v2 generation prompt added a hard 1-in-4 benchmark cap, archetype quotas, and de-benchmark reframing.</p>
+    <table>
+      <tr><th>Prompts</th><th>Proto-questions</th><th>Benchmark-flavored</th><th></th></tr>
+      <tr><td>v1 (6 papers)</td><td class="num">148</td><td class="num bad">22%</td><td><span class="bar"><i style="width:22%;background:var(--bad)"></i></span></td></tr>
+      <tr><td>v2 (2 papers)</td><td class="num">30</td><td class="num good">0%</td><td><span class="bar"><i style="width:1%;background:var(--good)"></i></span></td></tr>
+    </table>
+    <p>The 0% held even on the Lyptus paper — which is <em>itself about cyber-capability benchmarks</em>, the maximum-temptation case. v2 instead produced incident, legislation, treaty, and agency-publication questions.</p>
+    <div class="caveat">Caveat: v2 sample is 30 protos over 2 papers — directional, not a controlled trial. The cleanest test (same paper under both prompt sets) costs ~$25/paper and the everyrow budget is spent.</div>
+  </section>
+
+  <section class="finding">
+    <h2><span class="tag">Experiment</span> Deep research materially improves forecasts (not noise)</h2>
+    <p>We fed a Gemini <code>deep-research-max</code> report into the Fable second-opinion stage and measured the forecast against the claude-CLI's own sampling spread. On the US-federal-equity question, 3 runs each way:</p>
+    <table>
+      <tr><th>Arm</th><th>Runs</th><th>Mean</th><th>Range</th></tr>
+      <tr><td>No deep research</td><td>25, 32, 30</td><td class="num">29.0</td><td>25–32</td></tr>
+      <tr><td>With deep research</td><td>42, 37, 37</td><td class="num good">38.7</td><td>37–42</td></tr>
+    </table>
+    <p>The ranges <strong>do not overlap</strong> (DR min 37 &gt; no-DR max 32), so the ~+10pp lift is a real effect, beyond the ~7pp sampling band. Consistent with the blind experiment: research-backed questions beat memory-only ones. The reports were substantive — the cyber one surfaced Anthropic's "Project Glasswing"; the equity one built a federal-precedent ladder (Intel 9.9% → mining → quantum → AI).</p>
+    <div class="caveat">Caveats: one cleanly-controlled question (n=1); 3 deep-research-max calls cost ~$12–21 (5.6M tokens, 0 cached); the report itself can be wrong (no ground truth here).</div>
+  </section>
+
+  <section class="finding">
+    <h2><span class="tag">Experiment</span> Blinded: the pipeline beats a one-shot model</h2>
+    <p>The high-effort pipeline produced one final question; Fable 5 wrote five in a single pass with no web access (locked before the pipeline output existed). Three blinded judges scored all six, shuffled.</p>
+    <table>
+      <tr><th></th><th>Overall</th><th>Tournament-accept</th><th>Judges guessing "pipeline"</th></tr>
+      <tr><td><strong>Pipeline question</strong></td><td class="num good">80.0</td><td>3/3</td><td>3/3</td></tr>
+      <tr><td>One-shot mean (5 Qs)</td><td class="num">60.6</td><td>11/15</td><td>0/15</td></tr>
+    </table>
+    <p>The pipeline question won every judge's #1 slot and beat even the best one-shot (74.3). The mechanism is web research: two one-shot questions failed on factual currency (one already-determined, one mooted by a Dec-2025 act) — exactly the class the pipeline's research stages catch. <strong>Judges went 18/18 guessing the source</strong> — pipeline output is stylistically unmistakable.</p>
+    <div class="caveat">Caveats: n=1 pipeline question; the one-shot had no web access by design; generator/judges are all Claude-family (possible taste correlation).</div>
+  </section>
+
+  <section class="finding">
+    <h2><span class="tag">Architecture</span> Most pipeline stages never bind — and the costly ones add least</h2>
+    <p>An evidence audit across all stored projects found the 14-stage pipeline is mostly inert as a filter, while its most expensive stages are its lowest-value:</p>
+    <ul>
+      <li>Stage 04 (triple verification) dropped <strong>1 question in 17</strong>; stage 02d removed <strong>0 duplicates ever</strong>; stage 02c advanced every input in 5/7 projects; stage 05 killed <strong>0/16</strong> — but substantively rewrote 10/16 (it's an <em>editor</em>, not a gate).</li>
+      <li>The 06b/06c/06d "inflate-then-correct" chain moves forecasts (06b +8.7pp) then walks them back (06d −12.4pp) — and <strong>06b alone is 63% of per-paper cost ($15.62 at low effort)</strong>.</li>
+      <li>Four overlapping judges re-score the same three properties 4–6× each (the fragile-source rule appears in six prompts).</li>
+    </ul>
+    <p>Recommendation: a 5-pass "consolidated" design (~0.45× cost) that gates or removes the 06b/c/d chain — validate with a one-paper blind A/B.</p>
+  </section>
+
+  <section class="finding">
+    <h2><span class="tag">Budget</span> The real cost — and a billing-lag trap</h2>
+    <p>everyrow billing <strong>lags</strong>: per-stage cost fields read $0.00 while charges settle later against the balance. A "$0.00" reading is not "free." The real numbers, once they landed:</p>
+    <table>
+      <tr><th>Item</th><th>Cost</th></tr>
+      <tr><td>One low-effort paper (full pipeline)</td><td class="num bad">~$25</td></tr>
+      <tr><td>&nbsp;&nbsp;— of which stage 06b (deep-research re-forecast)</td><td class="num">$15.62</td></tr>
+      <tr><td>&nbsp;&nbsp;— stage 02 (generation)</td><td class="num">$3.74</td></tr>
+      <tr><td>3× Gemini deep-research-max (5.6M tokens)</td><td class="num warn">~$12–21</td></tr>
+    </table>
+    <p>Implication: "run 8 papers overnight" isn't viable at ~$25/paper without more credit — which is the strongest practical argument for the cheaper consolidated architecture above.</p>
+  </section>
+
+  <section class="finding">
+    <h2><span class="tag">Also shipped</span> Reports, bugs, and tooling</h2>
+    <ul>
+      <li><strong>Report redesign</strong> — probability is the headline badge, full-text search, working deep-link anchors, mobile + accessibility fixes, single shared design system (−980 duplicated lines).</li>
+      <li><strong>16 verified bugs fixed</strong> (each adversarially confirmed) — incl. silent "PASS" on failed reviews, a stage that corrupted upstream data, a Manifold close-date bug, and a hidden project leaking into the public site.</li>
+      <li><strong>Two new optional stages</strong> — 06f (Fable second opinion via the local CLI, ~free) and 06g (Gemini deep research, gated behind <code>--deep-research</code>).</li>
+      <li><strong>Per-question pages</strong> — every question now has its own page with a table of contents and all sections expanded.</li>
+    </ul>
+  </section>
+
+  <section class="finding">
+    <h2>Explore the live output</h2>
+    <div class="links">
+      <a href="https://haukehillebrandt.github.io/forecasting-reports/projects/_global/global_forecasts.html">Global forecast report</a>
+      <a href="https://haukehillebrandt.github.io/forecasting-reports/projects/ai_ownership/data/forecasts.html">AI-ownership project</a>
+      <a href="https://haukehillebrandt.github.io/forecasting-reports/projects/lyptus_cyber_horizons/data/forecasts.html">Lyptus cyber project</a>
+    </div>
+    <p style="margin-top:.7rem;font-size:.85rem;color:var(--text-2)">Detailed write-ups (in the repo): the architecture critique, the blind-experiment results, the over-indexing analysis, the deep-research results, and the three full deep-research reports.</p>
+  </section>
+
+  <footer>Generated 2026-06-11 · forecasting_pipeline · all figures traceable to committed artifacts under <code>docs/</code> and <code>docs/overnight2/</code>.</footer>
+
+</div>
+</body>
+</html>

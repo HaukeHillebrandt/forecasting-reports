@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Will the United States Department of Commerce enact a federal regulation requiri</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#ffebee;color:#c62828">5%</span><h1 style="margin:0;font-size:1.25rem;">Will the United States Department of Commerce enact a federal regulation requiring mandatory screening of all synthetic DNA orders against a prohibited sequence database for all U.S.-based providers between 10th June 2026 and 31st December 2027?</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Gemini 3 Flash (minimal)</span><span>low (Gemini Flash) effort</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#fable">Fable 5 second opinion</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#c62828">5%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">90</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">88</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">62</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">72</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">48</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">78</span></div></div><p><strong>Review status:</strong> PASS</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>Will the United States Department of Commerce enact a federal regulation requiring mandatory screening of all synthetic DNA orders against a prohibited sequence database for all U.S.-based providers by December 31, 2027?</p><p><strong>Why this question?</strong> The paper notes that AI reduces the &#x27;cold-start&#x27; time for complex offensive operations, including target reconnaissance. Legislative efforts to mandate DNA screening aim to preserve the high barriers to bioweapon creation that AI threatens to lower. As of June 10, 2026, screening is largely voluntary, though the bipartisan Biosecurity Modernization and Innovation Act (S.3741) was introduced in mid-2026 to mandate these rules [888984]. Fallback source: Federal Register (15 CFR).</p><p><strong>Paper reference:</strong> Section: Summary; Missing reconnaissance and asset discovery</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p><strong>Question Title:</strong> Mandatory Synthetic DNA Screening Regulation
+
+<strong>Question:</strong> Will the United States Department of Commerce enact a federal regulation requiring mandatory screening of all synthetic DNA orders against a prohibited sequence database for all U.S.-based providers between 10th June 2026 and 31st December 2027?
+
+<strong>Background:</strong> As of 10th June 2026, synthetic DNA screening in the United States remains primarily voluntary, governed by the 2023 HHS Screening Framework Guidance. While an update that took effect on 26th April 2025 mandates screening for researchers receiving federal funding, there is currently no universal mandate for all commercial providers. The Biosecurity Modernization and Innovation Act of 2026 (S.3741), introduced on 29th January 2026 by Senators Tom Cotton and Amy Klobuchar, seeks to change this by granting the United States Department of Commerce the authority to establish a mandatory screening regime. The bill is currently before the Committee on Commerce, Science, and Transportation. This shift in authority from the Department of Health and Human Services (HHS) to the Department of Commerce reflects a policy move toward regulating synthetic nucleic acids as dual-use technologies through commercial and export-style oversight. If S.3741 passes, the Secretary of Commerce would be required to promulgate these regulations, making the period leading up to 31st December 2027 a critical window for this regulatory outcome.
+
+<strong>Resolution Criteria:</strong> This question resolves as Yes if, between 10th June 2026 and 11:59 PM UTC on 31st December 2027, the United States Department of Commerce publishes a Final Rule or Interim Final Rule in the Federal Register (federalregister.gov) requiring mandatory screening of all synthetic DNA orders against a prohibited sequence database for all U.S.-based providers.
+
+For resolution, the following conditions must be met:
+
+1. The regulation is issued by the United States Department of Commerce (including joint rules with other agencies) and carries the force of law via civil or criminal penalties for non-compliance.
+
+2. The regulation applies to all U.S.-based providers, defined as any entity physically located in the United States that offers custom nucleic acid synthesis services or benchtop synthesis equipment.
+
+3. The mandate covers all synthetic DNA orders, defined to include double-stranded or single-stranded DNA and RNA.
+
+4. The screening must be conducted against a prohibited sequence database, defined as a list including at minimum the Select Agents and Toxins (42 CFR Part 73: <a href="https://www.ecfr.gov/current/title-42/part-73" target="_blank" rel="noopener">https://www.ecfr.gov/current/title-42/part-73</a>) or a successor list of pathogen sequences designated by the Secretary.
+
+5. The mandate is universal and not limited to entities receiving federal funding.
+
+Publication of a Proposed Rule or a purely voluntary guidance document does not suffice for a Yes resolution. The resolution will be determined by the official publication date in the Federal Register.</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>As of 10th June 2026, synthetic DNA screening in the United States remains primarily voluntary, governed by the 2023 HHS Screening Framework Guidance. While an update that took effect on 26th April 2025 mandates screening for researchers receiving federal funding, there is currently no universal mandate for all commercial providers. The Biosecurity Modernization and Innovation Act of 2026 (S.3741), introduced on 29th January 2026 by Senators Tom Cotton and Amy Klobuchar, seeks to change this by granting the United States Department of Commerce the authority to establish a mandatory screening regime. The bill is currently before the Committee on Commerce, Science, and Transportation. This shift in authority from the Department of Health and Human Services (HHS) to the Department of Commerce reflects a policy move toward regulating synthetic nucleic acids as dual-use technologies through commercial and export-style oversight. If S.3741 passes, the Secretary of Commerce would be required to promulgate these regulations, making the period leading up to 31st December 2027 a critical window for this regulatory outcome.</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question resolves as Yes if, between 10th June 2026 and 11:59 PM UTC on 31st December 2027, the United States Department of Commerce publishes a Final Rule or Interim Final Rule in the Federal Register (federalregister.gov) requiring mandatory screening of all synthetic DNA orders against a prohibited sequence database for all U.S.-based providers.
+
+For resolution, the following conditions must be met:
+
+1. The regulation is issued by the United States Department of Commerce (including joint rules with other agencies) and carries the force of law via civil or criminal penalties for non-compliance.
+
+2. The regulation applies to all U.S.-based providers, defined as any entity physically located in the United States that offers custom nucleic acid synthesis services or benchtop synthesis equipment.
+
+3. The mandate covers all synthetic DNA orders, defined to include double-stranded or single-stranded DNA and RNA.
+
+4. The screening must be conducted against a prohibited sequence database, defined as a list including at minimum the Select Agents and Toxins (42 CFR Part 73: <a href="https://www.ecfr.gov/current/title-42/part-73" target="_blank" rel="noopener">https://www.ecfr.gov/current/title-42/part-73</a>) or a successor list of pathogen sequences designated by the Secretary.
+
+5. The mandate is universal and not limited to entities receiving federal funding.
+
+Publication of a Proposed Rule or a purely voluntary guidance document does not suffice for a Yes resolution. The resolution will be determined by the official publication date in the Federal Register.</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> The question is &#x27;real-world&#x27; and tracks a high-impact biosecurity policy. It is well-specified with a clear deadline and verification source. As of June 10, 2026, synthetic DNA screening in the U.S. remains governed primarily by voluntary 2010 HHS guidance. The Biosecurity Modernization and Innovation Act of 2026 (S.3741), which would mandate such screening, was introduced on January 29, 2026, and is currently in the Committee on Commerce, Science, and Transportation <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. The outcome is uncertain but plausible, meeting high-entropy criteria.</p><p><strong>Ambiguity notes:</strong> Calibration: Over-compound with 5 conjunctive success conditions. 3, 5: There is internal tension between requiring coverage of &#x27;benchtop synthesis equipment&#x27; providers (Condition 2) and defining the mandate as covering &#x27;orders&#x27; (Condition 3), as benchtop machine usage does not typically involve sequence &#x27;orders&#x27; in the same way synthesis services do. Fix: Simplify to 2 core success conditions and reconcile the terminology between sequence orders and equipment usage.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> PASS &nbsp; <strong>Edge-case risk:</strong> MEDIUM</p><p>ASSESSMENT: PASS
+
+REVIEW: The question is well-constructed and accurately reflects the legislative and regulatory environment as of 10th June 2026. The existence and status of the Biosecurity Modernization and Innovation Act of 2026 (S.3741) were verified, including its bipartisan introduction and its specific mandate for the Department of Commerce to establish a screening regime <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. The background correctly identifies that current mandates (effective April 2025) are limited to federally funded researchers, a requirement that was preserved by the transition to EO 14292 <a href="https://ehs.ucf.edu/ostp-framework-for-nucleic-acid-synthesis-screening/" target="_blank" rel="noopener">OSTP Framework for Nucleic Acid Synthesis Screening</a> <a href="https://academic.oup.com/jlb/article/13/1/lsag005/8663945" target="_blank" rel="noopener">Biosecurity in the age of synthetic nucleic acids: modernizing the law ...</a>.
+
+The inclusion of single-stranded DNA and RNA in the resolution criteria reflects current industry expectations and the standards set by the 2025 HHS framework update <a href="https://ehs.ucf.edu/ostp-framework-for-nucleic-acid-synthesis-screening/" target="_blank" rel="noopener">OSTP Framework for Nucleic Acid Synthesis Screening</a>. Assigning authority to the Department of Commerce is legally consistent with the text of S.3741, which treats synthetic nucleic acids as dual-use technologies <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>. The resolution window (June 2026 – December 2027) is appropriate given the bill’s requirement for regulations to be promulgated within one year of enactment <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. No significant technical or legal barriers were found that would make the question trivial or unresolvable. A minor discrepancy exists regarding the exact effective date of the 2025 HHS update (some sources cite April 29 <a href="https://ehs.ucf.edu/ostp-framework-for-nucleic-acid-synthesis-screening/" target="_blank" rel="noopener">OSTP Framework for Nucleic Acid Synthesis Screening</a>), but this does not affect the resolution of the future Commerce mandate.
+
+EVIDENCE: <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">https://www.congress.gov/bill/119th-congress/senate-bill/3741/text</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>; <a href="https://ehs.ucf.edu/ostp-framework-for-nucleic-acid-synthesis-screening/" target="_blank" rel="noopener">https://ehs.ucf.edu/ostp-framework-for-nucleic-acid-synthesis-screening/</a> <a href="https://ehs.ucf.edu/ostp-framework-for-nucleic-acid-synthesis-screening/" target="_blank" rel="noopener">OSTP Framework for Nucleic Acid Synthesis Screening</a>; <a href="https://academic.oup.com/jlb/article/13/1/lsag005/8663945" target="_blank" rel="noopener">https://academic.oup.com/jlb/article/13/1/lsag005/8663945</a> <a href="https://academic.oup.com/jlb/article/13/1/lsag005/8663945" target="_blank" rel="noopener">Biosecurity in the age of synthetic nucleic acids: modernizing the law ...</a>; <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new</a> <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>
+
+SUGGESTION: </p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: MEDIUM
+
+SCENARIO: The Department of Commerce issues a Final Rule requiring screening for all DNA orders but limits mandatory RNA screening to sequences longer than 200 base pairs, effectively exempting short oligos. 
+SEVERITY: MEDIUM 
+FIX: Amend condition 3 to state: &quot;The mandate covers all synthetic DNA orders, defined to include double-stranded or single-stranded DNA and RNA, regardless of sequence length.&quot;
+
+SCENARIO: The regulation applies to &quot;fully integrated benchtop synthesizers&quot; but exempts modular synthesis components or kits sold to laboratories that require assembly. 
+SEVERITY: MEDIUM 
+FIX: Modify condition 2 to define benchtop synthesis equipment as &quot;any integrated or modular hardware system specifically designed to automate the assembly of nucleic acids from precursors.&quot;
+
+SCENARIO: The Final Rule establishes a mandatory screening regime where the only specified penalty is the &quot;revocation of synthesis provider certification&quot; (an administrative penalty) rather than a civil or criminal monetary fine <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. 
+SEVERITY: HIGH 
+FIX: Adjust condition 1 to read: &quot;carries the force of law via civil or criminal penalties (including monetary fines, imprisonment, or the revocation/denial of mandatory operating licenses or export privileges).&quot;
+
+SCENARIO: A provider is headquartered in the United States but maintains all physical synthesis facilities and screening operations outside of U.S. territory, leading to a dispute over whether they are &quot;physically located in the United States.&quot; 
+SEVERITY: MEDIUM 
+FIX: Clarify in condition 2 that &quot;U.S.-based providers&quot; includes any entity with a principal place of business, legal incorporation, or sales office in the United States, regardless of the location of the physical synthesis.
+
+SCENARIO: The regulation requires screening against a &quot;pathogen sequence database&quot; maintained by the Secretary that covers broad functional categories of virulence but does not explicitly reference or incorporate the full Select Agents and Toxins list (42 CFR Part 73). 
+SEVERITY: MEDIUM 
+FIX: Update condition 4 to include &quot;a prohibited sequence database designated by the Secretary that includes a majority of Select Agents or follows a functional pathogenicity-based screening approach.&quot;
+
+SCENARIO: The mandate is issued as part of a joint rule with the Department of Health and Human Services (HHS), but the rule specifies that HHS retains all enforcement authority and penalty-imposing power, while Commerce only manages the registry. 
+SEVERITY: MEDIUM 
+FIX: Clarify in condition 1 that joint rules are eligible even if the Department of Commerce is not the primary agency responsible for enforcing the penalties.</p></div></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>Summary
+The probability of the Department of Commerce enacting a mandatory synthetic DNA screening regulation by the end of 2027 is extremely low (5%). For this outcome to occur, two highly constrained and sequential steps must happen in rapid succession. First, Congress must pass legislation granting the Department of Commerce the statutory authority to mandate universal screening with civil and criminal penalties, as the current framework relies on voluntary compliance or conditions tied to federal funding through HHS and OSTP <a href="https://aspr.hhs.gov/S3/Pages/OSTP-Framework-for-Nucleic-Acid-Synthesis-Screening.aspx" target="_blank" rel="noopener">OSTP Framework for Nucleic Acid Synthesis Screening</a> <a href="https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/" target="_blank" rel="noopener">Improving the Safety and Security of Biological Research</a>. Second, the Department of Commerce must publish a Final Rule or Interim Final Rule within an exceptionally tight timeframe. While there is policy momentum for such a mandate, as seen in the Biosecurity Modernization and Innovation Act of 2026 (S.3741) [[PDF] S. 3741 - Congress.gov](<a href="https://www.congress.gov/119/bills/s3741/BILLS-119s3741is.pdf" target="_blank" rel="noopener">https://www.congress.gov/119/bills/s3741/BILLS-119s3741is.pdf</a>), the legislative process is historically slow. As of mid-2026, the bill remains stalled in committee with no hearings scheduled <a href="https://www.quiverquant.com/bills/119/s-3741" target="_blank" rel="noopener">S. 3741: Biosecurity Modernization and Innovation Act of 2026</a>. Furthermore, even if legislation is passed via an end-of-year package like the FY2027 National Defense Authorization Act (NDAA), the Department of Commerce would have at most 12 months to complete a complex regulatory rulemaking process. Administrative sluggishness in this exact policy area is already evident, with other agencies having missed executive deadlines for revising similar, voluntary guidelines by over 13 months <a href="https://aspr.hhs.gov/S3/Pages/OSTP-Framework-for-Nucleic-Acid-Synthesis-Screening.aspx" target="_blank" rel="noopener">OSTP Framework for Nucleic Acid Synthesis Screening</a>. Multiplying the low chance of legislative passage by the low chance of a massive federal agency completing a rule in less than a year results in a highly pessimistic outlook for a mandate materializing before 2028.
+
+Strongest Arguments for Yes
+- There is strong, organized momentum from industry and national security groups advocating for a universal mandate. S.3741 has garnered backing from prominent biosecurity organizations, biotech companies, and technology leaders [[PDF] S. 3741 - Congress.gov](<a href="https://www.congress.gov/119/bills/s3741/BILLS-119s3741is.pdf" target="_blank" rel="noopener">https://www.congress.gov/119/bills/s3741/BILLS-119s3741is.pdf</a>).
+- Bipartisan sponsorship for S.3741 increases the odds of the text being attached to a &quot;must-pass&quot; legislative vehicle. The FY2027 NDAA could serve as an expedient pathway for this legislation <a href="https://manifold.markets/HaukeHillebrandt/will-the-biosecurity-modernization" target="_blank" rel="noopener">Mandatory DNA synthesis screening law in the US by &#x27;27? | Manifold</a>.
+- If S.3741 passes, the text specifically directs the Department of Commerce to establish universal mandates covering benchtop synthesizers and utilizing civil penalties <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a> <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>, perfectly aligning with the required parameters for this regulatory outcome.
+
+Strongest Arguments for No
+- The legislative pipeline is stalled. As of June 2026, S.3741 remains in committee with only a few cosponsors and no scheduled hearings or markups <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a> <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/cosponsors" target="_blank" rel="noopener">Cosponsors - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. Similar legislation in the past, such as the Securing Gene Synthesis Act, failed to pass <a href="https://forum.effectivealtruism.org/posts/AzcgeE8XTkoLP8bJ7/ai-can-already-evade-dna-synthesis-screening-congress-s-new" target="_blank" rel="noopener">AI Can Already Evade DNA Synthesis Screening. Congress&#x27;s New ...</a>.
+- A competing House bill favors a strictly voluntary approach rather than a mandatory regulatory regime, indicating significant congressional friction regarding broad mandates and penalties <a href="https://www.congress.gov/bill/119th-congress/house-bill/3029/all-info" target="_blank" rel="noopener">All Info - H.R.3029 - 119th Congress (2025-2026): Nucleic Acid ...</a>.
+- The bureaucratic timeline is too compressed. A complex, binding rule under the Administrative Procedure Act typically requires 12 to 18 months at minimum. Because the underlying legislation would likely not pass until late 2026, Commerce would be forced into an impossibly tight one-year window to finalize a rule <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>.
+- Historical precedent reveals systemic delays in biosecurity policy; evidence suggests the Office of Science and Technology Policy (OSTP) missed a 90-day deadline to revise its voluntary screening framework by over 13 months <a href="https://aspr.hhs.gov/S3/Pages/OSTP-Framework-for-Nucleic-Acid-Synthesis-Screening.aspx" target="_blank" rel="noopener">OSTP Framework for Nucleic Acid Synthesis Screening</a>.
+
+Key Uncertainties
+- Inclusion in &quot;Must-Pass&quot; Legislation: If S.3741 language is successfully attached to the FY2027 NDAA or a major omnibus appropriations bill in late 2026, the probability of enactment would spike. If it is excluded, the bill would have to proceed through regular order, which essentially guarantees failure within the timeline.
+- A Major Biosecurity Incident: A high-profile biosecurity event, AI-enabled biological threat, or near-miss could drastically alter congressional priorities, forcing rapid legislative passage and granting Commerce emergency rulemaking authority to act immediately.
+- Use of Interim Final Rules (IFR): If legislation passes, the Department of Commerce&#x27;s willingness and legal ability to bypass standard notice-and-comment periods by issuing an IFR would dictate the outcome. If standard procedures are followed, the 2027 deadline will almost certainly be missed.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>High decision-relevance as a real-world regulatory outcome (not a benchmark) that addresses a critical biosecurity crux: shifting DNA screening from voluntary to mandatory to mitigate AI-assisted bioweapon risks.</p></section>
+<section class="qsection" id="fable"><h2>Fable 5 second opinion <span class="badge">Stage 6f</span></h2><p><strong>Pipeline:</strong> <span style="color:#c62828;font-weight:700">5%</span> &rarr; <strong>Fable 5:</strong> <span style="color:#c62828;font-weight:700">3%</span> &nbsp;<span class="badge">AGREE</span></p><p>The question is well-posed: clear resolver (Federal Register Final/Interim Final Rule by Commerce), unambiguous date window, and specific structural criteria (universal scope, force of law, all nucleic acids, designated prohibited-sequence database). The 5% estimate is reasonable, arguably slightly high. A Yes requires two slow sequential steps inside ~18 months: (1) S.3741 (currently stalled in committee, no hearings) becomes law granting Commerce authority, and (2) Commerce completes notice-and-comment rulemaking to a Final or Interim Final Rule. Federal rulemaking on novel dual-use tech routinely takes 1-3+ years after authorization; an Interim Final Rule could shortcut comment periods but remains unlikely on this timeline. The criteria are also stringent — any final rule must cover all providers, benchtop equipment, and both DNA and RNA universally, so even partial action wouldn&#x27;t resolve Yes. I&#x27;d put it nearer 2-4%. Within reasonable range of the pipeline&#x27;s 5%, so I agree.</p></section>
+</div></body></html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Will the Singapore AI Safety Hub (SASH) announce a joint AI safety evaluation or</title>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --accent: #4f46e5;
+    --accent-soft: #e0e7ff;
+    --text: #1f2430;
+    --text-2: #5c6370;
+    --text-3: #8a8f98;
+    --label: #595959;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; padding: 2.5rem 1rem;
+    font-size: 16px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e, #24244a); color: #eee; border-radius: 12px;
+    padding: 1.8rem 2.2rem; margin-bottom: 1.8rem;
+  }
+  .page-header h1 { font-size: 1.6rem; font-weight: 650; letter-spacing: -.015em; margin-bottom: .35rem; }
+  .page-header .subtitle { font-size: .92rem; color: #a0a0b8; margin-bottom: .8rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #c0c0d4;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .2rem .65rem; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sort bar — a labeled button group, mirrors the filter bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: .4rem; margin-bottom: 1.2rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .sort-bar .sort-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .sort-btn {
+    font-size: .78rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .sort-btn:hover { background: #f0f1f4; color: #333; }
+  .sort-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .sort-btn .sort-arrow { font-size: .7rem; line-height: 1; }
+
+  /* Expand / Collapse controls */
+  .expand-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .expand-bar .expand-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .expand-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .expand-btn:hover { background: #f0f1f4; color: #333; }
+  .expand-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .expand-sep {
+    width: 1px; height: 1.2rem; background: #ddd; margin: 0 .15rem;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem;
+    padding: .6rem 1rem; background: var(--card); border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-wrap: wrap;
+  }
+  .filter-bar .filter-label {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--label); font-weight: 600; margin-right: .25rem;
+  }
+  .filter-btn {
+    font-size: .8rem; font-weight: 500; padding: .3rem .7rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text-2); cursor: pointer;
+    transition: all .15s ease; user-select: none;
+  }
+  .filter-btn:hover { background: #f0f1f4; color: #333; }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-btn .filter-count {
+    font-size: .7rem; background: rgba(0,0,0,.08); padding: .05rem .35rem;
+    border-radius: 8px; margin-left: .3rem; font-variant-numeric: tabular-nums;
+  }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,.25); }
+  .q-search {
+    flex: 1; min-width: 10rem; font-size: .85rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--card); color: var(--text);
+  }
+  .q-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  #filter-count-live { margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+  /* Question rows — expandable <details> */
+  .question-list { display: flex; flex-direction: column; gap: .6rem; }
+
+  .q-row {
+    background: var(--card); border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    transition: box-shadow .2s ease, border-color .2s ease;
+    content-visibility: auto; contain-intrinsic-size: auto 54px;
+  }
+  .q-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.09); }
+  /* Lift content-visibility containment whenever the row is interacted with —
+     containment clips the absolutely-positioned tooltips at the row bounds. */
+  .q-row:hover, .q-row:focus-within, .q-row[open] { content-visibility: visible; }
+  .q-row[open] { border-color: #c7cdf7; box-shadow: 0 4px 12px rgba(79,70,229,.08); }
+  .q-row[open] > summary { border-bottom: 1px solid var(--line); }
+  .q-row.filter-hidden, .q-row.search-hidden, .group-hidden { display: none; }
+
+  .q-row > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.2rem;
+    transition: background .15s ease;
+    border-radius: 9px;
+  }
+  .q-row > summary::-webkit-details-marker { display: none; }
+  .q-row > summary:hover { background: #f3f4f8; }
+
+  .q-row > summary:focus-visible,
+  .tab-btn:focus-visible, .expand-btn:focus-visible, .filter-btn:focus-visible,
+  .sort-btn:focus-visible, .section summary:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .q-row > summary:focus-visible { background: #f3f4f8; }
+
+  .q-row > summary .expand-icon {
+    font-size: .55rem; color: var(--text-3); transition: transform .2s ease;
+    flex-shrink: 0; width: .8rem; text-align: center;
+  }
+  .q-row[open] > summary .expand-icon { transform: rotate(90deg); }
+
+  .anchor-link {
+    font-size: .7rem; color: #ccc; cursor: pointer;
+    flex-shrink: 0; width: .9rem; text-align: center; margin-right: .1rem;
+    opacity: 0; transition: opacity .15s ease;
+    background: none; border: 0; padding: 0;
+  }
+  .q-row > summary:hover .anchor-link,
+  .q-row > summary:focus-within .anchor-link { opacity: 1; }
+  .anchor-link:hover { color: var(--accent); }
+  .anchor-link:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 1px; }
+  .anchor-link.copied { color: #10b981; opacity: 1; }
+  @media (hover: none) { .anchor-link { opacity: .6; } }
+
+  .q-prob-badge {
+    font-weight: 700; font-size: 1rem;
+    min-width: 3.6rem; height: 1.9rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0; padding: 0 .45rem;
+    border: 1px solid rgba(0,0,0,.06);
+    font-variant-numeric: tabular-nums;
+  }
+  .q-title {
+    flex: 1; font-size: 1rem; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+  }
+  .q-meta-item {
+    font-size: .72rem; color: var(--text-2); text-align: center;
+    display: flex; flex-direction: column; align-items: center; min-width: 2.5rem;
+  }
+  .q-meta-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .q-meta-value { font-weight: 600; font-size: .82rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+  .imp-pill { padding: .1rem .45rem; border-radius: 4px; font-weight: 700; }
+  .imp-high { background: var(--accent-soft); color: #3730a3; }
+  .imp-med { background: #eef0f6; color: #4b5563; }
+  .imp-low { background: #f3f4f6; color: #9ca3af; }
+
+  .source-badge .q-meta-value {
+    background: #e8eaf6; color: #3949ab; padding: .1rem .4rem;
+    border-radius: 4px; font-size: .68rem;
+  }
+
+  .q-status-badge {
+    font-size: .65rem; padding: .1rem .4rem; border-radius: 10px; font-weight: 600;
+  }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .badge-revised { background: #fff3e0; color: #e65100; }
+  .badge-killed { background: #ffebee; color: #c62828; }
+  .badge-warn { background: #fff8e1; color: #b45309; }
+
+  /* Expanded card content */
+  .q-body { padding: .4rem 1.4rem 1.2rem 1.4rem; }
+
+  /* Score row inside expanded content */
+  .score-row {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    margin: .6rem 0 .8rem; padding: .55rem 1rem;
+    background: var(--bg); border-radius: 8px; font-size: .84rem;
+  }
+  .score-item {
+    display: flex; flex-direction: column; align-items: center; min-width: 3.5rem;
+  }
+  .score-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--label); line-height: 1.1;
+  }
+  .score-value { font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  /* Collapsible inner sections */
+  .section { margin-top: .4rem; }
+  .section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .4rem; padding: .25rem 0;
+  }
+  .section summary::-webkit-details-marker { display: none; }
+  .section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb; transition: transform .15s;
+  }
+  .section[open] summary::before { transform: rotate(90deg); }
+  .section summary h3 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .04em;
+    color: #444; margin: 0; display: flex; align-items: center; gap: .4rem;
+    font-weight: 600;
+  }
+  .section > p, .section > .content {
+    margin-top: .25rem; padding-left: .9rem;
+    font-size: .9rem; color: #444;
+  }
+  .section p { white-space: pre-wrap; word-wrap: break-word; }
+
+  .badge {
+    font-size: .7rem; color: var(--label); background: #f0f1f4; padding: .1rem .4rem;
+    border-radius: 10px; font-weight: 500;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #3730a3; text-decoration: underline; }
+
+  /* Group sub-headers (per source-section groupings) */
+  .group-header {
+    margin: 1rem 0 .4rem; padding: .4rem 1rem; font-size: .88rem; font-weight: 600;
+    color: #3949ab; border-left: 3px solid #3949ab; background: #e8eaf6;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Rendered long-form markdown (deep-research reports, critiques) */
+  .content .md-h { margin: .8rem 0 .3rem; font-weight: 650; color: var(--text); line-height: 1.3; }
+  h4.md-h { font-size: .98rem; }
+  h5.md-h { font-size: .9rem; }
+  h6.md-h { font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; color: var(--text-2); }
+  .content p { margin: .4rem 0; }
+  .content ul, .content ol { margin: .4rem 0 .4rem 1.3rem; }
+  .content li { margin: .15rem 0; }
+  .content blockquote { margin: .5rem 0; padding: .3rem .8rem; border-left: 3px solid var(--line); color: var(--text-2); }
+  .content hr { border: 0; border-top: 1px solid var(--line); margin: .8rem 0; }
+  sup.cite { color: var(--accent); font-size: .7em; font-weight: 600; }
+
+  /* Decomposition */
+  .subq-card {
+    background: var(--bg); border: 1px solid #eaeaef; border-radius: 8px;
+    padding: .65rem .9rem; margin: .35rem 0;
+  }
+  .subq-title { font-size: .84rem; font-weight: 600; color: #333; }
+  .subq-answer { font-size: .84rem; color: #555; margin-top: .25rem; }
+  .prob-comparison {
+    display: flex; gap: .8rem; align-items: center; padding: .4rem 0; font-size: .88rem;
+  }
+  .prob-comparison .arrow { color: #999; font-size: 1.1rem; }
+
+  /* Deep-link target flash */
+  .deeplink-flash {
+    animation: deeplink-ring 1.6s ease-out 1;
+  }
+  @keyframes deeplink-ring {
+    0% { box-shadow: 0 0 0 3px var(--accent); border-color: var(--accent); }
+    100% { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  }
+
+  /* --- Tooltips (CSS-only via data-tooltip) --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+    background: #2a2a2a; color: #f0f0f0; font-size: .7rem; font-weight: 400;
+    padding: .3rem .6rem; border-radius: 5px; line-height: 1.35;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100; max-width: 22rem; white-space: normal; text-transform: none;
+    letter-spacing: normal;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+  [data-tooltip]::before {
+    content: "";
+    position: absolute; bottom: calc(100% + 2px); left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top-color: #2a2a2a;
+    pointer-events: none; opacity: 0; transition: opacity .15s ease .25s;
+    z-index: 100;
+  }
+  [data-tooltip]:hover::before { opacity: 1; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    body { padding: 1rem .25rem; }
+    .container { padding: 0 .5rem; }
+    .page-header { padding: 1.2rem 1.2rem; }
+    .q-row > summary { flex-wrap: wrap; padding: .7rem .8rem; }
+    .q-title { flex: 1 1 12rem; }
+    .q-meta { flex: 1 1 100%; order: 3; flex-wrap: wrap; row-gap: .3rem; justify-content: flex-start; }
+    .q-body { padding: .4rem .8rem 1rem; }
+    [data-tooltip]::after, [data-tooltip]::before { display: none; }
+  }
+
+  .container { max-width: 880px; }
+  .backlink { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
+  .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+         padding: 1rem 1.3rem; margin-bottom: 1.4rem; }
+  .toc h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+            color: var(--label); margin-bottom: .5rem; }
+  .toc ol { margin: 0; padding-left: 1.3rem; }
+  .toc li { margin: .2rem 0; font-size: .92rem; }
+  .qsection { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+              padding: 1rem 1.4rem 1.2rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+  .qsection > h2 { font-size: 1.05rem; font-weight: 650; margin-bottom: .5rem;
+                   display: flex; align-items: center; gap: .5rem; }
+  .qsection .badge { font-weight: 500; }
+  .qsection p { margin: .45rem 0; white-space: pre-wrap; word-wrap: break-word; }
+  .summary-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  .summary-grid .score-item { min-width: 4rem; }
+  .subcard { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+             padding: .6rem .9rem; margin: .5rem 0; }
+
+</style></head><body><div class="container">
+  <a class="backlink" href="../forecasts.html">&larr; Back to all questions</a>
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:.7rem;"><span class="q-prob-badge" style="background:#fbe9e7;color:#e65100">28%</span><h1 style="margin:0;font-size:1.25rem;">Will the Singapore AI Safety Hub (SASH) announce a joint AI safety evaluation or red-teaming project involving both a US-headquartered and a Chinese-headquartered AI lab by December 31, 2027?</h1></div>
+    <div class="page-stats" style="margin-top:.6rem;"><span>Gemini 3 Flash (minimal)</span><span>low (Gemini Flash) effort</span><span>Resolution by 31st December 2027</span></div>
+  </div>
+  <nav class="toc"><h2>Contents</h2><ol><li><a href="#summary">Summary</a></li><li><a href="#proto">Proto-question</a></li><li><a href="#refined">Refined question</a></li><li><a href="#background">Background</a></li><li><a href="#resolution">Resolution criteria</a></li><li><a href="#verification">Verification scores</a></li><li><a href="#review">Adversarial review</a></li><li><a href="#forecast">Forecast rationale</a></li><li><a href="#importance">Importance rationale</a></li><li><a href="#decomp">Decomposition &amp; research</a></li><li><a href="#reconcile">Reconciled forecast</a></li></ol></nav>
+  <section class="qsection" id="summary"><h2>Summary</h2><div class="summary-grid score-row"><div class="score-item"><span class="score-label">Probability</span><span class="score-value" style="color:#e65100">28%</span></div><div class="score-item"><span class="score-label">Importance</span><span class="score-value" style="color:var(--text)">85</span></div><div class="score-item"><span class="score-label">Quality</span><span class="score-value" style="color:var(--text)">86</span></div><div class="score-item"><span class="score-label">Ambiguity</span><span class="score-value" style="color:var(--text)">95</span></div><div class="score-item"><span class="score-label">ITNSSS</span><span class="score-value" style="color:var(--text)">79</span></div><div class="score-item"><span class="score-label">Neglect</span><span class="score-value" style="color:var(--text)">80</span></div><div class="score-item"><span class="score-label">Tract</span><span class="score-value" style="color:var(--text)">75</span></div></div><p><strong>Review status:</strong> PASS</p></section>
+<section class="qsection" id="proto"><h2>Proto-question <span class="badge">Stage 1</span></h2><p>By 31 December 2027, will the Singapore AI Safety Hub (SASH) announce a joint AI safety evaluation or red-teaming project involving both a US-headquartered AI lab (e.g., OpenAI, Anthropic, Google) and a Chinese-headquartered AI lab?</p><p><strong>Why this question?</strong> The paper positions Singapore as a &#x27;neutral bridge&#x27; between the US and China. This question tests the viability of this theory of change by tracking whether Singapore can successfully facilitate technical safety cooperation between the two competing AI superpowers.</p><p><strong>Paper reference:</strong> Section 2: &#x27;Singapore AI Safety Hub... Position Singapore as a situationally aware, technically capable AI governance testbed via joint research projects&#x27;.</p></section>
+<section class="qsection" id="refined"><h2>Refined question <span class="badge">Stage 2</span></h2><p>### <strong>Question Title</strong>
+Will the Singapore AI Safety Hub (SASH) announce a joint AI safety evaluation or red-teaming project involving both a US-headquartered and a Chinese-headquartered AI lab by December 31, 2027?
+
+### <strong>Background</strong>
+Singapore has positioned itself as a neutral hub for global AI governance, aiming to bridge the gap between Western and Eastern approaches to AI safety. Central to this effort are the <strong>Singapore AI Safety Institute (AISI)</strong>, a government-led body under the Infocomm Media Development Authority (IMDA), and the <strong>Singapore AI Safety Hub (SASH)</strong>, which operates as a community and research-focused workspace aimed at fostering technical safety collaborations.
+
+As of early 2026, Singapore has actively signed bilateral and multilateral agreements, including a partnership with the UK AI Safety Institute and participation in the International Network of AI Safety Institutes. In May 2025, Singapore hosted the &quot;International Scientific Exchange on AI Safety,&quot; producing the &quot;Singapore Consensus on Global AI Safety Research Priorities.&quot; This document highlighted the need for sociotechnical safety evaluations and red-teaming to manage risks from Large Language Models (LLMs).
+
+While high-level diplomatic agreements between the US and China have touched on AI safety (e.g., at the 2023 Bletchley Park Summit and bilateral talks in 2024-2025), technical-level cooperation involving labs from both nations remains rare due to geopolitical tensions and export controls. SASH&#x27;s mission is to facilitate these &quot;bottom-up&quot; technical projects. This question tracks whether this &quot;neutral bridge&quot; theory of change results in a specific, public-facing technical project involving major labs from both superpowers.
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>Yes</strong> if, between January 1, 2025, and December 31, 2027, at 23:59 UTC, the Singapore AI Safety Hub (SASH) or the Singapore AI Safety Institute (AISI) officially announces a joint project that meets all the following conditions:
+
+1.  <strong>Joint Project:</strong> The announcement must specify a single collaborative project (e.g., a research paper, a red-teaming exercise, or an evaluation benchmark) where at least one US-headquartered AI lab and at least one Chinese-headquartered AI lab are active participants or contributors.
+2.  <strong>Qualifying Entities:</strong>
+    *   <strong>US-headquartered AI Lab:</strong> A private company or research organization with its global headquarters in the United States that develops frontier AI models (e.g., OpenAI, Anthropic, Google/DeepMind, Meta, Microsoft).
+    *   <strong>Chinese-headquartered AI Lab:</strong> A private company or research organization with its global headquarters in mainland China that develops frontier AI models (e.g., Baidu, Alibaba, Tencent, ByteDance, Moonshot AI, 01.AI, DeepSeek).
+3.  <strong>Technical Focus:</strong> The project must be explicitly defined as an <strong>AI safety evaluation</strong> or <strong>red-teaming</strong> project. 
+    *   <strong>AI Safety Evaluation:</strong> Systematic testing of an AI model&#x27;s capabilities, risks, or alignment with specific safety standards (e.g., NIST AI RMF or UK AISI frameworks).
+    *   <strong>Red-teaming:</strong> Structured adversarial testing where a team simulates &quot;attacks&quot; or &quot;jailbreaks&quot; to identify vulnerabilities or harmful outputs in an AI system.
+4.  <strong>Official Announcement:</strong> The announcement must be published on an official Singapore government or SASH-affiliated website (e.g., <a href="https://www.mddi.gov.sg" target="_blank" rel="noopener">mddi.gov.sg</a>, <a href="https://www.imda.gov.sg" target="_blank" rel="noopener">imda.gov.sg</a>, <a href="https://sgaisi.sg" target="_blank" rel="noopener">sgaisi.sg</a>, or <a href="https://www.aisafety.sg" target="_blank" rel="noopener">aisafety.sg</a>). A formal &quot;intent to collaborate&quot; or a signed Memorandum of Understanding (MoU) is sufficient if it names the specific project and the participating labs.
+
+<strong>Resolution Source:</strong>
+The primary source for resolution will be the Newsroom of the <strong>Ministry of Digital Development and Information (MDDI)</strong> or the official website of the <strong>Singapore AI Safety Institute (AISI)</strong>. If an announcement is reported by credible international news agencies (e.g., Reuters, AP, New York Times) but the official government link is unavailable, those reports may be used if they quote an official Singaporean government spokesperson confirming the joint project.
+
+If no such announcement is made by the deadline, the question resolves as <strong>No</strong>.</p></section>
+<section class="qsection" id="background"><h2>Background</h2><p>Singapore has positioned itself as a neutral hub for global AI governance, aiming to bridge the gap between Western and Eastern approaches to AI safety. Central to this effort are the <strong>Singapore AI Safety Institute (AISI)</strong>, a government-led body under the Infocomm Media Development Authority (IMDA), and the <strong>Singapore AI Safety Hub (SASH)</strong>, which operates as a community and research-focused workspace aimed at fostering technical safety collaborations.
+
+As of early 2026, Singapore has actively signed bilateral and multilateral agreements, including a partnership with the UK AI Safety Institute and participation in the International Network of AI Safety Institutes. In May 2025, Singapore hosted the &quot;International Scientific Exchange on AI Safety,&quot; producing the &quot;Singapore Consensus on Global AI Safety Research Priorities.&quot; This document highlighted the need for sociotechnical safety evaluations and red-teaming to manage risks from Large Language Models (LLMs).
+
+While high-level diplomatic agreements between the US and China have touched on AI safety (e.g., at the 2023 Bletchley Park Summit and bilateral talks in 2024-2025), technical-level cooperation involving labs from both nations remains rare due to geopolitical tensions and export controls. SASH&#x27;s mission is to facilitate these &quot;bottom-up&quot; technical projects. This question tracks whether this &quot;neutral bridge&quot; theory of change results in a specific, public-facing technical project involving major labs from both superpowers.
+
+### <strong>Resolution Criteria</strong>
+This question will resolve as <strong>Yes</strong> if, between January 1, 2025, and December 31, 2027, at 23:59 UTC, the Singapore AI Safety Hub (SASH) or the Singapore AI Safety Institute (AISI) officially announces a joint project that meets all the following conditions:
+
+1.  <strong>Joint Project:</strong> The announcement must specify a single collaborative project (e.g., a research paper, a red-teaming exercise, or an evaluation benchmark) where at least one US-headquartered AI lab and at least one Chinese-headquartered AI lab are active participants or contributors.
+2.  <strong>Qualifying Entities:</strong>
+    *   <strong>US-headquartered AI Lab:</strong> A private company or research organization with its global headquarters in the United States that develops frontier AI models (e.g., OpenAI, Anthropic, Google/DeepMind, Meta, Microsoft).
+    *   <strong>Chinese-headquartered AI Lab:</strong> A private company or research organization with its global headquarters in mainland China that develops frontier AI models (e.g., Baidu, Alibaba, Tencent, ByteDance, Moonshot AI, 01.AI, DeepSeek).
+3.  <strong>Technical Focus:</strong> The project must be explicitly defined as an <strong>AI safety evaluation</strong> or <strong>red-teaming</strong> project. 
+    *   <strong>AI Safety Evaluation:</strong> Systematic testing of an AI model&#x27;s capabilities, risks, or alignment with specific safety standards (e.g., NIST AI RMF or UK AISI frameworks).
+    *   <strong>Red-teaming:</strong> Structured adversarial testing where a team simulates &quot;attacks&quot; or &quot;jailbreaks&quot; to identify vulnerabilities or harmful outputs in an AI system.
+4.  <strong>Official Announcement:</strong> The announcement must be published on an official Singapore government or SASH-affiliated website (e.g., <a href="https://www.mddi.gov.sg" target="_blank" rel="noopener">mddi.gov.sg</a>, <a href="https://www.imda.gov.sg" target="_blank" rel="noopener">imda.gov.sg</a>, <a href="https://sgaisi.sg" target="_blank" rel="noopener">sgaisi.sg</a>, or <a href="https://www.aisafety.sg" target="_blank" rel="noopener">aisafety.sg</a>). A formal &quot;intent to collaborate&quot; or a signed Memorandum of Understanding (MoU) is sufficient if it names the specific project and the participating labs.</p></section>
+<section class="qsection" id="resolution"><h2>Resolution criteria</h2><p>This question will resolve as <strong>Yes</strong> if, between January 1, 2025, and December 31, 2027, at 23:59 UTC, the Singapore AI Safety Hub (SASH) or the Singapore AI Safety Institute (AISI) officially announces a joint project that meets all the following conditions:
+
+1.  <strong>Joint Project:</strong> The announcement must specify a single collaborative project (e.g., a research paper, a red-teaming exercise, or an evaluation benchmark) where at least one US-headquartered AI lab and at least one Chinese-headquartered AI lab are active participants or contributors.
+2.  <strong>Qualifying Entities:</strong>
+    *   <strong>US-headquartered AI Lab:</strong> A private company or research organization with its global headquarters in the United States that develops frontier AI models (e.g., OpenAI, Anthropic, Google/DeepMind, Meta, Microsoft).
+    *   <strong>Chinese-headquartered AI Lab:</strong> A private company or research organization with its global headquarters in mainland China that develops frontier AI models (e.g., Baidu, Alibaba, Tencent, ByteDance, Moonshot AI, 01.AI, DeepSeek).
+3.  <strong>Technical Focus:</strong> The project must be explicitly defined as an <strong>AI safety evaluation</strong> or <strong>red-teaming</strong> project. 
+    *   <strong>AI Safety Evaluation:</strong> Systematic testing of an AI model&#x27;s capabilities, risks, or alignment with specific safety standards (e.g., NIST AI RMF or UK AISI frameworks).
+    *   <strong>Red-teaming:</strong> Structured adversarial testing where a team simulates &quot;attacks&quot; or &quot;jailbreaks&quot; to identify vulnerabilities or harmful outputs in an AI system.
+4.  <strong>Official Announcement:</strong> The announcement must be published on an official Singapore government or SASH-affiliated website (e.g., <a href="https://www.mddi.gov.sg" target="_blank" rel="noopener">mddi.gov.sg</a>, <a href="https://www.imda.gov.sg" target="_blank" rel="noopener">imda.gov.sg</a>, <a href="https://sgaisi.sg" target="_blank" rel="noopener">sgaisi.sg</a>, or <a href="https://www.aisafety.sg" target="_blank" rel="noopener">aisafety.sg</a>). A formal &quot;intent to collaborate&quot; or a signed Memorandum of Understanding (MoU) is sufficient if it names the specific project and the participating labs.</p></section>
+<section class="qsection" id="verification"><h2>Verification scores <span class="badge">Stage 3</span></h2><p><strong>Quality notes:</strong> The question is well-defined and targets a specific, plausible geopolitical role for Singapore as a neutral bridge in AI safety governance. It is non-trivial, as US-China technical cooperation is currently limited, making the outcome genuinely uncertain. Research into Singapore&#x27;s diplomatic efforts (e.g., the &#x27;Singapore Consensus&#x27; and SASH&#x27;s &#x27;togaither&#x27; events) would meaningfully update a forecaster&#x27;s probability. The resolution source (SASH announcements) is likely to be reliable. One minor risk is the definition of &#x27;joint&#x27;—whether it requires a formal tripartite agreement or just simultaneous participation in a SASH-led initiative—but this can be addressed in stage 03 refinement. Overall, it has high entropy and tests a clear theory of change.</p><p><strong>Ambiguity notes:</strong> The question is highly specific and provides clear, objective resolution criteria. Key terms like &#x27;US-headquartered AI lab&#x27; and &#x27;Chinese-headquartered AI lab&#x27; are well-defined with examples. The resolution source is limited to official government or institute websites, which minimizes the risk of interpretation disputes. The requirement for a specific joint project (e.g., a research paper or red-teaming exercise) further clarifies the expected outcome. It is a robust question suitable for a forecasting tournament.</p></section>
+<section class="qsection" id="review"><h2>Adversarial review <span class="badge">Stage 5</span></h2><p><strong>Assessment:</strong> PASS &nbsp; <strong>Edge-case risk:</strong> MEDIUM</p><p>ASSESSMENT: PASS
+
+REVIEW: The question is well-timed and addresses a significant uncertainty in the AI governance landscape. My research confirms that both the Singapore AI Safety Hub (SASH) and the Singapore AI Safety Institute (AISI) are active and distinct entities. SASH operates as a community and research-focused workspace (officially at aisafety.sg), while AISI is the government-led body (sgaisi.sg).
+
+The background correctly identifies the &#x27;Singapore Consensus&#x27; (May 2025) and the &#x27;Singapore AI Safety Red Teaming Challenge&#x27; (published Feb 2025). While Singapore is positioning itself as a neutral bridge, current collaborations have mostly focused on regional Asian labs or Western labs (e.g., through the International Network of AI Safety Institutes). There is no evidence that a joint US-China project meeting these specific &#x27;frontier lab&#x27; criteria has already been announced, making the question non-trivial. 
+
+The resolution criteria are precise, and the resolution sources (MDDI and AISI websites) are currently operational and appropriate. The definition of US and Chinese labs provides sufficient examples to guide resolution without significant ambiguity. The inclusion of &#x27;red-teaming&#x27; and &#x27;evaluations&#x27; aligns with Singapore&#x27;s stated technical priorities. The time horizon (end of 2027) is appropriate given the current pace of international AI diplomacy and the scheduled 2025 AI Action Summit, which has not yet resolved the core uncertainty of deep technical US-China lab collaboration.
+
+EVIDENCE: <a href="https://www.aisafety.sg/," target="_blank" rel="noopener">https://www.aisafety.sg/,</a> <a href="https://sgaisi.sg/," target="_blank" rel="noopener">https://sgaisi.sg/,</a> <a href="https://www.imda.gov.sg/resources/press-releases-factsheets-and-speeches/press-releases/2025/top-scientific-minds-gathered-in-sg-to-advance-ai," target="_blank" rel="noopener">https://www.imda.gov.sg/resources/press-releases-factsheets-and-speeches/press-releases/2025/top-scientific-minds-gathered-in-sg-to-advance-ai,</a> <a href="https://www.scai.gov.sg/2025/scai2025-report/," target="_blank" rel="noopener">https://www.scai.gov.sg/2025/scai2025-report/,</a> <a href="https://www.mddi.gov.sg/newsroom/singapore-announces-new-ai-safety-initiatives/" target="_blank" rel="noopener">https://www.mddi.gov.sg/newsroom/singapore-announces-new-ai-safety-initiatives/</a>
+
+SUGGESTION: </p><div class="subcard"><strong>Edge cases:</strong><p>OVERALL_RISK: MEDIUM
+
+SCENARIO: An official announcement describes a project where a US lab (e.g., OpenAI) and a Chinese lab (e.g., Baidu) both contribute to the same evaluation benchmark but do not interact or share data directly.
+SEVERITY: MEDIUM
+FIX: Add &quot;The announcement must confirm that the labs actively collaborated, rather than independently contributing to a common framework or leaderboard without direct engagement.&quot;
+
+SCENARIO: A US-headquartered lab like Google/DeepMind participates in a red-teaming exercise through its Singapore-based legal entity, leading to a dispute over whether the &#x27;lab&#x27; itself is the participant.
+SEVERITY: LOW
+FIX: Add &quot;Participation by a regional subsidiary or local branch of a qualifying US or Chinese-headquartered lab shall be considered participation by the lab itself.&quot;
+
+SCENARIO: SASH announces a joint project focused on &#x27;AI alignment&#x27; or &#x27;robustness&#x27; which involves systematic testing but does not use the specific terms &#x27;AI safety evaluation&#x27; or &#x27;red-teaming&#x27;.
+SEVERITY: HIGH
+FIX: Add &quot;The project qualifies if its primary activities include systematic capability testing or adversarial probing, even if the specific labels &#x27;safety evaluation&#x27; or &#x27;red-teaming&#x27; are not explicitly used in the title.&quot;
+
+SCENARIO: A project involves a US-headquartered lab and a lab like Moonshot AI, which has significant global operations or is incorporated in a third-party jurisdiction (e.g., Cayman Islands) but is primarily Chinese-operated.
+SEVERITY: MEDIUM
+FIX: Add &quot;A lab is considered Chinese-headquartered if its primary operational base and executive leadership are located in mainland China, regardless of the jurisdiction of incorporation.&quot;
+
+SCENARIO: The announcement names the participating labs and the project but frames it as a &#x27;multi-stakeholder initiative&#x27; with twenty other participants, diluting the &#x27;joint project&#x27; nature.
+SEVERITY: MEDIUM
+FIX: Add &quot;The project qualifies as long as at least one qualifying US lab and one qualifying Chinese lab are named as participants, regardless of the total number of other involved organizations.&quot;</p></div></section>
+<section class="qsection" id="forecast"><h2>Forecast rationale</h2><p>With about 21 months remaining until the December 31, 2027 deadline, the status quo is characterized by a lack of direct, technical AI safety cooperation between US and Chinese frontier labs. While Singapore&#x27;s AI Safety Hub (SASH) provides an excellent neutral venue, structural and geopolitical barriers are immense. The &#x27;dual-use&#x27; nature of red-teaming and safety evaluations conflicts directly with tightening US export controls and political pressure, making US frontier labs extremely hesitant to engage in joint projects that share technical vulnerabilities or model weights with Chinese counterparts. Although SASH might construct a broad, multi-party evaluation benchmark that waters down the collaboration enough to get both sides to participate, a formal joint project specifically focused on red-teaming or safety evaluations remains highly improbable. Given the historical base rate of such US-China technical collaboration being &lt;5%, the geopolitical climate heavily favors a &#x27;No&#x27; outcome.</p></section>
+<section class="qsection" id="importance"><h2>Importance rationale</h2><p>The question tracks a leading indicator for Singapore&#x27;s viability as a &#x27;neutral bridge&#x27; in global AI governance. Facilitating technical cooperation between US and Chinese labs is a critical uncertainty; its resolution would significantly update models on whether middle powers can mitigate US-China AI competition risks. Success would likely shift resource allocation toward similar neutral-ground safety initiatives.</p></section>
+<section class="qsection" id="decomp"><h2>Decomposition &amp; research <span class="badge">Stage 6b</span></h2><p><strong>Research-informed re-forecast:</strong> <span style="color:#ef6c00;font-weight:700">42%</span></p><div class="subcard"><strong>SQ1: What legal and regulatory frameworks or &#x27;safe harbor&#x27; mechanisms exist in Singapore to facilitate technical AI safety collaboration between U.S. and Chinese AI labs?</strong><p>Singapore does not currently possess a single, codified &#x27;safe harbor&#x27; law specifically exempting international AI labs from liability during joint red-teaming. Instead, it utilizes a combination of voluntary governance frameworks—such as the <strong>Model AI Governance Framework for Generative AI (May 2024)</strong> and the <strong>Model AI Governance Framework for Agentic AI (January 2026)</strong>—and regulatory sandboxes like the <strong>Global AI Assurance Sandbox (2025)</strong> to facilitate collaboration. For U.S.-China collaboration, the most significant legal hurdles are the <strong>Strategic Goods (Control) Act (SGCA)</strong>, which regulates the transfer of AI technology, and the extraterritorial reach of <strong>U.S. BIS export controls</strong> on advanced computing, which were tightened in 2025 and 2026. While the <strong>Personal Data Protection Act (PDPA)</strong> offers a &#x27;Research Exemption&#x27; for data use, joint projects remain subject to rigorous export control scrutiny and the evolving cross-border data transfer rules established during the <strong>China-Singapore Digital Policy Dialogue (June 2024)</strong>. [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>)</p><p>Singapore&#x27;s legal approach to AI safety is characterized by &#x27;soft&#x27; law frameworks and voluntary standards rather than prescriptive legislative mandates. The <strong>Model AI Governance Framework for Generative AI (May 2024)</strong> and the <strong>Model AI Governance Framework for Agentic AI (January 2026)</strong> serve as the primary guidance documents for labs operating in Singapore. These frameworks emphasize nine dimensions of AI safety, including incident reporting and technical testing, but do not provide a &#x27;safe harbor&#x27; in the sense of a legal exemption from liability for red-teaming. Instead, they provide a structured environment for &#x27;trust&#x27; between developers and regulators.
+
+Specific &#x27;safe harbor&#x27; concepts in Singapore are often discussed in the context of:
+1.  <strong>Regulatory Sandboxes:</strong> The <strong>Global AI Assurance Sandbox</strong>, launched in early 2025, allows companies to test AI systems (including agentic AI) in a controlled environment to address risks like data leakage. While this facilitates collaboration, it does not explicitly exempt labs from the extraterritorial reach of foreign laws.
+2.  <strong>Strategic Goods (Control) Act (SGCA):</strong> This is the primary legal mechanism through which Singapore manages the transfer of &#x27;strategic technology,&#x27; which includes advanced AI-related hardware and, increasingly, model weights and intangible technology transfers. Any project involving Chinese labs must navigate the SGCA to ensure it does not violate Singapore&#x27;s own controls or inadvertently trigger U.S. export control violations for U.S. partners.
+3.  <strong>U.S. Export Controls:</strong> The <strong>U.S. Bureau of Industry and Security (BIS)</strong> regulations, particularly the revisions in late 2025 and January 2026, impose strict licensing requirements on advanced computing and AI chips destined for China. Singapore-based labs collaborating with Chinese entities are under heightened scrutiny. The U.S. and Singapore signaled more robust export control enforcement in April 2025, specifically to prevent circumvention through Singaporean hubs.
+4.  <strong>Chinese Law Interoperability:</strong> Collaboration with Chinese labs is further complicated by China&#x27;s <strong>Data Security Law</strong> and <strong>Personal Information Protection Law</strong>, which regulate the cross-border transfer of data. The <strong>China-Singapore Digital Policy Dialogue (June 2024)</strong> established a working group to harmonize these data transfer rules, but a definitive &#x27;safe harbor&#x27; for joint AI safety research has not yet been codified into law.
+5.  <strong>Personal Data Protection Act (PDPA):</strong> The PDPA includes a &#x27;Research Exemption&#x27; that allows for the collection and use of personal data without consent for certain research purposes, provided the results are not used to make decisions about the individuals and the research cannot be reasonably accomplished without the data. This is often cited as a facilitator for AI training and evaluation.
+
+While the <strong>Singapore Consensus on Global AI Safety Research Priorities (May 2025)</strong> outlines shared research goals, it remains a policy document without the force of law to provide legal safe harbors for labs. [[PDF] State-of-AI-Safety-in-China-2025.pdf - Concordia AI](<a href="https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf" target="_blank" rel="noopener">https://concordia-ai.com/wp-content/uploads/2025/07/State-of-AI-Safety-in-China-2025.pdf</a>)</p></div><div class="subcard"><strong>SQ2: Which major U.S. and Chinese AI labs have participated in technical safety activities led by the Singapore AI Safety Institute (AISI) or SASH since their inception?</strong><p>Since May 2024, Singapore has established itself as a critical neutral venue for technical AI safety collaboration between US and Chinese entities. Major US labs, including <strong>OpenAI, Anthropic, and Google DeepMind</strong>, and Chinese institutions such as the <strong>Shanghai AI Laboratory and Alibaba</strong>, have participated in technical activities led by the <strong>Singapore AI Safety Institute (AISI)</strong> and the <strong>Singapore AI Safety Hub (SASH)</strong>. Key milestones include the <strong>International Scientific Exchange on AI Safety (April 2025)</strong>, which produced the <strong>Singapore Consensus on Global AI Safety Research Priorities</strong>, a document with input from both US and Chinese experts. Additionally, the <strong>Singapore AI Safety Red Teaming Challenge (2024-2026)</strong> and the launch of the <strong>Project Moonshot</strong> testing toolkit have provided platforms for these labs to engage in model evaluation and benchmarking. While US labs have more formal public ties to the AISI network, Chinese labs have consistently engaged through scientific exchanges and regional research partnerships (e.g., Alibaba-NTU), creating a baseline of cooperation in shared safety benchmarks and red-teaming methodologies.</p><p>The Singapore AI Safety Institute (AISI) and the Singapore AI Safety Hub (SASH) have successfully engaged major US and Chinese AI labs in technical and scientific safety activities since their inception.
+
+### Participation by US-Headquartered Labs:
+*   <strong>OpenAI</strong>: Participated in the <strong>International Scientific Exchange on AI Safety (SCAI)</strong> in April 2025, contributing to the development of the <strong>Singapore Consensus on Global AI Safety Research Priorities</strong> released in May 2025. OpenAI is also a noted collaborator with the international network of AISIs, which Singapore&#x27;s AISI joined in 2024.
+*   <strong>Google DeepMind</strong>: Participated in the April 2025 SCAI conference and the resulting Singapore Consensus. Additionally, Google DeepMind expanded its research presence in Singapore with a new lab in early 2025, specifically focusing on advancing frontier AI safety in the Asia-Pacific region.
+*   <strong>Anthropic</strong>: Actively involved in the April 2025 SCAI scientific exchange and is a signatory/contributor to the research priorities outlined in the Singapore Consensus.
+*   <strong>Meta</strong>: Participated in the SCAI exchange in April 2025 and technical discussions surrounding model evaluation.
+
+### Participation by Chinese-Headquartered Labs:
+*   <strong>Shanghai AI Laboratory</strong>: Represented at high-level technical dialogues, including the <strong>International Dialogues on AI Safety (IDAIS)</strong> where Executive Director Kwok-Yan Lam of Singapore&#x27;s AISI participated alongside Shanghai AI Lab representatives.
+*   <strong>Alibaba</strong>: Involved through its <strong>Alibaba-NTU Singapore Joint Research Institute</strong> and has participated in regional AI safety dialogues. Alibaba&#x27;s models (Qwen series) were subjects of evaluation discussions during the 2025-2026 period.
+*   <strong>Moonshot AI and Zhipu AI</strong>: While specific participation in red-teaming challenges is suggested by their inclusion in regional safety benchmarks, their primary involvement has been through scientific exchange forums like SCAI (April 2025) and the broader &quot;AI Tigers&quot; dialogue in Southeast Asia.
+
+### Specific Technical Activities:
+*   <strong>Singapore AI Safety Red Teaming Challenge (Late 2024 - 2026)</strong>: This initiative, led by the Infocomm Media Development Authority (IMDA) and supported by AISI, involved multicultural and multilingual red-teaming. While individual lab participation is often protected by confidentiality, the challenge utilized models from major global providers to test for regional harms (e.g., linguistic and cultural bias).
+*   <strong>Singapore Consensus on Global AI Safety Research Priorities (May 2025)</strong>: This was a landmark technical document co-authored or reviewed by experts from OpenAI, Anthropic, Google DeepMind, and Chinese academic/lab counterparts (e.g., BAAI, Shanghai AI Lab), establishing shared priorities for model evaluation and risk mitigation.
+*   <strong>Project Moonshot (Launched May 2024)</strong>: An open-source testing toolkit for LLM safety that has been used by various labs to benchmark their models against safety standards developed in Singapore.
+
+### Institutional Roles:
+*   <strong>Singapore AI Safety Institute (AISI)</strong>: Focuses on the &quot;science of AI safety,&quot; including technical evaluations, benchmarks, and national research.
+*   <strong>Singapore AI Safety Hub (SASH)</strong>: Operates more as a community and technical upskilling hub, hosting &quot;ML4Good&quot; bootcamps (September 2025) and &quot;Technical Alignment&quot; programs (TARA) that include participants from various AI labs and academic institutions to foster a local ecosystem of safety researchers.
+
+All activities listed occurred between May 2024 and March 2026, establishing a strong precedent for Singapore as a neutral ground for US-China technical cooperation on AI safety.</p></div></section>
+<section class="qsection" id="reconcile"><h2>Reconciled forecast <span class="badge">Stage 6d</span></h2><p>Bottom-up 33% &rarr; Dep-adj 30% &rarr; Struct-adj 30% &rarr; Holistic 25% &rarr; Final 28%</p><p>The bottom-up estimate of 33% (calculated as 0.15 * 0.70 + 0.22) is slightly higher than the holistic estimate of 25%. The dependency adjustment accounts for the fact that Pathway A in C2 (open-source) is somewhat redundant with C1; if a formal safe harbor (C1) exists, labs are less likely to rely solely on open-source workarounds to claim a &#x27;joint project.&#x27; The holistic estimate is lower because it more heavily weights the extreme geopolitical friction and the low historical base rate of formal, named joint technical projects between US and Chinese frontier labs, even in neutral territory. The decomposition helps by identifying that &#x27;safety&#x27; is a unique niche where low-level technical exchange already exists (Singapore Consensus), but the holistic view remains cautious about a &#x27;formal announcement&#x27; of a joint project given the risks of domestic blowback in both the US and China. Because the estimates are within 10 points (30% and 25%), I have averaged them.</p></section>
+</div></body></html>
