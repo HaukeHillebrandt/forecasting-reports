@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proto-Question Quality Filter &mdash; Offensive Cybersecurity Time Horizons (Lyptus Research)</title>
+<style>  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f7f8fa; color: #2c2c2c; line-height: 1.65; padding: 2.5rem 1.5rem;
+  }
+  .container { max-width: 54rem; margin: 0 auto; }
+
+  /* --- Header --- */
+  .page-header {
+    background: #1a1a2e; color: #eee; border-radius: 12px;
+    padding: 2rem 2.5rem; margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(26,26,46,.18);
+  }
+  .page-header h1 { font-size: 1.35rem; font-weight: 600; margin-bottom: .4rem; letter-spacing: -.01em; }
+  .page-header .subtitle { font-size: .88rem; color: #a0a0b8; margin-bottom: .75rem; }
+  .page-header .page-stats {
+    display: flex; flex-wrap: wrap; gap: .6rem; font-size: .82rem; color: #8888a0;
+  }
+  .page-header .page-stats span {
+    background: rgba(255,255,255,.08); padding: .25rem .7rem; border-radius: 6px;
+  }
+
+  /* --- Sort controls --- */
+  .sort-bar {
+    display: flex; align-items: center; gap: .75rem;
+    margin-bottom: 1.5rem; font-size: .82rem; color: #888;
+  }
+  .sort-bar span { font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+  .sort-btn {
+    appearance: none; border: none; cursor: pointer;
+    background: #fff; color: #555; font-size: .8rem; font-weight: 500;
+    padding: .4rem .9rem; border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    transition: box-shadow .15s, color .15s, background .15s;
+  }
+  .sort-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); color: #1a1a2e; }
+  .sort-btn.active { background: #1a1a2e; color: #fff; box-shadow: 0 2px 8px rgba(26,26,46,.2); }
+
+  /* --- Question list (expandable details) --- */
+  .question-list { display: flex; flex-direction: column; gap: .75rem; }
+
+  .q-item {
+    background: #fff; border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.05);
+    transition: box-shadow .2s ease, transform .2s ease;
+    overflow: hidden;
+  }
+  .q-item:hover { box-shadow: 0 3px 14px rgba(0,0,0,.08); }
+  .q-item[open] { box-shadow: 0 4px 20px rgba(0,0,0,.09); }
+
+  .q-item summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .75rem;
+    padding: 1rem 1.5rem;
+    transition: background .15s;
+  }
+  .q-item summary::-webkit-details-marker { display: none; }
+  .q-item summary:hover { background: #fafbfd; }
+
+  .q-item summary .chevron {
+    flex-shrink: 0; width: 1rem; text-align: center;
+    font-size: .6rem; color: #b0b0b0;
+    transition: transform .2s ease;
+  }
+  .q-item[open] summary .chevron { transform: rotate(90deg); }
+
+  .q-score-badge {
+    flex-shrink: 0; font-size: .82rem; font-weight: 700;
+    min-width: 2.6rem; text-align: center;
+    padding: .2rem .5rem; border-radius: 6px;
+  }
+  .q-summary-text {
+    flex: 1; font-size: .92rem; font-weight: 500; color: #2c2c2c;
+    line-height: 1.45;
+  }
+  .badge {
+    flex-shrink: 0; font-size: .68rem; font-weight: 600;
+    padding: .2rem .55rem; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
+  .badge-selected { background: #e8f5e9; color: #2e7d32; }
+  .badge-filtered { background: #f0f0f0; color: #999; }
+
+  /* --- Expanded content --- */
+  .q-body { padding: .25rem 1.5rem 1.5rem 3.85rem; }
+
+  .score-row {
+    display: flex; gap: 1.5rem; margin: .5rem 0 1rem 0;
+    padding: .65rem 1rem; background: #f8f9fc; border-radius: 8px;
+    font-size: .84rem;
+  }
+  .score-item { display: flex; flex-direction: column; align-items: center; min-width: 4.5rem; }
+  .score-label {
+    position: relative;
+    font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; color: #999;
+    cursor: default;
+  }
+  .score-value { font-weight: 700; font-size: .95rem; margin-top: .1rem; }
+
+  .q-body p {
+    font-size: .9rem; line-height: 1.65; color: #444;
+    white-space: pre-wrap; word-wrap: break-word;
+    margin-bottom: .6rem;
+  }
+  .q-body p strong { color: #333; }
+
+  /* Collapsible sub-section inside expanded body */
+  .sub-section { margin-top: .5rem; }
+  .sub-section summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; gap: .35rem;
+    padding: .25rem 0; font-size: .8rem; text-transform: uppercase;
+    letter-spacing: .04em; color: #999; font-weight: 500;
+  }
+  .sub-section summary::-webkit-details-marker { display: none; }
+  .sub-section summary::before {
+    content: "\25B6"; font-size: .45rem; color: #bbb;
+    transition: transform .15s ease;
+  }
+  .sub-section[open] summary::before { transform: rotate(90deg); }
+  .sub-section > p { margin-top: .25rem; padding-left: .8rem; }
+
+  /* --- Tooltips --- */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+    background: #1a1a2e; color: #e8e8f0; font-size: .7rem; font-weight: 400;
+    text-transform: none; letter-spacing: normal;
+    padding: .35rem .65rem; border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity .15s ease;
+    z-index: 10;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+
+  a { color: #1565c0; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style></head><body><div class="container">
+  <div class="page-header">
+    <h1>Stage 02b: Proto-Question Quality Filter</h1>
+    <div class="subtitle">Offensive Cybersecurity Time Horizons (Lyptus Research)</div>
+    <div class="page-stats">
+      <span>14 total</span>
+      <span>5 selected (top 5)</span>
+      <span>Cutoff score: 85</span>
+      <span>Project: lyptus_cyber_horizons</span>
+    </div>
+  </div>
+
+  <div class="sort-bar">
+    <span>Sort by</span>
+    <button class="sort-btn active" data-sort="quality" onclick="sortBy('quality')">Quality Score</button>
+    <button class="sort-btn" data-sort="status" onclick="sortBy('status')">Status (selected first)</button>
+  </div>
+
+  <div class="question-list" id="question-list">
+    <details class="q-item" id="q-0" data-quality="88.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the Cybersecurity and Infrastructure Security Agency (CISA) or the UK National Cyber Security Centre (NCSC) publish a public report documenting at least one &quot;fully autonomous end-to-end&quot; cyberattack attributed to an AI agent by December 31, 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The 2026 International AI Safety Report (cited in the paper) states that &#x27;fully autonomous end-to-end attacks have not been reported&#x27; as of early 2026. This question tracks the transition from tactical AI subtask capability (P50 horizons) to real-world strategic capability. Fallback: Annual threat reports from Mandiant (Google Cloud) or CrowdStrike documenting a similar incident.</p>
+        <p><strong>Paper reference:</strong> What these results measure / 2026 International AI Safety Report</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. This question tracks a significant strategic capability shift. The current state-of-the-art (SOTA) as of the 2026 International AI Safety Report indicates that while AI agents can automate high percentages of subtasks like vulnerability discovery (e.g., 77% in some benchmarks), they cannot yet execute end-to-end attacks autonomously <a href="https://internationalaisafetyreport.org/publication/international-ai-safety-report-2026" target="_blank" rel="noopener">International AI Safety Report 2026</a> [[PDF] International AI Safety Report 2026 - arXiv](<a href="https://arxiv.org/pdf/2602.21012" target="_blank" rel="noopener">https://arxiv.org/pdf/2602.21012</a>). The resolution criteria are clear, leveraging authoritative public agencies (CISA/NCSC). Strengths: High decision relevance and clear resolution path. Risks: Attribution in public reports can sometimes be delayed or hedged, though the agencies named typically provide definitive assessments for major shifts in threat actor capabilities.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-1" data-quality="88.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will a treaty or international agreement involving at least five of the G7 nations be signed by December 31, 2027, that establishes a binding prohibition on the use of AI for autonomous offensive cyber-operations against critical civilian infrastructure?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The rapid scaling of offensive AI capabilities described in the paper has led to calls for international &#x27;red-lines&#x27;. Following the Bletchley and Seoul declarations, a binding treaty would be the next step in global governance. This forecast tracks the move from voluntary norms to binding international law. Fallback source: United Nations Office for Disarmament Affairs (UNODA) Treaty Database.</p>
+        <p><strong>Paper reference:</strong> Section 5: Trendline Functional Form / Discussion - Projections of capability growth and systemic risk.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. This is a high-quality geopolitical question addressing the transition from voluntary norms to binding international law. It is difficult and high-entropy, as current international consensus is limited to non-binding declarations like the 2024 REAIM &#x27;Blueprint for Action&#x27; and the Bletchley/Seoul declarations. Current SOTA: No binding treaty prohibiting AI in cyber-operations exists; discussions remain in the &#x27;norms-building&#x27; phase at the UN GGE and OEWG levels. The specific threshold (5 of 7 G7 nations) provides a clear, resolvable metric.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-2" data-quality="88.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">88</span><span class="q-summary-text">Will the United States Department of Commerce enact a federal regulation requiring mandatory screening of all synthetic DNA orders against a prohibited sequence database for all U.S.-based providers by December 31, 2027?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">88</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper notes that AI reduces the &#x27;cold-start&#x27; time for complex offensive operations, including target reconnaissance. Legislative efforts to mandate DNA screening aim to preserve the high barriers to bioweapon creation that AI threatens to lower. As of June 10, 2026, screening is largely voluntary, though the bipartisan Biosecurity Modernization and Innovation Act (S.3741) was introduced in mid-2026 to mandate these rules [888984]. Fallback source: Federal Register (15 CFR).</p>
+        <p><strong>Paper reference:</strong> Section: Summary; Missing reconnaissance and asset discovery</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question is &#x27;real-world&#x27; and tracks a high-impact biosecurity policy. It is well-specified with a clear deadline and verification source. As of June 10, 2026, synthetic DNA screening in the U.S. remains governed primarily by voluntary 2010 HHS guidance. The Biosecurity Modernization and Innovation Act of 2026 (S.3741), which would mandate such screening, was introduced on January 29, 2026, and is currently in the Committee on Commerce, Science, and Transportation <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/text" target="_blank" rel="noopener">S.3741 - Biosecurity Modernization and Innovation Act of 2026 ...</a>. The outcome is uncertain but plausible, meeting high-entropy criteria.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-3" data-quality="85.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the United States government enact a federal law requiring all domestic providers of synthetic nucleic acids to screen every order for sequences of concern?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> As of June 10, 2026, DNA synthesis screening remains largely voluntary under current frameworks [59ac9d]. The Biosecurity Modernization and Innovation Act of 2026 (S.3741), introduced in January 2026, aims to mandate such screening to mitigate AI-enabled biological risks [c40810]. The primary source is Congress.gov; the fallback is the Federal Register.</p>
+        <p><strong>Paper reference:</strong> Lyptus Research Section 2 (Introduction), Context: &quot;The 2026 International AI Safety Report identifies cybersecurity as the domain where evidence of real-world harm from AI is now strongest&quot; [6f106e].</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. This question tracks a significant policy shift from voluntary to mandatory biosecurity screening. It is high entropy as legislative outcomes are uncertain, and it is easily resolvable via public records. SOTA: DNA screening is currently voluntary under the 2023 OSTP Framework; the Biosecurity Modernization and Innovation Act (S.3741) was introduced on January 29, 2026, and remains in committee as of June 2026 <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-4" data-quality="85.00" data-status="0">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the European Commission designate at least 5 General-Purpose AI (GPAI) models as presenting &#x27;systemic risk&#x27; under Article 51 of the EU AI Act?</span><span class="badge badge-selected" data-tooltip="Advancing to refinement">SELECTED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-selected">SELECTED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper evaluates several frontier models (e.g., GPT-5, Opus 4) that push the boundaries of capability [c37152]. As of June 10, 2026, the EU AI Act&#x27;s obligations for GPAI models are in effect, but zero (0) models have been officially designated as &#x27;systemic risk&#x27; under the Article 51 criteria (typically &gt;10^25 FLOPs) [4ecef5]. Primary source: The EU AI Office (official model registry). Fallback: The Official Journal of the European Union.</p>
+        <p><strong>Paper reference:</strong> Section 6: Models / Frontier releases</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. The question tracks a clear regulatory milestone under Article 51 of the EU AI Act. As of June 10, 2026, zero (0) models have been officially designated as presenting systemic risk <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a>. However, at least 30 models (including Llama 3.1 405B, GPT-4, and Claude 3 Opus) are estimated to have been trained with compute exceeding the 10^25 FLOP presumption threshold <a href="https://epoch.ai/data-insights/models-over-1e25-flop" target="_blank" rel="noopener">Over 30 AI models have been trained at the scale of GPT-4 - Epoch AI</a>. The designation of 5 models is a non-trivial but plausible administrative outcome, making it high entropy. Resolvable via the EU AI Office&#x27;s model registry <a href="https://artificialintelligenceact.eu/article/51/" target="_blank" rel="noopener">Article 51: Classification of General-Purpose AI Models ... - EU AI Act</a>.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-5" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the US Department of Commerce&#x27;s Bureau of Industry and Security (BIS) publish a Final Rule in the Federal Register requiring infrastructure-as-a-service (IaaS) providers to report on foreign training of AI models exceeding 10^26 FLOPs?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (85)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper emphasizes that high reasoning effort and token budgets (2M tokens) are critical for evaluating frontier models [c37152]. Governance efforts like EO 14110 have initiated reporting requirements for high-compute models, but as of June 10, 2026, the specific threshold-based Final Rule for IaaS providers is still in the implementation phase [4ecef5]. Primary source: The Federal Register. Fallback: BIS.doc.gov (Bureau of Industry and Security announcements).</p>
+        <p><strong>Paper reference:</strong> Section 6: Model evaluation / Token budgets and reasoning effort</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>The question is &#x27;real-world&#x27; and tracks a specific regulatory milestone. It is difficult and high-entropy, as the finalization of the IaaS reporting rule (proposed in Jan 2024, 89 FR 5698) has been subject to administrative changes; search results indicate that while related &#x27;AI Diffusion&#x27; interim rules were issued in Jan 2025, they faced rescission or revision in early 2026. As of June 10, 2026, the specific &#x27;Final Rule&#x27; for IaaS reporting at the 10^26 FLOPs threshold remains unpublished in the Federal Register <a href="https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion" target="_blank" rel="noopener">Framework for Artificial Intelligence Diffusion</a> <a href="https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities" target="_blank" rel="noopener">Revision to License Review Policy for Advanced Computing ...</a>. The threshold of 10^26 FLOPs is the current regulatory SOTA established by EO 14110.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-6" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the European Commission or an EU Member State national authority issue at least one formal fine for a violation of the Article 15 &quot;Cybersecurity&quot; requirements by a high-risk AI system by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (85)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The EU AI Act&#x27;s enforcement for high-risk systems begins August 2, 2026, including Article 15 requirements for accuracy, robustness, and cybersecurity. This tracks the &#x27;governance&#x27; and &#x27;enforcement&#x27; of AI security standards mentioned in the paper. Fallback: Official Journal of the European Union.</p>
+        <p><strong>Paper reference:</strong> Open-source models / EU AI Act enforcement</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. This question tracks the enforcement of specific cybersecurity requirements (Article 15) for high-risk AI systems under the EU AI Act. Enforcement for high-risk systems is slated to begin on August 2, 2026, providing a roughly 17-month window for the first fine to be issued by the December 2027 deadline. Current SOTA for fines is zero, as the relevant provisions are not yet applicable. The question is well-defined, decision-relevant, and avoids benchmark caps. The 17-month enforcement window makes the question sufficiently difficult without being near-impossible, as seen in GDPR enforcement history where major fines often appeared within the first 12-24 months.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-7" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the Biosecurity Modernization and Innovation Act of 2026 (S.3741) be signed into law?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (85)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Current value check: S.3741 was introduced in the 119th Congress to mandate DNA synthesis screening, addressing the &#x27;biosafety&#x27; benchmark coverage gap identified in the paper [b9aa54]. Resolution paths: Congress.gov bill status or a Presidential signing statement. Fallback source: Federal Register notice of enactment.</p>
+        <p><strong>Paper reference:</strong> Section 9: Benchmark coverage (Biosafety)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This is a real-world question tracking the legislative progress of the Biosecurity Modernization and Innovation Act (S.3741). The bill was introduced on January 29, 2026, by Senator Tom Cotton and is currently referred to the Senate Committee on Commerce, Science, and Transportation <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. It addresses a specific &#x27;biosafety&#x27; gap by mandating DNA synthesis screening. The question is highly resolvable via official legislative trackers like Congress.gov <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3741/all-info" target="_blank" rel="noopener">All Info - S.3741 - 119th Congress (2025-2026): Biosecurity ...</a>. It has high entropy, as evidenced by a 22% probability on Manifold Markets, indicating it is a difficult and contested forecast. It avoids all caps and penalties.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-8" data-quality="85.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">85</span><span class="q-summary-text">Will the Federal Trade Commission (FTC) announce a formal enforcement action or settlement against a U.S. corporation specifically for a data breach caused by an &quot;unauthorized action&quot; of an internal AI agent by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (85)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">85</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper discusses the risks of agentic AI environments and the potential for unauthorized tool use. As of June 10, 2026, there are documented incidents of AI agent &#x27;control failure&#x27; and internal data exposure (e.g., the Meta AI agent incident), but no formal regulatory enforcement actions have been finalized [b31cc1]. Fallback source: U.S. Department of Justice (DOJ) Press Room.</p>
+        <p><strong>Paper reference:</strong> Section: Human Evaluation Setup; Unauthorized agent actions</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. This question targets a specific regulatory milestone (FTC enforcement) responding to a known failure mode. The rationale is well-supported by the documented &#x27;Meta AI agent incident&#x27; in March 2026, which involved a &#x27;confused deputy&#x27; vulnerability and unauthorized internal data exposure <a href="https://aviatrix.ai/threat-research-center/meta-ai-agent-confused-deputy-2026/" target="_blank" rel="noopener">Meta AI Agent Confused Deputy Incident 2026 - Aviatrix</a> [[PDF] Owner-Harm: A Missing Threat Model for AI Agent Safety - arXiv](<a href="https://arxiv.org/pdf/2604.18658" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.18658</a>). As of June 10, 2026, no formal enforcement actions have been finalized for this or similar incidents [[PDF] Owner-Harm: A Missing Threat Model for AI Agent Safety - arXiv](<a href="https://arxiv.org/pdf/2604.18658" target="_blank" rel="noopener">https://arxiv.org/pdf/2604.18658</a>). Strengths: Grounded in recent precedent; high decision relevance for corporate AI governance. Risks: Legal processes often extend beyond an 18-month window, which might make the 2027 deadline tight for a &#x27;finalized&#x27; settlement, though the question includes &#x27;announcing&#x27; an action.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-9" data-quality="82.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">82</span><span class="q-summary-text">Will the U.S. Department of Defense (DoD) award a contract or project funding of at least $100 million for the deployment of an autonomous AI-driven cybersecurity defense system specifically for the NIPRNet or SIPRNet by December 31, 2027?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (85)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">82</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> The paper notes that AI performance is beginning to be anchored to professional standards. Following DARPA&#x27;s AIxCC (concluded in 2025), a $100 million procurement contract would signal the first large-scale adoption of autonomous AI defense by a major state actor. Fallback source: SAM.gov (System for Award Management) contract awards.</p>
+        <p><strong>Paper reference:</strong> Section 5: Study completions only / Expert estimation effort - Performance vs. professional standards.</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. This question monitors the adoption of autonomous AI defense by the Department of Defense. It follows DARPA&#x27;s AIxCC competition, which concluded in August 2025 <a href="https://aicyberchallenge.com/overview/" target="_blank" rel="noopener">Overview – aicyberchallenge.com</a>. While AIxCC demonstrated the capability of autonomous systems to secure code, a $100 million procurement contract would represent a significant step toward large-scale deployment. The threshold is high but decision-relevant for tracking military AI integration. Resolvable via SAM.gov.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-10" data-quality="80.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#2e7d32;background:#e8f5e9" data-tooltip="Quality score (0-100)">80</span><span class="q-summary-text">By 31st December 2027, will the United States Federal Government enact a mandate requiring all AI developers training models with compute exceeding 10^26 FLOPs to report offensive cybersecurity red-teaming results to the Department of Commerce?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (85)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#2e7d32">80</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Current reporting requirements are based on Executive Orders; this question tracks the formalization of such requirements into enacted federal law or final agency rules by the end of 2027. Fallback source: The Federal Register.</p>
+        <p><strong>Paper reference:</strong> [23] H. Toner, “Nonproliferation is the wrong approach to AI misuse.”</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>This real-world question tracks the formalization of AI reporting requirements into federal law or final agency rules. The 10^26 FLOPs threshold was a key feature of the Biden-era Executive Order 14110 (and its 2024 proposed rule <a href="https://www.federalregister.gov/documents/2024/09/11/2024-20529/establishment-of-reporting-requirements-for-the-development-of-advanced-artificial-intelligence" target="_blank" rel="noopener">Establishment of Reporting Requirements for the Development of ...</a>), but the current regulatory environment is in flux following reported rescissions and new legislative recommendations released by the White House in March 2026. The question is decision-relevant as it monitors the shift from voluntary frameworks or executive orders to binding federal mandates. It avoids the benchmark cap because it focuses on the policy outcome (the mandate itself) rather than a model&#x27;s performance on a specific test. The target date (2027) provides sufficient time for the legislative or rulemaking process to resolve.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-11" data-quality="78.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#ef6c00;background:#fff3e0" data-tooltip="Quality score (0-100)">78</span><span class="q-summary-text">By 31st December 2027, will at least two distinct national cybersecurity agencies (e.g., CISA, UK NCSC, or ENISA) issue official advisories regarding a single cyber campaign where the attackers utilized AI to execute 90% or more of the operation&#x27;s tasks?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (85)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#ef6c00">78</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> In November 2025, Anthropic reported a state-sponsored campaign that was 80-90% automated by AI [53c9fb]. This question monitors whether the automation threshold in confirmed incidents moves beyond 90%. Fallback source: The MITRE ATT&amp;CK &#x27;Campaigns&#x27; database or the Council on Foreign Relations Cyber Operations Tracker.</p>
+        <p><strong>Paper reference:</strong> [1] Anthropic, “Disrupting the First Reported AI-Orchestrated Cyber Espionage Campaign.”</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. The question monitors the progression of AI-orchestrated cyberattacks by tracking official recognition of high automation levels (90%+). Current SOTA is established by an Anthropic report (November 2025) which documented a campaign that was 80-90% automated <a href="https://www.anthropic.com/news/disrupting-AI-espionage" target="_blank" rel="noopener">Disrupting the first reported AI-orchestrated cyber espionage ...</a> [[PDF] Disrupting the first reported AI-orchestrated cyber espionage ...](<a href="https://www-cdn.anthropic.com/d7dd50dd1185f59be051b307150d877f2b82bd2c.pdf" target="_blank" rel="noopener">https://www-cdn.anthropic.com/d7dd50dd1185f59be051b307150d877f2b82bd2c.pdf</a>). The 90% threshold represents a clear next step in capability. The primary risk is resolution: national agencies (CISA, NCSC, ENISA) often use qualitative descriptions rather than precise percentage metrics in public advisories, which may make a &quot;Yes&quot; resolution difficult to achieve even if the underlying fact is true. However, it tracks a high-impact real-world outcome and is not capped by benchmark rules.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-12" data-quality="72.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#ef6c00;background:#fff3e0" data-tooltip="Quality score (0-100)">72</span><span class="q-summary-text">Will the European AI Office issue a formal enforcement notice against an AI provider for failing to meet the adversarial robustness requirements of the EU AI Act?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (85)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#ef6c00">72</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> As of June 2026, the EU AI Act is in the implementation phase, and while NIST has released concept notes for critical infrastructure AI profiles [59ac9d], no formal enforcement actions for robustness failures have been issued. This question measures the regulatory response to AI security risks. The primary source is the EU AI Office official newsroom; the fallback is the Official Journal of the European Union.</p>
+        <p><strong>Paper reference:</strong> Lyptus Research Section 2 (Introduction), Context: &quot;The 2026 International AI Safety Report identifies cybersecurity as the domain where evidence of real-world harm from AI is now strongest&quot; [6f106e].</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Real-world. The question is decision-relevant and tracks regulatory enforcement of the EU AI Act. Key strength is the clear fallback source (Official Journal). Risks include terminology: the EU AI Act typically uses &#x27;corrective measures&#x27; or &#x27;decisions&#x27; rather than &#x27;formal enforcement notices&#x27; (a term more common in UK/GDPR contexts). Current SOTA: Article 15 (adversarial robustness) for high-risk systems is scheduled for enforcement starting August 2, 2026 <a href="https://artificialintelligenceact.eu/article/15/" target="_blank" rel="noopener">Article 15: Accuracy, Robustness and Cybersecurity - EU AI Act</a>, though recent reports suggest compliance for Annex III systems (e.g., recruitment, credit scoring) has been deferred to December 2, 2027. This timing creates a high-entropy window for first enforcement actions.</p></details>
+      </div>
+    </details>
+    <details class="q-item" id="q-13" data-quality="70.00" data-status="1">
+      <summary><span class="chevron">&#9654;</span><span class="q-score-badge" style="color:#ef6c00;background:#fff3e0" data-tooltip="Quality score (0-100)">70</span><span class="q-summary-text">Will the National Institute of Standards and Technology (NIST) publish a final technical standard for &#x27;sequence-to-function&#x27; DNA screening on NIST.gov?</span><span class="badge badge-filtered" data-tooltip="Below cutoff (85)">FILTERED</span></summary>
+      <div class="q-body">
+        <div class="score-row">
+          <div class="score-item"><span class="score-label" data-tooltip="Overall quality rating from AI scoring">Quality</span><span class="score-value" style="color:#ef6c00">70</span></div>
+          <div class="score-item"><span class="score-label" data-tooltip="Whether this question advances to stage 03">Status</span><span class="badge badge-filtered">FILTERED</span></div>
+        </div>
+        <p><strong>Rationale:</strong> Current value check: S.3741 directs NIST to research this to prevent evasion of current homology-based screening [b9aa54]. No final standard exists as of June 10, 2026. This addresses the biosafety gap identified in the paper. Resolution paths: NIST.gov publications or the Federal Register. Fallback source: NIST AI Safety Institute (AISI) annual update.</p>
+        <p><strong>Paper reference:</strong> Section 9: Benchmark coverage (Biosafety)</p>
+        <details class="sub-section"><summary>Quality notes</summary><p>Quasi-benchmark. This question concerns the publication of a technical standard by a government institute (NIST). While decision-relevant, it is capped at 70 as an agency output/eval. SOTA: NIST is actively researching sequence-to-function tools (e.g., LANTERN) and datasets, but has only published a draft standard guide for nucleic acid providers as of May 2026, not a final technical standard for sequence-to-function screening <a href="https://www.nist.gov/programs-projects/biosecurity-synthetic-nucleic-acid-sequences" target="_blank" rel="noopener">Biosecurity for Synthetic Nucleic Acid Sequences | NIST</a> <a href="https://www.nist.gov/news-events/news" target="_blank" rel="noopener">https://www.nist.gov/news-events/news</a>.</p></details>
+      </div>
+    </details>
+  </div>
+
+<script>
+function sortBy(mode) {
+  var list = document.getElementById('question-list');
+  var items = Array.from(list.querySelectorAll('.q-item'));
+  items.sort(function(a, b) {
+    if (mode === 'quality') {
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    if (mode === 'status') {
+      var s = parseInt(a.dataset.status) - parseInt(b.dataset.status);
+      if (s !== 0) return s;
+      return parseFloat(b.dataset.quality) - parseFloat(a.dataset.quality);
+    }
+    return 0;
+  });
+  items.forEach(function(el) { list.appendChild(el); });
+  var btns = document.querySelectorAll('.sort-btn');
+  btns.forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.sort === mode);
+  });
+}
+</script>
+</div></body></html>
