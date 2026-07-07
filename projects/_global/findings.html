@@ -55,9 +55,9 @@
       <div class="sub">The headline result. 3 blinded judges; pipeline question ranked #1 by all; 18/18 correct source guesses</div>
     </div>
     <div class="stat" style="border-color:#c7cdf7">
-      <div class="big"><span class="bad">22%</span> <span class="arrow">→</span> <span class="good">0%</span></div>
+      <div class="big"><span class="bad">42%</span> <span class="arrow">→</span> <span class="good">17%</span></div>
       <div class="lbl">Benchmark over-indexing</div>
-      <div class="sub">v1 vs v2 prompts — share of generated questions that resolve via a benchmark score instead of a real-world outcome</div>
+      <div class="sub">Same paper, steer removed — deleting one pro-benchmark line did most of the work; heavy penalties added little. Prompts now de-steered.</div>
     </div>
     <div class="stat">
       <div class="big bad">$15.62</div>
@@ -72,15 +72,22 @@
   </div>
 
   <section class="finding">
-    <h2><span class="tag">Prompts</span> v2 prompts eliminated benchmark over-indexing</h2>
-    <p>Your suspicion was right and quantified: the old prompts over-produced "will model X hit Y% on benchmark Z" questions instead of decision-relevant real-world outcomes, and the quality filter made it <em>worse</em> (42% → 44% of finals). The v2 generation prompt added a hard 1-in-4 benchmark cap, archetype quotas, and de-benchmark reframing.</p>
+    <h2><span class="tag">Prompts</span> The fix was removing a steer, not adding penalties</h2>
+    <p>Your suspicion was right and quantified: the old (v1) prompts over-produced "will model X hit Y% on benchmark Z" questions instead of decision-relevant real-world outcomes, and the quality filter made it <em>worse</em> (42% → 44% of finals). The first fix (v2) bolted on heavy machinery — a hard 1-in-4 benchmark cap, archetype quotas, de-benchmark reframing, and explicit benchmark penalties at six stages.</p>
     <table>
       <tr><th>Prompts</th><th>Proto-questions</th><th>Benchmark-flavored</th><th></th></tr>
       <tr><td>v1 (6 papers)</td><td class="num">148</td><td class="num bad">22%</td><td><span class="bar"><i style="width:22%;background:var(--bad)"></i></span></td></tr>
       <tr><td>v2 (2 papers)</td><td class="num">30</td><td class="num good">0%</td><td><span class="bar"><i style="width:1%;background:var(--good)"></i></span></td></tr>
     </table>
-    <p>The 0% held even on the Lyptus paper — which is <em>itself about cyber-capability benchmarks</em>, the maximum-temptation case. v2 instead produced incident, legislation, treaty, and agency-publication questions.</p>
-    <div class="caveat">Caveat: v2 sample is 30 protos over 2 papers — directional, not a controlled trial. The cleanest test (same paper under both prompt sets) costs ~$25/paper and the everyrow budget is spent.</div>
+    <p>But a controlled 3-way test — the <em>same</em> Lyptus seed (itself about cyber-capability benchmarks, the maximum-temptation case), 12 questions per variant, one-shot — showed the penalties were doing little work beyond <em>removing the original pro-benchmark steer</em>:</p>
+    <table>
+      <tr><th>Generation prompt</th><th>Benchmark-flavored (of 12)</th><th></th></tr>
+      <tr><td>v1 — pro-benchmark steer (a "capability benchmarks" category)</td><td class="num bad">42%</td><td><span class="bar"><i style="width:42%;background:var(--bad)"></i></span></td></tr>
+      <tr><td><strong>v3 — neutral (steer removed, no penalties)</strong></td><td class="num good">17%</td><td><span class="bar"><i style="width:17%;background:var(--good)"></i></span></td></tr>
+      <tr><td>v2 — neutral + heavy anti-benchmark penalties</td><td class="num good">8%</td><td><span class="bar"><i style="width:8%;background:var(--good)"></i></span></td></tr>
+    </table>
+    <p>Deleting one biased line (v1→v3) captured most of the drop, 42%→17%; the penalty scaffolding bought one more question (17%→8%, within sampling noise) at the cost of six prompts of complexity. <strong>Decision:</strong> the ground-truth prompts are now de-steered — the pro-benchmark category is gone and the anti-benchmark penalties are stripped from generation, quality, priority, refine, ambiguity, and importance. The two v3 questions flagged as "benchmark" were borderline-legitimate governance signals (a government AISI/CAISI <em>publishing</em> an evaluation), not leaderboard scores.</p>
+    <div class="caveat">Caveat: the 3-way test is one paper, 12 questions per arm, one-shot with no web research, benchmark-share measured by regex — directional, not a controlled trial. One-question gaps are noise. The clean test (same paper through the full pipeline under each prompt set) costs ~$25/paper and the everyrow budget is spent.</div>
   </section>
 
   <section class="finding">
